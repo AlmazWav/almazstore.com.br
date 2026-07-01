@@ -5952,7 +5952,24 @@ body.cat-open{overflow:hidden}
 
 
 
-<section id="faq" class="sec-dark"><div class="container"><div class="reveal text-center"><div class="tag g">Dúvidas frequentes</div><h2 class="h2 on-dark">FAQ</h2></div><div class="faq-list" id="fl"></div></div></section>
+<section id="faq" class="sec-dark"><div class="container"><div class="reveal text-center"><div class="tag g">Dúvidas frequentes</div><h2 class="h2 on-dark">FAQ</h2></div>
+
+<!-- As 3 objeções que mais travam a compra, respondidas em destaque (não escondidas no acordeão) -->
+<style>
+.sq-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:960px;margin:28px auto 40px}
+.sq-item{background:linear-gradient(180deg,#161010,#0d0d0d);border:1px solid rgba(255,45,58,.25);border-radius:12px;padding:18px 16px;text-align:left}
+.sq-q{font-family:var(--fh);font-size:15px;font-weight:800;color:#fff;text-transform:uppercase;display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;line-height:1.25}
+.sq-a{font-size:13.5px;color:var(--muted);line-height:1.65}
+.sq-a strong{color:#fff}
+@media(max-width:768px){.sq-grid{grid-template-columns:1fr;gap:10px;margin:22px auto 32px}}
+</style>
+<div id="seguranca" class="sq-grid">
+  <div class="sq-item reveal"><div class="sq-q"><span aria-hidden="true">🚫</span>Vou tomar ban na minha conta Steam?</div><div class="sq-a">O desbloqueio é feito pelo <strong>nosso launcher, na sua própria conta Steam</strong> — sem conta compartilhada, sem login de terceiros. E você tem <strong>7 dias de garantia</strong> pra testar sem risco.</div></div>
+  <div class="sq-item reveal rd1"><div class="sq-q"><span aria-hidden="true">🛡️</span>É seguro? Os jogos são originais?</div><div class="sq-a">Sim. Downloads e atualizações vêm <strong>direto dos servidores oficiais da Steam</strong>. Nada de sites estranhos nem arquivos suspeitos no seu PC.</div></div>
+  <div class="sq-item reveal rd2"><div class="sq-q"><span aria-hidden="true">⚡</span>Como recebo depois de pagar?</div><div class="sq-a">Pagou o PIX, o <strong>acesso chega no seu e-mail em poucos minutos</strong>, com o passo a passo da ativação. Aí é abrir a Steam, baixar e jogar.</div></div>
+</div>
+
+<div class="faq-list" id="fl"></div></div></section>
 
 
 
