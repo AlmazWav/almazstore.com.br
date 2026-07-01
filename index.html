@@ -6900,7 +6900,11 @@ function checkout(url,val){
   }
   document.addEventListener('click',function(e){
     var el=e.target.closest('a[href*="pay.almazstore.com.br"], a[onclick*="checkout("], [onclick*="checkout("]');
-    if(el) markLoading(el);
+    // setTimeout(0): a troca do visual só pode acontecer DEPOIS da propagação do
+    // clique. O pixel da Utmify decide o InitiateCheckout pelo TEXTO do botão
+    // ("Quero garantir"); trocar pra "Abrindo checkout…" durante a captura
+    // matava o evento IC na Meta (confirmado em produção 01/07).
+    if(el) setTimeout(function(){markLoading(el);},0);
   },true);
 })();
 
