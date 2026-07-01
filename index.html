@@ -1079,17 +1079,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
         <div class="hero2-slides" id="hero2-slides">
 
-          <div class="hero2-slide active"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3768760/library_hero.jpg" alt="007 First Light" loading="eager"></div>
+          <div class="hero2-slide active"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/271590/library_hero.jpg" alt="Grand Theft Auto V" loading="eager"></div>
+
+          <div class="hero2-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/library_hero.jpg" alt="Elden Ring" loading="lazy"></div>
 
           <div class="hero2-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3764200/library_hero.jpg" alt="Resident Evil Requiem" loading="lazy"></div>
 
-          <div class="hero2-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3321460/library_hero.jpg" alt="Crimson Desert" loading="lazy"></div>
-
           <div class="hero2-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/2358720/library_hero.jpg" alt="Black Myth: Wukong" loading="lazy"></div>
 
-          <div class="hero2-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/271590/library_hero.jpg" alt="Grand Theft Auto V" loading="lazy"></div>
+          <div class="hero2-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3768760/library_hero.jpg" alt="007 First Light" loading="lazy"></div>
 
-          <div class="hero2-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/library_hero.jpg" alt="Elden Ring" loading="lazy"></div>
+          <div class="hero2-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3321460/library_hero.jpg" alt="Crimson Desert" loading="lazy"></div>
 
         </div>
 
@@ -1103,7 +1103,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         </div>
 
-        <div class="hero2-card-title" id="hero2-title">007 First Light</div>
+        <div class="hero2-card-title" id="hero2-title">Grand Theft Auto V</div>
 
         <div class="hero2-card-sub">Baixe os arquivos oficiais direto pela Steam.</div>
 
@@ -1129,7 +1129,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
       (function(){
 
-        var games=['007 First Light','Resident Evil Requiem','Crimson Desert','Black Myth: Wukong','Grand Theft Auto V','Elden Ring'];
+        // Mais reconhecíveis primeiro (tráfego frio decide em segundos)
+        var games=['Grand Theft Auto V','Elden Ring','Resident Evil Requiem','Black Myth: Wukong','007 First Light','Crimson Desert'];
 
         var slides=document.querySelectorAll('#hero2-slides .hero2-slide');
 
@@ -1172,7 +1173,11 @@ document.addEventListener('DOMContentLoaded', function () {
           card.setAttribute('tabindex','0');
           card.setAttribute('aria-label','Começar agora');
           var goVsl=function(){var t=document.getElementById('vsl');if(window.almazScrollTo){window.almazScrollTo(t);}else if(t){t.scrollIntoView({behavior:'smooth'});}};
-          card.addEventListener('click',function(e){if(e.target.closest('.hero2-dot'))return;goVsl();});
+          // Swipe manual: arrastar na horizontal troca o slide e NÃO abre o VSL.
+          var tx=0,ty=0,swiped=false;
+          card.addEventListener('touchstart',function(e){var t=e.touches[0];tx=t.clientX;ty=t.clientY;swiped=false;},{passive:true});
+          card.addEventListener('touchend',function(e){var t=e.changedTouches[0];var dx=t.clientX-tx,dy=t.clientY-ty;if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)*1.2){swiped=true;stop();go(dx<0?cur+1:cur-1);start();}},{passive:true});
+          card.addEventListener('click',function(e){if(swiped){swiped=false;return;}if(e.target.closest('.hero2-dot'))return;goVsl();});
           card.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();goVsl();}});
         }
 
