@@ -7995,6 +7995,14 @@ html.no-motionlib .amz-toast.amz-in{opacity:1;transform:translateX(0)}
 
       if(document.hidden || modalOpen){ schedule(4000); return; }
 
+      // Mobile: adia o toast se um botão de compra está na faixa onde ele aparece
+      // (acima do sticky CTA) — pop-up nunca pode cobrir CTA.
+      if(window.innerWidth<=768){
+        var vh=window.innerHeight, bandTop=vh-210, bandBot=vh-70;
+        var busy=[].slice.call(document.querySelectorAll('.hero2-cta,.offer-btn,.btn-xl')).some(function(b){var r=b.getBoundingClientRect();return r.bottom>bandTop&&r.top<bandBot;});
+        if(busy){ schedule(4000); return; }
+      }
+
       var el=(count%3===2) ? buildReview() : buildSale();
 
       count++;
