@@ -6982,15 +6982,35 @@ else{el.scrollIntoView({behavior:'smooth'});}
 
     if (!nudgeOff) {
 
-      setTimeout(function() {
+      // Regras pra NUNCA cobrir um CTA de compra no mobile (o balão é fixo e
+      // sobrepunha o "Começar agora" da 1ª tela): só aparece depois de 12s,
+      // com o visitante já fora da dobra e sem nenhum botão de compra na tela.
+      var nudgeArmed = false;
 
-        if (!nudgeShown && !win.classList.contains('open')) {
+      var buyBtns = [].slice.call(document.querySelectorAll('.offer-btn, .hero2-cta, .btn-xl'));
 
-          nudge.classList.add('show');
+      function buyCtaOnScreen() {
+        var vh = window.innerHeight;
+        return buyBtns.some(function(b) { var r = b.getBoundingClientRect(); return r.bottom > 0 && r.top < vh; });
+      }
 
+      function tryShowNudge() {
+        if (nudgeShown) {
+          // Já apareceu: se um botão de compra entrar na tela, recolhe pra não cobrir.
+          if (nudge.classList.contains('show') && buyCtaOnScreen()) { hideNudge(); window.removeEventListener('scroll', tryShowNudge); }
+          return;
         }
+        if (win.classList.contains('open')) { window.removeEventListener('scroll', tryShowNudge); return; }
+        if (!nudgeArmed) return;
+        if (window.pageYOffset < window.innerHeight * 0.6) return; // ainda na 1ª tela
+        if (buyCtaOnScreen()) return;
+        nudge.classList.add('show');
+        nudgeShown = true;
+      }
 
-      }, 12000); // 12s: não disputa atenção com a 1ª tela (59% saíam antes de rolar 10%)
+      setTimeout(function() { nudgeArmed = true; tryShowNudge(); }, 12000);
+
+      window.addEventListener('scroll', tryShowNudge, { passive: true });
 
     }
 
