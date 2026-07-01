@@ -7679,7 +7679,9 @@ else{el.scrollIntoView({behavior:'smooth'});}
 
 #amz-toasts{position:fixed;left:24px;bottom:24px;z-index:950;display:flex;flex-direction:column;gap:12px;pointer-events:none;max-width:340px;width:calc(100vw - 48px)}
 
-@media(max-width:600px){#amz-toasts{left:12px;bottom:18px;max-width:none;width:calc(100vw - 120px)}}
+/* ≤768px o sticky CTA (56px+) ocupa a base da tela — toasts sobem pra não cobri-lo */
+@media(max-width:768px){#amz-toasts{bottom:84px}}
+@media(max-width:600px){#amz-toasts{left:12px;bottom:80px;max-width:none;width:calc(100vw - 120px)}}
 
 .amz-toast{pointer-events:auto;position:relative;display:flex;align-items:flex-start;gap:12px;background:rgba(16,16,16,.97);border:1px solid rgba(255,45,58,.28);border-left:3px solid var(--neon);border-radius:14px;padding:13px 30px 13px 14px;box-shadow:0 14px 40px rgba(0,0,0,.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);cursor:pointer;will-change:transform,opacity;font-family:var(--fb);opacity:0;overflow:hidden}
 
