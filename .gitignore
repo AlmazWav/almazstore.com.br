@@ -1,0 +1,6 @@
+# Backups manuais antigos (o git passa a ser o histórico)
+index.backup-*.html
+
+# Brutos de vídeo (1GB+; a página usa mp4 externos)
+videos/
+*.MOV
