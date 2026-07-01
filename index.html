@@ -1544,7 +1544,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     <div class="lib2-right reveal rd1">
 
-      <span class="lib2-tag">
+      <!-- Antes era um "dead click": parecia botão e não fazia nada. Agora leva à seção que prova a originalidade. -->
+      <span class="lib2-tag" role="button" tabindex="0" style="cursor:pointer" aria-label="Ver por que os arquivos são oficiais" onclick="var t=document.getElementById('pirataria');if(window.almazScrollTo){almazScrollTo(t)}else if(t){t.scrollIntoView({behavior:'smooth'})}" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
 
         <svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
 
