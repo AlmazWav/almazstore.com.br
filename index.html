@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<title>Almaz Store — Sua Biblioteca Steam · +40.000 Jogos</title>
+<title>Almaz Store | +40.000 jogos originais na sua Steam</title>
 
 <meta name="description" content="Acesse +40.000 jogos na Steam. Taxa única, licença vitalícia.">
 
@@ -944,7 +944,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 .hero2-cta::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);animation:shimmer 2.5s infinite}
 
-.hero2-trust{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px;font-family:var(--fb);font-size:13px;color:var(--muted)}
+.hero2-trust{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;margin-top:14px;font-family:var(--fb);font-size:13px;color:var(--muted)}
 .hero2-trust-item{white-space:nowrap}
 .hero2-trust-sep{opacity:.4}
 @media(max-width:768px){.hero2-trust{justify-content:center;font-size:12.5px;margin-top:12px}}
@@ -1031,21 +1031,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
     <div class="hero2-left reveal">
 
-      <h1 class="hero2-h1">desbloqueie toda a sua <span class="w">steam</span></h1>
+      <h1 class="hero2-h1">+<span data-almaz-games="vitalicio">40.000</span> jogos originais <span class="w">na sua conta steam</span></h1>
 
-      <p class="hero2-count">+<span data-almaz-games="vitalicio">40.000</span> jogos no seu PC</p>
+      <p class="hero2-count">GTA V, Elden Ring, EA FC e os lançamentos</p>
 
-      <p class="hero2-desc">A maior biblioteca do Brasil direto na sua Steam. Entrega Instantânea e Automatizada. Exclusivo para PC.</p>
+      <p class="hero2-desc">Pague uma vez, receba na hora. Sem mensalidade, sem conta compartilhada.</p>
 
-      <a href="#vsl" class="hero2-cta" onclick="var t=document.getElementById('vsl');if(window.almazScrollTo){window.almazScrollTo(t);return false}">Começar agora →</a>
+      <a href="#como-funciona" class="hero2-cta" onclick="var t=document.getElementById('como-funciona');if(window.almazScrollTo){window.almazScrollTo(t);return false}">Começar agora →</a>
 
       <div class="hero2-trust" aria-label="Garantias da compra">
         <span class="hero2-trust-item">🛡️ 7 dias de garantia</span>
-        <span class="hero2-trust-sep">·</span>
         <span class="hero2-trust-item">✅ Arquivos oficiais Steam</span>
-        <span class="hero2-trust-sep">·</span>
         <span class="hero2-trust-item">⚡ Entrega na hora</span>
-        <span class="hero2-trust-sep">·</span>
         <span class="hero2-trust-item">🔒 Pagamento via PIX</span>
       </div>
 
@@ -1081,17 +1078,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
         <div class="hero2-slides" id="hero2-slides">
 
-          <div class="hero2-slide active"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/271590/library_hero.jpg" alt="Grand Theft Auto V" loading="eager"></div>
+          <div class="hero2-slide active"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3768760/library_hero.jpg" alt="007 First Light" loading="eager"></div>
 
-          <div class="hero2-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/library_hero.jpg" alt="Elden Ring" loading="lazy"></div>
+          <div class="hero2-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3321460/library_hero.jpg" alt="Crimson Desert" loading="lazy"></div>
 
           <div class="hero2-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3764200/library_hero.jpg" alt="Resident Evil Requiem" loading="lazy"></div>
 
           <div class="hero2-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/2358720/library_hero.jpg" alt="Black Myth: Wukong" loading="lazy"></div>
 
-          <div class="hero2-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3768760/library_hero.jpg" alt="007 First Light" loading="lazy"></div>
+          <div class="hero2-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/271590/library_hero.jpg" alt="Grand Theft Auto V" loading="lazy"></div>
 
-          <div class="hero2-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3321460/library_hero.jpg" alt="Crimson Desert" loading="lazy"></div>
+          <div class="hero2-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/library_hero.jpg" alt="Elden Ring" loading="lazy"></div>
 
         </div>
 
@@ -1105,7 +1102,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         </div>
 
-        <div class="hero2-card-title" id="hero2-title">Grand Theft Auto V</div>
+        <div class="hero2-card-title" id="hero2-title">007 First Light</div>
 
         <div class="hero2-card-sub">Baixe os arquivos oficiais direto pela Steam.</div>
 
@@ -1131,8 +1128,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
       (function(){
 
-        // Mais reconhecíveis primeiro (tráfego frio decide em segundos)
-        var games=['Grand Theft Auto V','Elden Ring','Resident Evil Requiem','Black Myth: Wukong','007 First Light','Crimson Desert'];
+        // Lançamentos novos primeiro (destacar o que está em alta)
+        var games=['007 First Light','Crimson Desert','Resident Evil Requiem','Black Myth: Wukong','Grand Theft Auto V','Elden Ring'];
 
         var slides=document.querySelectorAll('#hero2-slides .hero2-slide');
 
@@ -1167,15 +1164,15 @@ document.addEventListener('DOMContentLoaded', function () {
         dots.forEach(function(d,i){d.addEventListener('click',function(){stop();go(i);start();});});
 
         // Card inteiro clicável: antes era "dead click" (a arte parecia clicável e nada acontecia).
-        // Mesma ação do CTA "Começar agora" do herói → leva ao VSL. Ignora cliques nos dots.
+        // Mesma ação do CTA "Começar agora" do herói → leva aos 3 passos. Ignora cliques nos dots.
         var card=slides[0].closest('.hero2-card');
         if(card){
           card.style.cursor='pointer';
           card.setAttribute('role','button');
           card.setAttribute('tabindex','0');
           card.setAttribute('aria-label','Começar agora');
-          var goVsl=function(){var t=document.getElementById('vsl');if(window.almazScrollTo){window.almazScrollTo(t);}else if(t){t.scrollIntoView({behavior:'smooth'});}};
-          // Swipe manual: arrastar na horizontal troca o slide e NÃO abre o VSL.
+          var goVsl=function(){var t=document.getElementById('como-funciona');if(window.almazScrollTo){window.almazScrollTo(t);}else if(t){t.scrollIntoView({behavior:'smooth'});}};
+          // Swipe manual: arrastar na horizontal troca o slide e NÃO dispara o scroll.
           var tx=0,ty=0,swiped=false;
           card.addEventListener('touchstart',function(e){var t=e.touches[0];tx=t.clientX;ty=t.clientY;swiped=false;},{passive:true});
           card.addEventListener('touchend',function(e){var t=e.changedTouches[0];var dx=t.clientX-tx,dy=t.clientY-ty;if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)*1.2){swiped=true;stop();go(dx<0?cur+1:cur-1);start();}},{passive:true});
@@ -1195,123 +1192,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </section>
 
-<!-- ===== VSL (Video Sales Letter) ===== -->
-<style>
-.vsl-section{padding:56px 0 22px;position:relative}
-.vsl-tag{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#ff5a63;background:rgba(230,32,46,.10);border:1px solid rgba(230,32,46,.30);padding:7px 14px;border-radius:100px;margin-bottom:16px}
-.vsl-tag svg{width:13px;height:13px;fill:currentColor}
-.vsl-title{margin:0 0 10px}
-.vsl-title em{color:var(--accent);font-style:normal}
-.vsl-shell{max-width:860px;margin:28px auto 0;padding:0 18px}
-.vsl-border{border-radius:22px;padding:1.5px;background:linear-gradient(135deg,rgba(230,32,46,.95),rgba(230,32,46,.15) 42%,rgba(255,255,255,.10) 68%,rgba(230,32,46,.6));box-shadow:0 26px 70px -22px rgba(230,32,46,.5),0 16px 50px -22px rgba(0,0,0,.85)}
-.vsl-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:20px;overflow:hidden;background:#000;cursor:pointer}
-.vsl-frame video,.vsl-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;object-fit:cover}
-.vsl-click{position:absolute;inset:0;z-index:2;cursor:pointer}
-/* Capa: ativar áudio */
-.vsl-cover{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:4;cursor:pointer;background:radial-gradient(120% 120% at 50% 38%,rgba(12,12,12,.30),rgba(8,8,8,.80));-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);transition:opacity .45s ease}
-.vsl-cover.hide{opacity:0;pointer-events:none}
-.vsl-cover-inner{display:flex;flex-direction:column;align-items:center;text-align:center;gap:13px;padding:20px}
-.vsl-spk{position:relative;width:76px;height:76px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#e6202e,#a3131c);box-shadow:0 12px 32px -6px rgba(230,32,46,.75)}
-.vsl-spk svg{width:34px;height:34px;fill:#fff;position:relative;z-index:2}
-.vsl-spk::before,.vsl-spk::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid rgba(230,32,46,.55);animation:vslPulse 2s ease-out infinite}
-.vsl-spk::after{animation-delay:1s}
-@keyframes vslPulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.75);opacity:0}}
-.vsl-cover-txt{font-size:17px;font-weight:800;color:#fff;letter-spacing:.01em}
-.vsl-cover-sub{font-size:12.5px;color:rgba(255,255,255,.62);margin-top:-3px}
-/* Botão play central (pausado) */
-.vsl-playbtn{position:absolute;inset:0;margin:auto;width:72px;height:72px;border-radius:50%;display:none;align-items:center;justify-content:center;z-index:3;background:rgba(15,15,15,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.18);pointer-events:none}
-.vsl-playbtn svg{width:30px;height:30px;fill:#fff;margin-left:3px}
-.vsl-frame.paused .vsl-playbtn{display:flex}
-/* Barra inferior: tempo (não clicável, sem skip) */
-.vsl-bar{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:20px 16px 11px;display:flex;flex-direction:column;gap:8px;background:linear-gradient(to top,rgba(0,0,0,.74),transparent);opacity:0;transition:opacity .3s;pointer-events:none}
-.vsl-frame.activated .vsl-bar{opacity:1}
-.vsl-progress{height:4px;border-radius:100px;background:rgba(255,255,255,.22);overflow:hidden}
-.vsl-progress span{display:block;height:100%;width:0;border-radius:100px;background:linear-gradient(90deg,#ff5a63,#e6202e)}
-.vsl-time{font-size:12px;font-weight:700;color:rgba(255,255,255,.92);font-variant-numeric:tabular-nums;text-shadow:0 1px 3px rgba(0,0,0,.65)}
-@media(max-width:560px){.vsl-cover-txt{font-size:15px}.vsl-spk{width:66px;height:66px}.vsl-spk svg{width:30px;height:30px}}
-.vsl-watching{display:flex;align-items:center;justify-content:center;gap:9px;margin:16px auto 0;font-size:13.5px;font-weight:600;color:var(--muted)}
-.vsl-watching #vslWatchers{color:#fff;font-weight:800}
-.vsl-watching-dot{width:9px;height:9px;border-radius:50%;background:#36e07f;box-shadow:0 0 0 0 rgba(54,224,127,.55);animation:vslLive 1.8s ease-out infinite}
-@keyframes vslLive{0%{box-shadow:0 0 0 0 rgba(54,224,127,.55)}70%{box-shadow:0 0 0 8px rgba(54,224,127,0)}100%{box-shadow:0 0 0 0 rgba(54,224,127,0)}}
-</style>
-<section id="vsl" class="vsl-section">
-  <div class="container">
-    <div class="text-center reveal">
-      <div class="vsl-tag"><svg viewBox="0 0 24 24"><polygon points="6,4 20,12 6,20"/></svg> Assista antes de começar</div>
-      <h2 class="h2 on-dark vsl-title">Veja como funciona em <em>2 minutos</em></h2>
-      <p class="sub on-dark center">Aperte o play, ative o som e entenda por que +5 mil pessoas já desbloquearam a Steam.</p>
-    </div>
-    <div class="vsl-shell reveal rd1">
-      <div class="vsl-border">
-        <div class="vsl-frame" id="vslFrame">
-          <iframe id="vslIframe" loading="lazy" src="https://player.vimeo.com/video/1205054304?background=0&amp;autoplay=1&amp;muted=1&amp;loop=1&amp;controls=0&amp;playsinline=1&amp;autopause=0&amp;badge=0&amp;dnt=1" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" title="VSL — Como instalar os 40 mil jogos na Steam"></iframe>
-          <div class="vsl-click" id="vslClick"></div>
-          <div class="vsl-cover" id="vslCover">
-            <div class="vsl-cover-inner">
-              <span class="vsl-spk"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 00-2.5-4.03v8.05A4.5 4.5 0 0016.5 12zM14 3.23v2.06a7 7 0 010 13.42v2.06A9 9 0 0014 3.23z"/></svg></span>
-              <span class="vsl-cover-txt">Clique para ativar o áudio</span>
-              <span class="vsl-cover-sub">O vídeo recomeça do início com som</span>
-            </div>
-          </div>
-          <div class="vsl-playbtn"><svg viewBox="0 0 24 24"><polygon points="6,4 20,12 6,20"/></svg></div>
-        </div>
-      </div>
-    </div>
-    <div class="vsl-watching reveal"><span class="vsl-watching-dot"></span><span id="vslWatchers">270</span> pessoas assistindo agora</div>
-      </div>
-</section>
+<!-- API do Vimeo — usada pelos vídeos Vimeo do chatbot (initChatVideo) -->
 <script src="https://player.vimeo.com/api/player.js"></script>
-<script>
-(function(){
-  var frame=document.getElementById('vslFrame');
-  var iframe=document.getElementById('vslIframe');
-  var shield=document.getElementById('vslClick');
-  var cover=document.getElementById('vslCover');
-  if(!frame||!iframe||!window.Vimeo) return;
-  var player=new Vimeo.Player(iframe);
-  var activated=false, userPaused=false;
-  function fmt(t){ if(!isFinite(t)||t<0){t=0;} var m=Math.floor(t/60),s=Math.floor(t%60); return m+':'+(s<10?'0':'')+s; }
-  player.setVolume(0).catch(function(){});
-  player.on('ended',function(){ frame.classList.add('paused'); });
-  // Autoplay (mudo) quando entra na tela
-  if('IntersectionObserver' in window){
-    new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){ if(!userPaused){ player.play().catch(function(){}); } } else { player.pause().catch(function(){}); } });},{threshold:.4}).observe(frame);
-  }
-  // Ativa áudio + reinicia do começo
-  function activate(){
-    activated=true; userPaused=false;
-    // Mobile (iOS/Android) só libera o áudio se o des-mutar acontecer SINCRONAMENTE
-    // dentro do gesto de toque. Por isso des-muta primeiro, e só depois reinicia do começo.
-    player.setMuted(false); player.setVolume(1);
-    player.play().catch(function(){});
-    player.setLoop(false).catch(function(){});
-    player.setCurrentTime(0).catch(function(){});
-    cover.classList.add('hide'); frame.classList.add('activated'); frame.classList.remove('paused');
-  }
-  // Clique na capa: ativa áudio + reinicia do começo
-  cover.addEventListener('click',function(ev){ ev.stopPropagation(); activate(); });
-  // Clique no vídeo: pausar / despausar (só depois de ativado)
-  shield.addEventListener('click',function(){
-    if(!activated){ activate(); return; }
-    player.getPaused().then(function(p){
-      if(p){ userPaused=false; player.play().catch(function(){}); frame.classList.remove('paused'); }
-      else { userPaused=true; player.pause().catch(function(){}); frame.classList.add('paused'); }
-    });
-  });
-  // Contador "pessoas assistindo agora" — varia suavemente ao longo do tempo
-  (function(){
-    var el=document.getElementById('vslWatchers'); if(!el) return;
-    var n=270;
-    setInterval(function(){
-      n+=Math.floor(Math.random()*7)-3;
-      if(n<238){ n=238+Math.floor(Math.random()*6); }
-      if(n>324){ n=324-Math.floor(Math.random()*6); }
-      el.textContent=n;
-    },2300);
-  })();
-})();
-</script>
-<!-- ===== /VSL ===== -->
+
+<!-- ===== Como funciona (3 passos) — o cliente vê o funil antes de comprar ===== -->
+<section id="como-funciona" class="sec-dark"><div class="container text-center">
+<div class="reveal">
+<h2 class="h2 on-dark">Como funciona? <em>3 passos</em></h2>
+<p class="sub on-dark center">Do pagamento ao jogo rodando, em poucos minutos.</p></div>
+<div class="steps">
+<div class="step reveal"><div class="step-num">1</div><div class="step-title">Garanta o acesso</div><div class="step-desc">Escolha o plano e finalize seu pedido, a confirmação é na hora.</div></div>
+<div class="step reveal rd1"><div class="step-num">2</div><div class="step-title">Receba no e-mail</div><div class="step-desc">O acesso chega instantaneamente, com o passo a passo da ativação do launcher.</div></div>
+<div class="step reveal rd2"><div class="step-num">3</div><div class="step-title">Baixe e jogue</div><div class="step-desc">Abra a sua Steam e baixe qualquer jogo da biblioteca, com atualizações oficiais.</div></div>
+</div>
+</div></section>
+<!-- ===== /Como funciona ===== -->
 
 <!-- ===== Autoridade: números + selos + marcas ===== -->
 
@@ -1403,7 +1298,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     <div class="auth-brands reveal rd2">
 
-      <span class="auth-brands-lbl">Compatível com · Pagamento via PIX</span>
+      <span class="auth-brands-lbl">Compatível com</span>
 
       <span class="auth-brand"><svg viewBox="0 0 24 24" fill="#d2d2d2"><path d="M11.98 2C6.74 2 2.43 5.94 2.05 11.04l5.34 2.2a2.83 2.83 0 0 1 1.6-.49l2.38-3.44v-.05a3.77 3.77 0 1 1 3.77 3.77h-.09l-3.39 2.42c0 .03 0 .06.01.08a2.84 2.84 0 1 1-5.65.42L2.4 14.05A10 10 0 1 0 11.98 2zm-3.7 15.18l-1.22-.5a2.13 2.13 0 0 0 1.1 1.04 2.12 2.12 0 0 0 2.78-1.14 2.12 2.12 0 0 0 0-1.62 2.12 2.12 0 0 0-1.15-1.15 2.12 2.12 0 0 0-1.62 0l1.27.52a1.57 1.57 0 1 1-1.2 2.9zm9.23-9.42a2.51 2.51 0 1 0 0 5.03 2.51 2.51 0 0 0 0-5.03zm0 .63a1.89 1.89 0 1 1 0 3.78 1.89 1.89 0 0 1 0-3.78z"/></svg> Steam</span>
 
@@ -1797,7 +1692,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     <div class="cat-grid-wrap" id="cat-grid-wrap">
 
-      <div class="cat-note">⚡ Nossa biblioteca tem <strong>+40.000 jogos</strong>. Este catálogo mostra apenas os <strong>mais procurados pelos nossos clientes</strong> — não achou o seu? Ele provavelmente está disponível mesmo assim.</div>
+      <div class="cat-note">⚡ Nossa biblioteca tem <strong>+40.000 jogos</strong>. Este catálogo mostra apenas os <strong>mais procurados pelos nossos clientes</strong>. Não achou o seu? Ele provavelmente está disponível mesmo assim.</div>
 
       <div class="cat-grid" id="cat-grid"></div>
 
@@ -4209,7 +4104,7 @@ body.cat-open{overflow:hidden}
 
     if(!list.length){
 
-      track.innerHTML='<div class="av-empty">Não achamos <strong>“'+esc(query)+'”</strong> nesta amostra — mas nossa biblioteca tem <strong>+40.000 jogos</strong> e cresce toda semana. Desbloqueie o acesso e procure direto na sua Steam.<br><button class="av-unlock" type="button">Desbloquear acesso</button></div>';
+      track.innerHTML='<div class="av-empty">Não achamos <strong>“'+esc(query)+'”</strong> nesta amostra, mas nossa biblioteca tem <strong>+40.000 jogos</strong> e cresce toda semana. Desbloqueie o acesso e procure direto na sua Steam.<br><button class="av-unlock" type="button">Desbloquear acesso</button></div>';
 
     } else {
 
@@ -4303,7 +4198,7 @@ body.cat-open{overflow:hidden}
 
     function chips(){ cchips.innerHTML=CATS.map(function(c){return '<button class="av-chip'+(c[0]===cCat?' active':'')+'" type="button" data-cat="'+c[0]+'">'+c[1]+'</button>';}).join(''); }
 
-    function setCount(){ ccount.textContent = cList.length+' jogo'+(cList.length===1?'':'s')+(shown<cList.length?' · mostrando '+shown:''); }
+    function setCount(){ ccount.textContent = cList.length+' jogo'+(cList.length===1?'':'s')+(shown<cList.length?', mostrando '+shown:''); }
 
     function append(){
 
@@ -4333,7 +4228,7 @@ body.cat-open{overflow:hidden}
 
       if(!cList.length){
 
-        grid.innerHTML='<div class="cat-empty" style="grid-column:1/-1">Nenhum jogo encontrado para <strong>“'+esc(cQ)+'”</strong> nesta amostra.<br>A biblioteca completa tem <strong>+40.000 jogos</strong> — desbloqueie e procure direto na sua Steam.</div>';
+        grid.innerHTML='<div class="cat-empty" style="grid-column:1/-1">Nenhum jogo encontrado para <strong>“'+esc(cQ)+'”</strong> nesta amostra.<br>A biblioteca completa tem <strong>+40.000 jogos</strong>. Desbloqueie e procure direto na sua Steam.</div>';
 
         moreWrap.style.display='none'; ccount.textContent='0 jogos'; return;
 
@@ -4377,189 +4272,6 @@ body.cat-open{overflow:hidden}
 
 <!-- ===== /Verificar Disponibilidade ===== -->
 
-<!-- ===== App Desktop (Windows) ===== -->
-
-<style>
-
-.app2{padding:80px 0;position:relative;overflow:hidden}
-
-.app2-grid{max-width:1100px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1fr 1.05fr;gap:56px;align-items:center}
-
-.app2-pill{display:inline-flex;align-items:center;gap:9px;background:rgba(255,45,58,.05);border:1px solid rgba(255,45,58,.3);color:var(--neon);font-family:var(--fh);font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border-radius:50px;padding:8px 16px;margin-bottom:24px}
-
-.app2-pill svg{width:16px;height:16px;stroke:var(--neon);fill:none;stroke-width:2}
-
-.app2-h2{font-family:var(--fh);font-size:clamp(34px,4.6vw,54px);font-weight:900;line-height:.98;margin-bottom:18px}
-
-.app2-h2 .wh{color:#fff;display:block}
-
-.app2-h2 .gr{color:var(--neon);display:block}
-
-.app2-desc{font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:24px;max-width:430px}
-
-.app2-feats{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:30px}
-
-.app2-feat{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.02);border:1px solid var(--border2);border-radius:8px;padding:11px 16px;font-size:13px;color:#f3f3f3}
-
-.app2-feat svg{width:15px;height:15px;stroke:var(--neon);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-
-.app2-cta{display:inline-flex;align-items:center;gap:10px;background:var(--neon);color:#040a00;font-family:var(--fh);font-size:16px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;padding:16px 32px;border-radius:8px;box-shadow:0 0 28px var(--neon-glow);transition:all .2s;position:relative;overflow:hidden}
-
-.app2-cta:hover{background:#ff4651;transform:translateY(-2px)}
-
-.app2-cta::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);animation:shimmer 2.5s infinite}
-
-/* Janela do app */
-
-.app2-win{border-radius:14px;overflow:hidden;border:1px solid var(--border2);background:#0e0e10;box-shadow:0 30px 70px rgba(0,0,0,.7)}
-
-.app2-bar{display:flex;align-items:center;gap:8px;padding:11px 14px;background:#161618;border-bottom:1px solid var(--border)}
-
-.app2-dot{width:11px;height:11px;border-radius:50%}
-
-.app2-dot.r{background:#ff5f57}.app2-dot.y{background:#febc2e}.app2-dot.g{background:#28c840}
-
-.app2-bar-title{margin-left:8px;font-size:12px;color:var(--dim)}
-
-.app2-body{display:grid;grid-template-columns:130px 1fr}
-
-.app2-side{background:#0e0e10;border-right:1px solid var(--border);padding:16px 13px;display:flex;flex-direction:column;gap:5px}
-
-.app2-logo{font-family:var(--fh);font-size:18px;font-weight:900;letter-spacing:.1em;color:#fff;margin-bottom:14px}
-
-.app2-logo span{color:var(--neon)}
-
-.app2-nav{font-size:13px;color:var(--dim);padding:9px 11px;border-radius:7px;display:flex;align-items:center;gap:8px}
-
-.app2-nav.active{background:rgba(255,45,58,.1);color:var(--neon);font-weight:600}
-
-.app2-nav.active::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--neon);box-shadow:0 0 6px var(--neon)}
-
-.app2-online{margin-top:auto;font-size:12px;color:var(--neon);display:flex;align-items:center;gap:7px;padding:9px 11px}
-
-.app2-online-dot{width:8px;height:8px;border-radius:50%;background:var(--neon);box-shadow:0 0 8px var(--neon)}
-
-.app2-main{padding:14px;display:flex;flex-direction:column;gap:12px;background:#0a0a0c}
-
-.app2-feature{position:relative;border-radius:10px;overflow:hidden;aspect-ratio:16/7;border:1px solid var(--border)}
-
-.app2-feature img{width:100%;height:100%;object-fit:cover}
-
-.app2-feature::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.85),transparent 62%)}
-
-.app2-badge{position:absolute;top:10px;left:10px;z-index:2;font-family:var(--fh);font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;background:var(--neon);color:#08130a;padding:4px 10px;border-radius:5px}
-
-.app2-feature-info{position:absolute;left:12px;bottom:10px;z-index:2}
-
-.app2-feature-name{font-family:var(--fh);font-size:16px;font-weight:800;color:#fff;text-transform:uppercase}
-
-.app2-feature-status{font-size:12px;color:var(--neon);font-weight:600}
-
-.app2-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-
-.app2-row img{width:100%;aspect-ratio:600/900;object-fit:cover;border-radius:8px;border:1px solid var(--border);background:#141414}
-
-@media(max-width:880px){.app2-grid{grid-template-columns:1fr;gap:38px}}
-
-@media(max-width:768px){.app2{padding:56px 0}.app2-body{grid-template-columns:108px 1fr}}
-
-</style>
-
-<section id="app" class="app2">
-
-  <div class="app2-grid">
-
-    <div class="app2-left reveal">
-
-      <span class="app2-pill"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg> Windows App</span>
-
-      <h2 class="app2-h2"><span class="wh">Almaz App</span><span class="gr">Baixe jogos em segundos</span></h2>
-
-      <p class="app2-desc">O jeito mais fácil de acessar sua biblioteca. Escolha o jogo, clique e baixe direto pela Steam.</p>
-
-      <div class="app2-feats">
-
-        <span class="app2-feat"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Download Instantâneo</span>
-
-        <span class="app2-feat"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> 100% Seguro</span>
-
-        <span class="app2-feat"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Acesso Vitalício</span>
-
-      </div>
-
-      <a href="#pirataria" class="app2-cta" onclick="var t=document.getElementById('pirataria');if(window.almazScrollTo){window.almazScrollTo(t);return false}">Desbloquear Steam →</a>
-
-    </div>
-
-    <div class="app2-right reveal rd1">
-
-      <div class="app2-win">
-
-        <div class="app2-bar">
-
-          <span class="app2-dot r"></span><span class="app2-dot y"></span><span class="app2-dot g"></span>
-
-          <span class="app2-bar-title">Almaz</span>
-
-        </div>
-
-        <div class="app2-body">
-
-          <div class="app2-side">
-
-            <div class="app2-logo">ALM<span>AZ</span></div>
-
-            <div class="app2-nav active">Biblioteca</div>
-
-            <div class="app2-nav">Downloads</div>
-
-            <div class="app2-nav">Configurações</div>
-
-            <div class="app2-online"><span class="app2-online-dot"></span>Online</div>
-
-          </div>
-
-          <div class="app2-main">
-
-            <div class="app2-feature">
-
-              <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/library_hero.jpg" alt="Elden Ring" loading="lazy">
-
-              <span class="app2-badge">Destaque</span>
-
-              <div class="app2-feature-info">
-
-                <div class="app2-feature-name">Elden Ring</div>
-
-                <div class="app2-feature-status">Liberado</div>
-
-              </div>
-
-            </div>
-
-            <div class="app2-row">
-
-              <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1593500/library_600x900.jpg" alt="God of War" loading="lazy">
-
-              <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/990080/library_600x900.jpg" alt="Hogwarts Legacy" loading="lazy">
-
-              <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1817070/library_600x900.jpg" alt="Marvel's Spider-Man Remastered" loading="lazy">
-
-              <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1551360/library_600x900.jpg" alt="Forza Horizon 5" loading="lazy">
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
 
 
 
@@ -4587,19 +4299,7 @@ body.cat-open{overflow:hidden}
 
 @media(max-width:768px){.pir{padding:60px 0}.pir-p{font-size:15px;line-height:1.8}}
 
-/* tilt fan dos vídeos (print "Depoimentos em Vídeo") */
-
-@media(min-width:781px){
-
-  #videos .vfb-grid{perspective:1500px}
-
-  #videos .vfb-card:nth-child(1){transform:rotateY(13deg) translateZ(-18px);transform-origin:right center}
-
-  #videos .vfb-card:nth-child(3){transform:rotateY(-13deg) translateZ(-18px);transform-origin:left center}
-
-  #videos .vfb-card:hover{transform:rotateY(0deg) translateY(-8px)!important}
-
-}
+/* O antigo "tilt fan" foi trocado pelo efeito spotlight (blur nos vídeos das laterais) — ver bloco .vfb-* abaixo. */
 
 </style>
 
@@ -4613,7 +4313,7 @@ body.cat-open{overflow:hidden}
 
     <p class="pir-p reveal">Jogos piratas trazem vírus, travam o computador e não conectam na internet. A Almaz entrega o <strong>oposto disso</strong>.</p>
 
-    <p class="pir-p reveal rd1">Com o <strong>nosso launcher</strong>, você libera todos os jogos direto na <strong>sua própria conta Steam</strong> — sem conta compartilhada. Você abre a sua Steam e baixa o jogo original. Ele atualiza sozinho, não trava e você joga com qualidade máxima. É o jeito inteligente e barato de jogar.</p>
+    <p class="pir-p reveal rd1">Com o <strong>nosso launcher</strong>, você libera todos os jogos direto na <strong>sua própria conta Steam</strong>, sem conta compartilhada. Você abre a sua Steam e baixa o jogo original. Ele atualiza sozinho, não trava e você joga com qualidade máxima. É o jeito inteligente e barato de jogar.</p>
 
     <div class="pir-divider reveal"></div>
 
@@ -4722,7 +4422,7 @@ body.cat-open{overflow:hidden}
 
     <h2 class="qba-h2">Feedbacks no nosso grupo de clientes</h2>
 
-    <p class="qba-sub">Prints reais da nossa comunidade. Ao comprar, você também recebe acesso ao nosso grupo de clientes — totalmente aberto, onde a galera troca ideia sobre os jogos e tira dúvidas sempre que precisa.</p>
+    <p class="qba-sub">Prints reais da nossa comunidade. Ao comprar, você também recebe acesso ao nosso grupo de clientes, totalmente aberto, onde a galera troca ideia sobre os jogos e tira dúvidas sempre que precisa.</p>
 
   </div>
 
@@ -4805,7 +4505,14 @@ body.cat-open{overflow:hidden}
 
 .vfb-grid{display:flex;justify-content:center;gap:28px;margin-top:46px;flex-wrap:wrap;position:relative;z-index:2}
 
-.vfb-card{position:relative;width:284px;aspect-ratio:9/16;border-radius:22px;overflow:hidden;border:1px solid var(--border2);background:#000;box-shadow:0 24px 55px rgba(0,0,0,.65);cursor:pointer;transition:border-color .35s,transform .35s,box-shadow .35s}
+.vfb-card{position:relative;width:270px;aspect-ratio:9/16;border-radius:22px;overflow:hidden;border:1px solid var(--border2);background:#000;box-shadow:0 24px 55px rgba(0,0,0,.65);cursor:pointer;transition:filter .5s ease,transform .5s cubic-bezier(.16,1,.3,1),opacity .5s ease,border-color .35s,box-shadow .35s}
+
+/* ===== Spotlight: vídeo do centro em foco, os das laterais desfocados =====
+   Só ativa quando o JS marca .vfb-ready (sem JS, tudo aparece normal). */
+.vfb-grid.vfb-ready .vfb-card{filter:blur(6px) brightness(.5) saturate(.9);transform:scale(.82);opacity:.7}
+.vfb-grid.vfb-ready .vfb-card.vfb-focus{filter:none;transform:scale(1);opacity:1;z-index:3}
+.vfb-grid.vfb-ready .vfb-card:not(.vfb-focus) .vfb-audio-hint{opacity:0!important;animation:none}
+.vfb-grid.vfb-ready .vfb-card:not(.vfb-focus):hover{filter:blur(2.5px) brightness(.72) saturate(.95);transform:scale(.87);opacity:.9}
 
 .vfb-card::after{content:'';position:absolute;inset:0;border-radius:22px;background:linear-gradient(to top,rgba(0,0,0,.55) 0%,transparent 32%);pointer-events:none;z-index:2}
 
@@ -4849,21 +4556,19 @@ body.cat-open{overflow:hidden}
 
 .vfb-pause svg{width:62px;height:62px;fill:#fff;filter:drop-shadow(0 2px 10px rgba(0,0,0,.6))}
 
-@media(max-width:768px){
+/* Carrossel deslizável até 900px — evita o "bug" de quebrar em 2 linhas (2+1) em telas médias */
+@media(max-width:900px){
 
   .vfb-section{padding:56px 0}
 
-  .vfb-grid{gap:18px}
+  .vfb-grid{gap:0;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;justify-content:flex-start;margin-top:34px;padding:14px 13vw 20px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none}
 
-  .vfb-card{width:248px}
+  .vfb-grid::-webkit-scrollbar{display:none}
 
-}
+  .vfb-card{flex:0 0 74vw;width:74vw;max-width:320px;scroll-snap-align:center;margin:0 7px}
 
-@media(max-width:480px){
-
-  .vfb-grid{gap:14px;flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;padding:0 24px 14px;scroll-snap-type:x mandatory;-webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
-
-  .vfb-card{flex:0 0 76vw;width:76vw;scroll-snap-align:center}
+  /* blur mais leve no celular (menos custo de GPU) */
+  .vfb-grid.vfb-ready .vfb-card{filter:blur(3.5px) brightness(.55) saturate(.92);transform:scale(.9);opacity:.72}
 
 }
 
@@ -4877,7 +4582,7 @@ body.cat-open{overflow:hidden}
 
       <h2 class="h2 on-dark">Depoimentos em Vídeo</h2>
 
-      <p class="sub on-dark center">Vídeos reais de clientes — sem ator, sem roteiro. Toque para ouvir.</p>
+      <p class="sub on-dark center">Vídeos reais de clientes, sem ator, sem roteiro. Toque para ouvir.</p>
 
       <div class="vfb-stars">
 
@@ -4895,7 +4600,7 @@ body.cat-open{overflow:hidden}
 
         </span>
 
-        <span class="vfb-stars-txt"><b>4,9/5</b> · centenas de ativações</span>
+        <span class="vfb-stars-txt"><b>4,9/5</b> em centenas de ativações</span>
 
       </div>
 
@@ -4993,105 +4698,118 @@ body.cat-open{overflow:hidden}
 
 (function(){
 
-  // IntersectionObserver para autoplay quando visível
+  // Spotlight: só o vídeo central toca (nítido); os das laterais ficam borrados e pausados.
+  var section = document.getElementById('videos');
+  if(!section) return;
+  var grid = section.querySelector('.vfb-grid');
+  var cards = [].slice.call(section.querySelectorAll('[data-vfb]'));
+  if(!grid || !cards.length) return;
 
-  var cards = document.querySelectorAll('[data-vfb]');
+  var current = null;   // card em foco
+  var visible = false;  // seção visível na tela?
 
-  var playObserver = new IntersectionObserver(function(entries){
+  function isCarousel(){ return grid.scrollWidth - grid.clientWidth > 8; }
 
-    entries.forEach(function(entry){
+  function playFocused(){
+    if(!visible || !current) return;
+    var v = current.querySelector('video');
+    if(v) v.play().catch(function(){});
+  }
 
-      var video = entry.target.querySelector('video');
-
-      if(!video) return;
-
-      if(entry.isIntersecting){
-
-        video.play().catch(function(){});
-
+  // Um vídeo em foco: nítido + tocando; os outros borrados + pausados + mudos
+  function focusCard(card){
+    cards.forEach(function(c){
+      var v = c.querySelector('video');
+      var h = c.querySelector('.vfb-audio-hint');
+      var p = c.querySelector('.vfb-pause');
+      if(c === card){
+        c.classList.add('vfb-focus');
       } else {
-
-        video.pause();
-
+        c.classList.remove('vfb-focus','vfb-on');
+        if(v){ v.pause(); v.muted = true; }
+        if(h) h.classList.remove('hidden');
+        if(p) p.classList.remove('show');
       }
-
     });
+    current = card;
+    playFocused();
+  }
 
-  },{threshold:0.4});
+  // No carrossel (mobile), o card mais perto do centro vira o foco
+  function focusNearestToCenter(){
+    var gr = grid.getBoundingClientRect();
+    var mid = gr.left + gr.width / 2;
+    var best = null, bestD = Infinity;
+    cards.forEach(function(c){
+      var r = c.getBoundingClientRect();
+      var d = Math.abs((r.left + r.width / 2) - mid);
+      if(d < bestD){ bestD = d; best = c; }
+    });
+    if(best && best !== current) focusCard(best);
+  }
 
+  // Marca como pronto → o CSS aplica o blur nas laterais (sem JS, tudo aparece normal)
+  grid.classList.add('vfb-ready');
 
+  // Toca só com a seção visível; fora dela pausa tudo (não deixa 3 vídeos rodando juntos)
+  new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      visible = e.isIntersecting;
+      if(visible) playFocused();
+      else cards.forEach(function(c){ var v = c.querySelector('video'); if(v) v.pause(); });
+    });
+  }, {threshold:0.35}).observe(grid);
+
+  // Rolar o carrossel atualiza o foco
+  var scrollT;
+  grid.addEventListener('scroll', function(){
+    clearTimeout(scrollT);
+    scrollT = setTimeout(focusNearestToCenter, 80);
+  }, {passive:true});
 
   cards.forEach(function(card){
-
     var video = card.querySelector('video');
-
     var hint = card.querySelector('.vfb-audio-hint');
-
     var pauseOverlay = card.querySelector('.vfb-pause');
-
     if(!video) return;
 
-
-
-    playObserver.observe(card);
-
-
-
     card.addEventListener('click', function(){
-
-      // Primeiro clique: ativa áudio
-
-      if(video.muted){
-
-        // Muta todos os outros vídeos
-
-        document.querySelectorAll('[data-vfb] video').forEach(function(v){
-
-          if(v !== video){ v.muted = true; }
-
-        });
-
-        // Reseta hints dos outros
-
-        document.querySelectorAll('[data-vfb] .vfb-audio-hint').forEach(function(h){
-
-          if(h !== hint){ h.classList.remove('hidden'); }
-
-        });
-
-        // Brilho no card ativo
-
-        document.querySelectorAll('[data-vfb].vfb-on').forEach(function(c){ if(c!==card) c.classList.remove('vfb-on'); });
-
-        card.classList.add('vfb-on');
-
-        video.muted = false;
-
-        if(hint) hint.classList.add('hidden');
-
+      // Card fora de foco → traz para o centro/foco
+      if(current !== card){
+        if(isCarousel()) card.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+        focusCard(card);
         return;
-
       }
-
-      // Já com áudio: toggle play/pause
-
-      if(video.paused){
-
+      // Card em foco ainda mudo → primeiro toque ativa o áudio
+      if(video.muted){
+        cards.forEach(function(c){ var v = c.querySelector('video'); if(v && v !== video) v.muted = true; });
+        card.classList.add('vfb-on');
+        video.muted = false;
+        if(hint) hint.classList.add('hidden');
         video.play().catch(function(){});
-
-        pauseOverlay.classList.remove('show');
-
-      } else {
-
-        video.pause();
-
-        pauseOverlay.classList.add('show');
-
+        return;
       }
-
+      // Card em foco com áudio → toggle play/pause
+      if(video.paused){
+        video.play().catch(function(){});
+        pauseOverlay.classList.remove('show');
+      } else {
+        video.pause();
+        pauseOverlay.classList.add('show');
+      }
     });
-
   });
+
+  // Foco inicial: carrossel → card central; desktop → card do meio
+  if(isCarousel()) focusNearestToCenter();
+  else focusCard(cards[Math.floor(cards.length / 2)] || cards[0]);
+
+  // Girar o celular / redimensionar → recalcula o foco
+  var resizeT;
+  window.addEventListener('resize', function(){
+    clearTimeout(resizeT);
+    resizeT = setTimeout(function(){ if(isCarousel()) focusNearestToCenter(); }, 200);
+  }, {passive:true});
 
 })();
 
@@ -5101,7 +4819,7 @@ body.cat-open{overflow:hidden}
 
 
 
-<section id="testemunhos" class="sec-dark" style="display:none"><div class="container"><div class="text-center reveal" style="margin-bottom:48px"><div class="tag g">Mensagens reais</div><h2 class="h2 on-dark">Direto de quem <em>já está jogando</em></h2><p class="sub on-dark center">Centenas de conversas como essas chegam toda semana. Sem filtro, sem roteiro.</p></div>
+<section id="testemunhos" class="sec-dark" style="display:none"><div class="container"><div class="text-center reveal" style="margin-bottom:48px"><h2 class="h2 on-dark">Direto de quem <em>já está jogando</em></h2><p class="sub on-dark center">Centenas de conversas como essas chegam toda semana. Sem filtro, sem roteiro.</p></div>
 
 
 
@@ -5219,13 +4937,11 @@ body.cat-open{overflow:hidden}
 
   <div class="safe-inner">
 
-    <div class="tag g reveal">Sem riscos</div>
-
     <h2 class="h2 on-dark reveal">É seguro? <em>Bem melhor que pirataria</em></h2>
 
     <div class="safe-divider reveal"></div>
 
-    <p class="reveal">Pirataria é <strong>vírus, travamento e dor de cabeça</strong> — e ainda é ilegal.</p>
+    <p class="reveal">Pirataria é <strong>vírus, travamento e dor de cabeça</strong>, e ainda é ilegal.</p>
 
     <p class="reveal rd1">Aqui não. São <strong>jogos originais</strong>, baixados direto da <strong>Steam</strong>, na sua conta e com atualização automática. Você paga uma vez e joga tranquilo, <span class="hl">sem risco nenhum</span>.</p>
 
@@ -5239,23 +4955,10 @@ body.cat-open{overflow:hidden}
 
 
 
-<!-- ===== Como funciona (3 passos) — reduz a incerteza do pós-compra antes dos planos ===== -->
-<section id="como-funciona" class="sec-dark"><div class="container text-center">
-<div class="reveal"><div class="tag g">Simples assim</div>
-<h2 class="h2 on-dark">Como funciona? <em>3 passos</em></h2>
-<p class="sub on-dark center">Do pagamento ao jogo rodando, em poucos minutos.</p></div>
-<div class="steps">
-<div class="step reveal"><div class="step-num">1</div><div class="step-title">Garanta o acesso</div><div class="step-desc">Escolha o plano e pague no PIX. A confirmação é na hora.</div></div>
-<div class="step reveal rd1"><div class="step-num">2</div><div class="step-title">Receba no e-mail</div><div class="step-desc">O acesso chega em poucos minutos, com o passo a passo da ativação do launcher.</div></div>
-<div class="step reveal rd2"><div class="step-num">3</div><div class="step-title">Baixe e jogue</div><div class="step-desc">Abra a sua Steam e baixe qualquer jogo da biblioteca, com atualizações oficiais.</div></div>
-</div>
-</div></section>
 
 <section id="pricing" class="sec-dark" style="overflow:visible"><div class="container text-center">
 
 <div class="reveal" style="position:relative;margin-bottom:48px">
-
-<div class="tag g">Último passo</div>
 
 <h2 class="h2 on-dark">Escolha seu <em>Acesso</em></h2>
 
@@ -5365,7 +5068,7 @@ body.cat-open{overflow:hidden}
 
       <div class="cps-band-title">Compra 100% Segura</div>
 
-      <div class="cps-band-sub">Pagamento protegido e processado pelo <strong>Mercado Pago</strong> — ambiente criptografado e aprovação na hora.</div>
+      <div class="cps-band-sub">Pagamento protegido pelo <strong>Mercado Pago</strong></div>
 
     </div>
 
@@ -5385,7 +5088,7 @@ body.cat-open{overflow:hidden}
 
 <div class="offer-card" data-plan-id="basico" style="position:relative;opacity:0.95;transform:scale(0.96)">
 
-<div class="offer-plan-name">Básico</div>
+<div class="offer-plan-name">1.000 JOGOS</div>
 
 <div class="offer-plan-sub">Acesso essencial</div>
 
@@ -5407,7 +5110,7 @@ body.cat-open{overflow:hidden}
 
 </ul>
 
-<a href="https://pay.almazstore.com.br/checkout/v5/3SZQGWf2lurzA7Sb3M26" onclick="checkout('https://pay.almazstore.com.br/checkout/v5/3SZQGWf2lurzA7Sb3M26',9.97);return false" class="offer-btn" style="background:#262626; color:#fff; border:1px solid rgba(255,255,255,0.12)">Quero garantir</a></div>
+<a role="button" tabindex="0" href="#pricing" onclick="almazUpsell('basico');return false" class="offer-btn" style="background:#262626; color:#fff; border:1px solid rgba(255,255,255,0.12)"> Quero garantir</a></div>
 
 
 
@@ -5415,7 +5118,7 @@ body.cat-open{overflow:hidden}
 
 <div class="offer-card" data-plan-id="avancado" style="position:relative">
 
-<div class="offer-plan-name">Avançado</div>
+<div class="offer-plan-name">20.000 JOGOS</div>
 
 <div class="offer-plan-sub">O favorito dos jogadores</div>
 
@@ -5429,9 +5132,11 @@ body.cat-open{overflow:hidden}
 
 <li><span data-almaz-games="avancado">20.000</span> jogos inclusos</li>
 
-<li>Jogos novos e lançamentos</li>
+ <li> Acesso vitalicio</li>
 
-<li>Online nos compatíveis</li>
+<li>Lançamentos 2026</li>
+
+<li>Online liberado</li>
 
 <li>Suporte prioritário no WhatsApp</li>
 
@@ -5439,7 +5144,7 @@ body.cat-open{overflow:hidden}
 
 </ul>
 
-<a href="https://pay.almazstore.com.br/checkout/v5/EBQq9V24j7dAljWU9EUd" onclick="checkout('https://pay.almazstore.com.br/checkout/v5/EBQq9V24j7dAljWU9EUd',19.97);return false" class="offer-btn">Quero garantir</a></div>
+<a role="button" tabindex="0" href="#pricing" onclick="almazUpsell('avancado');return false" class="offer-btn"> Quero garantir</a></div>
 
 
 
@@ -5449,7 +5154,7 @@ body.cat-open{overflow:hidden}
 
 <div class="offer-tag">RECOMENDADO</div>
 
-<div class="offer-plan-name">VITALÍCIO</div>
+<div class="offer-plan-name">40.000 JOGOS</div>
 
 <div class="offer-plan-sub">Biblioteca completa</div>
 
@@ -5463,9 +5168,9 @@ body.cat-open{overflow:hidden}
 
 <li><strong><span data-almaz-games="vitalicio">40.000</span> jogos liberados</strong></li>
 
-<li><strong>Recebe jogos novos pra sempre</strong></li>
+<li><strong>Atualizações de futuros lançamentos</strong></li>
 
-<li>Multiplayer funcionando</li>
+<li>Online funcionando</li>
 
 <li>Pede qualquer jogo que a gente adiciona</li>
 
@@ -5503,11 +5208,11 @@ body.cat-open{overflow:hidden}
 
     </div>
 
-    <h3 class="guarantee-title-custom">Reembolso em até 7 dias</h3>
+    <h3 class="guarantee-title-custom">GARANTIA DE 7 DIAS</h3>
 
     <p class="guarantee-desc-custom">
 
-      Compra sem risco. Se por qualquer motivo você não curtir a experiência, você pode solicitar reembolso em até <strong class="highlight-neon">7 dias</strong> após a compra. Transparente, simples e direto — padrão <span class="highlight-neon bold">AlmazStore</span>.
+      Compra sem risco. Se por qualquer motivo você não curtir a experiência, você pode solicitar reembolso em até <strong class="highlight-neon">7 dias</strong> após a compra. Transparente, simples e direto. Padrão <span class="highlight-neon bold">AlmazStore</span>.
 
     </p>
 
@@ -5967,36 +5672,17 @@ body.cat-open{overflow:hidden}
 
 
 
-<section id="faq" class="sec-dark"><div class="container"><div class="reveal text-center"><div class="tag g">Dúvidas frequentes</div><h2 class="h2 on-dark">FAQ</h2></div>
+<section id="faq" class="sec-dark"><div class="container"><div class="reveal text-center"><h2 class="h2 on-dark">FAQ</h2></div>
 
-<!-- As 3 objeções que mais travam a compra, respondidas em destaque (não escondidas no acordeão) -->
-<style>
-.sq-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:960px;margin:28px auto 40px}
-.sq-item{background:linear-gradient(180deg,#161010,#0d0d0d);border:1px solid rgba(255,45,58,.25);border-radius:12px;padding:18px 16px;text-align:left}
-.sq-q{font-family:var(--fh);font-size:15px;font-weight:800;color:#fff;text-transform:uppercase;display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;line-height:1.25}
-.sq-a{font-size:13.5px;color:var(--muted);line-height:1.65}
-.sq-a strong{color:#fff}
-@media(max-width:768px){.sq-grid{grid-template-columns:1fr;gap:10px;margin:22px auto 32px}}
-</style>
-<div id="seguranca" class="sq-grid">
-  <div class="sq-item reveal"><div class="sq-q"><span aria-hidden="true">🚫</span>Vou tomar ban na minha conta Steam?</div><div class="sq-a">O desbloqueio é feito pelo <strong>nosso launcher, na sua própria conta Steam</strong> — sem conta compartilhada, sem login de terceiros. E você tem <strong>7 dias de garantia</strong> pra testar sem risco.</div></div>
-  <div class="sq-item reveal rd1"><div class="sq-q"><span aria-hidden="true">🛡️</span>É seguro? Os jogos são originais?</div><div class="sq-a">Sim. Downloads e atualizações vêm <strong>direto dos servidores oficiais da Steam</strong>. Nada de sites estranhos nem arquivos suspeitos no seu PC.</div></div>
-  <div class="sq-item reveal rd2"><div class="sq-q"><span aria-hidden="true">⚡</span>Como recebo depois de pagar?</div><div class="sq-a">Pagou o PIX, o <strong>acesso chega no seu e-mail em poucos minutos</strong>, com o passo a passo da ativação. Aí é abrir a Steam, baixar e jogar.</div></div>
-</div>
 
 <div class="faq-list" id="fl"></div>
 
-<!-- Suporte humano visível: dúvida que o FAQ não resolve não pode virar venda perdida -->
-<div class="reveal text-center" style="margin-top:34px">
-  <p style="font-size:14.5px;color:var(--muted);margin-bottom:14px">Ficou alguma dúvida? Fala com a gente antes de comprar:</p>
-  <a href="https://wa.me/message/D2HR2QUNBFFGD1" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:9px;background:#25d366;color:#062b16;font-family:var(--fh);font-size:14px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;padding:14px 26px;border-radius:100px;box-shadow:0 8px 26px rgba(37,211,102,.28)"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m0 1.67c2.2 0 4.26.86 5.82 2.42a8.2 8.2 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.25 8.25-8.25M8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.86-.87 2.07 0 1.22.89 2.39 1 2.56.14.17 1.76 2.67 4.25 3.73.59.27 1.05.42 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.16-.48-.27-.25-.14-1.47-.74-1.69-.82-.23-.08-.37-.12-.56.12-.16.25-.64.81-.78.97-.15.17-.29.19-.53.07-.26-.13-1.06-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.12-.24-.01-.39.11-.5.11-.11.27-.29.37-.44.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.11-.56-1.35-.77-1.84-.2-.48-.4-.42-.56-.43-.14 0-.3-.01-.47-.01"/></svg>Chamar no WhatsApp</a>
-</div>
 
 </div></section>
 
 
 
-<section style="padding:88px 24px;text-align:center;position:relative;overflow:hidden;background:var(--bg)"><div style="position:absolute;top:-150px;left:50%;transform:translateX(-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(180,18,28,.08) 0%,transparent 65%);pointer-events:none"></div><div class="reveal" style="position:relative;z-index:2;max-width:600px;margin:0 auto"><div class="tag g">Pronto para jogar?</div><h2 class="h2 on-dark" style="font-size:clamp(34px,6vw,72px);margin-bottom:16px">Sua biblioteca<br><em>completa hoje.</em></h2><p class="sub on-dark center" style="margin-bottom:32px">Acesse e baixe os melhores jogos do mundo diretamente pela Steam.</p><a href="https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm" onclick="checkout('https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm',49.97);return false" class="btn btn-accent btn-xl">Adquirir Acesso</a><div style="font-family:var(--fh);font-size:11px;font-weight:700;color:var(--dim);margin-top:16px;letter-spacing:.08em">LICENÇA VITALÍCIA · ENVIO IMEDIATO · SUPORTE 24H</div></div></section>
+<section style="padding:88px 24px;text-align:center;position:relative;overflow:hidden;background:var(--bg)"><div style="position:absolute;top:-150px;left:50%;transform:translateX(-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(180,18,28,.08) 0%,transparent 65%);pointer-events:none"></div><div class="reveal" style="position:relative;z-index:2;max-width:600px;margin:0 auto"><h2 class="h2 on-dark" style="font-size:clamp(34px,6vw,72px);margin-bottom:16px">Sua biblioteca<br><em>completa hoje.</em></h2><p class="sub on-dark center" style="margin-bottom:32px">Acesse e baixe os melhores jogos do mundo diretamente pela Steam.</p><a href="https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm" onclick="checkout('https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm',49.97);return false" class="btn btn-accent btn-xl">Adquirir Acesso</a><div style="font-family:var(--fh);font-size:11px;font-weight:700;color:var(--dim);margin-top:16px;letter-spacing:.08em">LICENÇA VITALÍCIA&nbsp;&nbsp;&nbsp;ENVIO IMEDIATO&nbsp;&nbsp;&nbsp;SUPORTE 24H</div></div></section>
 
 
 
@@ -6147,6 +5833,90 @@ body.offer-active header{top:0!important}
 
 <!-- ===== /Barra de Oferta com Cronômetro ===== -->
 
+<!-- ===== Popup de upsell: Básico/Avançado -> Vitalício 50% OFF ===== -->
+<style>
+#upsell-ov{position:fixed;inset:0;z-index:2000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+#upsell-ov.open{display:flex}
+.ups-box{position:relative;width:100%;max-width:440px;background:linear-gradient(180deg,#191014,#0d0d0d);border:2px solid rgba(255,45,58,.5);border-radius:20px;padding:30px 24px 22px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 60px rgba(255,45,58,.12);animation:upsPop .3s cubic-bezier(.16,1,.3,1)}
+@keyframes upsPop{from{opacity:0;transform:scale(.92) translateY(10px)}to{opacity:1;transform:none}}
+.ups-x{position:absolute;top:12px;right:14px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.07);color:#bbb;border:none;font-size:18px;line-height:1;cursor:pointer}
+.ups-x:hover{background:rgba(255,255,255,.15);color:#fff}
+.ups-badge{display:inline-block;font-family:var(--fh);font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#040a00;background:var(--neon);border-radius:50px;padding:6px 16px;margin-bottom:14px}
+.ups-title{font-family:var(--fh);font-size:clamp(23px,5.6vw,31px);font-weight:900;line-height:1.12;color:#fff;margin-bottom:8px;text-transform:none}
+.ups-title span{color:var(--neon)}
+.ups-sub{font-family:var(--fb);font-size:14.5px;color:var(--muted);line-height:1.55;margin-bottom:18px}
+.ups-price{display:flex;align-items:baseline;justify-content:center;gap:12px;margin-bottom:16px}
+.ups-old{font-size:16px;color:var(--dim);text-decoration:line-through}
+.ups-new{font-family:var(--fh);font-weight:900;color:#fff;line-height:1}
+.ups-new b{font-size:46px;color:var(--neon)}
+.ups-feat{list-style:none;padding:0;margin:0 auto 22px;text-align:left;display:inline-block;font-family:var(--fb);font-size:14.5px;color:#e6e6e6}
+.ups-feat li{padding:5px 0;line-height:1.4}
+.ups-accept{display:block;width:100%}
+.ups-decline{display:block;width:100%;margin-top:12px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.18);color:#ccc;font-family:var(--fh);font-size:15px;font-weight:700;letter-spacing:.02em;text-decoration:none;cursor:pointer;padding:14px 18px;border-radius:10px;text-align:center;transition:all .25s}
+.ups-decline:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.32);color:#fff}
+</style>
+<div id="upsell-ov" role="dialog" aria-modal="true" aria-label="Oferta especial">
+  <div class="ups-box">
+    <button class="ups-x" id="upsell-x" type="button" aria-label="Fechar">×</button>
+    <div class="ups-badge">🔥 Só agora, 50% OFF</div>
+    <h3 class="ups-title">Leve os <span>40.000 jogos</span> por metade do preço</h3>
+    <p class="ups-sub">Em vez do plano menor, garanta o <strong style="color:#fff">Vitalício</strong>: todos os 40.000 jogos e os lançamentos, pra sempre.</p>
+    <div class="ups-price">
+      <span class="ups-old">de R$ 49,97</span>
+      <span class="ups-new">R$ <b>24</b>,98</span>
+    </div>
+    <ul class="ups-feat">
+      <li>✅ 40.000 jogos liberados</li>
+      <li>✅ Recebe jogos novos pra sempre</li>
+      <li>✅ Multiplayer funcionando</li>
+      <li>✅ Acesso vitalício, taxa única</li>
+    </ul>
+    <a role="button" tabindex="0" href="javascript:void(0)" id="upsell-accept" class="offer-btn ups-accept">Quero garantir com 50% OFF</a>
+    <button type="button" id="upsell-decline" class="ups-decline">Não, continuar com o plano menor →</button>
+  </div>
+</div>
+<script>
+(function(){
+  /* UPSELL_URL é o checkout do Vitalício com os 50% OFF já aplicados: cobra R$24,98
+     (R$23,73 no PIX), o mesmo valor que o popup anuncia. Se trocar este link, confira
+     o preço na página do checkout — o popup promete R$24,98 e precisa bater. */
+  var UPSELL_URL = 'https://ggcheckout.app/checkout/v5/uDIPxkFgNZlX2eQzy1ua';
+  var UPSELL_VAL = 24.98;
+  /* ============================================================ */
+  var PLANOS = {
+    basico:   { url:'https://pay.almazstore.com.br/checkout/v5/3SZQGWf2lurzA7Sb3M26', val:9.97,  nome:'Básico',   preco:'R$ 9,97'  },
+    avancado: { url:'https://pay.almazstore.com.br/checkout/v5/EBQq9V24j7dAljWU9EUd', val:19.97, nome:'Avançado', preco:'R$ 19,97' }
+  };
+  var ov = document.getElementById('upsell-ov');
+  var accept = document.getElementById('upsell-accept');
+  var decline = document.getElementById('upsell-decline');
+  if(!ov || !accept || !decline) return;
+  function openUp(){ ov.classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeUp(){ ov.classList.remove('open'); document.body.style.overflow=''; }
+  /* Limpa handlers antigos antes de reatribuir */
+  var _acceptHandler = null;
+  var _declineHandler = null;
+  window.almazUpsell = function(plan){
+    var p = PLANOS[plan]; if(!p) return;
+    /* aceite -> Vitalício com desconto; recusa -> checkout do plano original (mesma função checkout() de sempre) */
+    if(_acceptHandler) accept.removeEventListener('click', _acceptHandler);
+    if(_declineHandler) decline.removeEventListener('click', _declineHandler);
+    _acceptHandler = function(e){ e.preventDefault(); checkout(UPSELL_URL, UPSELL_VAL); };
+    _declineHandler = function(e){ e.preventDefault(); checkout(p.url, p.val); };
+    accept.addEventListener('click', _acceptHandler);
+    decline.textContent = 'Continuar com o ' + p.nome + ' (' + p.preco + ') →';
+    decline.addEventListener('click', _declineHandler);
+    accept.removeAttribute('onclick');
+    decline.removeAttribute('onclick');
+    openUp();
+  };
+  document.getElementById('upsell-x').addEventListener('click', closeUp);
+  ov.addEventListener('click', function(e){ if(e.target===ov) closeUp(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && ov.classList.contains('open')) closeUp(); });
+})();
+</script>
+<!-- ===== /Popup de upsell ===== -->
+
 <!-- ===== CTA sticky (mobile) — sempre visível acima da dobra ===== -->
 <style>
 #sticky-cta{display:none}
@@ -6283,7 +6053,7 @@ body.offer-active header{top:0!important}
 
     <div class="ai-messages" id="ai-messages">
 
-      <div class="msg msg-ai">Opa, tudo certo? 👋 Aqui é o suporte da Almaz. Pode perguntar sem cerimônia — toca na dúvida que mais te preocupa que eu já te explico:</div>
+      <div class="msg msg-ai">Opa, tudo certo? 👋 Aqui é o suporte da Almaz. Pode perguntar sem cerimônia. Toca na dúvida que mais te preocupa que eu já te explico:</div>
 
     </div>
 
@@ -6767,7 +6537,7 @@ document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
 
 
 
-(function(){var F=[{q:'É seguro?',a:'Sim. Acesso seguro, sem arquivos suspeitos ou alterações no seu PC — e você ainda tem 7 dias de garantia: se não curtir, devolvemos o seu dinheiro.'},{q:'Como funciona?',a:'Após a compra, você recebe o acesso por e-mail, faz a ativação rápida e baixa os jogos direto na sua biblioteca Steam.'},{q:'Os jogos são originais?',a:'Sim. Downloads e atualizações oficiais realizados diretamente pelos servidores da Steam.'},{q:'Funciona online?',a:'Sim. Jogos com suporte a multiplayer funcionam online normalmente.'},{q:'A licença expira?',a:'Não. Pagamento único e acesso vitalício, com todas as atualizações futuras inclusas.'},{q:'Quais as formas de pagamento?',a:'Aceitamos pagamento via PIX, com liberação instantânea após a confirmação.'},{q:'Como funciona o suporte?',a:'Oferecemos suporte humanizado via WhatsApp para auxiliar em todo o processo de ativação.'}];var fl=document.getElementById('fl');fl.innerHTML=F.map(function(f){return'<div class="faq-item reveal"><button class="faq-q" onclick="tFaq(this)">'+f.q+'<span class="faq-chev">▼</span></button><div class="faq-a">'+f.a+'</div></div>'}).join('');fl.querySelectorAll('.reveal').forEach(function(el){io.observe(el)})})();
+(function(){var F=[{q:'Vou tomar ban na minha conta Steam?',a:'O desbloqueio é feito pelo nosso launcher, na sua própria conta Steam, sem conta compartilhada, sem login de terceiros. E você tem 7 dias de garantia pra testar sem risco.'},{q:'Como recebo depois de pagar?',a:'Pagou o PIX, o acesso chega no seu e-mail em poucos minutos, com o passo a passo da ativação. Aí é abrir a Steam, baixar e jogar.'},{q:'É seguro?',a:'Sim. Acesso seguro, sem arquivos suspeitos ou alterações no seu PC, e você ainda tem 7 dias de garantia: se não curtir, devolvemos o seu dinheiro.'},{q:'Como funciona?',a:'Após a compra, você recebe o acesso por e-mail, faz a ativação rápida e baixa os jogos direto na sua biblioteca Steam.'},{q:'Os jogos são originais?',a:'Sim. Downloads e atualizações oficiais realizados diretamente pelos servidores da Steam.'},{q:'Funciona online?',a:'Sim. Jogos com suporte a multiplayer funcionam online normalmente.'},{q:'A licença expira?',a:'Não. Pagamento único e acesso vitalício, com todas as atualizações futuras inclusas.'},{q:'Quais as formas de pagamento?',a:'Aceitamos pagamento via PIX, com liberação instantânea após a confirmação.'},{q:'Como funciona o suporte?',a:'Oferecemos suporte humanizado via WhatsApp para auxiliar em todo o processo de ativação.'}];var fl=document.getElementById('fl');fl.innerHTML=F.map(function(f){return'<div class="faq-item reveal"><button class="faq-q" onclick="tFaq(this)">'+f.q+'<span class="faq-chev">▼</span></button><div class="faq-a">'+f.a+'</div></div>'}).join('');fl.querySelectorAll('.reveal').forEach(function(el){io.observe(el)})})();
 
 function tFaq(b){var a=b.nextElementSibling,o=b.classList.contains('open');document.querySelectorAll('.faq-q.open').forEach(function(q){q.classList.remove('open');q.nextElementSibling.classList.remove('open')});if(!o){b.classList.add('open');a.classList.add('open')}}
 
@@ -6899,7 +6669,7 @@ function checkout(url,val){
     },6000);
   }
   document.addEventListener('click',function(e){
-    var el=e.target.closest('a[href*="pay.almazstore.com.br"], a[onclick*="checkout("], [onclick*="checkout("]');
+    var el=e.target.closest('a[href*="pay.almazstore.com.br"], a[onclick*="checkout("], [onclick*="checkout("], #upsell-accept, #upsell-decline');
     // setTimeout(0): a troca do visual só pode acontecer DEPOIS da propagação do
     // clique. O pixel da Utmify decide o InitiateCheckout pelo TEXTO do botão
     // ("Quero garantir"); trocar pra "Abrindo checkout…" durante a captura
@@ -7285,9 +7055,9 @@ else{el.scrollIntoView({behavior:'smooth'});}
 
       a: [
 
-        "Boa pergunta, e vou ser sincero com você: dá pra usar tranquilo. Não é aquele joguinho pirata cheio de vírus — você baixa os arquivos originais direto pelos servidores da Steam, igual a quem comprou na loja.",
+        "Boa pergunta, e vou ser sincero com você: dá pra usar tranquilo. Não é aquele joguinho pirata cheio de vírus. Você baixa os arquivos originais direto pelos servidores da Steam, igual a quem comprou na loja.",
 
-        "Funciona assim: o nosso launcher libera os jogos direto na SUA conta Steam — nada de conta compartilhada nem login de terceiros. Tem bastante gente usando todo dia, e se em algum momento não rolar como você esperava, ainda tem os 7 dias de garantia. Você não fica na mão."
+        "Funciona assim: o nosso launcher libera os jogos direto na SUA conta Steam, nada de conta compartilhada nem login de terceiros. Tem bastante gente usando todo dia, e se em algum momento não rolar como você esperava, ainda tem os 7 dias de garantia. Você não fica na mão."
 
       ]
 
@@ -7299,7 +7069,7 @@ else{el.scrollIntoView({behavior:'smooth'});}
 
       a: [
 
-        "É a SUA Steam, sim. Você não troca de conta nem entrega seu login pra ninguém — instala o nosso launcher, entra com o email da compra e os jogos aparecem na sua biblioteca pra baixar.",
+        "É a SUA Steam, sim. Você não troca de conta nem entrega seu login pra ninguém. Instala o nosso launcher, entra com o email da compra e os jogos aparecem na sua biblioteca pra baixar.",
 
         "Ou seja: seu perfil, seus saves, seus amigos de sempre. Só que com a estante de jogos bem maior. 🙂"
 
@@ -7313,7 +7083,7 @@ else{el.scrollIntoView({behavior:'smooth'});}
 
       a: [
 
-        "É seguro e você tem 7 dias de garantia. Se comprar e não curtir, é só pedir o reembolso dentro desse prazo — sem a gente ficar inventando desculpa pra te segurar.",
+        "É seguro e você tem 7 dias de garantia. Se comprar e não curtir, é só pedir o reembolso dentro desse prazo, sem a gente ficar inventando desculpa pra te segurar.",
 
         "O pagamento é por PIX e a liberação é na hora que cai. Se travar em qualquer parte, a gente te ajuda no WhatsApp."
 
@@ -7327,7 +7097,7 @@ else{el.scrollIntoView({behavior:'smooth'});}
 
       a: [
 
-        "É bem direto: depois da compra você baixa o nosso launcher, entra com o email que usou e clica em desbloquear. Em poucos minutos os jogos já aparecem na sua Steam prontos pra baixar — tudo no seu PC, sem complicação."
+        "É bem direto: depois da compra você baixa o nosso launcher, entra com o email que usou e clica em desbloquear. Em poucos minutos os jogos já aparecem na sua Steam prontos pra baixar, tudo no seu PC, sem complicação."
 
       ],
 
@@ -7341,7 +7111,7 @@ else{el.scrollIntoView({behavior:'smooth'});}
 
       a: [
 
-        "Recebe sim. Assim que o PIX é confirmado o acesso libera na hora — questão de minutos e você já tá desbloqueando. ⚡"
+        "Recebe sim. Assim que o PIX é confirmado o acesso libera na hora, questão de minutos e você já tá desbloqueando. ⚡"
 
       ],
 
@@ -7355,7 +7125,7 @@ else{el.scrollIntoView({behavior:'smooth'});}
 
       a: [
 
-        "São 3 planos, todos pagamento único (nada de mensalidade): Básico R$9 com 1.000 jogos, Avançado R$19 com 20.000, e o Vitalício R$49, que é o mais escolhido — 40.000 jogos e os lançamentos que forem chegando.",
+        "São 3 planos, todos pagamento único (nada de mensalidade): Básico R$9 com 1.000 jogos, Avançado R$19 com 20.000, e o Vitalício R$49, que é o mais escolhido, com 40.000 jogos e os lançamentos que forem chegando.",
 
         "Dá uma olhada na seção de Planos e escolhe o que faz sentido pra você."
 
@@ -7369,7 +7139,7 @@ else{el.scrollIntoView({behavior:'smooth'});}
 
       a: [
 
-        "Se for PC com Windows e a Steam instalada, funciona. É só baixar o nosso launcher, entrar e desbloquear. (Por enquanto é só pra PC mesmo — não roda em console nem celular.)"
+        "Se for PC com Windows e a Steam instalada, funciona. É só baixar o nosso launcher, entrar e desbloquear. (Por enquanto é só pra PC mesmo, não roda em console nem celular.)"
 
       ]
 
@@ -7769,10 +7539,6 @@ html.no-motionlib .amz-toast.amz-in{opacity:1;transform:translateX(0)}
 
       {sel:'.lib2-left',  dir:'left',  dist:54},
 
-      {sel:'.app2-left',  dir:'left',  dist:54},
-
-      {sel:'.app2-right', dir:'right', dist:54},
-
       {sel:'.lib2-tile',  dir:'alt',   dist:46, stagger:0.05, restore:true}
 
     ];
@@ -7833,31 +7599,7 @@ html.no-motionlib .amz-toast.amz-in{opacity:1;transform:translateX(0)}
 
     var CITIES=['Sao Paulo, SP','Rio de Janeiro, RJ','Belo Horizonte, MG','Curitiba, PR','Porto Alegre, RS','Salvador, BA','Fortaleza, CE','Recife, PE','Brasilia, DF','Goiania, GO','Campinas, SP','Manaus, AM','Florianopolis, SC','Natal, RN'];
 
-    var ACTIONS=['desbloqueou o Acesso Vitalicio','garantiu o acesso a +40.000 jogos','ativou a biblioteca completa','liberou o Plano Vitalicio'];
-
-    var FEEDBACKS=[
-
-      'mano funcionou certinho, ja baixei o GTA V aqui 🎮 vlw demais',
-
-      'ativei em uns 5 min, tudo certo! recomendo 🙏',
-
-      'tava na duvida mas e real msm kkk ja baixei varios jogos',
-
-      'comprei ontem e ja to jogando elden ring 🔥 top demais',
-
-      'o suporte me ajudou rapidao, atendimento nota 1000 👏',
-
-      'melhor compra que fiz esse mes, valeu cada centavo 👌',
-
-      'baixei rdr2 e hogwarts, roda liso aqui 👍',
-
-      'achei que era golpe mas funcionou kkkk obrigado!',
-
-      'consegui ativar de boa, jogo original pela steam mesmo 😮',
-
-      'funcionou aqui tbm cara, qualidade maxima 💚'
-
-    ];
+    var ACTIONS=['comprou o Plano Vitalicio','comprou o Plano Avancado','comprou o Plano Basico','garantiu o acesso a +40.000 jogos','desbloqueou a biblioteca completa'];
 
     var rand=function(a){ return a[Math.floor(Math.random()*a.length)]; };
 
@@ -7879,41 +7621,11 @@ html.no-motionlib .amz-toast.amz-in{opacity:1;transform:translateX(0)}
 
         +'<div class="amz-toast-body">'
 
-        +'<div class="amz-toast-title">'+name+' <span class="amz-toast-loc">— '+rand(CITIES)+'</span></div>'
+        +'<div class="amz-toast-title">'+name+' <span class="amz-toast-loc">de '+rand(CITIES)+'</span></div>'
 
         +'<div class="amz-toast-sub">'+rand(ACTIONS)+'</div>'
 
-        +'<div class="amz-toast-meta">'+ago()+' · <span class="amz-toast-verif">✓ compra verificada</span></div>'
-
-        +'</div>'
-
-        +'<button class="amz-toast-x" aria-label="Fechar">×</button>'
-
-        +'<span class="amz-toast-bar"></span>';
-
-      return el;
-
-    }
-
-    function buildReview(){
-
-      var first=rand(NAMES), name=first+' '+rand(INI);
-
-      var el=document.createElement('div');
-
-      el.className='amz-toast amz-toast--review';
-
-      el.setAttribute('data-cta','#depoimentos');
-
-      el.innerHTML='<div class="amz-toast-ic amz-avatar">'+first.charAt(0)+'</div>'
-
-        +'<div class="amz-toast-body">'
-
-        +'<div class="amz-toast-title">'+name+' <span class="amz-stars">★★★★★</span></div>'
-
-        +'<div class="amz-toast-sub">'+rand(FEEDBACKS)+'</div>'
-
-        +'<div class="amz-toast-meta">'+ago()+' · <span class="amz-toast-verif">✓ cliente verificado</span></div>'
+        +'<div class="amz-toast-meta">'+ago()+' &nbsp;&nbsp;<span class="amz-toast-verif">✓ compra verificada</span></div>'
 
         +'</div>'
 
@@ -8007,7 +7719,7 @@ html.no-motionlib .amz-toast.amz-in{opacity:1;transform:translateX(0)}
         if(busy){ schedule(4000); return; }
       }
 
-      var el=(count%3===2) ? buildReview() : buildSale();
+      var el=buildSale();
 
       count++;
 
@@ -8058,4 +7770,3 @@ html.no-motionlib .amz-toast.amz-in{opacity:1;transform:translateX(0)}
 
 
 </body></html>
-
