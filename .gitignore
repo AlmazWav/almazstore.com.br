@@ -4,3 +4,6 @@ index.backup-*.html
 # Brutos de vídeo (1GB+; a página usa mp4 externos)
 videos/
 *.MOV
+
+# Ferramentas locais de dev (expõem caminhos da máquina; o site não precisa)
+.claude/
