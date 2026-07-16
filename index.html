@@ -1651,7 +1651,31 @@ document.addEventListener('DOMContentLoaded', function () {
 
   </div>
 
-  
+
+</section>
+
+<!-- Teaser de preço: no Clarity (30d) a rolagem cai pra ~37% na metade da página,
+     enquanto a busca de jogos logo acima é a zona de maior atenção do site
+     (~9 min médios). Este bloco mostra o preço cedo, pra quem acabou de achar
+     o jogo que queria, em vez de exigir que role até #pricing. -->
+<style>
+.pricepeek{padding:0 24px 56px;background:var(--bg)}
+.pricepeek-in{display:flex;align-items:center;justify-content:center;gap:22px;flex-wrap:wrap;max-width:760px;margin:0 auto;background:var(--card);border:1px solid var(--border2);border-radius:14px;padding:22px 26px;text-align:center}
+.pricepeek-txt{display:flex;flex-direction:column;gap:4px}
+.pricepeek-txt strong{font-family:var(--fh);font-size:20px;font-weight:900;color:#fff;letter-spacing:.02em}
+.pricepeek-txt span{font-family:var(--fb);font-size:13.5px;color:var(--muted)}
+.pricepeek-btn{flex-shrink:0;display:inline-block;padding:14px 28px;font-family:var(--fh);font-size:15px;font-weight:900;letter-spacing:.04em;border-radius:10px;background:var(--accent);color:#040a00;box-shadow:0 4px 20px var(--accent-glow);text-align:center}
+.pricepeek-btn:active{transform:scale(.98)}
+@media(max-width:600px){.pricepeek-in{flex-direction:column;gap:14px}.pricepeek-btn{width:100%}}
+</style>
+<section class="pricepeek" aria-label="Resumo dos planos">
+  <div class="pricepeek-in reveal">
+    <div class="pricepeek-txt">
+      <strong>Achou seu jogo? Planos a partir de R$ 9,97</strong>
+      <span>Taxa única, sem mensalidade. Biblioteca completa com +40.000 jogos por R$ 49,97.</span>
+    </div>
+    <a href="#pricing" class="pricepeek-btn" role="button">Ver planos</a>
+  </div>
 </section>
 
 <!-- ===== Modal: Catálogo Completo ===== -->
@@ -5110,7 +5134,8 @@ body.cat-open{overflow:hidden}
 
 </ul>
 
-<a role="button" tabindex="0" href="#pricing" onclick="almazUpsell('basico');return false" class="offer-btn" style="background:#262626; color:#fff; border:1px solid rgba(255,255,255,0.12)"> Quero garantir</a></div>
+<a role="button" tabindex="0" href="#pricing" onclick="almazUpsell('basico');return false" class="offer-btn" style="background:#262626; color:#fff; border:1px solid rgba(255,255,255,0.12)"> Quero garantir</a>
+<div class="offer-trust"><strong>PIX aprovado na hora</strong> e 7 dias de garantia</div></div>
 
 
 
@@ -5144,7 +5169,8 @@ body.cat-open{overflow:hidden}
 
 </ul>
 
-<a role="button" tabindex="0" href="#pricing" onclick="almazUpsell('avancado');return false" class="offer-btn"> Quero garantir</a></div>
+<a role="button" tabindex="0" href="#pricing" onclick="almazUpsell('avancado');return false" class="offer-btn"> Quero garantir</a>
+<div class="offer-trust"><strong>PIX aprovado na hora</strong> e 7 dias de garantia</div></div>
 
 
 
@@ -5182,7 +5208,8 @@ body.cat-open{overflow:hidden}
 
 </ul>
 
-<a href="https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm" onclick="checkout('https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm',49.97);return false" class="offer-btn">Quero garantir</a></div>
+<a href="https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm" onclick="checkout('https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm',49.97);return false" class="offer-btn">Quero garantir</a>
+<div class="offer-trust"><strong>PIX aprovado na hora</strong> e 7 dias de garantia</div></div>
 
 
 
@@ -5357,6 +5384,9 @@ body.cat-open{overflow:hidden}
 @keyframes livep{0%,100%{opacity:1}50%{opacity:.3}}
 
 .offer-btn{display:block;width:100%;padding:18px;font-family:var(--fh);font-size:18px;font-weight:900;letter-spacing:.04em;border-radius:10px;text-align:center;cursor:pointer;transition:all .3s;border:none;background:var(--accent);color:#040a00;box-shadow:0 4px 20px var(--accent-glow);position:relative;overflow:hidden;margin-top:auto}
+/* Resposta às 2 maiores dúvidas do FAQ (Clarity), colada no botão de compra */
+.offer-trust{margin-top:10px;font-family:var(--fb);font-size:12.5px;color:var(--muted);text-align:center;line-height:1.4}
+.offer-trust strong{color:#fff;font-weight:600}
 /* Estado "Abrindo checkout…" — feedback durante os ~800ms até o redirect */
 .btn-loading{pointer-events:none;opacity:.9}
 .btn-spin{display:inline-block;width:14px;height:14px;margin-right:9px;border:2px solid currentColor;border-top-color:transparent;border-radius:50%;vertical-align:-2px;animation:btnspin .6s linear infinite}
@@ -6761,7 +6791,7 @@ else{el.scrollIntoView({behavior:'smooth'});}
       // com o visitante já fora da dobra e sem nenhum botão de compra na tela.
       var nudgeArmed = false;
 
-      var buyBtns = [].slice.call(document.querySelectorAll('.offer-btn, .hero2-cta, .btn-xl'));
+      var buyBtns = [].slice.call(document.querySelectorAll('.offer-btn, .hero2-cta, .btn-xl, .pricepeek-btn'));
 
       function buyCtaOnScreen() {
         var vh = window.innerHeight;
@@ -6778,11 +6808,15 @@ else{el.scrollIntoView({behavior:'smooth'});}
         if (!nudgeArmed) return;
         if (window.pageYOffset < window.innerHeight * 0.6) return; // ainda na 1ª tela
         if (buyCtaOnScreen()) return;
+        // Nunca junto com um toast: os dois ocupam o canto inferior e se sobrepõem.
+        if (document.querySelector('#amz-toasts .amz-toast')) return;
         nudge.classList.add('show');
         nudgeShown = true;
       }
 
-      setTimeout(function() { nudgeArmed = true; tryShowNudge(); }, 12000);
+      // 45s (era 12s): o Clarity mostrou o X do nudge como 4º elemento mais
+      // clicado do site — aparecer cedo só gerava dispensa na 1ª tela.
+      setTimeout(function() { nudgeArmed = true; tryShowNudge(); }, 45000);
 
       window.addEventListener('scroll', tryShowNudge, { passive: true });
 
@@ -7639,7 +7673,7 @@ html.no-motionlib .amz-toast.amz-in{opacity:1;transform:translateX(0)}
 
 
 
-    var VISIBLE=6000, GAP_MIN=9000, GAP_MAX=16000;
+    var VISIBLE=6000, GAP_MIN=18000, GAP_MAX=28000, MAX_TOASTS=6;
 
     var count=0, timer=null, current=null;
 
@@ -7711,11 +7745,16 @@ html.no-motionlib .amz-toast.amz-in{opacity:1;transform:translateX(0)}
 
       if(document.hidden || modalOpen){ schedule(4000); return; }
 
+      // Nunca junto com o balão do chat: dividem o canto inferior e se sobrepõem.
+      var nudgeOpen=document.querySelector('.ai-nudge.show');
+      var chatOpen=document.querySelector('.ai-window.open, #ai-window.open');
+      if(nudgeOpen || chatOpen){ schedule(5000); return; }
+
       // Mobile: adia o toast se um botão de compra está na faixa onde ele aparece
       // (acima do sticky CTA) — pop-up nunca pode cobrir CTA.
       if(window.innerWidth<=768){
         var vh=window.innerHeight, bandTop=vh-210, bandBot=vh-70;
-        var busy=[].slice.call(document.querySelectorAll('.hero2-cta,.offer-btn,.btn-xl')).some(function(b){var r=b.getBoundingClientRect();return r.bottom>bandTop&&r.top<bandBot;});
+        var busy=[].slice.call(document.querySelectorAll('.hero2-cta,.offer-btn,.btn-xl,.pricepeek-btn')).some(function(b){var r=b.getBoundingClientRect();return r.bottom>bandTop&&r.top<bandBot;});
         if(busy){ schedule(4000); return; }
       }
 
@@ -7749,6 +7788,8 @@ html.no-motionlib .amz-toast.amz-in{opacity:1;transform:translateX(0)}
 
     function schedule(ms){
 
+      if(count>=MAX_TOASTS) return; // dose certa de prova social; depois disso vira ruído
+
       if(timer) clearTimeout(timer);
 
       var wait = (ms!=null) ? ms : (GAP_MIN + Math.random()*(GAP_MAX-GAP_MIN));
@@ -7759,7 +7800,22 @@ html.no-motionlib .amz-toast.amz-in{opacity:1;transform:translateX(0)}
 
 
 
-    schedule(6000);
+    /* Toasts só começam depois de 45s OU 25% de rolagem, o que vier primeiro.
+       Clarity (30d): metade do tráfego abandona na 1ª tela e o X do toast era o
+       3º elemento mais clicado do site inteiro — interromper cedo custa visitante. */
+    var toastsArmed=false;
+    function armToasts(){
+      if(toastsArmed) return;
+      toastsArmed=true;
+      window.removeEventListener('scroll',armToastsOnScroll);
+      schedule(1500);
+    }
+    function armToastsOnScroll(){
+      var max=document.documentElement.scrollHeight-window.innerHeight;
+      if(max>0 && (window.pageYOffset/max)>=0.25) armToasts();
+    }
+    window.addEventListener('scroll',armToastsOnScroll,{passive:true});
+    setTimeout(armToasts,45000);
 
   }
 
