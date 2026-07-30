@@ -455,21 +455,83 @@ h2{font-size:clamp(21px,3.1vw,27px);margin-bottom:6px}
 .step h3{font-size:15px;margin-bottom:4px}
 .step p{font-size:13.5px;color:var(--dim);line-height:1.6}
 
-/* ---------- planos (edicoes) ---------- */
-.eds{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:start}
-@media(max-width:860px){.eds{grid-template-columns:1fr;max-width:440px;margin:0 auto}}
+/* =========================================================================
+   PLANOS: podio. O recomendado (R$ 49,97) fica no MEIO no desktop e em
+   PRIMEIRO no celular, maior e com o unico botao verde da secao. Os outros
+   dois viram secundarios (preco menor, botao cinza) pra nao disputar o olho.
+   A ordem visual e feita por `order`, sem mexer na marcacao dos cards, pra
+   nao tocar em nada que o tracking use.
+   ========================================================================= */
+.eds{display:grid;grid-template-columns:1fr 1.28fr 1fr;gap:20px;align-items:center}
+.offer-card[data-plan-id="basico"]{order:1}
+.offer-card.featured{order:2}
+.offer-card[data-plan-id="avancado"]{order:3}
+
 .offer-card{
   background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);
   overflow:hidden;display:flex;flex-direction:column;transition:border-color .15s;
 }
 .offer-card:hover{border-color:var(--line2)}
-.offer-card.featured{border-color:rgba(74,157,42,.55);box-shadow:0 0 0 1px rgba(74,157,42,.18),var(--shadow)}
 .offer-card.focus-pulse{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-dim)}
+
+/* --- os dois secundarios --- */
+.offer-card:not(.featured) .ed-new{font-size:19px;color:var(--txt2)}
+.offer-card:not(.featured) .deal{font-size:14px;padding:4px 8px}
+.offer-card:not(.featured) .ed-name{font-size:14.5px}
+.offer-card:not(.featured) .offer-features li{font-size:13px}
+.offer-card:not(.featured) .offer-btn{
+  background:var(--panel3);border-color:var(--line2);color:var(--txt);
+  box-shadow:none;font-size:14px;padding:11px 20px;font-weight:600;
+}
+.offer-card:not(.featured) .offer-btn:hover{background:#2b4054;filter:none}
+
+/* --- o destacado --- */
+.offer-card.featured{
+  border-width:2px;border-color:var(--buy);
+  background:linear-gradient(180deg,rgba(74,157,42,.12) 0%,var(--panel) 26%);
+  box-shadow:0 0 0 1px rgba(74,157,42,.22),0 18px 44px rgba(0,0,0,.5),0 0 70px rgba(74,157,42,.09);
+}
+.ed-ribbon{display:none}
+.featured .ed-ribbon{
+  display:block;background:var(--buy);color:#fff;text-align:center;
+  font-size:11.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:8px 10px;
+}
+.featured .ed-top{padding:16px 18px}
+.featured .ed-name{font-size:18px}
+.featured .ed-name small{font-size:13px}
+.featured .ed-body{padding:16px 18px}
+.featured .offer-features li{font-size:14px}
+.featured .ed-buy{padding:16px 18px}
+.featured .ed-new{font-size:34px}
+.featured .deal{font-size:19px;padding:7px 11px}
+.featured .offer-btn{padding:16px 26px;font-size:16.5px}
+.featured .offer-methods{font-size:12.5px}
+
+/* linha de valor: aritmetica em cima dos proprios numeros dos planos */
+.ed-gain{
+  display:none;background:rgba(74,157,42,.1);border:1px solid rgba(74,157,42,.28);
+  border-radius:var(--r);padding:9px 12px;margin-bottom:12px;
+  font-size:12.5px;color:var(--txt2);line-height:1.5;text-align:center;
+}
+.featured .ed-gain{display:block}
+.ed-gain b{color:var(--buy2);font-weight:700}
+
 .ed-top{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}
 .ed-name{font-size:15.5px;font-weight:700}
 .ed-name small{display:block;font-size:12.5px;font-weight:400;color:var(--dim);margin-top:2px}
-.ed-flag{font-size:11px;font-weight:700;color:#fff;background:var(--buy);padding:3px 9px;border-radius:4px;flex-shrink:0}
 .ed-body{padding:14px 16px;flex:1}
+
+/* rotulo que so aparece no celular, pra ordem "recomendado primeiro" ficar
+   proposital em vez de parecer preco fora de ordem */
+.eds-alt{display:none;text-align:center;font-size:12.5px;color:var(--dim);padding:4px 0 0}
+
+@media(max-width:860px){
+  .eds{grid-template-columns:1fr;max-width:430px;margin:0 auto;gap:18px;align-items:stretch}
+  .offer-card.featured{order:-1}
+  .eds-alt{display:block;order:0}
+  .offer-card[data-plan-id="basico"]{order:1}
+  .offer-card[data-plan-id="avancado"]{order:2}
+}
 .offer-features{list-style:none;display:flex;flex-direction:column;gap:8px}
 .offer-features li{font-size:13.5px;color:var(--txt2);display:flex;gap:8px;align-items:flex-start;line-height:1.5}
 .offer-features li::before{
@@ -1105,9 +1167,9 @@ var io = (function(){
 
       <!-- Vitalício -->
       <div class="offer-card featured" data-plan-id="vitalicio">
+        <div class="ed-ribbon">Mais escolhido</div>
         <div class="ed-top">
           <div class="ed-name">Completo<small><span data-almaz-games="vitalicio">40.000</span> jogos</small></div>
-          <span class="ed-flag">Mais escolhido</span>
         </div>
         <div class="ed-body">
           <ul class="offer-features">
@@ -1120,6 +1182,9 @@ var io = (function(){
           </ul>
         </div>
         <div class="ed-buy">
+          <div class="ed-gain">
+            São <b>R$ 40,00</b> a mais que o Essencial e você leva <b>39.000 jogos</b> a mais.
+          </div>
           <div class="ed-price-row">
             <span class="deal num">-90%</span>
             <span class="ed-price">
@@ -1134,6 +1199,8 @@ var io = (function(){
           <div class="offer-trust"><strong>Aprovação na hora</strong> e 7 dias de garantia</div>
         </div>
       </div>
+
+      <div class="eds-alt">Ou comece com um plano menor</div>
 
     </div>
   </div>
