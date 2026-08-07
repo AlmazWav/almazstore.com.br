@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- =========================================================================
+     CONFIGURAÇÃO DA PÁGINA — mexa só aqui.
+     Precisa vir antes de tudo: os scripts de tracking leem esses valores.
+     ========================================================================= -->
+<script>
+window.ALMAZ = {
+  /* --- WhatsApp --- */
+  phone: '5500000000000',   /* DDI + DDD + número, só dígitos. Ex.: 5511987654321 */
+  msg:   'Oi! Vim pelo site e quero ativar os +40.000 jogos na minha conta Steam.',
+  openHour: 9, closeHour: 23,          /* horário de atendimento (hora de Brasília) */
+
+  /* --- Tracking (mesmos IDs da página principal) --- */
+  clarityId:      'xeud5hnipq',
+  utmifyPixelId:  '6a185fdf262a79a6a040ba4e',
+  ga4Id:          '',       /* opcional: G-XXXXXXX */
+  metaPixelId:    '',       /* opcional: só se esta oferta tiver Pixel PRÓPRIO, separado da Utmify */
+
+  /* Dispara Contact/Lead no fbq quando o cliente clica no WhatsApp.
+     DESLIGADO por padrão, seguindo a regra da página principal: nunca chamar
+     fbq na mão, porque a Utmify já dispara browser + CAPI e dobraria a
+     contagem. Aqui a Utmify injeta o Pixel dela normalmente (confirmado:
+     window.fbq existe), mas NÃO se sabe se ela dispara evento no clique de
+     WhatsApp — isso depende de como esta oferta está configurada no painel.
+
+     COMO DECIDIR (2 min): suba a página, abra o Meta Pixel Helper, clique num
+     botão de WhatsApp e veja o Events Manager em tempo real.
+       • Não apareceu Contact nem Lead  -> ligue aqui (true). Sem evento, a
+         campanha de mensagens não tem o que otimizar.
+       • Já apareceu                    -> deixe false, senão conta em dobro. */
+  fireMetaOnWhatsApp: false,
+
+  /* Valor estimado do lead, usado nos eventos (ajuste ao ticket desta oferta) */
+  leadValue: 49.97,
+
+  /* A UTMify já injeta o rastreio invisível na mensagem do WhatsApp.
+     Ligue só se quiser a origem também em texto visível pro atendente ler. */
+  showRefInMessage: false
+};
+</script>
+
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        if(!i) return;
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", window.ALMAZ.clarityId);
+</script>
+
+<!-- Pixel próprio da Meta e GA4 — só carregam se você preencher os IDs acima.
+     A página principal roda só com a Utmify; estes ficam aqui pro caso de
+     você querer medir esta oferta em separado. -->
+<script>
+(function(){
+  var C = window.ALMAZ || {};
+  if(C.metaPixelId){
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+    (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', C.metaPixelId); fbq('track','PageView');
+  }
+  if(C.ga4Id){
+    var s=document.createElement('script');
+    s.async=true; s.src='https://www.googletagmanager.com/gtag/js?id='+C.ga4Id;
+    document.head.appendChild(s);
+    window.dataLayer=window.dataLayer||[];
+    window.gtag=function(){dataLayer.push(arguments)};
+    gtag('js',new Date()); gtag('config',C.ga4Id);
+  }
+})();
+</script>
+
+<!-- Utmify Pixel -->
+<script>
+  if(window.ALMAZ.utmifyPixelId){
+    window.pixelId = window.ALMAZ.utmifyPixelId;
+    var a = document.createElement("script");
+    a.setAttribute("async", "");
+    a.setAttribute("defer", "");
+    a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+    document.head.appendChild(a);
+  }
+</script>
+
+<!-- Utmify UTMs -->
+<script
+  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+  data-utmify-prevent-xcod-sck
+  data-utmify-prevent-subids
+  async
+  defer
+></script>
+
+<!-- Utmify Lead Stitching (script do suporte UTMify) -->
+<!-- Costura o _id do lead da UTMify dentro do utm_source (ex: FBjLj<id>) para
+     que a venda seja casada com a visita/pixel (fbp/fbc). SEM isso, a UTMify
+     recebe a venda mas nao dispara o Purchase/IC pra Meta.
+     Nesta pagina o checkout acontece DEPOIS, dentro da conversa do WhatsApp —
+     por isso o utm_source costurado tambem vai dentro da mensagem enviada
+     (ver "ref" no script do WhatsApp), pra ser colado no link de pagamento. -->
+<script>
+(function () {
+  const POLL_MS = 500;
+  const MAX_ATTEMPTS = 40; // ~20s; evita timer infinito apos a costura
+
+  function getStorageKey() {
+    const url = new URL(window.location.href);
+    const current = url.searchParams.get("utm_source");
+    if (current === "FB") return "lead";
+    if (current === "google") return "lead-google";
+    return null;
+  }
+
+  function getLeadId(storageKey) {
+    if (!storageKey) return null;
+    const raw = localStorage.getItem(storageKey);
+    if (!raw) return null;
+    try {
+      const obj = JSON.parse(raw);
+      return obj && obj._id ? String(obj._id) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function applyUtmIfNeeded() {
+    const url = new URL(window.location.href);
+    const current = url.searchParams.get("utm_source");
+    const storageKey = getStorageKey();
+    const id = getLeadId(storageKey);
+    if (!id) return false;
+
+    let desired = null;
+    if (current === "FB") {
+      desired = "FBjLj" + id;
+    } else if (current === "google") {
+      desired = "googlejLj" + id;
+    }
+
+    if (!desired) return false;
+
+    url.searchParams.set("utm_source", desired);
+    window.location.replace(url.toString());
+    return true;
+  }
+
+  if (applyUtmIfNeeded()) return;
+
+  let attempts = 0;
+  const interval = setInterval(() => {
+    attempts++;
+    if (applyUtmIfNeeded() || getStorageKey() === null || attempts >= MAX_ATTEMPTS) {
+      clearInterval(interval);
+    }
+  }, POLL_MS);
+})();
+</script>
+
+<title>Almaz Store | +40.000 jogos na sua Steam, fale agora no WhatsApp</title>
+<meta name="description" content="Chame no WhatsApp e ative +40.000 jogos originais na sua própria conta Steam. Atendente de verdade, dúvidas respondidas antes de pagar e instalação acompanhada na hora. Pix ou cartão.">
+<meta name="theme-color" content="#0b1219">
+<meta name="robots" content="index,follow">
+
+<!-- OG / preview do link (usado quando o anúncio ou o link é compartilhado) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="+40.000 jogos na sua própria conta Steam | Almaz Store">
+<meta property="og:description" content="Chama no WhatsApp, tira suas dúvidas com um atendente de verdade e a gente instala com você, na hora.">
+<meta property="og:image" content="https://i.imgur.com/wDJUANB.png">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.cloudflare.steamstatic.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+
+<style>
+/* =========================================================================
+   Mesmo sistema visual da Almaz Store (azul grafite + CTA verde) — página
+   dedicada ao funil de ativação via WhatsApp.
+   Estrutura original preservada; adicionadas animações de entrada, micro-
+   interações e destaques de conversão para tráfego pago.
+   ========================================================================= */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0b1219; --bg2:#0f1a24; --panel:#16222f; --panel2:#1d2b3a; --panel3:#243546;
+  --line:rgba(146,186,220,.13); --line2:rgba(146,186,220,.22);
+  --txt:#dbe6f1; --txt2:#aebfd0; --dim:#8399ae;
+  --blue:#59a6e0; --blue-dim:rgba(89,166,224,.12);
+  --buy:#4a9d2a; --buy2:#57b533; --buy-dark:#2f6b18;
+  --deal-bg:#2f5d10; --deal-tx:#bce337;
+  --warn:#e0a03a; --warn-bg:rgba(224,160,58,.14);
+  --f:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --r:8px; --r2:12px;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--f);background:var(--bg);color:var(--txt);line-height:1.6;
+  font-size:15px;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+/* brilho suave atrás do topo da página */
+body::before{
+  content:'';position:fixed;z-index:-1;top:-260px;left:50%;transform:translateX(-50%);
+  width:1000px;height:700px;pointer-events:none;
+  background:radial-gradient(circle at 50% 50%,rgba(74,157,42,.14),transparent 62%);
+}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(16px,4.2vw,20px)}
+h1,h2,h3{font-weight:700;line-height:1.15;letter-spacing:-.02em}
+.sec{padding:52px 0;border-top:1px solid var(--line)}
+/* eixo central: cabeçalhos e blocos de texto centralizados, mas com largura
+   máxima pra linha não esticar e ficar cansativa no desktop */
+.sec-head{margin:0 auto 22px;max-width:640px;text-align:center}
+.sec-head h2{font-size:clamp(21px,3.1vw,27px);margin-bottom:6px}
+.sec-head p{color:var(--dim);font-size:14.5px;margin-top:4px}
+
+/* ---------- animações base ---------- */
+.reveal{opacity:0;transform:translateY(22px);
+  transition:opacity .75s var(--ease),transform .75s var(--ease);transition-delay:var(--d,0s)}
+.reveal.in{opacity:1;transform:none}
+.fade-in{animation:fadeUp .8s var(--ease) both;animation-delay:var(--d,0s)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+/* ---------- topbar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:600;background:rgba(11,18,25,.92);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+  transition:box-shadow .3s,background .3s;
+}
+.topbar.stuck{box-shadow:0 6px 24px rgba(0,0,0,.45);background:rgba(11,18,25,.97)}
+.topbar-in{max-width:1180px;margin:0 auto;padding:0 20px;height:58px;display:flex;align-items:center;gap:20px}
+.tb-brand{display:flex;align-items:center;gap:9px;flex-shrink:0}
+.tb-brand-mark{width:30px;height:30px;border-radius:6px;flex-shrink:0;object-fit:contain}
+.tb-brand span{font-weight:700;font-size:15px;letter-spacing:-.01em}
+.tb-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+.tb-status{display:none;align-items:center;gap:7px;font-size:12.5px;color:var(--txt2);font-weight:500}
+@media(min-width:700px){.tb-status{display:flex}}
+.tb-cta{
+  display:inline-flex;align-items:center;gap:7px;
+  background:linear-gradient(180deg,var(--buy2),var(--buy));color:#fff;
+  font-size:13.5px;font-weight:700;padding:9px 16px;border-radius:6px;
+  box-shadow:0 1px 0 rgba(255,255,255,.14) inset;transition:filter .15s,transform .15s;
+}
+.tb-cta:hover{filter:brightness(1.08);transform:translateY(-1px)}
+
+/* ponto verde "online" */
+.live-dot{
+  width:8px;height:8px;border-radius:50%;background:var(--buy2);flex-shrink:0;
+  box-shadow:0 0 0 0 rgba(87,181,51,.6);animation:live 2.2s ease-out infinite;
+}
+@keyframes live{0%{box-shadow:0 0 0 0 rgba(87,181,51,.55)}70%{box-shadow:0 0 0 8px rgba(87,181,51,0)}100%{box-shadow:0 0 0 0 rgba(87,181,51,0)}}
+.live-dot.off{background:var(--warn);animation:none}
+
+/* ---------- hero ---------- */
+.ph{padding:34px 0 4px;text-align:center}
+.ph-crumb{font-size:12.5px;color:var(--dim);margin-bottom:12px}
+.ph-crumb b{color:var(--txt2);font-weight:500}
+.ph h1{font-size:clamp(25px,5.2vw,40px);max-width:820px;margin:0 auto}
+.ph h1 span{color:var(--buy2)}
+.ph h1 i{font-style:normal;font-variant-numeric:tabular-nums}
+.ph-sub{color:var(--txt2);font-size:clamp(14.5px,3.6vw,15.5px);margin:10px auto 0;max-width:620px}
+.ph-sub b{color:var(--txt);font-weight:600}
+
+/* status do atendimento: texto solto, sem moldura */
+.ph-live{
+  display:inline-flex;align-items:center;gap:9px;margin-top:16px;
+  color:var(--txt2);font-size:13.5px;font-weight:500;
+}
+.ph-live.off{color:var(--dim)}
+
+/* ---------- carrossel de arte (mesmo componente da pagina principal) ---------- */
+.art{background:#000;border:1px solid var(--line);border-radius:var(--r2);overflow:hidden;box-shadow:var(--shadow);margin:22px auto 0;max-width:900px;text-align:left}
+.art-stage{position:relative;aspect-ratio:16/9;background:#05080b;overflow:hidden}
+.art-slide{position:absolute;inset:0;opacity:0;transition:opacity .6s ease}
+.art-slide.on{opacity:1}
+.art-slide img{width:100%;height:100%;object-fit:cover;transform:scale(1.01)}
+.art-slide.on img{animation:kenburns 6.5s ease-out both}
+@keyframes kenburns{from{transform:scale(1.01)}to{transform:scale(1.08)}}
+.art-prog{position:absolute;top:0;left:0;right:0;height:3px;background:rgba(255,255,255,.08);z-index:3}
+.art-prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--buy2),var(--deal-tx))}
+.art-prog.run i{animation:prog 5s linear both}
+@keyframes prog{from{width:0}to{width:100%}}
+.art-cap{
+  position:absolute;left:0;right:0;bottom:0;padding:34px 16px 12px;
+  background:linear-gradient(to top,rgba(3,6,9,.92),transparent);
+  display:flex;align-items:flex-end;justify-content:space-between;gap:12px;z-index:2;
+}
+.art-cap-name{font-size:14px;font-weight:600;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.8);transition:opacity .3s}
+.art-cap-tag{font-size:11.5px;color:var(--deal-tx);background:rgba(47,93,16,.85);padding:3px 9px;border-radius:4px;font-weight:600;flex-shrink:0}
+.art-thumbs{display:flex;gap:6px;padding:8px;background:var(--panel);overflow-x:auto;scrollbar-width:none}
+.art-thumbs::-webkit-scrollbar{display:none}
+.art-thumb{
+  flex:0 0 auto;width:104px;aspect-ratio:16/9;border-radius:5px;overflow:hidden;
+  border:2px solid transparent;opacity:.55;transition:opacity .2s,border-color .2s,transform .2s;cursor:pointer;
+}
+.art-thumb.on{opacity:1;border-color:var(--blue)}
+.art-thumb:hover{opacity:1;transform:translateY(-2px)}
+.art-thumb img{width:100%;height:100%;object-fit:cover}
+
+.hero-cta-row{margin-top:22px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px}
+.offer-btn{
+  position:relative;overflow:hidden;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  background:linear-gradient(180deg,var(--buy2),var(--buy));
+  color:#fff;font-weight:700;font-size:15.5px;letter-spacing:.01em;
+  padding:14px 26px;border-radius:var(--r);border:1px solid rgba(0,0,0,.25);
+  box-shadow:0 1px 0 rgba(255,255,255,.14) inset,0 4px 14px rgba(0,0,0,.35);
+  transition:filter .15s,transform .12s,box-shadow .25s;
+}
+.offer-btn:hover{filter:brightness(1.1);transform:translateY(-2px);box-shadow:0 1px 0 rgba(255,255,255,.14) inset,0 10px 26px rgba(74,157,42,.32)}
+.offer-btn:active{transform:translateY(1px)}
+.offer-btn svg{transition:transform .25s var(--ease)}
+.offer-btn:hover svg{transform:rotate(-8deg) scale(1.1)}
+/* brilho que atravessa o botão de tempos em tempos */
+.offer-btn::after{
+  content:'';position:absolute;top:-20%;left:-130%;width:55%;height:140%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.3),transparent);
+  transform:skewX(-18deg);animation:shine 4.2s ease-in-out infinite;
+}
+@keyframes shine{0%,70%{left:-130%}100%{left:170%}}
+.hero-trust{font-size:13px;color:var(--dim);display:flex;align-items:center;gap:7px}
+.hero-trust svg{width:15px;height:15px;stroke:var(--buy2);fill:none;stroke-width:2;flex-shrink:0}
+
+/* ---------- faixa de confianca ---------- */
+.trustbar{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg2);margin-top:30px}
+.trustbar-in{max-width:1180px;margin:0 auto;padding:14px 20px;display:flex;gap:26px;flex-wrap:wrap;justify-content:center}
+.trustbar-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--txt2);transition:color .2s}
+.trustbar-item:hover{color:var(--txt)}
+.trustbar-item svg{width:16px;height:16px;stroke:var(--blue);fill:none;stroke-width:2;flex-shrink:0}
+.trustbar-item.in svg{animation:checkPop .5s var(--ease) both}
+@keyframes checkPop{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
+
+/* ---------- 3 passos ---------- */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:760px){.steps{grid-template-columns:1fr}}
+.step{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);
+  padding:24px 20px;position:relative;overflow:hidden;text-align:center;
+  transition:transform .28s var(--ease),border-color .28s,box-shadow .28s;
+}
+.step::before{
+  content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;pointer-events:none;
+  background:linear-gradient(140deg,rgba(89,166,224,.10),transparent 55%);
+}
+.step:hover{transform:translateY(-4px);border-color:var(--line2);box-shadow:0 12px 30px rgba(0,0,0,.35)}
+.step:hover::before{opacity:1}
+.step-n{
+  width:28px;height:28px;border-radius:6px;background:var(--blue-dim);border:1px solid rgba(89,166,224,.3);
+  color:var(--blue);font-size:13.5px;font-weight:700;display:flex;align-items:center;justify-content:center;
+  margin:0 auto 12px;transition:background .28s,box-shadow .28s;
+}
+.step:hover .step-n{background:rgba(89,166,224,.22);box-shadow:0 0 18px rgba(89,166,224,.25)}
+.step h3{font-size:16px;margin-bottom:5px}
+.step p{font-size:13.5px;color:var(--dim);line-height:1.6}
+.step p b{color:var(--txt2);font-weight:600}
+
+/* ---------- badges de atendimento ---------- */
+.badges{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:760px){.badges{grid-template-columns:1fr}}
+.badge{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);
+  padding:22px 18px;display:flex;flex-direction:column;gap:12px;
+  align-items:center;text-align:center;
+  transition:transform .28s var(--ease),border-color .28s,box-shadow .28s;
+}
+.badge:hover{transform:translateY(-4px);border-color:var(--line2);box-shadow:0 12px 30px rgba(0,0,0,.35)}
+.badge-ico{
+  width:38px;height:38px;border-radius:9px;background:rgba(74,157,42,.14);border:1px solid rgba(74,157,42,.32);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .28s,transform .28s var(--ease);
+}
+.badge:hover .badge-ico{background:rgba(74,157,42,.26);transform:scale(1.08) rotate(-4deg)}
+.badge-ico svg{width:19px;height:19px;stroke:var(--buy2);fill:none;stroke-width:2}
+.badge h3{font-size:14.5px;margin-bottom:3px}
+.badge p{font-size:13px;color:var(--dim);line-height:1.55}
+.badge p b{color:var(--txt2);font-weight:600}
+
+/* ---------- CTA final ---------- */
+.final{background:linear-gradient(180deg,rgba(74,157,42,.10) 0%,var(--bg) 60%);border-top:1px solid var(--line)}
+.final-box{
+  max-width:620px;margin:0 auto;text-align:center;background:var(--panel);
+  border:1px solid var(--line2);border-radius:var(--r2);padding:38px 26px 30px;
+  box-shadow:var(--shadow);
+}
+.final-box h2{font-size:clamp(20px,3.4vw,26px);margin-bottom:8px}
+.final-box p{color:var(--txt2);font-size:14.5px;margin-bottom:22px}
+.final-box p b{color:var(--txt);font-weight:600}
+.final .offer-btn{width:100%;font-size:16.5px;padding:16px 20px}
+.final-box.in .offer-btn{animation:ctaPulse 2.8s ease-in-out 1s infinite}
+@keyframes ctaPulse{
+  0%,100%{box-shadow:0 1px 0 rgba(255,255,255,.14) inset,0 4px 14px rgba(0,0,0,.35),0 0 0 0 rgba(87,181,51,.42)}
+  50%{box-shadow:0 1px 0 rgba(255,255,255,.14) inset,0 4px 14px rgba(0,0,0,.35),0 0 0 12px rgba(87,181,51,0)}
+}
+.final-note{font-size:12.5px;color:var(--dim);margin-top:12px}
+
+/* escassez em voz baixa: sem caixa, sem caixa alta, sem cor de alerta.
+   Discreto passa mais credibilidade do que pílula gritando. */
+.vagas{
+  display:block;margin-top:16px;
+  color:var(--dim);font-size:12.5px;font-weight:500;
+}
+
+.pay-row{margin-top:16px;display:flex;justify-content:center;gap:18px;flex-wrap:wrap}
+.pay-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--dim)}
+.pay-item svg{width:15px;height:15px;stroke:var(--txt2);fill:none;stroke-width:2}
+.pay-item b{color:var(--txt2);font-weight:600}
+
+/* ---------- rodape ---------- */
+.foot{border-top:1px solid var(--line);padding:26px 0 34px;background:var(--bg2)}
+.foot-in{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.foot-brand{display:flex;align-items:center;gap:9px;font-weight:600;font-size:14px}
+.foot-brand .tb-brand-mark{width:22px;height:22px}
+.foot p{font-size:12.5px;color:var(--dim);line-height:1.6}
+
+/* ---------- CTA fixo no mobile ---------- */
+#sticky-cta{
+  position:fixed;left:12px;right:12px;bottom:12px;z-index:700;display:none;
+  align-items:center;justify-content:center;gap:8px;
+  background:linear-gradient(180deg,var(--buy2),var(--buy));color:#fff;font-weight:700;font-size:15px;
+  padding:14px;border-radius:var(--r);box-shadow:0 6px 22px rgba(0,0,0,.5);
+  transform:translateY(180%);transition:transform .4s var(--ease);
+  overflow:hidden;
+}
+#sticky-cta::after{
+  content:'';position:absolute;top:-20%;left:-130%;width:55%;height:140%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.3),transparent);
+  transform:skewX(-18deg);animation:shine 4.2s ease-in-out infinite;
+}
+@media(max-width:820px){
+  #sticky-cta{display:flex}
+  #sticky-cta.on{transform:none}
+}
+
+/* ---------- responsivo ---------- */
+
+/* tablet: o carrossel encosta nas bordas, então solta um pouco o respiro */
+@media(max-width:1024px){
+  .sec{padding:46px 0}
+}
+
+/* enquanto o CTA fixo estiver na tela, o rodapé precisa de folga pra não
+   ficar escondido embaixo dele */
+@media(max-width:820px){
+  .foot{padding-bottom:96px}
+  .foot-in{justify-content:center;text-align:center;flex-direction:column;gap:10px}
+}
+
+@media(max-width:760px){
+  .sec{padding:40px 0}
+  .ph{padding:26px 0 4px}
+  .sec-head{margin-bottom:18px}
+  .trustbar-in{gap:10px 22px;padding:13px 20px}
+}
+
+/* celular */
+@media(max-width:560px){
+  body{font-size:14.5px}
+  .sec{padding:34px 0}
+  .ph{padding:22px 0 4px}
+  .ph-crumb{margin-bottom:10px}
+
+  /* CTA ocupa a largura toda: é o alvo principal do dedo */
+  .hero-cta-row{flex-direction:column;align-items:stretch;gap:12px;margin-top:20px}
+  .hero-cta-row .offer-btn{width:100%;padding:16px 20px;font-size:16px}
+  .hero-trust{justify-content:center;font-size:12.5px}
+
+  /* faixa de confiança vira lista, uma por linha, alinhada à esquerda pra
+     leitura ficar natural mas o bloco continuar centralizado */
+  .trustbar-in{flex-direction:column;align-items:center;gap:9px}
+  .trustbar-item{width:100%;max-width:320px;font-size:12.5px}
+
+  .art{margin-top:18px;border-radius:10px}
+  .art-cap{padding:26px 12px 10px}
+  .art-cap-name{font-size:12.5px}
+  .art-cap-tag{font-size:10.5px;padding:2px 7px}
+  .art-thumbs{padding:6px;gap:5px;scroll-snap-type:x mandatory}
+  .art-thumb{width:84px;scroll-snap-align:start}
+
+  .steps,.badges{gap:11px}
+  .step{padding:20px 16px}
+  .badge{padding:20px 16px}
+  .step p,.badge p{font-size:13px}
+
+  .final-box{padding:28px 18px 24px;border-radius:10px}
+  .final .offer-btn{font-size:15.5px;padding:15px 16px}
+  .final-note{font-size:12px}
+  .pay-row{gap:14px}
+
+  #sticky-cta{left:10px;right:10px;bottom:10px;padding:15px}
+}
+
+/* celular estreito: o topo é o primeiro a quebrar */
+@media(max-width:400px){
+  .topbar-in{gap:10px;height:54px}
+  .tb-brand span{font-size:14px}
+  .tb-cta{padding:8px 12px;font-size:12.5px}
+  .ph-live{font-size:12.5px;gap:7px}
+  .vagas{font-size:12px}
+}
+
+/* esconde só a marca escrita quando não cabe mais; o logo continua */
+@media(max-width:340px){
+  .tb-brand span{display:none}
+}
+
+/* alvos de toque com tamanho mínimo confortável */
+@media(hover:none){
+  .tb-cta{min-height:40px}
+  .offer-btn,#sticky-cta{min-height:48px}
+  .art-thumb{min-height:44px}
+}
+
+/* ---------- acessibilidade: sem movimento ---------- */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+  .fade-in{animation:none}
+  .live-dot,.offer-btn::after,#sticky-cta::after,.art-slide.on img,
+  .final-box.in .offer-btn,.trustbar-item.in svg,.art-prog.run i{animation:none}
+  .step:hover,.badge:hover,.offer-btn:hover,.tb-cta:hover,.art-thumb:hover{transform:none}
+  #sticky-cta{transition:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ TOPBAR ============ -->
+<header class="topbar" id="topbar">
+  <div class="topbar-in">
+    <div class="tb-brand">
+      <img class="tb-brand-mark" src="https://i.imgur.com/wDJUANB.png" alt="Almaz Store">
+      <span>Almaz Store</span>
+    </div>
+    <div class="tb-right">
+      <span class="tb-status"><span class="live-dot" data-live-dot></span><span data-live-text>Atendimento online</span></span>
+      <a href="https://wa.me/5500000000000?text=Oi!%20Quero%20ativar%20os%2040%20mil%20jogos%20da%20Steam" class="tb-cta" data-wa data-cta="topbar" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="ph wrap">
+  <div class="ph-crumb fade-in" style="--d:.05s">Almaz Store &nbsp;›&nbsp; <b>Ativação por WhatsApp</b></div>
+  <h1 class="fade-in" style="--d:.12s">Ative <span>+<i data-count="40000">40.000</i> jogos</span> da Steam na sua própria conta, falando direto com a gente</h1>
+  <p class="ph-sub fade-in" style="--d:.2s">Sem cadastro, sem formulário, sem espera. Você chama no WhatsApp, fala com <b>um atendente de verdade</b>, tira todas as dúvidas <b>antes de pagar</b> e a gente instala junto com você, na hora, no seu PC.</p>
+
+  <div class="ph-live fade-in" style="--d:.28s" data-live-box>
+    <span class="live-dot" data-live-dot></span><span data-live-text>Atendente online agora, resposta em poucos minutos</span>
+  </div>
+
+  <!-- carrossel com uma amostra da biblioteca -->
+  <div class="art fade-in" style="--d:.34s">
+    <div class="art-stage" id="art-stage">
+      <div class="art-slide on"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3768760/library_hero.jpg" alt="007 First Light" fetchpriority="high" decoding="async"></div>
+      <div class="art-slide"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4704690/c0c3ab9f5f2b41e86606a1c790fef432fe2d65cf/ss_c0c3ab9f5f2b41e86606a1c790fef432fe2d65cf.1920x1080.jpg" alt="MECCHA CHAMELEON" loading="lazy" decoding="async"></div>
+      <div class="art-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3321460/library_hero.jpg" alt="Crimson Desert" loading="lazy" decoding="async"></div>
+      <div class="art-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3764200/library_hero.jpg" alt="Resident Evil Requiem" loading="lazy" decoding="async"></div>
+      <div class="art-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/2358720/library_hero.jpg" alt="Black Myth: Wukong" loading="lazy" decoding="async"></div>
+      <div class="art-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/271590/library_hero.jpg" alt="Grand Theft Auto V" loading="lazy" decoding="async"></div>
+      <div class="art-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/library_hero.jpg" alt="Elden Ring" loading="lazy" decoding="async"></div>
+      <div class="art-prog" id="art-prog"><i></i></div>
+      <div class="art-cap">
+        <span class="art-cap-name" id="art-name">007 First Light</span>
+        <span class="art-cap-tag">Incluso no acesso</span>
+      </div>
+    </div>
+    <div class="art-thumbs" id="art-thumbs">
+      <div class="art-thumb on" data-i="0"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3768760/library_hero.jpg" alt="007 First Light" loading="lazy"></div>
+      <div class="art-thumb" data-i="1"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4704690/c0c3ab9f5f2b41e86606a1c790fef432fe2d65cf/ss_c0c3ab9f5f2b41e86606a1c790fef432fe2d65cf.600x338.jpg" alt="MECCHA CHAMELEON" loading="lazy"></div>
+      <div class="art-thumb" data-i="2"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3321460/library_hero.jpg" alt="Crimson Desert" loading="lazy"></div>
+      <div class="art-thumb" data-i="3"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3764200/library_hero.jpg" alt="Resident Evil Requiem" loading="lazy"></div>
+      <div class="art-thumb" data-i="4"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/2358720/library_hero.jpg" alt="Black Myth: Wukong" loading="lazy"></div>
+      <div class="art-thumb" data-i="5"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/271590/library_hero.jpg" alt="Grand Theft Auto V" loading="lazy"></div>
+      <div class="art-thumb" data-i="6"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/library_hero.jpg" alt="Elden Ring" loading="lazy"></div>
+    </div>
+  </div>
+
+  <div class="hero-cta-row fade-in" style="--d:.42s">
+    <a href="https://wa.me/5500000000000?text=Oi!%20Quero%20ativar%20os%2040%20mil%20jogos%20da%20Steam" class="offer-btn" data-wa data-cta="hero" target="_blank" rel="noopener">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.35 5.07L2 22l5.06-1.33A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18a7.9 7.9 0 0 1-4.03-1.1l-.29-.17-3 .79.8-2.92-.19-.3A7.93 7.93 0 1 1 12 20z"/><path d="M16.7 13.5c-.25-.12-1.47-.72-1.7-.8s-.4-.12-.56.12-.63.8-.78.96-.29.18-.54.06a6.6 6.6 0 0 1-1.94-1.2 7.3 7.3 0 0 1-1.35-1.68c-.14-.24 0-.37.11-.49.11-.11.24-.29.36-.43.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42s-.56-1.35-.77-1.85c-.2-.48-.41-.42-.56-.43h-.48a.92.92 0 0 0-.67.31 2.8 2.8 0 0 0-.87 2.08c0 1.22.89 2.4 1.01 2.57.12.16 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.14-1.18-.06-.1-.22-.16-.47-.28z"/></svg>
+      Chamar no WhatsApp agora
+    </a>
+    <div class="hero-trust">
+      <svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+      A conversa já abre pronta, sem compromisso
+    </div>
+  </div>
+</section>
+
+<div class="trustbar">
+  <div class="trustbar-in">
+    <div class="trustbar-item reveal" style="--d:0s"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg> Acesso na sua própria conta Steam</div>
+    <div class="trustbar-item reveal" style="--d:.1s"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg> Instalação acompanhada por um atendente</div>
+    <div class="trustbar-item reveal" style="--d:.2s"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg> Pix ou cartão</div>
+  </div>
+</div>
+
+<!-- ============ 3 PASSOS ============ -->
+<section class="sec wrap" id="como-funciona">
+  <div class="sec-head reveal">
+    <h2>Como funciona</h2>
+    <p>Do primeiro "oi" até o jogo instalado no seu PC, normalmente no mesmo dia</p>
+  </div>
+  <div class="steps">
+    <div class="step reveal" style="--d:.05s">
+      <div class="step-n">1</div>
+      <h3>Chama no WhatsApp</h3>
+      <p>Um toque no botão e a conversa abre com a mensagem já escrita. Você fala com <b>uma pessoa de verdade</b>, sem robô, sem formulário e sem fila de espera.</p>
+    </div>
+    <div class="step reveal" style="--d:.15s">
+      <div class="step-n">2</div>
+      <h3>Tira todas as dúvidas</h3>
+      <p>A gente explica direitinho <b>como funciona o acesso</b> aos +40.000 jogos, o que está incluso e as formas de pagamento. Você só fecha se fizer sentido pra você.</p>
+    </div>
+    <div class="step reveal" style="--d:.25s">
+      <div class="step-n">3</div>
+      <h3>Instalamos com você, na hora</h3>
+      <p>Acompanhamos a configuração <b>passo a passo</b> na sua conta Steam, no seu computador. Você sai da conversa já baixando o primeiro jogo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ATENDIMENTO ============ -->
+<section class="sec wrap" style="padding-top:0">
+  <div class="sec-head reveal">
+    <h2>Atendimento rápido, do começo ao fim</h2>
+    <p>Antes, durante e depois da ativação, você fala sempre com a gente</p>
+  </div>
+  <div class="badges">
+    <div class="badge reveal" style="--d:.05s">
+      <div class="badge-ico"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
+      <div>
+        <h3>Resposta rápida</h3>
+        <p>Atendimento humano no WhatsApp, com resposta em <b>poucos minutos</b>. Nada de robô, ticket ou e-mail sem resposta.</p>
+      </div>
+    </div>
+    <div class="badge reveal" style="--d:.15s">
+      <div class="badge-ico"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 1-5.4 5.4l-6 6a1.5 1.5 0 0 0 2.1 2.1l6-6a4 4 0 0 1 5.4-5.4l-3 3-1.6-.4-.4-1.6 3-3z"/></svg></div>
+      <div>
+        <h3>Suporte na instalação</h3>
+        <p>A gente entra junto com você no passo a passo, <b>até o primeiro jogo abrir</b> no seu computador. Não te deixamos no vácuo.</p>
+      </div>
+    </div>
+    <div class="badge reveal" style="--d:.25s">
+      <div class="badge-ico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg></div>
+      <div>
+        <h3>Pix ou cartão</h3>
+        <p>Pague do seu jeito: <b>Pix cai na hora</b> e libera na hora, ou cartão se preferir. Você escolhe direto na conversa.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA FINAL ============ -->
+<section class="sec final" id="cta-final">
+  <div class="wrap">
+    <div class="final-box reveal">
+      <h2>Bora ativar seus jogos?</h2>
+      <p>Leva <b>2 minutos</b> pra tirar suas dúvidas no WhatsApp e você já sai instalando <b>ainda hoje</b>.</p>
+      <a href="https://wa.me/5500000000000?text=Oi!%20Quero%20ativar%20os%2040%20mil%20jogos%20da%20Steam" class="offer-btn" data-wa data-cta="final" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.35 5.07L2 22l5.06-1.33A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18a7.9 7.9 0 0 1-4.03-1.1l-.29-.17-3 .79.8-2.92-.19-.3A7.93 7.93 0 1 1 12 20z"/><path d="M16.7 13.5c-.25-.12-1.47-.72-1.7-.8s-.4-.12-.56.12-.63.8-.78.96-.29.18-.54.06a6.6 6.6 0 0 1-1.94-1.2 7.3 7.3 0 0 1-1.35-1.68c-.14-.24 0-.37.11-.49.11-.11.24-.29.36-.43.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42s-.56-1.35-.77-1.85c-.2-.48-.41-.42-.56-.43h-.48a.92.92 0 0 0-.67.31 2.8 2.8 0 0 0-.87 2.08c0 1.22.89 2.4 1.01 2.57.12.16 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.14-1.18-.06-.1-.22-.16-.47-.28z"/></svg>
+        Chamar no WhatsApp
+      </a>
+      <div class="final-note">Sem compromisso. A gente responde suas dúvidas mesmo que você não feche hoje.</div>
+      <div class="vagas">Vagas limitadas</div>
+      <div class="pay-row">
+        <div class="pay-item"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg> Aceitamos <b>cartão</b></div>
+        <div class="pay-item"><svg viewBox="0 0 24 24"><path d="M12 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg> Aceitamos <b>Pix</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RODAPE ============ -->
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="foot-brand"><img class="tb-brand-mark" src="https://i.imgur.com/wDJUANB.png" alt="Almaz Store"> Almaz Store</div>
+    <p>Suporte pelo WhatsApp. Pagamento por Pix ou cartão.</p>
+  </div>
+</footer>
+
+<!-- ============ CTA FIXO MOBILE ============ -->
+<a href="https://wa.me/5500000000000?text=Oi!%20Quero%20ativar%20os%2040%20mil%20jogos%20da%20Steam" id="sticky-cta" data-wa data-cta="sticky" target="_blank" rel="noopener">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.35 5.07L2 22l5.06-1.33A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18a7.9 7.9 0 0 1-4.03-1.1l-.29-.17-3 .79.8-2.92-.19-.3A7.93 7.93 0 1 1 12 20z"/></svg>
+  Chamar no WhatsApp
+</a>
+
+<script>
+
+// --- SISTEMA DE TRACKING AVANÇADO FOCADO EM META ADS ---
+// Portado da página principal (trackeament/index.html) sem alterar o
+// comportamento: mesmas chaves, mesmo storage, mesma API global
+// (getMergedTrackingParams / generateEventId / decorateUrlWithTracking /
+// trackEvent). O que muda nesta página está comentado caso a caso.
+
+(function() {
+
+  var trackingKeys = [
+    'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term',
+    'src', 'sck', 'xcod', 'fbclid', 'gclid', 'ttclid', 'msclkid', 'irclickid', 'utm_id'
+  ];
+
+  // 1. Extrair parâmetros da URL
+  var urlParams = new URLSearchParams(window.location.search);
+  var currentTracking = {};
+  var hasParamsInUrl = false;
+
+  trackingKeys.forEach(function(key) {
+    var val = urlParams.get(key);
+    if (val) {
+      currentTracking[key] = val;
+      hasParamsInUrl = true;
+    }
+  });
+
+  // 2. Gerenciar Armazenamento (localStorage & sessionStorage)
+  var storageKey = 'almaz_utm_tracker';
+  var storedTracking = {};
+
+  try {
+    var rawStored = localStorage.getItem(storageKey) || sessionStorage.getItem(storageKey);
+    if (rawStored) {
+      storedTracking = JSON.parse(rawStored);
+    }
+  } catch (e) {
+    console.error('Erro ao ler UTMs do cache:', e);
+  }
+
+  // Mesclar: Se a URL tem parâmetros novos, atualiza o cache. Caso contrário, mantém o que já estava salvo.
+  var mergedTracking = {};
+  if (hasParamsInUrl) {
+    mergedTracking = Object.assign({}, storedTracking, currentTracking);
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(mergedTracking));
+      sessionStorage.setItem(storageKey, JSON.stringify(mergedTracking));
+    } catch (e) {
+      console.error('Erro ao salvar UTMs no cache:', e);
+    }
+  } else {
+    mergedTracking = storedTracking;
+  }
+
+  // 3. Fallback para Tráfego Orgânico se nenhum canal for detectado
+  if (!mergedTracking['utm_source'] && !mergedTracking['src']) {
+    var referrer = document.referrer;
+    if (referrer) {
+      var referrerHost = '';
+      try { referrerHost = new URL(referrer).hostname; } catch (err) {}
+
+      if (referrerHost) {
+        if (referrerHost.indexOf('google') !== -1) {
+          mergedTracking['utm_source'] = 'organic_google';
+        } else if (referrerHost.indexOf('facebook') !== -1) {
+          mergedTracking['utm_source'] = 'organic_facebook';
+        } else if (referrerHost.indexOf('instagram') !== -1) {
+          mergedTracking['utm_source'] = 'organic_instagram';
+        } else if (referrerHost.indexOf('tiktok') !== -1) {
+          mergedTracking['utm_source'] = 'organic_tiktok';
+        } else {
+          mergedTracking['utm_source'] = 'referrer_' + referrerHost.replace(/\./g, '_');
+        }
+        mergedTracking['utm_medium'] = 'organic';
+      }
+    }
+  }
+
+  // Exportar funções globais de tracking
+  window.getMergedTrackingParams = function() {
+    return mergedTracking;
+  };
+
+  // Gera um event_id único por clique. Usa crypto.randomUUID com fallback p/
+  // navegadores antigos.
+  window.generateEventId = function() {
+    try {
+      if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+        return window.crypto.randomUUID();
+      }
+    } catch (e) {}
+    return 'evt-' + Date.now() + '-' + Math.random().toString(16).slice(2);
+  };
+
+  window.decorateUrlWithTracking = function(rawUrl, eventId) {
+    try {
+      var urlObj = new URL(rawUrl);
+      var params = window.getMergedTrackingParams();
+
+      for (var key in params) {
+        if (params.hasOwnProperty(key) && params[key]) {
+          urlObj.searchParams.set(key, params[key]);
+        }
+      }
+
+      if (eventId) {
+        urlObj.searchParams.set('event_id', eventId);
+      }
+
+      return urlObj.toString();
+    } catch (e) {
+      return rawUrl;
+    }
+  };
+
+  // Monta a etiqueta de origem que vai DENTRO da mensagem do WhatsApp.
+  // É o que mantém a atribuição viva no handoff pro atendimento: o utm_source
+  // aqui já vem costurado pela UTMify (ex.: FBjLj<leadId>), então basta o
+  // atendente colar essa etiqueta no link de pagamento pra venda casar com o
+  // anúncio que a gerou.
+  window.buildTrackingRef = function() {
+    var p = window.getMergedTrackingParams() || {};
+    var partes = [p.utm_source, p.utm_campaign, p.utm_content].filter(Boolean);
+    if (!partes.length) return '';
+    return partes.join(' · ').slice(0, 120);
+  };
+
+  window.trackEvent = function(eventName, params, eventID) {
+    var C = window.ALMAZ || {};
+
+    // Meta / Facebook: na página principal o fbq NUNCA é chamado aqui, porque
+    // o Pixel da UTMify dispara browser + CAPI com deduplicação automática e
+    // chamar manualmente dobraria a contagem. Mesma regra aqui: desligado por
+    // padrão. Ligue em ALMAZ.fireMetaOnWhatsApp só depois de conferir no
+    // Events Manager que a UTMify NÃO dispara nada no clique do WhatsApp.
+    //
+    // Usa o fbq que a UTMify já injetou (não precisa de metaPixelId). Sempre
+    // com eventID, pra deduplicar se um dia entrar CAPI nesta oferta.
+    if (C.fireMetaOnWhatsApp && typeof window.fbq === 'function') {
+      try {
+        fbq('track', eventName, params, eventID ? { eventID: eventID } : undefined);
+      } catch (e) {}
+    }
+
+    // TikTok Pixel
+    if (typeof window.ttq === 'object' && typeof window.ttq.track === 'function') {
+      window.ttq.track(eventName, params);
+    }
+
+    // Google Analytics (gtag)
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', eventName, params);
+    }
+
+    // Camada de dados (GTM), caso você plugue depois
+    try { (window.dataLayer = window.dataLayer || []).push(Object.assign({ event: eventName }, params || {})); } catch (e) {}
+
+    console.log('[TRACKING EVENT]:', eventName, params, eventID ? '(eventID: ' + eventID + ')' : '');
+  };
+
+})();
+
+// ViewContent (visualização da oferta) — evento interno de tracking.
+(function() {
+  function fireViewContent() {
+    var C = window.ALMAZ || {};
+    if (typeof window.trackEvent === 'function') {
+      window.trackEvent('ViewContent', {
+        content_name: 'Almaz Store — Ativação via WhatsApp',
+        content_type: 'product',
+        content_category: 'Landing WhatsApp',
+        value: C.leadValue || 0,
+        currency: 'BRL'
+      });
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fireViewContent);
+  } else {
+    fireViewContent();
+  }
+})();
+
+// Interceptador Global de Cliques — WhatsApp.
+// Pega qualquer link wa.me/whatsapp.com da página, inclusive os que você
+// adicionar depois sem passar pelo data-wa.
+document.addEventListener('DOMContentLoaded', function() {
+  document.body.addEventListener('click', function(e) {
+    var target = e.target.closest('a');
+    if (!target || !target.href) return;
+    var href = target.href;
+
+    if (href.indexOf('wa.me') !== -1 || href.indexOf('whatsapp.com') !== -1) {
+      var C = window.ALMAZ || {};
+      var origem = target.getAttribute('data-cta') || 'WhatsApp';
+      var eventId = window.generateEventId ? window.generateEventId() : null;
+
+      window.trackEvent('Contact', {
+        content_name: 'WhatsApp — ' + origem,
+        content_category: 'Landing WhatsApp',
+        value: C.leadValue || 0,
+        currency: 'BRL',
+        link: href
+      }, eventId);
+
+      // Lead: é este que a campanha de mensagens costuma usar como objetivo.
+      window.trackEvent('Lead', {
+        content_name: 'WhatsApp — ' + origem,
+        value: C.leadValue || 0,
+        currency: 'BRL'
+      }, eventId);
+    }
+  });
+});
+
+</script>
+
+<script>
+/* ---------------------------------------------------------------------------
+   1) Monta os links do WhatsApp.
+
+   ATENÇÃO — escreve o href UMA VEZ SÓ, e cedo. Não reescreva depois.
+   O script latest.js da UTMify decora os links de WhatsApp injetando o ID do
+   lead codificado em caracteres INVISÍVEIS dentro do texto da mensagem
+   (U+2060–206F / U+200B–200D). É assim que a conversa é casada com o anúncio
+   sem o cliente ver nada. Qualquer setAttribute('href', ...) depois que a
+   UTMify rodar APAGA esse rastreio e a venda vira "orgânica" no painel.
+   Por isso: sem setInterval, sem reaplicar.
+   --------------------------------------------------------------------------- */
+(function(){
+  var C = window.ALMAZ || {};
+
+  // Etiqueta VISÍVEL de origem, desligada por padrão: a UTMify já resolve a
+  // atribuição de forma invisível. Ligue em ALMAZ.showRefInMessage só se você
+  // quiser que o atendente leia a origem no texto da conversa.
+  var ref = '';
+  if (C.showRefInMessage && typeof window.buildTrackingRef === 'function') {
+    var r = window.buildTrackingRef();
+    if (r) ref = '\n\n[origem: ' + r + ']';
+  }
+
+  var href = 'https://wa.me/' + C.phone + '?text=' + encodeURIComponent((C.msg || '') + ref);
+  [].slice.call(document.querySelectorAll('[data-wa]')).forEach(function(a){
+    a.setAttribute('href', href);
+  });
+})();
+
+/* ---------------------------------------------------------------------------
+   2) Pílula "online agora" — segue o horário de atendimento (fuso de Brasília).
+   --------------------------------------------------------------------------- */
+(function(){
+  var C = window.ALMAZ || {};
+  var h;
+  try{
+    h = parseInt(new Intl.DateTimeFormat('pt-BR',{timeZone:'America/Sao_Paulo',hour:'2-digit',hour12:false}).format(new Date()),10);
+  }catch(e){ h = new Date().getHours(); }
+  var aberto = h >= (C.openHour||9) && h < (C.closeHour||23);
+  if(aberto) return;
+  var box = document.querySelector('[data-live-box]');
+  if(box) box.classList.add('off');
+  [].slice.call(document.querySelectorAll('[data-live-dot]')).forEach(function(d){ d.classList.add('off'); });
+  var textos = document.querySelectorAll('[data-live-text]');
+  if(textos[0]) textos[0].textContent = 'Fora do horário';
+  if(textos[1]) textos[1].textContent = 'Manda mensagem agora, respondemos assim que abrir, a partir das ' + (C.openHour||9) + 'h';
+})();
+
+/* ---------------------------------------------------------------------------
+   3) Animações de entrada por rolagem (respeitando prefers-reduced-motion).
+   --------------------------------------------------------------------------- */
+(function(){
+  var alvos = [].slice.call(document.querySelectorAll('.reveal'));
+  var reduz = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduz || !('IntersectionObserver' in window)){
+    alvos.forEach(function(el){ el.classList.add('in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  },{ threshold:.14, rootMargin:'0px 0px -8% 0px' });
+  alvos.forEach(function(el){ io.observe(el); });
+})();
+
+/* ---------------------------------------------------------------------------
+   4) Contador do "+40.000" no título.
+   --------------------------------------------------------------------------- */
+(function(){
+  var el = document.querySelector('[data-count]');
+  if(!el) return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var alvo = parseInt(el.getAttribute('data-count'),10) || 0;
+  var ini = null, dur = 1400;
+  function passo(t){
+    if(!ini) ini = t;
+    var p = Math.min((t-ini)/dur,1);
+    var v = Math.round(alvo * (1 - Math.pow(1-p,3)));
+    el.textContent = v.toLocaleString('pt-BR');
+    if(p < 1) requestAnimationFrame(passo);
+  }
+  el.textContent = '0';
+  requestAnimationFrame(passo);
+})();
+
+/* ---------------------------------------------------------------------------
+   5) Topbar ganha sombra ao rolar.
+   --------------------------------------------------------------------------- */
+(function(){
+  var tb = document.getElementById('topbar');
+  if(!tb) return;
+  var onScroll = function(){ tb.classList.toggle('stuck', window.scrollY > 12); };
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>
+
+<script>
+/* Carrossel da arte: troca automatica + clique nas miniaturas (mesma logica da pagina principal). */
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.art-slide'));
+  var thumbs=[].slice.call(document.querySelectorAll('.art-thumb'));
+  var nameEl=document.getElementById('art-name');
+  var prog=document.getElementById('art-prog');
+  if(!slides.length) return;
+  var i=0, timer=null;
+  function resetProg(){
+    if(!prog) return;
+    prog.classList.remove('run');
+    void prog.offsetWidth;      /* reinicia a animacao da barra */
+    prog.classList.add('run');
+  }
+  function show(n){
+    i=(n+slides.length)%slides.length;
+    slides.forEach(function(s,k){ s.classList.toggle('on',k===i); });
+    thumbs.forEach(function(t,k){ t.classList.toggle('on',k===i); });
+    var img=slides[i].querySelector('img');
+    if(nameEl && img) nameEl.textContent=img.getAttribute('alt')||'';
+    resetProg();
+  }
+  function play(){ stop(); resetProg(); timer=setInterval(function(){ show(i+1); },5000); }
+  function stop(){ if(timer) clearInterval(timer); timer=null; if(prog) prog.classList.remove('run'); }
+  thumbs.forEach(function(t){
+    t.addEventListener('click',function(){ show(parseInt(t.getAttribute('data-i'),10)||0); play(); });
+  });
+  document.addEventListener('visibilitychange',function(){ document.hidden?stop():play(); });
+  play();
+})();
+</script>
+
+<script>
+  var stickyEl = document.getElementById('sticky-cta');
+  var heroCtaRow = document.querySelector('.hero-cta-row');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      stickyEl.classList.toggle('on', !e.isIntersecting);
+    });
+  }, { rootMargin: '-80px 0px 0px 0px' });
+  if (heroCtaRow) io.observe(heroCtaRow);
+</script>
+
+</body>
+</html>
