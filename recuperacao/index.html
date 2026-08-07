@@ -207,7 +207,7 @@ main{padding:0 14px 30px}
 
 <!-- ?v= é anti-cache: no GitHub Pages o header no-store do vercel.json não vale,
      então ao gerar um dados.js novo suba este número, senão o celular abre a lista velha -->
-<script src="dados.js?v=1"></script>
+<script src="dados.js?v=2"></script>
 <script>
 /* =========================================================================
    1) Descriptografia. O arquivo dados.js publicado contem apenas o blob
@@ -360,7 +360,8 @@ function render(){
       if(c.dias <= 3 && c.tipoTel === 'ok') tags.push('<span class="tag quente">QUENTE · '+haQuanto(c.quando)+'</span>');
       if(c.tentativas > 1) tags.push('<span class="tag tent">'+c.tentativas+' TENTATIVAS</span>');
       if(c.statusPlanilha !== 'Não contatado') tags.push('<span class="tag env">JÁ CONTATADO ANTES</span>');
-      if(s === 'comprou') tags.push('<span class="tag ok">COMPROU</span>');
+      if(c.comprou) tags.push('<span class="tag ok">JÁ COMPROU · '+money(c.pagoValor)+'</span>');
+      else if(s === 'comprou') tags.push('<span class="tag ok">COMPROU</span>');
       if(c.tipoTel === 'sem_ddd') tags.push('<span class="tag sddd">FALTA DDD</span>');
       if(c.tipoTel === 'ausente') tags.push('<span class="tag mail">SÓ E-MAIL</span>');
 
@@ -535,7 +536,15 @@ document.getElementById('btn-backup').addEventListener('click', () => {
    ========================================================================= */
 document.getElementById('lista').addEventListener('click', e => {
   const zap = e.target.closest('[data-zap]');
-  if(zap){ abrirMsg(DADOS.contatos.find(c => c.id == zap.dataset.zap)); return; }
+  if(zap){
+    const c = DADOS.contatos.find(x => x.id == zap.dataset.zap);
+    // trava contra o erro mais caro: cobrar quem ja pagou
+    if(c.comprou && !confirm(capitalizar(c.nome) + ' JÁ COMPROU (' + money(c.pagoValor)
+        + ' em ' + (c.pagoQuando || 'data não informada') + ').\n\n'
+        + 'Cobrar cliente que já pagou costuma virar denúncia e derrubar número novo.\n\n'
+        + 'Abrir mesmo assim?')) return;
+    abrirMsg(c); return;
+  }
 
   const mail = e.target.closest('[data-mail]');
   if(mail){
@@ -558,7 +567,12 @@ document.getElementById('lista').addEventListener('click', e => {
       + 'Valores tentados: ' + c.valores.map(money).join(', ') + '\n'
       + 'Tentativas: ' + c.tentativas + '\n'
       + 'Abandonou: ' + (c.quando ? new Date(c.quando).toLocaleString('pt-BR') : 'sem data') + '\n'
-      + 'Status na planilha: ' + c.statusPlanilha);
+      + 'Status na planilha: ' + c.statusPlanilha
+      + (c.comprou
+          ? '\n\n--- JÁ É CLIENTE ---\nPagou: ' + money(c.pagoValor)
+            + '\nEm: ' + (c.pagoQuando || 'sem data')
+            + '\nProduto: ' + produtoCurto(c.pagoProduto)
+          : ''));
     return;
   }
 
@@ -584,8 +598,12 @@ document.getElementById('filtros').addEventListener('click', e => {
    ========================================================================= */
 function iniciar(dados){
   DADOS = dados;
-  // quem a planilha ja marcou como contatado entra como enviado, pra nao cobrar duas vezes
   DADOS.contatos.forEach(c => {
+    // cruzado com a exportacao de pagamentos aprovados: ja e cliente, sai da fila.
+    // Isso manda na frente de qualquer status local, porque cobrar quem ja pagou
+    // e o jeito mais rapido de tomar denuncia e derrubar numero novo.
+    if(c.comprou){ ST[c.id] = 'comprou'; return; }
+    // quem a planilha ja marcou como contatado entra como enviado, pra nao cobrar duas vezes
     if(c.statusPlanilha !== 'Não contatado' && !ST[c.id]) ST[c.id] = 'enviado';
   });
   salvarST();
