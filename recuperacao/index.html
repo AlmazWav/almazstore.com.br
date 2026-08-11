@@ -83,6 +83,7 @@ main{padding:0 14px 30px}
 .tag.ok{background:rgba(74,157,42,.18);color:var(--buy2)}
 .tag.sddd{background:rgba(89,166,224,.16);color:var(--blue)}
 .tag.mail{background:rgba(146,186,220,.12);color:var(--dim)}
+.tag.ver{background:rgba(224,160,58,.18);color:var(--warn)}
 
 .c-btns{display:flex;gap:6px}
 .b-zap{flex:1;background:linear-gradient(180deg,var(--buy2),var(--buy));color:#fff;
@@ -207,7 +208,7 @@ main{padding:0 14px 30px}
 
 <!-- ?v= é anti-cache: no GitHub Pages o header no-store do vercel.json não vale,
      então ao gerar um dados.js novo suba este número, senão o celular abre a lista velha -->
-<script src="dados.js?v=2"></script>
+<script src="dados.js?v=3"></script>
 <script>
 /* =========================================================================
    1) Descriptografia. O arquivo dados.js publicado contem apenas o blob
@@ -320,6 +321,7 @@ const FILTROS = [
   { id:'multi',   label:'Tentou +1x' },
   { id:'enviado', label:'Enviados' },
   { id:'comprou', label:'Compraram' },
+  { id:'verificar', label:'Confirmar se pagou' },
   { id:'sddd',    label:'Sem DDD' },
   { id:'mail',    label:'Só e-mail' },
   { id:'todos',   label:'Todos' }
@@ -334,6 +336,7 @@ function passaFiltro(c){
     case 'multi':   return c.tentativas > 1;
     case 'enviado': return s === 'enviado';
     case 'comprou': return s === 'comprou';
+    case 'verificar': return c.verificar;
     case 'sddd':    return c.tipoTel === 'sem_ddd';
     case 'mail':    return c.tipoTel === 'ausente';
     default:        return true;
@@ -362,6 +365,7 @@ function render(){
       if(c.statusPlanilha !== 'Não contatado') tags.push('<span class="tag env">JÁ CONTATADO ANTES</span>');
       if(c.comprou) tags.push('<span class="tag ok">JÁ COMPROU · '+money(c.pagoValor)+'</span>');
       else if(s === 'comprou') tags.push('<span class="tag ok">COMPROU</span>');
+      if(c.verificar) tags.push('<span class="tag ver">CONFIRMAR SE PAGOU</span>');
       if(c.tipoTel === 'sem_ddd') tags.push('<span class="tag sddd">FALTA DDD</span>');
       if(c.tipoTel === 'ausente') tags.push('<span class="tag mail">SÓ E-MAIL</span>');
 
