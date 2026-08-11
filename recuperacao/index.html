@@ -42,6 +42,8 @@ header{position:sticky;top:0;z-index:500;background:rgba(11,18,25,.97);
 .h-acoes{display:flex;gap:6px}
 .h-acoes button{background:var(--panel);border:1px solid var(--line);border-radius:8px;
   padding:7px 10px;font-size:12px;color:var(--txt2);font-weight:600}
+#gerado{font-size:11px;color:var(--dim);margin-top:2px}
+#gerado.velha{color:var(--warn)}
 
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px}
 .stat{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:7px 4px;text-align:center}
@@ -147,8 +149,12 @@ main{padding:0 14px 30px}
 <div id="app" style="display:none">
   <header>
     <div class="h-top">
-      <h1>Carrinhos abandonados</h1>
+      <div>
+        <h1>Carrinhos abandonados</h1>
+        <div id="gerado"></div>
+      </div>
       <div class="h-acoes">
+        <button id="btn-atualizar" title="Baixar a lista de novo">↻</button>
         <button id="btn-compraram">Já compraram</button>
         <button id="btn-backup">Backup</button>
       </div>
@@ -206,9 +212,6 @@ main{padding:0 14px 30px}
   </div>
 </div>
 
-<!-- ?v= é anti-cache: no GitHub Pages o header no-store do vercel.json não vale,
-     então ao gerar um dados.js novo suba este número, senão o celular abre a lista velha -->
-<script src="dados.js?v=4"></script>
 <script>
 /* =========================================================================
    1) Descriptografia. O arquivo dados.js publicado contem apenas o blob
@@ -498,6 +501,19 @@ document.getElementById('m-fechar').addEventListener('click',
 /* =========================================================================
    6) Cruzamento com quem ja comprou
    ========================================================================= */
+/* Força rebaixar a lista sem depender do cache do navegador. */
+document.getElementById('btn-atualizar').addEventListener('click', async () => {
+  const b = document.getElementById('btn-atualizar');
+  b.textContent = '...';
+  BLOB = null;
+  try{
+    const dados = await decifrar(await carregarBlob(), sessionStorage.getItem(CHAVE_CACHE));
+    iniciar(dados);
+    b.textContent = '✓';
+  }catch(e){ b.textContent = '!'; }
+  setTimeout(() => b.textContent = '↻', 1500);
+});
+
 document.getElementById('btn-compraram').addEventListener('click',
   () => document.getElementById('m-comp').classList.add('on'));
 document.getElementById('comp-fechar').addEventListener('click',
@@ -617,6 +633,14 @@ document.getElementById('filtros').addEventListener('click', e => {
    ========================================================================= */
 function iniciar(dados){
   DADOS = dados;
+
+  // Limpa status orfaos. Os ids antigos eram sequenciais e mudavam a cada
+  // exportacao; o que sobrou deles aponta pra ninguem e so acumula lixo.
+  const validos = new Set(DADOS.contatos.map(c => String(c.id)));
+  let removidos = 0;
+  Object.keys(ST).forEach(k => { if(!validos.has(k)){ delete ST[k]; removidos++; } });
+  if(removidos) console.log('[recuperacao] ' + removidos + ' status órfãos descartados');
+
   DADOS.contatos.forEach(c => {
     // cruzado com a exportacao de pagamentos aprovados: ja e cliente, sai da fila.
     // Isso manda na frente de qualquer status local, porque cobrar quem ja pagou
@@ -626,6 +650,17 @@ function iniciar(dados){
     if(c.statusPlanilha !== 'Não contatado' && !ST[c.id]) ST[c.id] = 'enviado';
   });
   salvarST();
+  // deixa visivel de que dia e a lista: sem isso nao da pra saber se o que
+  // esta na tela e a exportacao nova ou uma copia velha em cache
+  const g = document.getElementById('gerado');
+  if(DADOS.geradoEm){
+    const dt = new Date(DADOS.geradoEm);
+    const horas = (Date.now() - dt) / 3600000;
+    g.textContent = 'Lista de ' + dt.toLocaleString('pt-BR',
+      { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' })
+      + ' · ' + DADOS.contatos.length + ' contatos';
+    g.classList.toggle('velha', horas > 48);
+  }
   document.getElementById('filtros').innerHTML = FILTROS.map(f =>
     '<button class="filtro '+(f.id===filtroAtual?'on':'')+'" data-f="'+f.id+'">'+f.label+'</button>').join('');
   document.getElementById('gate').style.display = 'none';
@@ -633,15 +668,34 @@ function iniciar(dados){
   render();
 }
 
+/* Busca o dados.js em tempo de execucao, com no-store e timestamp.
+   O GitHub Pages manda Cache-Control: max-age=600 e nao deixa mudar isso, entao
+   o celular guardava o index.html antigo e continuava pedindo a versao velha do
+   dados.js. Buscando aqui, mesmo com o HTML em cache a lista vem sempre nova. */
+let BLOB = null;
+async function carregarBlob(){
+  if(BLOB) return BLOB;
+  const r = await fetch('dados.js?t=' + Date.now(), { cache:'no-store' });
+  if(!r.ok) throw new Error('http ' + r.status);
+  const m = (await r.text()).match(/"([^"]+)"/);
+  if(!m) throw new Error('dados.js inesperado');
+  BLOB = m[1];
+  return BLOB;
+}
+
 async function tentarAbrir(senha){
   const erro = document.getElementById('gate-erro');
   erro.textContent = 'Abrindo...';
   try{
-    const dados = await decifrar(window.ALMAZ_DADOS, senha);
+    const dados = await decifrar(await carregarBlob(), senha);
     sessionStorage.setItem(CHAVE_CACHE, senha);
     carregarLocal();
     iniciar(dados);
   }catch(e){
+    if(String(e.message||'').startsWith('http') || e.name === 'TypeError'){
+      erro.textContent = 'Não consegui baixar a lista. Sem internet?';
+      return;
+    }
     erro.textContent = 'Senha errada.';
     document.getElementById('gate-senha').value = '';
   }
