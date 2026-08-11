@@ -377,8 +377,46 @@ h2{font-size:clamp(21px,3.1vw,27px);margin-bottom:6px}
 .av-card{
   flex:0 0 auto;width:212px;background:var(--panel);border:1px solid var(--line);
   border-radius:var(--r);overflow:hidden;transition:border-color .15s,transform .15s;
+  cursor:pointer;text-align:left;
 }
 .av-card:hover{border-color:var(--line2);transform:translateY(-2px)}
+.av-card:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+
+/* Confirmacao do jogo: qualquer clique num card do catalogo cai aqui, com o
+   proximo passo escrito. Sem isso o cliente clicava no jogo, nada acontecia e
+   ele saia do site achando que aquele jogo nao estava incluso. */
+.gm-ov{
+  position:fixed;inset:0;z-index:9600;background:rgba(6,10,14,.9);
+  display:none;align-items:center;justify-content:center;padding:20px 16px;
+}
+.gm-ov.on{display:flex}
+/* Classe propria (e nao style.overflow inline) pra nao brigar com o visor de
+   prints, que gerencia o overflow do body pelo inline. */
+body.gm-open{overflow:hidden}
+.gm-box{
+  position:relative;width:min(400px,94vw);max-height:92vh;overflow-y:auto;
+  background:var(--bg2);border:1px solid var(--line2);border-radius:var(--r2);
+  box-shadow:0 30px 70px rgba(0,0,0,.6);
+}
+.gm-img{width:100%;aspect-ratio:460/215;object-fit:cover;display:block;background:var(--panel2)}
+.gm-x{
+  position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:50%;
+  background:rgba(6,10,14,.72);border:1px solid var(--line2);color:#fff;font-size:19px;line-height:1;
+}
+.gm-body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:12px;text-align:center}
+.gm-name{font-size:17px;font-weight:700;color:#fff;line-height:1.3}
+.gm-status{
+  align-self:center;font-size:12.5px;font-weight:600;padding:4px 11px;border-radius:20px;
+  background:rgba(47,93,16,.55);color:var(--deal-tx);
+}
+.gm-status.soon{background:rgba(224,160,58,.14);color:var(--warn)}
+.gm-txt{font-size:14px;line-height:1.55;color:var(--txt2)}
+.gm-txt strong{color:#fff;font-weight:600}
+.gm-back{
+  background:none;font-size:13.5px;color:var(--dim);text-decoration:underline;
+  text-underline-offset:3px;padding:2px;
+}
+.gm-back:hover{color:var(--txt2)}
 .av-card-img{width:100%;aspect-ratio:460/215;object-fit:cover;background:var(--panel2)}
 .av-card-body{padding:9px 10px 10px}
 .av-card-name{
@@ -561,8 +599,9 @@ h2{font-size:clamp(21px,3.1vw,27px);margin-bottom:6px}
 .fbs:hover .fbs-track{animation-play-state:paused}
 .fbs-card{
   flex:0 0 auto;width:286px;min-height:150px;border:1px solid var(--line);border-radius:10px;
-  overflow:hidden;background:var(--panel);
+  overflow:hidden;background:var(--panel);cursor:zoom-in;padding:0;
 }
+.fbs-card:hover{border-color:var(--line2)}
 .fbs-card img{width:100%;height:auto;display:block}
 @keyframes fbsMove{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 7px))}}
 @media(max-width:600px){.fbs-card{width:228px}.fbs-track{animation-duration:46s}}
@@ -583,7 +622,10 @@ h2{font-size:clamp(21px,3.1vw,27px);margin-bottom:6px}
   transition:filter .35s ease,opacity .35s ease,transform .35s ease,border-color .2s;
 }
 .vfb-card video{width:100%;aspect-ratio:9/16;object-fit:cover;display:block;background:#05080b}
-.vfb-grid.vfb-ready .vfb-card:not(.vfb-focus){filter:blur(4px) saturate(.6);opacity:.45;transform:scale(.94)}
+/* Sem blur: o cliente ve todos os videos nitidos. O card fora de foco so fica
+   um pouco mais apagado, o suficiente pra saber qual esta tocando. O blur antigo
+   fazia a pessoa gastar um toque so pra "desborrar" o card. */
+.vfb-grid.vfb-ready .vfb-card:not(.vfb-focus){opacity:.72;transform:scale(.97)}
 .vfb-card.vfb-focus{border-color:var(--line2)}
 .vfb-card.vfb-on{border-color:var(--buy)}
 .vfb-audio-hint{
@@ -635,17 +677,17 @@ h2{font-size:clamp(21px,3.1vw,27px);margin-bottom:6px}
   /* 272px e o maior valor em que os 4 cards ainda cabem juntos no desktop
      (1140px de wrap). Assim nenhuma resposta fica escondida em tela grande e
      a seta so aparece de tablet pra baixo, que e onde realmente sobra card. */
-  flex:0 0 clamp(232px,27vw,272px);scroll-snap-align:center;cursor:pointer;
+  flex:0 0 clamp(232px,27vw,272px);scroll-snap-align:center;cursor:zoom-in;
   display:flex;flex-direction:column;text-align:left;padding:0;
   background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);
   overflow:hidden;color:inherit;font:inherit;
   transition:filter .35s ease,opacity .35s ease,transform .35s ease,border-color .2s;
 }
-/* spotlight igual ao dos videos: so o card em foco fica nitido. A classe
-   qbx-ready so entra pelo JS, entao sem JS nada fica borrado. */
-.qbx-track.qbx-ready .qbx-card:not(.qbx-focus){filter:blur(4px) saturate(.6);opacity:.45;transform:scale(.94)}
-.qbx-card.qbx-focus{border-color:var(--line2);cursor:zoom-in}
-.qbx-card.qbx-focus:hover{transform:translateY(-2px)}
+/* Sem blur (o publico e mais velho e gastava um toque so pra desborrar).
+   O card fora de foco so fica levemente apagado; qualquer clique ja abre o print. */
+.qbx-track.qbx-ready .qbx-card:not(.qbx-focus){opacity:.78;transform:scale(.98)}
+.qbx-card.qbx-focus{border-color:var(--line2)}
+.qbx-card:hover{transform:translateY(-2px)}
 /* aspect-ratio no wrapper + object-fit no img: os stories sao 9:16 e sem isso
    os cards ficam com alturas diferentes enquanto as imagens carregam. */
 .qbx-shot{position:relative;aspect-ratio:9/16;background:#05080b;overflow:hidden}
@@ -684,7 +726,20 @@ h2{font-size:clamp(21px,3.1vw,27px);margin-bottom:6px}
   display:none;align-items:center;justify-content:center;padding:24px 16px;
 }
 .qbx-ov.on{display:flex}
-.qbx-ov img{max-width:min(420px,92vw);max-height:88vh;width:auto;border-radius:10px;display:block}
+/* O print vem junto com um CTA: quem abriu a imagem leu a resposta e precisa
+   saber qual e o proximo passo, senao fecha o visor e fica parado no site. */
+.qbx-ov-box{
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+  max-height:100%;width:min(420px,92vw);overflow-y:auto;scrollbar-width:none;
+}
+.qbx-ov-box::-webkit-scrollbar{display:none}
+.qbx-ov img{width:100%;max-height:66vh;object-fit:contain;border-radius:10px;display:block}
+.qbx-ov-cta{
+  width:100%;background:var(--panel);border:1px solid var(--line2);border-radius:var(--r2);
+  padding:14px 16px 16px;display:flex;flex-direction:column;gap:11px;text-align:center;
+}
+.qbx-ov-cta p{font-size:14px;line-height:1.5;color:var(--txt2)}
+.qbx-ov-cta p strong{color:#fff;font-weight:600}
 .qbx-x{
   position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;
   background:var(--panel2);border:1px solid var(--line2);color:var(--txt);
@@ -1044,7 +1099,7 @@ var io = (function(){
   <div class="wrap">
     <div class="sec-head reveal">
       <h2>Um pedaço da biblioteca</h2>
-      <p>A biblioteca completa tem mais de <span data-almaz-games="vitalicio">40.000</span> jogos. Abaixo estão os mais procurados pelos nossos clientes.</p>
+      <p>A biblioteca completa tem mais de <span data-almaz-games="vitalicio">40.000</span> jogos. Abaixo estão os mais procurados pelos nossos clientes. Toque em qualquer jogo pra ver se ele está incluso.</p>
     </div>
 
     <div id="disponibilidade">
@@ -1166,7 +1221,7 @@ var io = (function(){
 
     <div class="sec-head reveal" style="margin:34px 0 16px;max-width:660px">
       <h2 style="font-size:18px">Feedbacks no grupo de clientes</h2>
-      <p>Prints do nosso grupo. Quem compra entra no grupo, que é aberto, e vê a galera trocando ideia e tirando dúvida em tempo real.</p>
+      <p>Prints do nosso grupo. Quem compra entra no grupo, que é aberto, e vê a galera trocando ideia e tirando dúvida em tempo real. Toque num print pra ler ele maior.</p>
     </div>
     <div class="fbs reveal" id="fbs" aria-label="Prints de feedback de clientes"></div>
 
@@ -1409,11 +1464,26 @@ var io = (function(){
       <div class="cat-chips" id="cat-chips"></div>
     </div>
     <div class="cat-grid-wrap" id="cat-grid-wrap">
-      <div class="cat-note">A nossa biblioteca tem <strong>+40.000 jogos</strong>. Este catálogo mostra só os mais procurados pelos clientes. Não achou o seu? Provavelmente ele está disponível mesmo assim.</div>
+      <div class="cat-note">A nossa biblioteca tem <strong>+40.000 jogos</strong>. Este catálogo mostra só os mais procurados pelos clientes. Toque em qualquer jogo pra confirmar que ele está incluso. Não achou o seu? Provavelmente ele está disponível mesmo assim.</div>
       <div class="cat-grid" id="cat-grid"></div>
       <div class="cat-more-wrap" id="cat-more-wrap" style="display:none">
         <button class="cat-more" id="cat-more" type="button">Carregar mais jogos</button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== CONFIRMACAO DO JOGO ===================== -->
+<div class="gm-ov" id="gm-ov" role="dialog" aria-modal="true" aria-labelledby="gm-name">
+  <div class="gm-box">
+    <button class="gm-x" id="gm-x" type="button" aria-label="Fechar">&times;</button>
+    <img class="gm-img" id="gm-img" src="" alt="">
+    <div class="gm-body">
+      <div class="gm-name" id="gm-name"></div>
+      <div class="gm-status" id="gm-status">Disponível agora</div>
+      <p class="gm-txt" id="gm-txt"></p>
+      <a role="button" tabindex="0" href="javascript:void(0)" class="offer-btn" id="gm-go">Quero esse jogo</a>
+      <button type="button" class="gm-back" id="gm-back">Continuar vendo os jogos</button>
     </div>
   </div>
 </div>
@@ -1446,7 +1516,13 @@ var io = (function(){
 <!-- Visor das caixinhas do Instagram -->
 <div class="qbx-ov" id="qbx-ov" role="dialog" aria-modal="true" aria-label="Print da caixinha de perguntas">
   <button class="qbx-x" id="qbx-x" type="button" aria-label="Fechar">&times;</button>
-  <img id="qbx-ov-img" src="" alt="Print da caixinha de perguntas do Instagram">
+  <div class="qbx-ov-box">
+    <img id="qbx-ov-img" src="" alt="Print da caixinha de perguntas do Instagram">
+    <div class="qbx-ov-cta">
+      <p id="qbx-ov-txt">Tirou a dúvida? Então é só escolher o seu acesso e <strong>liberar os 40.000 jogos</strong>.</p>
+      <a role="button" tabindex="0" href="javascript:void(0)" class="offer-btn" id="qbx-ov-go">Ver os planos e preços</a>
+    </div>
+  </div>
 </div>
 
 <div id="upsell-ov" role="dialog" aria-modal="true" aria-label="Oferta especial">
@@ -4245,7 +4321,10 @@ var io = (function(){
 
     var nm=esc(g.n);
 
-    return '<div class="av-card">'+
+    // role/tabindex + data-*: clicar num jogo abre a confirmacao "esse jogo esta
+    // incluso" com o CTA. Antes o clique no card nao levava a lugar nenhum.
+    return '<div class="av-card" role="button" tabindex="0" data-gn="'+nm+'"'+
+      (g.soon?' data-gsoon="1" data-gdt="'+esc(g.dt||'')+'"':'')+'>'+
 
       '<img class="av-card-img" data-i="'+g.i+'"'+(g.u?' data-u="1"':'')+' src="'+(g.u||'https://cdn.cloudflare.steamstatic.com/steam/apps/'+g.i+'/'+(g.img||'header.jpg'))+'" alt="'+nm+'" loading="lazy" decoding="async" onerror="almazImgFallback(this)">'+
 
@@ -4449,6 +4528,80 @@ var io = (function(){
 
 
 
+  // ---------- Confirmação do jogo ----------
+  // Clique em qualquer card de jogo (na faixa da home ou dentro do catálogo)
+  // abre uma confirmação com o próximo passo escrito, em vez de não fazer nada.
+  (function(){
+    var ov=document.getElementById('gm-ov');
+    if(!ov)return;
+    var gimg=document.getElementById('gm-img'),
+        gname=document.getElementById('gm-name'),
+        gstat=document.getElementById('gm-status'),
+        gtxt=document.getElementById('gm-txt'),
+        ggo=document.getElementById('gm-go'),
+        gback=document.getElementById('gm-back'),
+        gx=document.getElementById('gm-x');
+
+    function close(){ ov.classList.remove('on'); document.body.classList.remove('gm-open'); }
+
+    function open(card){
+      var nome=card.getAttribute('data-gn')||'Esse jogo',
+          soon=card.getAttribute('data-gsoon')==='1',
+          dt=card.getAttribute('data-gdt')||'',
+          im=card.querySelector('.av-card-img');
+
+      gimg.src = im ? im.src : '';
+      gimg.alt = nome;
+      gname.textContent = nome;
+
+      // Mesma fonte única de números do resto da página (window.ALMAZ_GAMES).
+      var qtd=(window.ALMAZ_GAMES&&window.ALMAZ_GAMES.vitalicio)||'40.000';
+
+      if(soon){
+        gstat.className='gm-status soon';
+        gstat.textContent = (!dt||dt==='a confirmar') ? 'Lançamento, data a confirmar' : 'Chega em '+dt;
+        gtxt.innerHTML='<strong>'+esc(nome)+'</strong> ainda não saiu. Assim que lançar, ele entra no seu acesso automaticamente, sem pagar de novo, junto com os outros <strong>'+qtd+' jogos</strong>.';
+        ggo.textContent='Quero garantir esse lançamento';
+      } else {
+        gstat.className='gm-status';
+        gstat.textContent='Disponível agora';
+        gtxt.innerHTML='<strong>'+esc(nome)+'</strong> está liberado no seu acesso, junto com mais <strong>'+qtd+' jogos</strong>. Baixa direto pela Steam e joga hoje mesmo.';
+        ggo.textContent='Quero esse jogo';
+      }
+      ov.classList.add('on');
+      document.body.classList.add('gm-open');
+    }
+
+    document.addEventListener('click',function(e){
+      // O botão "Desbloquear acesso" do estado vazio tem o próprio destino.
+      if(e.target.closest('.av-unlock'))return;
+      var card=e.target.closest('.av-card');
+      if(!card||!card.getAttribute('data-gn'))return;
+      open(card);
+    });
+
+    // Teclado: os cards são role="button", então Enter/espaço também abrem.
+    document.addEventListener('keydown',function(e){
+      if(e.key==='Escape'&&ov.classList.contains('on')){ close(); return; }
+      if(e.key!=='Enter'&&e.key!==' ')return;
+      var card=e.target&&e.target.closest?e.target.closest('.av-card'):null;
+      if(!card||!card.getAttribute('data-gn'))return;
+      e.preventDefault(); open(card);
+    });
+
+    gx.addEventListener('click',close);
+    gback.addEventListener('click',close);
+    ov.addEventListener('click',function(e){ if(e.target===ov)close(); });
+
+    ggo.addEventListener('click',function(){
+      close();
+      if(window.almazCatClose)window.almazCatClose();
+      gotoPricing();
+    });
+  })();
+
+
+
   // ---------- Modal: Catálogo Completo (busca + filtro + paginação) ----------
 
   (function(){
@@ -4526,6 +4679,9 @@ var io = (function(){
     function open(){ cCat='todos'; cQ=''; cinput.value=''; chips(); rerender(); modal.classList.add('open'); document.body.classList.add('cat-open'); openedAt=Date.now(); }
 
     function close(){ modal.classList.remove('open'); document.body.classList.remove('cat-open'); }
+
+    // O CTA da confirmacao do jogo precisa fechar o catalogo antes de rolar pros planos.
+    window.almazCatClose=close;
 
 
 
@@ -4630,15 +4786,23 @@ var io = (function(){
   var html='';
   for(var d=0;d<2;d++){
     ids.forEach(function(id){
-      html+='<div class="fbs-card"'+(d===1?' aria-hidden="true"':'')+'>'
+      /* button + data-print: clicar num print abre ele grande no visor, com CTA.
+         Antes o clique nao fazia nada e o cliente ficava tentando. */
+      html+='<button type="button" class="fbs-card" data-print="https://i.imgur.com/'+id+'.jpeg" aria-label="Ver o feedback ampliado"'+(d===1?' tabindex="-1"':'')+'>'
           /* eager de proposito: os prints tem alturas diferentes e sem height
              definida uma imagem lazy fica com 0px, fazendo a faixa pular
              enquanto carrega. Sao 6 URLs unicas (a 2a volta vem do cache). */
           + '<img src="https://i.imgur.com/'+id+'.jpeg" alt="Feedback de cliente no grupo" loading="eager" decoding="async">'
-          + '</div>';
+          + '</button>';
     });
   }
   host.innerHTML='<div class="fbs-track">'+html+'</div>';
+
+  host.addEventListener('click',function(e){
+    var c=e.target.closest('.fbs-card'); if(!c||!window.almazOpenPrint) return;
+    window.almazOpenPrint(c.getAttribute('data-print'),
+      'Esse é o grupo de clientes, aberto pra quem compra. <strong>Quer entrar também?</strong>');
+  });
 })();
 
 /* Caixinhas do Instagram: mesmo spotlight dos feedbacks em video. So o card em
@@ -4655,13 +4819,30 @@ var io = (function(){
   /* ---- visor ---- */
   function close(){ ov.classList.remove('on'); document.body.style.overflow=''; }
   function open(card){
-    img.src=card.getAttribute('data-qbx');
-    ov.classList.add('on');
-    document.body.style.overflow='hidden';
+    window.almazOpenPrint(card.getAttribute('data-qbx'));
   }
   x.addEventListener('click',close);
   ov.addEventListener('click',function(e){ if(e.target===ov) close(); });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&ov.classList.contains('on')) close(); });
+
+  /* O visor tambem atende os prints do grupo (faixa #fbs), que antes nao
+     abriam nada quando a pessoa clicava. */
+  window.almazOpenPrint=function(src,texto){
+    img.src=src;
+    var qtd=(window.ALMAZ_GAMES&&window.ALMAZ_GAMES.vitalicio)||'40.000';
+    var t=document.getElementById('qbx-ov-txt');
+    if(t) t.innerHTML = texto || 'Tirou a dúvida? Então é só escolher o seu acesso e <strong>liberar os '+qtd+' jogos</strong>.';
+    ov.classList.add('on');
+    document.body.style.overflow='hidden';
+  };
+
+  /* CTA do visor: fecha o print e leva pros planos. */
+  var go=document.getElementById('qbx-ov-go');
+  if(go) go.addEventListener('click',function(){
+    close();
+    var p=document.getElementById('pricing');
+    if(window.almazScrollTo){window.almazScrollTo(p);} else if(p){p.scrollIntoView({behavior:'smooth'});}
+  });
 
   /* ---- spotlight ---- */
   var current=null;
@@ -4682,12 +4863,14 @@ var io = (function(){
     });
     if(best&&best!==current) focusCard(best);
   }
+  /* Um toque so: antes o primeiro clique num card fora de foco servia so pra
+     tirar o blur, e o cliente achava que o site nao tinha respondido. Agora
+     qualquer clique ja abre o print inteiro. */
   cards.forEach(function(card){
     card.addEventListener('click',function(){
       if(current!==card){
         if(isCarousel()) card.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
         focusCard(card);
-        return;
       }
       open(card);
     });
@@ -4851,13 +5034,14 @@ var io = (function(){
     if(!video) return;
 
     card.addEventListener('click', function(){
-      // Card fora de foco → traz para o centro/foco
+      // Card fora de foco → traz para o centro/foco e já solta o áudio no mesmo
+      // toque. Antes o primeiro clique só focava, e o cliente achava que o site
+      // tinha travado porque continuava mudo.
       if(current !== card){
         if(isCarousel()) card.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
         focusCard(card);
-        return;
       }
-      // Card em foco ainda mudo → primeiro toque ativa o áudio
+      // Card em foco ainda mudo → ativa o áudio
       if(video.muted){
         cards.forEach(function(c){ var v = c.querySelector('video'); if(v && v !== video) v.muted = true; });
         card.classList.add('vfb-on');
