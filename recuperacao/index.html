@@ -208,7 +208,7 @@ main{padding:0 14px 30px}
 
 <!-- ?v= é anti-cache: no GitHub Pages o header no-store do vercel.json não vale,
      então ao gerar um dados.js novo suba este número, senão o celular abre a lista velha -->
-<script src="dados.js?v=3"></script>
+<script src="dados.js?v=4"></script>
 <script>
 /* =========================================================================
    1) Descriptografia. O arquivo dados.js publicado contem apenas o blob
@@ -307,9 +307,23 @@ Me chama que eu resolvo manualmente, leva 2 minutos.` },
 
 Você parou na hora de fechar o ${produtoCurto(c.produto)}. Se ficou com receio de como funciona a ativação, eu te explico direitinho antes de qualquer pagamento.
 
-Sem compromisso.` }
+Sem compromisso.` },
+
+  /* Reset Key nao e venda nova: 88% de quem compra ja tinha plano. Essa pessoa
+     provavelmente JA e cliente e travou num reset. Mandar "finalize sua compra"
+     pra ela soa como se a gente nao soubesse quem ela e. */
+  { nome:'Reset Key', txt: c =>
+`Oi ${primeiroNome(c.nome)}, tudo bem?
+
+Vi que você começou o pedido do Reset Key e não conseguiu concluir. Deu algum problema na sua ativação?
+
+Me conta o que aconteceu que eu resolvo por aqui.` }
 ];
-function modeloSugerido(c){ return c.tentativas >= 3 ? 3 : (c.dias <= 3 ? 0 : 2); }
+const ehReset = c => /reset/i.test(c.produto || '');
+function modeloSugerido(c){
+  if(ehReset(c)) return 5;              // cliente com problema, nao lead novo
+  return c.tentativas >= 3 ? 3 : (c.dias <= 3 ? 0 : 2);
+}
 
 /* =========================================================================
    4) Estado / render
@@ -366,6 +380,7 @@ function render(){
       if(c.comprou) tags.push('<span class="tag ok">JÁ COMPROU · '+money(c.pagoValor)+'</span>');
       else if(s === 'comprou') tags.push('<span class="tag ok">COMPROU</span>');
       if(c.verificar) tags.push('<span class="tag ver">CONFIRMAR SE PAGOU</span>');
+      if(ehReset(c)) tags.push('<span class="tag tent">PROVÁVEL CLIENTE · RESET</span>');
       if(c.tipoTel === 'sem_ddd') tags.push('<span class="tag sddd">FALTA DDD</span>');
       if(c.tipoTel === 'ausente') tags.push('<span class="tag mail">SÓ E-MAIL</span>');
 
