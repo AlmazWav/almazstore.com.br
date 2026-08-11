@@ -138,7 +138,7 @@ main{padding:0 14px 30px}
 <div id="gate">
   <div class="gate-box">
     <h1>Recuperação de carrinhos</h1>
-    <p>Os dados dos clientes estão criptografados. Digite a senha para abrir.</p>
+    <p>Digite a senha uma vez. Este aparelho fica destravado depois disso.</p>
     <input type="password" id="gate-senha" placeholder="senha" autocomplete="current-password" inputmode="text">
     <button id="gate-btn">Abrir</button>
     <div id="gate-erro"></div>
@@ -507,7 +507,7 @@ document.getElementById('btn-atualizar').addEventListener('click', async () => {
   b.textContent = '...';
   BLOB = null;
   try{
-    const dados = await decifrar(await carregarBlob(), sessionStorage.getItem(CHAVE_CACHE));
+    const dados = await decifrar(await carregarBlob(), localStorage.getItem(CHAVE_CACHE));
     iniciar(dados);
     b.textContent = '✓';
   }catch(e){ b.textContent = '!'; }
@@ -688,7 +688,7 @@ async function tentarAbrir(senha){
   erro.textContent = 'Abrindo...';
   try{
     const dados = await decifrar(await carregarBlob(), senha);
-    sessionStorage.setItem(CHAVE_CACHE, senha);
+    localStorage.setItem(CHAVE_CACHE, senha);
     carregarLocal();
     iniciar(dados);
   }catch(e){
@@ -707,7 +707,7 @@ document.getElementById('gate-senha').addEventListener('keydown',
 
 // se ja abriu nesta sessao, nao pede de novo
 (function(){
-  const s = sessionStorage.getItem(CHAVE_CACHE);
+  const s = localStorage.getItem(CHAVE_CACHE);
   if(s) tentarAbrir(s);
   else document.getElementById('gate-senha').focus();
 })();
