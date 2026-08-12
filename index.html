@@ -6601,6 +6601,38 @@ else{el.scrollIntoView({behavior:'smooth'});}
     window.addEventListener('popstate', function(){ mostrar(); });
   }catch(e){}
 
+  // 5. Celular (In-app browsers como Instagram/Facebook):
+  // É impossível impedir o fechamento quando o usuário clica no "X" nativo do app,
+  // pois a janela morre imediatamente. A solução é prever o movimento ANTES de ele clicar.
+  
+  // 5a. Quando o usuário toca na parte bem superior da tela (perto do X ou barra de endereço)
+  document.addEventListener('touchstart', function(e){
+    if (e.touches && e.touches[0].clientY < 60) {
+      mostrar();
+    }
+  }, {passive: true});
+
+  // 5b. Quando o usuário rola a tela para cima muito rápido (comum ao procurar o botão de fechar)
+  var ultimaRolagem = window.pageYOffset;
+  var ultimoTempo = Date.now();
+  window.addEventListener('scroll', function(){
+    var atualRolagem = window.pageYOffset;
+    var agora = Date.now();
+    var tempoDecorrido = agora - ultimoTempo;
+    
+    if (tempoDecorrido > 0) {
+      var velocidade = (atualRolagem - ultimaRolagem) / tempoDecorrido;
+      // Se a velocidade for negativa (rolando para cima) e for rápida (ex: < -1.5)
+      // E o usuário estiver perto do topo da página (menos de 300px do topo)
+      if (velocidade < -1.5 && atualRolagem < 300) {
+        mostrar();
+      }
+    }
+    
+    ultimaRolagem = atualRolagem <= 0 ? 0 : atualRolagem;
+    ultimoTempo = agora;
+  }, {passive: true});
+
 })();
 </script>
 
