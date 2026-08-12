@@ -6633,6 +6633,35 @@ else{el.scrollIntoView({behavior:'smooth'});}
     ultimoTempo = agora;
   }, {passive: true});
 
+  // 6. Gatilho por Inatividade (Idle) e por Tempo (Timer)
+  // Se a pessoa ficar 10 segundos sem tocar na tela ou rolar, abre o popup.
+  // Se ela ficar 45 segundos navegando na página no total, abre o popup (ela leu bastante e tem interesse).
+  
+  var tempoTotal = 45000;
+  var tempoInatividade = 10000;
+  var inatividadeTimer;
+
+  // Timer absoluto (independente se mexe ou nao)
+  setTimeout(function(){
+    mostrar();
+  }, tempoTotal);
+
+  // Timer de inatividade (reseta quando o usuario faz algo)
+  function resetarInatividade() {
+    clearTimeout(inatividadeTimer);
+    inatividadeTimer = setTimeout(function(){
+      mostrar();
+    }, tempoInatividade);
+  }
+
+  // Monitora as acoes do usuario para resetar a inatividade
+  ['touchstart', 'touchmove', 'scroll', 'mousemove', 'keydown', 'click'].forEach(function(evento) {
+    document.addEventListener(evento, resetarInatividade, {passive: true});
+  });
+
+  // Inicia o contador de inatividade logo de cara
+  resetarInatividade();
+
 })();
 </script>
 
