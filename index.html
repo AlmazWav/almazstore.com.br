@@ -805,38 +805,7 @@ body.gm-open{overflow:hidden}
 }
 .ups-decline:hover{color:var(--txt);border-color:var(--line2)}
 
-/* ---------- Convite pro grupo, so na saida ----------
-   Aparece uma unica vez por pessoa e so quando ela demonstra que vai embora
-   (mouse saindo pra fora no desktop, botao voltar no celular). Nunca durante
-   a leitura, porque a primeira tela ja perde metade do trafego e nao pode
-   levar mais uma interrupcao. */
-#exg-ov{
-  position:fixed;inset:0;z-index:9700;display:none;align-items:center;justify-content:center;
-  padding:18px;background:rgba(4,8,12,.88);
-}
-#exg-ov.open{display:flex}
-.exg-box{
-  width:100%;max-width:400px;background:var(--panel);border:1px solid var(--line2);
-  border-radius:var(--r2);padding:24px 22px 18px;position:relative;
-  box-shadow:0 30px 70px rgba(0,0,0,.6);
-}
-.exg-x{
-  position:absolute;top:10px;right:12px;width:28px;height:28px;border-radius:6px;
-  background:var(--panel2);color:var(--dim);font-size:18px;line-height:1;
-}
-.exg-x:hover{color:#fff;background:var(--panel3)}
-.exg-title{font-size:20px;font-weight:700;line-height:1.3;margin-bottom:8px}
-.exg-title span{color:var(--buy2)}
-.exg-sub{font-size:14px;color:var(--txt2);line-height:1.6;margin-bottom:15px}
-.exg-feat{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
-.exg-feat li{font-size:13.5px;color:var(--txt2);display:flex;gap:8px;align-items:flex-start}
-.exg-feat li b{color:#fff;font-weight:600}
-.exg-go{width:100%}
-.exg-no{
-  display:block;width:100%;margin-top:10px;background:none;border:1px solid var(--line);
-  color:var(--dim);font-size:13.5px;font-weight:500;padding:11px;border-radius:var(--r);
-}
-.exg-no:hover{color:var(--txt);border-color:var(--line2)}
+
 
 /* ---------- chat de suporte ---------- */
 #ai-widget{position:fixed;right:16px;bottom:16px;z-index:800}
@@ -1506,24 +1475,7 @@ var io = (function(){
   </div>
 </div>
 
-<!-- ===================== CONVITE PRO GRUPO (SAIDA) ===================== -->
-<div id="exg-ov" role="dialog" aria-modal="true" aria-labelledby="exg-title">
-  <div class="exg-box">
-    <button class="exg-x" id="exg-x" type="button" aria-label="Fechar">&times;</button>
-    <h3 class="exg-title" id="exg-title">Não pode comprar agora? <span>Entre no nosso grupo</span> e não perca o contato!</h3>
-    <p class="exg-sub">Lá dentro nós postamos feedbacks de quem já usa e você pode me chamar no privado (DM) para tirar qualquer dúvida antes de decidir.</p>
-    <ul class="exg-feat">
-      <li>✅ <span>Veja <b>feedbacks reais</b> da galera que já comprou</span></li>
-      <li>✅ <span><b>Tire suas dúvidas</b> diretamente comigo por mensagem privada</span></li>
-      <li>✅ <span>Fique sabendo dos <b>lançamentos e das promoções</b></span></li>
-    </ul>
-    <!-- button (e nao <a href>) de proposito: o script da Utmify decora todo
-         href da pagina com utm_source/utm_medium, e isso sujaria o convite do
-         grupo. Sem href, o link sai exatamente como foi colado. -->
-    <button type="button" id="exg-go" class="offer-btn exg-go">Entrar no grupo</button>
-    <button type="button" id="exg-no" class="exg-no">Não, quero continuar no site</button>
-  </div>
-</div>
+
 
 <!-- ===================== CONFIRMACAO DO JOGO ===================== -->
 <div class="gm-ov" id="gm-ov" role="dialog" aria-modal="true" aria-labelledby="gm-name">
@@ -6508,162 +6460,7 @@ else{el.scrollIntoView({behavior:'smooth'});}
 
 </script>
 
-<script>
-/* ===================== CONVITE PRO GRUPO NA SAIDA =====================
 
-   Por que so na saida: o Clarity mostra que 46,93% das pessoas somem antes de
-   10% de rolagem e que ~9,4% de todos os toques do site sao gente fechando
-   popup. Um convite na entrada entraria justamente onde o funil mais sangra.
-   Na saida o custo e zero, porque so fala com quem ja estava indo embora.
-
-   >>>>>> TROQUE A LINHA ABAIXO PELO LINK DO GRUPO <<<<<<
-   Enquanto estiver com o valor de exemplo, o convite NAO aparece pra ninguem
-   (trava de seguranca, pra nao mandar trafego pago pra um link que nao existe).
-   Pra testar antes de publicar, abra o site com ?vergrupo=1 no final da URL. */
-
-(function(){
-  var LINK_DO_GRUPO = 'https://chat.whatsapp.com/D6Z0VQsPBe2BkvcqgrmHQr'; // Link do grupo do WhatsApp
-
-  var ov = document.getElementById('exg-ov');
-  if(!ov) return;
-
-  var linkPronto = LINK_DO_GRUPO.indexOf('http') === 0;
-
-  var armado = false, mostrado = false, ultimoCheckout = 0;
-  var POS_CHECKOUT = 45000; // nao interrompe quem acabou de clicar em comprar
-
-  // Quem acabou de clicar em comprar esta quente: nao atravessar a frente dele.
-  document.addEventListener('click', function(e){
-    var a = e.target.closest ? e.target.closest('a[href]') : null;
-    if(!a) return;
-    var h = a.href || '';
-    if(h.indexOf('pay.almazstore.com.br')!==-1 || h.indexOf('ggcheckout.app')!==-1){
-      ultimoCheckout = Date.now();
-    }
-  }, true);
-
-  // Ja tem outro popup na tela? Entao nao empilha mais um em cima.
-  function outroAberto(){
-    return !!(document.querySelector('#gm-ov.on, .qbx-ov.on, #cat-modal.open, #upsell-ov.open'));
-  }
-
-  function mostrar(){
-    if(mostrado || !armado) return;
-    if(Date.now() - ultimoCheckout < POS_CHECKOUT) return;
-    if(outroAberto()) return;
-    mostrado = true;
-    ov.classList.add('open');
-    document.body.classList.add('gm-open');
-    var go = document.getElementById('exg-go');
-    if(go) go.focus();
-  }
-
-  function fechar(){
-    ov.classList.remove('open');
-    document.body.classList.remove('gm-open');
-  }
-
-  // Abre numa aba nova pra pessoa entrar no grupo sem perder o site.
-  var go = document.getElementById('exg-go');
-  if(go) go.addEventListener('click', function(){
-    if(linkPronto) window.open(LINK_DO_GRUPO, '_blank', 'noopener');
-    else alert('Lembre-se de colocar o link do WhatsApp no código!');
-    fechar();
-  });
-  document.getElementById('exg-no').addEventListener('click', fechar);
-  document.getElementById('exg-x').addEventListener('click', fechar);
-  ov.addEventListener('click', function(e){ if(e.target===ov) fechar(); });
-  document.addEventListener('keydown', function(e){
-    if(e.key==='Escape' && ov.classList.contains('open')) fechar();
-  });
-
-  // ARMADO IMEDIATAMENTE (Sem travas)
-  armado = true;
-
-  // 1. Mouse saindo da janela (Qualquer direção)
-  document.addEventListener('mouseout', function(e){
-    if(!e.relatedTarget) mostrar();
-  });
-
-  // 2. Quando o usuário clica para ir para outra aba ou minimiza o navegador (Blur)
-  window.addEventListener('blur', function(){
-    mostrar();
-  });
-
-  // 3. Quando a visibilidade da página muda (vai pra segundo plano)
-  document.addEventListener('visibilitychange', function(){
-    if (document.hidden) mostrar();
-  });
-
-  // 4. Celular: botão de voltar do histórico
-  try{
-    history.pushState({almazExg:1}, '');
-    window.addEventListener('popstate', function(){ mostrar(); });
-  }catch(e){}
-
-  // 5. Celular (In-app browsers como Instagram/Facebook):
-  // É impossível impedir o fechamento quando o usuário clica no "X" nativo do app,
-  // pois a janela morre imediatamente. A solução é prever o movimento ANTES de ele clicar.
-  
-  // 5a. Quando o usuário toca na parte bem superior da tela (perto do X ou barra de endereço)
-  document.addEventListener('touchstart', function(e){
-    if (e.touches && e.touches[0].clientY < 60) {
-      mostrar();
-    }
-  }, {passive: true});
-
-  // 5b. Quando o usuário rola a tela para cima muito rápido (comum ao procurar o botão de fechar)
-  var ultimaRolagem = window.pageYOffset;
-  var ultimoTempo = Date.now();
-  window.addEventListener('scroll', function(){
-    var atualRolagem = window.pageYOffset;
-    var agora = Date.now();
-    var tempoDecorrido = agora - ultimoTempo;
-    
-    if (tempoDecorrido > 0) {
-      var velocidade = (atualRolagem - ultimaRolagem) / tempoDecorrido;
-      // Se a velocidade for negativa (rolando para cima) e for rápida (ex: < -1.5)
-      // E o usuário estiver perto do topo da página (menos de 300px do topo)
-      if (velocidade < -1.5 && atualRolagem < 300) {
-        mostrar();
-      }
-    }
-    
-    ultimaRolagem = atualRolagem <= 0 ? 0 : atualRolagem;
-    ultimoTempo = agora;
-  }, {passive: true});
-
-  // 6. Gatilho por Inatividade (Idle) e por Tempo (Timer)
-  // Se a pessoa ficar 10 segundos sem tocar na tela ou rolar, abre o popup.
-  // Se ela ficar 45 segundos navegando na página no total, abre o popup (ela leu bastante e tem interesse).
-  
-  var tempoTotal = 45000;
-  var tempoInatividade = 10000;
-  var inatividadeTimer;
-
-  // Timer absoluto (independente se mexe ou nao)
-  setTimeout(function(){
-    mostrar();
-  }, tempoTotal);
-
-  // Timer de inatividade (reseta quando o usuario faz algo)
-  function resetarInatividade() {
-    clearTimeout(inatividadeTimer);
-    inatividadeTimer = setTimeout(function(){
-      mostrar();
-    }, tempoInatividade);
-  }
-
-  // Monitora as acoes do usuario para resetar a inatividade
-  ['touchstart', 'touchmove', 'scroll', 'mousemove', 'keydown', 'click'].forEach(function(evento) {
-    document.addEventListener(evento, resetarInatividade, {passive: true});
-  });
-
-  // Inicia o contador de inatividade logo de cara
-  resetarInatividade();
-
-})();
-</script>
 
 </body>
 </html>
