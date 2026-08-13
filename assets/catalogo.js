@@ -1,0 +1,2650 @@
+/* Catalogo de jogos da Almaz Store.
+   Separado do index.html em 13/08/2026: o array era 224 KB (70 KB comprimido),
+   ou seja 64% de tudo que o visitante baixava, e 100% das pessoas pagavam por ele
+   mesmo com so ~35% chegando a abrir o catalogo. Agora carrega sob demanda.
+   Quem edita jogo mexe AQUI, nao no index.html. Formato e regras: ver a memoria
+   catalogo-jogos (capa com hash usa o campo u; jogo nao lancado usa soon/dt/o). */
+  window.ALMAZ_CATALOGO=[
+    // Ordem = mais procurados primeiro. Base: nº real de avaliacoes na Steam de cada
+    // jogo, com peso extra pra lancamento recente (2026 x4, 2025 x2). Quem ainda nao
+    // saiu herda a procura do antecessor da franquia. Recalculado em 30/07/2026.
+
+    // Entrou em 13/08/2026, conferido contra os mais vendidos e os mais desejados da Steam.
+    // Os 3 tem capa nova com hash, entao levam `u` (o header.jpg antigo devolve 404 e o
+    // onerror esconderia o card calado). Capas validadas por GET: 51, 41 e 40 KB.
+    {i:'2523770',n:"The Lord of the Rings: War in the North - Legacy Edition",c:'rpg',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2523770/ce49411b23ef7bfe8dd88c1c58f29a4584cf961e/header.jpg'},
+    {i:'3669870',n:"CONTROL Resonant",c:'acao',soon:1,dt:'24 set 2026',o:20260924,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3669870/1e0c76e4253d347bb1304c3f213570251d924edf/header.jpg'},
+    {i:'1867240',n:"WARDOGS",c:'acao',soon:1,dt:'10 set 2026',o:20260910,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1867240/59d4daf753bd5d982e6675f7eee363bc817c574e/header.jpg'},
+
+    {i:'271590',n:"Grand Theft Auto V",c:'mundoaberto'},{i:'105600',n:"Terraria",c:'sobrevivencia'},{i:'252490',n:"Rust",c:'sobrevivencia'},
+
+    {i:'4000',n:"Garry's Mod",c:'fps'},{i:'2358720',n:"Black Myth: Wukong",c:'acao'},{i:'553850',n:"Helldivers 2",c:'fps'},
+
+    {i:'1245620',n:"Elden Ring",c:'rpg'},{i:'550',n:"Left 4 Dead 2",c:'terror'},{i:'413150',n:"Stardew Valley",c:'indie'},
+
+    {i:'1091500',n:"Cyberpunk 2077",c:'rpg'},{i:'227300',n:"Euro Truck Simulator 2",c:'corrida'},{i:'381210',n:"Dead by Daylight",c:'terror'},
+
+    {i:'1174180',n:"Red Dead Redemption 2",c:'mundoaberto'},{i:'292030',n:"The Witcher 3",c:'rpg'},{i:'1086940',n:"Baldur's Gate 3",c:'rpg'},
+
+    {i:'739630',n:"Phasmophobia",c:'terror'},{i:'1030300',n:"Hollow Knight: Silksong",c:'indie',nw:1,y:'2025'},{i:'3241660',n:"R.E.P.O.",c:'coop',nw:1,y:'2025'},
+
+    {i:'1808500',n:"ARC Raiders",c:'fps',nw:1,y:'2025'},{i:'4435490',n:"Call of Duty: Modern Warfare 4",c:'fps',soon:1,dt:'22 out 2026',o:20261022,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4435490/0c492be3204835d71e8b454b6eb1817f8ff68c0d/header.jpg'},{i:'1938090',n:"Call of Duty: Modern Warfare II",c:'fps'},
+
+    {i:'346110',n:"ARK: Survival Evolved",c:'sobrevivencia'},{i:'2868840',n:"Slay the Spire 2",c:'indie',nw:1,y:'2026'},{i:'945360',n:"Among Us",c:'sobrevivencia'},
+
+    {i:'3764200',n:"Resident Evil Requiem",c:'terror',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3764200/ce5437442768e38eb575f205ab9397d0264017b0/header.jpg'},{i:'2807960',n:"Battlefield 6",c:'fps',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2807960/c12d12ce3c7d217398d3fcad77427bfc9d57c570/header.jpg'},{i:'3527290',n:"PEAK",c:'coop',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3527290/31bac6b2eccf09b368f5e95ce510bae2baf3cfcd/header.jpg'},
+
+    {i:'242760',n:"The Forest",c:'sobrevivencia'},{i:'218620',n:"PAYDAY 2",c:'fps'},{i:'3321460',n:"Crimson Desert",c:'mundoaberto',nw:1,y:'2026'},
+
+    {i:'2246340',n:"Monster Hunter Wilds",c:'acao',nw:1,y:'2025'},{i:'322170',n:"Geometry Dash",c:'indie'},{i:'3164500',n:"Schedule I",c:'simulador',nw:1,y:'2025'},
+
+    {i:'367520',n:"Hollow Knight",c:'indie'},{i:'1903340',n:"Clair Obscur: Expedition 33",c:'rpg',nw:1,y:'2025'},{i:'322330',n:"Don't Starve Together",c:'terror'},
+
+    {i:'892970',n:"Valheim",c:'sobrevivencia'},{i:'582010',n:"Monster Hunter World",c:'rpg'},{i:'1966720',n:"Lethal Company",c:'coop'},
+
+    {i:'1962700',n:"Subnautica 2",c:'sobrevivencia',nw:1,y:'2026'},{i:'239140',n:"Dying Light",c:'terror'},{i:'221100',n:"DayZ",c:'sobrevivencia'},
+
+    {i:'620',n:"Portal 2",c:'fps'},{i:'108600',n:"Project Zomboid",c:'sobrevivencia'},{i:'1623730',n:"Palworld",c:'sobrevivencia'},
+
+    {i:'2694490',n:"Path of Exile 2",c:'rpg',nw:1,y:'2025'},{i:'374320',n:"Dark Souls III",c:'rpg'},{i:'250900',n:"The Binding of Isaac: Rebirth",c:'terror'},
+
+    {i:'377160',n:"Fallout 4",c:'rpg'},{i:'2719590',n:"Light No Fire",c:'mundoaberto',soon:1,dt:'a confirmar',o:99999999},{i:'275850',n:"No Man's Sky",c:'mundoaberto'},
+
+    {i:'284160',n:"BeamNG.drive",c:'corrida'},{i:'251570',n:"7 Days to Die",c:'sobrevivencia'},{i:'960090',n:"Bloons TD 6",c:'indie'},
+
+    {i:'1771300',n:"Kingdom Come: Deliverance II",c:'rpg',nw:1,y:'2025'},{i:'548430',n:"Deep Rock Galactic",c:'coop'},{i:'264710',n:"Subnautica",c:'aventura'},
+
+    {i:'2622380',n:"Elden Ring Nightreign",c:'acao',nw:1,y:'2025'},{i:'289070',n:"Sid Meier’s Civilization VI",c:'mundoaberto'},{i:'648800',n:"Raft",c:'sobrevivencia'},
+
+    {i:'394360',n:"Hearts of Iron IV",c:'mundoaberto'},{i:'489830',n:"Skyrim Special Edition",c:'rpg'},{i:'1172620',n:"Sea of Thieves",c:'aventura'},
+
+    {i:'990080',n:"Hogwarts Legacy",c:'rpg'},{i:'2483190',n:"Forza Horizon 6",c:'corrida',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2483190/99ff2e08356158cc0aacb4cf192298fc4c45f215/header_alt_assets_2.jpg'},{i:'2592160',n:"Dispatch",c:'aventura',nw:1,y:'2025'},
+
+    {i:'814380',n:"Sekiro",c:'acao'},{i:'632360',n:"Risk of Rain 2",c:'indie'},{i:'1144200',n:"Ready or Not",c:'terror'},
+
+    {i:'391540',n:"Undertale",c:'terror'},{i:'1517290',n:"Battlefield 2042",c:'fps'},{i:'72850',n:"The Elder Scrolls V: Skyrim",c:'mundoaberto'},
+
+    {i:'1326470',n:"Sons of the Forest",c:'sobrevivencia'},{i:'1118200',n:"People Playground",c:'terror'},{i:'49520',n:"Borderlands 2",c:'mundoaberto'},
+
+    {i:'4704690',n:"MECCHA CHAMELEON",c:'indie',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4704690/163e2a742e5fb8e1f5d1e3a890da98f04ab809d4/header.jpg'},{i:'1145360',n:"Hades",c:'indie'},{i:'1293830',n:"Forza Horizon 4",c:'corrida'},
+
+    {i:'1063730',n:"New World: Aeternum",c:'mundoaberto'},{i:'261550',n:"Mount & Blade II: Bannerlord",c:'rpg'},{i:'107410',n:"Arma 3",c:'mundoaberto'},
+
+    {i:'255710',n:"Cities: Skylines",c:'simulador'},{i:'1237970',n:"Titanfall 2",c:'fps'},{i:'1551360',n:"Forza Horizon 5",c:'corrida'},
+
+    {i:'220',n:"Half-Life 2",c:'fps'},{i:'526870',n:"Satisfactory",c:'simulador'},{i:'594650',n:"Hunt: Showdown 1896",c:'terror'},
+
+    {i:'2050650',n:"Resident Evil 4",c:'terror'},{i:'1238810',n:"Battlefield V",c:'mundoaberto'},{i:'203160',n:"Tomb Raider Game of the Year",c:'rpg'},
+
+    {i:'1426210',n:"It Takes Two",c:'coop'},{i:'1794680',n:"Vampire Survivors",c:'indie'},{i:'10',n:"Counter-Strike",c:'sobrevivencia'},
+
+    {i:'976730',n:"Halo: The Master Chief Collection",c:'fps'},{i:'22380',n:"Fallout: New Vegas",c:'sobrevivencia'},{i:'1222140',n:"Detroit: Become Human",c:'aventura'},
+
+    {i:'1671210',n:"DELTARUNE",c:'rpg',nw:1,y:'2025'},{i:'3065800',n:"Marathon",c:'fps',nw:1,y:'2026'},{i:'2001120',n:"Split Fiction",c:'coop',nw:1,y:'2025'},
+
+    {i:'294100',n:"RimWorld",c:'sobrevivencia'},{i:'1145350',n:"Hades II",c:'acao',nw:1,y:'2025'},{i:'393380',n:"Squad",c:'sobrevivencia'},
+
+    {i:'1229490',n:"ULTRAKILL",c:'fps'},{i:'427520',n:"Factorio",c:'simulador'},{i:'311210',n:"Call of Duty: Black Ops III",c:'mundoaberto'},
+
+    {i:'477160',n:"Human Fall Flat",c:'terror'},{i:'1238840',n:"Battlefield 1",c:'mundoaberto'},{i:'1468810',n:"鬼谷八荒 Tale of Immortal",c:'rpg'},
+
+    {i:'379720',n:"DOOM",c:'fps'},{i:'2183900',n:"Warhammer 40K: Space Marine 2",c:'acao'},{i:'1774880',n:"Blight: Survival",c:'terror',soon:1,dt:'a confirmar',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1774880/fe9504e8a6bf5e904f2b847be82c251838451eea/header.jpg'},
+
+    {i:'2852190',n:"Monster Hunter Stories 3: Twisted Reflection",c:'rpg',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2852190/de3717096a093d7bf9ab504563621bc17e37ccf4/header.jpg'},{i:'2109770',n:"Kingmakers",c:'acao',soon:1,dt:'a confirmar'},{i:'4199910',n:"Total War: WARHAMMER 40,000",c:'simulador',soon:1,dt:'a confirmar',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4199910/fcb5b083b8f42f5dde4480aefa0294420ddf6b19/header.jpg'},
+
+    {i:'4824610',n:"Resident Evil Veronica",c:'terror',soon:1,dt:'2027',o:20279999,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4824610/28045d733a3ada082858b5b1a5149e33ee40f378/header.jpg'},{i:'1846700',n:"Witchbrook",c:'indie',soon:1,dt:'2026',o:20269999,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1846700/51ffec115f4052d63621745305336a4b1ee14ad3/header.jpg'},{i:'1757350',n:"ILL",c:'terror',soon:1,dt:'2027',o:20279999,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1757350/d612df21fe4a2fac7ff8e639ab74fbd059df692c/header.jpg'},
+
+    {i:'2050420',n:"ARK 2",c:'sobrevivencia',soon:1,dt:'a confirmar'},{i:'2272360',n:"Warhammer 40,000: Dawn of War IV",c:'simulador',soon:1,dt:'17 set 2026',o:20260917,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2272360/f50a309da98ef75cbdae400a7d492e36314ce415/header.jpg'},{i:'2963950',n:"Persona 4 Revival",c:'rpg',soon:1,dt:'17 fev 2027',o:20270217,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2963950/e83b7da1c2e9ddbed1a27038bd86e9714b2aa893/header.jpg'},
+
+    {i:'3558670',n:"Tomb Raider: Legacy of Atlantis",c:'aventura',soon:1,dt:'12 fev 2027',o:20270212,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3558670/d0d4229807e9bd939c2374cb94a1264aa1386398/header.jpg'},{i:'2873440',n:"Chrono Odyssey",c:'rpg',soon:1,dt:'a confirmar',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2873440/de48f2d77db5eb14226739d563fdd68332c39e30/header.jpg'},{i:'3727390',n:"The Expanse: Osiris Reborn",c:'aventura',soon:1,dt:'2º tri 2027',o:20270698,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3727390/29369846b5ba94b2b1620eb8dd5aa8488f058d90/header.jpg'},
+
+    {i:'2590240',n:"METRO 2039",c:'fps',soon:1,dt:'fev 2027',o:20270299,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2590240/6998fb70f896b0f155061de0b472a8262bd06ef9/header.jpg'},{i:'4358690',n:"Graveyard Keeper 2",c:'simulador',soon:1,dt:'2026',o:20269999,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4358690/d63c37d6289ef7c48d89c0521fb82ac51d7f5ce8/header.jpg'},{i:'2439280',n:"Clockwork Revolution",c:'rpg',soon:1,dt:'2027',o:20279999,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2439280/19eb8ba017772920c7c6bf4287c0403b9675425d/header.jpg'},
+
+    {i:'1687540',n:"Showa American Story",c:'acao',soon:1,dt:'2026',o:20269999,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1687540/ce4d0d62bcc4d558977f34685bb52e65f788a3f0/header.jpg'},{i:'1952620',n:"The Lost Wild",c:'sobrevivencia',soon:1,dt:'2027',o:20279999,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1952620/c4a4cc62ec8b70700df7aa8f981513f17d170a89/header.jpg'},{i:'1586260',n:"BLACKFROST: The Long Dark 2",c:'sobrevivencia',soon:1,dt:'2027',o:20279999},
+
+    {i:'2692660',n:"Car Mechanic Simulator 2026",c:'simulador',soon:1,dt:'2026',o:20269999,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2692660/41c1499aac6db7e93d07162a16e8da3d2b5bc461/header.jpg'},{i:'1818140',n:"Den of Wolves",c:'fps',soon:1,dt:'a confirmar',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1818140/7221502e23b0e91387fc97cc4ccd3de407cf1a99/header.jpg'},{i:'2849490',n:"Outward 2",c:'rpg',soon:1,dt:'2027',o:20279999,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2849490/9858db3f4e8efe5050f2fb6c1266b377aa958d35/header.jpg'},
+
+    {i:'4260840',n:"STRANGER THAN HEAVEN",c:'acao',soon:1,dt:'14 jan 2027',o:20270114,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4260840/3e40b76faf9a3eafb4397dd51308eb2e48ac3660/header.jpg'},{i:'2649560',n:"Persona 6",c:'rpg',soon:1,dt:'a confirmar',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2649560/96402e10ba89cccb7906eecd235d7d812f8f9eb0/header.jpg'},{i:'3788800',n:"Atomic Heart 2",c:'fps',soon:1,dt:'a confirmar',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3788800/ddbc5938e486052c2b51819e280a1993b5f510ac/header.jpg'},
+
+    {i:'2165810',n:"Streets of Rogue 2",c:'indie',soon:1,dt:'a confirmar'},{i:'3230960',n:"EXODUS",c:'rpg',soon:1,dt:'2027',o:20279999,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3230960/c7daff445142b7d24677b2e962bd84314da0b813/header.jpg'},{i:'1257610',n:"Prison Architect 2",c:'simulador',soon:1,dt:'a confirmar'},
+
+    {i:'3493540',n:"Transport Fever 3",c:'simulador',soon:1,dt:'2026',o:20269999,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3493540/4c179a79a6286b15575ca3f1a6ca620e5d159b19/header.jpg'},{i:'3199500',n:"My Time at Evershine",c:'simulador',soon:1,dt:'2027',o:20279999},{i:'1388550',n:"Human Fall Flat 2",c:'coop',soon:1,dt:'a confirmar'},
+
+    {i:'2208810',n:"Jurassic Park: Survival",c:'sobrevivencia',soon:1,dt:'a confirmar',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2208810/5d10da69efd0cfb1b09019cbdbe53ca0a376710d/header.jpg'},{i:'4767480',n:"Lords of the Fallen II",c:'rpg',soon:1,dt:'a confirmar',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4767480/a34e3c4d4088e71c7d2cdc5445dc950abd2521db/header.jpg'},{i:'2617340',n:"Terminator: Survivors",c:'sobrevivencia',soon:1,dt:'a confirmar'},
+
+    {i:'2254950',n:"The Eternal Life of Goldman",c:'aventura',soon:1,dt:'a confirmar',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2254950/50ada08a863528ad28dd29a92568dbdaccd84e83/header.jpg'},{i:'4354570',n:"FINAL FANTASY VII REVELATION",c:'rpg',soon:1,dt:'2027',o:20279999,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4354570/c82a370d62d715234771be34c6ff3c928c7d78e2/header.jpg'},{i:'2412960',n:"Breathedge 2",c:'sobrevivencia',soon:1,dt:'30 ago 2026',o:20260830,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2412960/083885c9265403cf35f96efa398d620ca06ec2ae/header.jpg'},
+
+    {i:'1701840',n:"ExeKiller",c:'acao',soon:1,dt:'a confirmar'},{i:'2705130',n:"Exoborne",c:'fps',soon:1,dt:'a confirmar',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2705130/a5ee0be87c82cb610c098eeed59c0a13fb99e923/header.jpg'},{i:'1203170',n:"Darksiders 4",c:'acao',soon:1,dt:'a confirmar',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1203170/1dffc8cc0b74ab4e002e904d9022d54650bc84c8/header.jpg'},
+
+    {i:'883710',n:"Resident Evil 2",c:'terror'},{i:'268910',n:"Cuphead",c:'indie'},{i:'534380',n:"Dying Light 2 Stay Human: Reloaded Edition",c:'terror'},
+
+    {i:'646570',n:"Slay the Spire",c:'indie'},{i:'782330',n:"DOOM Eternal",c:'fps'},{i:'2669320',n:"EA Sports FC 25",c:'esportes',nw:1,y:'2025'},
+
+    {i:'8930',n:"Sid Meier's Civilization V",c:'simulador'},{i:'3240220',n:"Grand Theft Auto V Enhanced",c:'mundoaberto'},{i:'3405340',n:"Megabonk",c:'acao',nw:1,y:'2025'},
+
+    {i:'2277560',n:"WUCHANG: Fallen Feathers",c:'acao',nw:1,y:'2025'},{i:'686060',n:"Mewgenics",c:'rpg',nw:1,y:'2026'},{i:'435150',n:"Divinity: Original Sin 2 - Definitive Edition",c:'mundoaberto'},
+
+    {i:'3041230',n:"Windrose",c:'sobrevivencia',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3041230/7e838d87d787735d5d29d72777c5ee55653dfb2b/header.jpg'},{i:'3357650',n:"Pragmata",c:'aventura',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3357650/e32e168b25ed68a0cf6264c220c07e96c2abfb56/header.jpg'},{i:'518790',n:"theHunter: Call of the Wild",c:'esportes'},
+
+    {i:'901583',n:"Grand Theft Auto IV: Complete Edition",c:'mundoaberto'},{i:'12210',n:"Grand Theft Auto IV: The Complete Edition",c:'mundoaberto'},{i:'400',n:"Portal",c:'fps'},
+
+    {i:'281990',n:"Stellaris",c:'mundoaberto'},{i:'2379780',n:"Balatro",c:'indie'},{i:'270880',n:"American Truck Simulator",c:'mundoaberto'},
+
+    {i:'3405690',n:"EA SPORTS FC 26",c:'esportes',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3405690/64d362e71693f1ec7023f52ab94026f9a0d4fbed/header.jpg'},{i:'240',n:"Counter-Strike: Source",c:'sobrevivencia'},{i:'552520',n:"Far Cry 5",c:'fps'},
+
+    {i:'812140',n:"Assassin's Creed Odyssey",c:'mundoaberto'},{i:'3489700',n:"Stellar Blade",c:'acao',nw:1,y:'2025'},{i:'379430',n:"Kingdom Come: Deliverance",c:'mundoaberto'},
+
+    {i:'1593500',n:"God of War",c:'acao'},{i:'588650',n:"Dead Cells",c:'rpg'},{i:'813780',n:"Age of Empires II: Definitive Edition",c:'coop'},
+
+    {i:'1332010',n:"Stray",c:'terror'},{i:'1716740',n:"Starfield",c:'rpg'},{i:'1172380',n:"STAR WARS Jedi: Fallen Order",c:'mundoaberto'},
+
+    {i:'244210',n:"Assetto Corsa",c:'corrida'},{i:'48700',n:"Mount & Blade: Warband",c:'mundoaberto'},{i:'3768760',n:"007 First Light",c:'acao',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3768760/6646220d04fce26fc441f589e8f98d66c9e33b9c/header_alt_assets_2.jpg'},
+
+    {i:'601150',n:"Devil May Cry 5",c:'coop'},{i:'3949040',n:"RV There Yet?",c:'indie',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3949040/cae24b4ed7f4531be51f0d63f785b7d253f92dc3/header.jpg'},{i:'1285190',n:"Borderlands 4",c:'fps',nw:1,y:'2025'},
+
+    {i:'397540',n:"Borderlands 3",c:'fps'},{i:'304390',n:"FOR HONOR",c:'rpg'},{i:'70',n:"Half-Life",c:'fps'},
+
+    {i:'2881650',n:"Content Warning",c:'coop'},{i:'306130',n:"The Elder Scrolls Online",c:'mundoaberto'},{i:'262060',n:"Darkest Dungeon",c:'terror'},
+
+    {i:'1868140',n:"DAVE THE DIVER",c:'rpg'},{i:'208650',n:"Batman: Arkham Knight",c:'acao'},{i:'1943950',n:"Escape the Backrooms",c:'terror'},
+
+    {i:'433340',n:"Slime Rancher",c:'simulador'},{i:'1172710',n:"Dune: Awakening",c:'sobrevivencia',nw:1,y:'2025'},{i:'391220',n:"Rise of the Tomb Raider",c:'sobrevivencia'},
+
+    {i:'3590',n:"Plants vs. Zombies GOTY Edition",c:'sobrevivencia'},{i:'570940',n:"DARK SOULS: REMASTERED",c:'mundoaberto'},{i:'508440',n:"Totally Accurate Battle Simulator",c:'simulador'},
+
+    {i:'524220',n:"NieR:Automata",c:'mundoaberto'},{i:'1196590',n:"Resident Evil Village",c:'terror'},{i:'1222680',n:"Need for Speed Heat",c:'corrida'},
+
+    {i:'1811260',n:"EA SPORTS FIFA 23",c:'esportes'},{i:'1297900',n:"Gothic 1 Remake",c:'rpg',nw:1,y:'2026'},{i:'3079210',n:"Hell Let Loose: Vietnam",c:'acao',soon:1,dt:'13 ago 2026',o:20260813,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3079210/2e52f99e70e827b57a2205469dc5d529e8e0490a/header.jpg'},
+
+    {i:'686810',n:"Hell Let Loose",c:'fps'},{i:'1092790',n:"Inscryption",c:'terror'},{i:'552500',n:"Warhammer: Vermintide 2",c:'sobrevivencia'},
+
+    {i:'671860',n:"BattleBit Remastered",c:'fps'},{i:'1142710',n:"Total War: WARHAMMER III",c:'coop'},{i:'1057090',n:"Ori and the Will of the Wisps",c:'mundoaberto'},
+
+    {i:'8870',n:"BioShock Infinite",c:'rpg'},{i:'220200',n:"Kerbal Space Program",c:'mundoaberto'},{i:'504230',n:"Celeste",c:'aventura'},
+
+    {i:'362890',n:"Black Mesa",c:'terror'},{i:'457140',n:"Oxygen Not Included",c:'sobrevivencia'},{i:'1158310',n:"Crusader Kings III",c:'rpg'},
+
+    {i:'3124540',n:"Far Far West",c:'fps',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3124540/2d55092d45b1784dcc7cb0ba6ad3f919e62eb5d0/header.jpg'},{i:'2527500',n:"MiSide",c:'terror'},{i:'204360',n:"Castle Crashers",c:'rpg'},
+
+    {i:'3008130',n:"Dying Light: The Beast",c:'terror',nw:1,y:'2025'},{i:'1151340',n:"Fallout 76",c:'terror'},{i:'286690',n:"Metro 2033 Redux",c:'terror'},
+
+    {i:'361420',n:"ASTRONEER",c:'sobrevivencia'},{i:'238320',n:"Outlast",c:'terror'},{i:'1361210',n:"Warhammer 40,000: Darktide",c:'terror'},
+
+    {i:'236850',n:"Europa Universalis IV",c:'mundoaberto'},{i:'323190',n:"Frostpunk",c:'sobrevivencia'},{i:'223470',n:"POSTAL 2",c:'mundoaberto'},
+
+    {i:'1817070',n:"Marvel's Spider-Man",c:'acao'},{i:'1604030',n:"V Rising",c:'sobrevivencia'},{i:'1687950',n:"Persona 5 Royal",c:'rpg'},
+
+    {i:'1643320',n:"S.T.A.L.K.E.R. 2",c:'fps'},{i:'412020',n:"Metro Exodus",c:'terror'},{i:'244850',n:"Space Engineers",c:'sobrevivencia'},
+
+    {i:'1167630',n:"Teardown",c:'mundoaberto'},{i:'581320',n:"Insurgency: Sandstorm",c:'mundoaberto'},{i:'220240',n:"Far Cry 3",c:'sobrevivencia'},
+
+    {i:'335300',n:"DARK SOULS II: Scholar of the First Sin",c:'terror'},{i:'632470',n:"Disco Elysium - The Final Cut",c:'mundoaberto'},{i:'232090',n:"Killing Floor 2",c:'terror'},
+
+    {i:'1151640',n:"Horizon Zero Dawn",c:'mundoaberto'},{i:'582160',n:"Assassin's Creed Origins",c:'mundoaberto'},{i:'225540',n:"Just Cause 3",c:'mundoaberto'},
+
+    {i:'1313140',n:"Cult of the Lamb",c:'aventura'},{i:'219150',n:"Hotline Miami",c:'indie'},{i:'513710',n:"SCUM",c:'sobrevivencia'},
+
+    {i:'674940',n:"Stick Fight: The Game",c:'fps'},{i:'1446780',n:"MONSTER HUNTER RISE",c:'mundoaberto'},{i:'418370',n:"Resident Evil 7 Biohazard",c:'terror'},
+
+    {i:'222880',n:"Insurgency",c:'fps'},{i:'952060',n:"Resident Evil 3",c:'terror'},{i:'211820',n:"Starbound",c:'sobrevivencia'},
+
+    {i:'305620',n:"The Long Dark",c:'terror'},{i:'2835570',n:"Buckshot Roulette",c:'terror'},{i:'774171',n:"Muse Dash",c:'terror'},
+
+    {i:'594570',n:"Total War: WARHAMMER II",c:'rpg'},{i:'387990',n:"Scrap Mechanic",c:'corrida'},{i:'1506830',n:"FIFA 22",c:'esportes'},
+
+    {i:'3932890',n:"Escape from Tarkov",c:'fps',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3932890/e1367f10d469137a2ced522b642a9b1ee10450da/header.jpg'},{i:'899770',n:"Last Epoch",c:'rpg'},{i:'376210',n:"The Isle",c:'terror'},
+
+    {i:'1942280',n:"Brotato",c:'sobrevivencia'},{i:'440900',n:"Conan Exiles Enhanced",c:'sobrevivencia'},{i:'424840',n:"Little Nightmares",c:'terror'},
+
+    {i:'356190',n:"Middle-earth: Shadow of War",c:'mundoaberto'},{i:'516750',n:"My Summer Car",c:'corrida'},{i:'1259420',n:"Days Gone",c:'mundoaberto'},
+
+    {i:'2054970',n:"Dragon's Dogma 2",c:'rpg'},{i:'1832640',n:"Mirror 2: Project X",c:'rpg'},{i:'1295660',n:"Sid Meier’s Civilization VII",c:'simulador',nw:1,y:'2025'},
+
+    {i:'976310',n:"Mortal Kombat 11",c:'acao'},{i:'233860',n:"Kenshi",c:'sobrevivencia'},{i:'2399830',n:"ARK: Survival Ascended",c:'sobrevivencia'},
+
+    {i:'219740',n:"Don't Starve",c:'terror'},{i:'629760',n:"MORDHAU",c:'sobrevivencia'},{i:'231430',n:"Company of Heroes 2",c:'fps'},
+
+    {i:'2397300',n:"Half Sword",c:'acao',nw:1,y:'2026'},{i:'2195250',n:"EA Sports FC 24",c:'esportes'},{i:'613100',n:"House Flipper",c:'terror'},
+
+    {i:'1304930',n:"The Outlast Trials",c:'terror'},{i:'1030840',n:"Mafia: Definitive Edition",c:'acao'},{i:'268500',n:"XCOM 2",c:'simulador'},
+
+    {i:'219990',n:"Grim Dawn",c:'rpg'},{i:'848450',n:"Subnautica: Below Zero",c:'terror'},{i:'287700',n:"METAL GEAR SOLID V: THE PHANTOM PAIN",c:'mundoaberto'},
+
+    {i:'359320',n:"Elite Dangerous",c:'mundoaberto'},{i:'1888930',n:"The Last of Us Part I",c:'aventura'},{i:'753640',n:"Outer Wilds",c:'terror'},
+
+    {i:'460930',n:"Tom Clancy's Ghost Recon Wildlands",c:'sobrevivencia'},{i:'546560',n:"Half-Life: Alyx",c:'vr'},{i:'1203620',n:"Enshrouded",c:'sobrevivencia'},
+
+    {i:'2138720',n:"REMATCH",c:'esportes',nw:1,y:'2025'},{i:'1217060',n:"Gunfire Reborn",c:'rpg'},{i:'3280350',n:"DEATH STRANDING 2: ON THE BEACH",c:'aventura',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3280350/6270c77b0729e2df0a17d660286eeddfd9169386/header.jpg'},
+
+    {i:'221380',n:"Age of Empires II (Retired)",c:'coop'},{i:'1222700',n:"A Way Out",c:'coop'},{i:'815370',n:"Green Hell",c:'sobrevivencia'},
+
+    {i:'447040',n:"Watch Dogs 2",c:'mundoaberto'},{i:'646910',n:"The Crew 2",c:'corrida'},{i:'1237950',n:"STAR WARS Battlefront II",c:'fps'},
+
+    {i:'383870',n:"Firewatch",c:'terror'},{i:'3751950',n:"Assassin's Creed Black Flag Resynced",c:'mundoaberto',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3751950/9b046115b1663a4be2b252712328e4f6c162da68/header.jpg'},{i:'282070',n:"This War of Mine",c:'sobrevivencia'},
+
+    {i:'254700',n:"Resident Evil 4 (2005)",c:'terror'},{i:'703080',n:"Planet Zoo",c:'terror'},{i:'241930',n:"Middle-earth: Shadow of Mordor",c:'mundoaberto'},
+
+    {i:'365590',n:"Tom Clancy’s The Division",c:'sobrevivencia'},{i:'4080220',n:"EA SPORTS FC 27",c:'esportes',soon:1,dt:'24 set 2026',o:20260924,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4080220/05d419a45653a1299ce46d13dbff4533fa076c1c/header.jpg'},{i:'2129530',n:"Reanimal",c:'terror',nw:1,y:'2026'},
+
+    {i:'683320',n:"GRIS",c:'aventura'},{i:'389730',n:"TEKKEN 7",c:'acao'},{i:'962130',n:"Grounded",c:'terror'},
+
+    {i:'1466860',n:"Age of Empires IV: Anniversary Edition",c:'mundoaberto'},{i:'2215430',n:"Ghost of Tsushima",c:'acao'},{i:'582660',n:"Black Desert",c:'mundoaberto'},
+
+    {i:'779340',n:"Total War: THREE KINGDOMS",c:'simulador'},{i:'1454400',n:"Cookie Clicker",c:'terror'},{i:'1248130',n:"Farming Simulator 22",c:'mundoaberto'},
+
+    {i:'1366540',n:"Dyson Sphere Program",c:'mundoaberto'},{i:'949230',n:"Cities: Skylines II",c:'simulador'},{i:'349040',n:"NARUTO SHIPPUDEN: Ultimate Ninja STORM 4",c:'mundoaberto'},
+
+    {i:'20920',n:"The Witcher 2: Assassins of Kings Enhanced Edition",c:'mundoaberto'},{i:'234140',n:"Mad Max",c:'mundoaberto'},{i:'311690',n:"Enter the Gungeon",c:'coop'},
+
+    {i:'1363080',n:"Manor Lords",c:'simulador'},{i:'4197610',n:"Librarian: Tidy Up the Arcane Library!",c:'indie',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4197610/2162be8e12b6bcbf696e508a4b6297c378c33bda/header.jpg'},{i:'635260',n:"CarX Drift Racing Online",c:'corrida'},
+
+    {i:'235460',n:"METAL GEAR RISING: REVENGEANCE",c:'aventura'},{i:'602960',n:"Barotrauma",c:'terror'},{i:'881100',n:"Noita",c:'mundoaberto'},
+
+    {i:'1274570',n:"DEVOUR",c:'terror'},{i:'1150690',n:"OMORI",c:'terror'},{i:'214950',n:"Total War: ROME II - Emperor Edition",c:'simulador'},
+
+    {i:'205100',n:"Dishonored",c:'mundoaberto'},{i:'750920',n:"Shadow of the Tomb Raider: Definitive Edition",c:'sobrevivencia'},{i:'3017860',n:"DOOM: The Dark Ages",c:'fps',nw:1,y:'2025'},
+
+    {i:'20900',n:"The Witcher: Enhanced Edition Director's Cut",c:'mundoaberto'},{i:'1113000',n:"Persona 4 Golden",c:'rpg'},{i:'35140',n:"Batman: Arkham Asylum Game of the Year Edition",c:'acao'},
+
+    {i:'206440',n:"To the Moon",c:'rpg'},{i:'39210',n:"FINAL FANTASY XIV Online",c:'mundoaberto'},{i:'1888160',n:"Armored Core VI",c:'acao'},
+
+    {i:'1774580',n:"STAR WARS Jedi: Survivor",c:'mundoaberto'},{i:'1533390',n:"Gorilla Tag",c:'terror'},{i:'289650',n:"Assassin's Creed Unity",c:'mundoaberto'},
+
+    {i:'3105440',n:"Heroes of Might and Magic: Olden Era",c:'rpg',nw:1,y:'2026'},{i:'644560',n:"Mirror",c:'rpg'},{i:'2670630',n:"Supermarket Simulator",c:'fps'},
+
+    {i:'728880',n:"Overcooked! 2",c:'simulador'},{i:'12120',n:"Grand Theft Auto: San Andreas",c:'mundoaberto'},{i:'2651280',n:"Marvel's Spider-Man 2",c:'acao',nw:1,y:'2025'},
+
+    {i:'1588550',n:"Cairn",c:'aventura',nw:1,y:'2026'},{i:'977950',n:"A Dance of Fire and Ice",c:'terror'},{i:'240720',n:"Getting Over It with Bennett Foddy",c:'indie'},
+
+    {i:'1238860',n:"Battlefield 4",c:'mundoaberto'},{i:'287390',n:"Metro: Last Light Redux",c:'terror'},{i:'1627720',n:"Lies of P",c:'rpg'},
+
+    {i:'1118520',n:"Paralives",c:'simulador',nw:1,y:'2026'},{i:'207610',n:"The Walking Dead",c:'terror'},{i:'1371980',n:"No Rest for the Wicked",c:'mundoaberto'},
+
+    {i:'239030',n:"Papers, Please",c:'simulador'},{i:'636480',n:"Ravenfield",c:'mundoaberto'},{i:'274170',n:"Hotline Miami 2: Wrong Number",c:'indie'},
+
+    {i:'1190460',n:"Death Stranding",c:'aventura'},{i:'307690',n:"Sleeping Dogs: Definitive Edition",c:'mundoaberto'},{i:'211420',n:"DARK SOULS: Prepare To Die Edition",c:'mundoaberto'},
+
+    {i:'212680',n:"FTL: Faster Than Light",c:'sobrevivencia'},{i:'1260320',n:"Party Animals",c:'coop'},{i:'242050',n:"Assassin’s Creed IV Black Flag",c:'mundoaberto'},
+
+    {i:'2479810',n:"Gray Zone Warfare",c:'sobrevivencia'},{i:'638970',n:"Yakuza 0",c:'mundoaberto'},{i:'3159330',n:"Assassin's Creed Shadows",c:'mundoaberto',nw:1,y:'2025'},
+
+    {i:'206420',n:"Saints Row IV: Re-Elected",c:'mundoaberto'},{i:'1364780',n:"Street Fighter 6",c:'acao'},{i:'200260',n:"Batman: Arkham City - Game of the Year Edition",c:'mundoaberto'},
+
+    {i:'438740',n:"Friday the 13th: The Game",c:'terror'},{i:'295110',n:"Just Survive",c:'terror'},{i:'678950',n:"DRAGON BALL FighterZ",c:'mundoaberto'},
+
+    {i:'414340',n:"Hellblade: Senua's Sacrifice",c:'terror'},{i:'787860',n:"Farming Simulator 19",c:'mundoaberto'},{i:'620980',n:"Beat Saber",c:'vr'},
+
+    {i:'460950',n:"Katana ZERO",c:'indie'},{i:'304430',n:"INSIDE",c:'terror'},{i:'863550',n:"HITMAN 2",c:'mundoaberto'},
+
+    {i:'431240',n:"Golf With Your Friends",c:'esportes'},{i:'2344520',n:"Diablo IV",c:'rpg'},{i:'3681010',n:"Nioh 3",c:'rpg',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3681010/a21264e9fd476dcb2901c2432b598107d024c5a8/header.jpg'},
+
+    {i:'286160',n:"Tabletop Simulator",c:'mundoaberto'},{i:'3265700',n:"Vampire Crawlers: The Turbo Wildcard from Vampire Survivors",c:'acao',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3265700/5590e42cab09dacabee973dd2c3e27ef12ed4950/header.jpg'},{i:'233450',n:"Prison Architect",c:'simulador'},
+
+    {i:'213670',n:"South Park: The Stick of Truth",c:'mundoaberto'},{i:'924970',n:"Back 4 Blood",c:'terror'},{i:'238460',n:"BattleBlock Theater",c:'coop'},
+
+    {i:'3892270',n:"Gamble With Your Friends",c:'coop',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3892270/395e6d7972474333a698b26f8aa5597bf38109a1/header.jpg'},{i:'298110',n:"Far Cry 4",c:'sobrevivencia'},{i:'1250410',n:"Microsoft Flight Simulator (2020) 40th Anniversary Edition",c:'mundoaberto'},
+
+    {i:'1284190',n:"The Planet Crafter",c:'sobrevivencia'},{i:'17390',n:"SPORE",c:'mundoaberto'},{i:'2231450',n:"Pizza Tower",c:'indie'},
+
+    {i:'493340',n:"Planet Coaster",c:'mundoaberto'},{i:'1778820',n:"Tekken 8",c:'acao'},{i:'1790600',n:"DRAGON BALL: Sparking! ZERO",c:'mundoaberto'},
+
+    {i:'387290',n:"Ori and the Blind Forest: Definitive Edition",c:'mundoaberto'},{i:'3146520',n:"WEBFISHING",c:'coop'},{i:'752590',n:"A Plague Tale: Innocence",c:'terror'},
+
+    {i:'265930',n:"Goat Simulator",c:'mundoaberto'},{i:'221040',n:"Resident Evil 6",c:'terror'},{i:'838350',n:"The Scroll Of Taiwu",c:'mundoaberto'},
+
+    {i:'55230',n:"Saints Row: The Third",c:'mundoaberto'},{i:'747660',n:"Five Nights at Freddy's: Security Breach",c:'terror'},{i:'1340720',n:"State of Decay 3",c:'acao',soon:1,dt:'a confirmar',o:99999999,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1340720/45dc128cbf1d0498c8ca15663d60aafbf33690e6/header.jpg'},
+
+    {i:'495420',n:"State of Decay 2: Juggernaut Edition",c:'terror'},{i:'2623190',n:"The Elder Scrolls IV: Oblivion Remastered",c:'mundoaberto',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2623190/a7cee9165bb1bfc092c390c5cff215ce0e381dfc/header.jpg'},{i:'1693980',n:"Dead Space",c:'terror'},
+
+    {i:'1404210',n:"Red Dead Online",c:'mundoaberto'},{i:'1250',n:"Killing Floor",c:'terror'},{i:'466560',n:"Northgard: Definitive Edition",c:'sobrevivencia'},
+
+    {i:'424370',n:"Wolcen: Lords of Mayhem",c:'mundoaberto'},{i:'1282100',n:"Remnant II",c:'fps'},{i:'500',n:"Left 4 Dead",c:'terror'},
+
+    {i:'2909400',n:"Final Fantasy VII Rebirth",c:'rpg',nw:1,y:'2025'},{i:'201270',n:"Total War: SHOGUN 2",c:'coop'},{i:'34330',n:"Total War: SHOGUN 2",c:'coop'},
+
+    {i:'1659040',n:"HITMAN World of Assassination",c:'mundoaberto'},{i:'285900',n:"Gang Beasts",c:'simulador'},{i:'1850570',n:"DEATH STRANDING DIRECTOR'S CUT",c:'terror'},
+
+    {i:'1139900',n:"Ghostrunner",c:'sobrevivencia'},{i:'493520',n:"GTFO",c:'terror'},{i:'1384160',n:"GUILTY GEAR -STRIVE-",c:'acao'},
+
+    {i:'403640',n:"Dishonored 2",c:'mundoaberto'},{i:'21690',n:"Resident Evil 5",c:'terror'},{i:'1328670',n:"Mass Effect Legendary Edition",c:'rpg'},
+
+    {i:'214490',n:"Alien: Isolation",c:'terror'},{i:'1149460',n:"ICARUS",c:'sobrevivencia'},{i:'774361',n:"Blasphemous",c:'terror'},
+
+    {i:'1621690',n:"Core Keeper",c:'sobrevivencia'},{i:'219640',n:"Chivalry: Medieval Warfare",c:'fps'},{i:'246620',n:"Plague Inc: Evolved",c:'terror'},
+
+    {i:'1272080',n:"PAYDAY 3",c:'rpg'},{i:'209000',n:"Batman: Arkham Origins",c:'mundoaberto'},{i:'409710',n:"BioShock Remastered",c:'terror'},
+
+    {i:'2456740',n:"inZOI",c:'simulador',nw:1,y:'2025'},{i:'420530',n:"OneShot",c:'terror'},{i:'414700',n:"Outlast 2",c:'terror'},
+
+    {i:'204100',n:"Max Payne 3",c:'mundoaberto'},{i:'360430',n:"Mafia III: Definitive Edition",c:'mundoaberto'},{i:'2680010',n:"The First Berserker: Khazan",c:'acao',nw:1,y:'2025'},
+
+    {i:'1636440',n:"SILENT HILL: Townfall",c:'acao',soon:1,dt:'23 set 2026',o:20260923,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1636440/0ed1cb4bc30631f95b92f7f13bb06c15d49b4afa/header.jpg'},{i:'2124490',n:"Silent Hill 2",c:'terror'},{i:'203140',n:"Hitman: Absolution",c:'aventura'},
+
+    {i:'2567870',n:"Chained Together",c:'mundoaberto'},{i:'312660',n:"Sniper Elite 4",c:'mundoaberto'},{i:'3472040',n:"NBA 2K26",c:'esportes',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3472040/f7e126add75c3b09779b44cd349be93d31b0a80b/header.jpg'},
+
+    {i:'113200',n:"The Binding of Isaac",c:'sobrevivencia'},{i:'870780',n:"CONTROL Ultimate Edition",c:'terror'},{i:'678960',n:"CODE VEIN",c:'rpg'},
+
+    {i:'629730',n:"Blade and Sorcery",c:'rpg'},{i:'201810',n:"Wolfenstein: The New Order",c:'fps'},{i:'48000',n:"LIMBO",c:'terror'},
+
+    {i:'680420',n:"OUTRIDERS",c:'mundoaberto'},{i:'33230',n:"Assassin's Creed 2",c:'mundoaberto'},{i:'274190',n:"Broforce",c:'simulador'},
+
+    {i:'10180',n:"Call of Duty: Modern Warfare 2 (2009)",c:'fps'},{i:'529340',n:"Victoria 3",c:'simulador'},{i:'2161700',n:"Persona 3 Reload",c:'rpg'},
+
+    {i:'307780',n:"Mortal Kombat X",c:'terror'},{i:'1089350',n:"NBA 2K20",c:'esportes'},{i:'261570',n:"Ori and the Blind Forest",c:'aventura'},
+
+    {i:'3180070',n:"No, I'm not a Human",c:'terror',nw:1,y:'2025'},{i:'2593370',n:"The Hungry Lamb: Traveling in the Late Ming Dynasty",c:'rpg'},{i:'573090',n:"Stormworks: Build and Rescue",c:'sobrevivencia'},
+
+    {i:'2605790',n:"Deep Rock Galactic: Rogue Core",c:'coop',nw:1,y:'2026'},{i:'454650',n:"DRAGON BALL XENOVERSE 2",c:'mundoaberto'},{i:'1089980',n:"The Henry Stickmin Collection",c:'aventura'},
+
+    {i:'1846380',n:"Need for Speed Unbound",c:'corrida'},{i:'319510',n:"Five Nights at Freddy's",c:'terror'},{i:'108710',n:"Alan Wake",c:'terror'},
+
+    {i:'552100',n:"Brick Rigs",c:'corrida'},{i:'2416450',n:"MOUSE: P.I. For Hire",c:'fps',nw:1,y:'2026'},{i:'1290000',n:"PowerWash Simulator",c:'simulador'},
+
+    {i:'200510',n:"XCOM: Enemy Unknown",c:'rpg'},{i:'50130',n:"Mafia II (Classic)",c:'mundoaberto'},{i:'860510',n:"Little Nightmares II",c:'terror'},
+
+    {i:'851850',n:"DRAGON BALL Z: KAKAROT",c:'sobrevivencia'},{i:'1824220',n:"Chivalry 2",c:'fps'},{i:'637650',n:"FINAL FANTASY XV WINDOWS EDITION",c:'mundoaberto'},
+
+    {i:'427410',n:"Abiotic Factor",c:'sobrevivencia'},{i:'1941540',n:"Mafia: The Old Country",c:'acao',nw:1,y:'2025'},{i:'880940',n:"Pummel Party",c:'coop'},
+
+    {i:'1147560',n:"Skul: The Hero Slayer",c:'aventura'},{i:'1451940',n:"NEEDY STREAMER OVERLOAD",c:'terror'},{i:'617290',n:"Remnant: From the Ashes",c:'terror'},
+
+    {i:'633230',n:"NARUTO TO BORUTO: SHINOBI STRIKER",c:'mundoaberto'},{i:'2947440',n:"Silent Hill f",c:'terror',nw:1,y:'2025'},{i:'2288340',n:"ACE COMBAT 8: WINGS OF THEVE",c:'acao',soon:1,dt:'1 out 2026',o:20261001,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2288340/13dea8084135fd130605b78189c82e39bf944c35/header.jpg'},
+
+    {i:'502500',n:"ACE COMBAT 7: SKIES UNKNOWN",c:'simulador'},{i:'50300',n:"Spec Ops: The Line",c:'terror'},{i:'645630',n:"Car Mechanic Simulator 2018",c:'corrida'},
+
+    {i:'3097560',n:"Liar's Bar",c:'terror'},{i:'568220',n:"Lobotomy Corporation | Monster Management Simulation",c:'terror'},{i:'1017180',n:"The Long Drive",c:'corrida'},
+
+    {i:'22370',n:"Fallout 3: Game of the Year Edition",c:'mundoaberto'},{i:'1562430',n:"DREDGE",c:'terror'},{i:'1206560',n:"WorldBox - God Simulator",c:'simulador'},
+
+    {i:'2300320',n:"Farming Simulator 25",c:'simulador'},{i:'3948120',n:"Scritchy Scratchy",c:'simulador',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3948120/3ebd05427181e24a1d791531d0572e596bf31e55/header.jpg'},{i:'1313860',n:"EA SPORTS FIFA 21",c:'esportes'},
+
+    {i:'312520',n:"Rain World",c:'indie'},{i:'648350',n:"Jurassic World Evolution",c:'sobrevivencia'},{i:'1465360',n:"SnowRunner",c:'corrida'},
+
+    {i:'1874880',n:"Arma Reforger",c:'mundoaberto'},{i:'881020',n:"Granblue Fantasy: Relink",c:'rpg'},{i:'1501750',n:"Lords of the Fallen",c:'rpg'},
+
+    {i:'599140',n:"Graveyard Keeper",c:'rpg'},{i:'480490',n:"Prey",c:'terror'},{i:'6060',n:"STAR WARS Battlefront II (Classic, 2005)",c:'mundoaberto'},
+
+    {i:'1817190',n:"Spider-Man: Miles Morales",c:'acao'},{i:'470220',n:"UNO",c:'indie'},{i:'253230',n:"A Hat in Time",c:'aventura'},
+
+    {i:'2531310',n:"The Last of Us Part II",c:'aventura'},{i:'10090',n:"Call of Duty: World at War",c:'fps'},{i:'346010',n:"Besiege",c:'simulador'},
+
+    {i:'386940',n:"Ultimate Chicken Horse",c:'coop'},{i:'972660',n:"Spiritfarer: Farewell Edition",c:'simulador'},{i:'900883',n:"The Elder Scrolls IV: Oblivion Game of the Year Edition Deluxe (2009)",c:'mundoaberto'},
+
+    {i:'22330',n:"The Elder Scrolls IV: Oblivion Game of the Year Edition (2009)",c:'mundoaberto'},{i:'621060',n:"PC Building Simulator",c:'simulador'},{i:'505460',n:"Foxhole",c:'sobrevivencia'},
+
+    {i:'364360',n:"Total War: WARHAMMER",c:'mundoaberto'},{i:'1631270',n:"StarRupture",c:'acao',nw:1,y:'2026'},{i:'282140',n:"SOMA",c:'terror'},
+
+    {i:'501300',n:"What Remains of Edith Finch",c:'terror'},{i:'2062430',n:"BALL x PIT",c:'indie',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2062430/a157aa8de4bd9070194ddffb27c31636355dca05/header.jpg'},{i:'243470',n:"Watch_Dogs",c:'mundoaberto'},
+
+    {i:'1129580',n:"Medieval Dynasty",c:'sobrevivencia'},{i:'8190',n:"Just Cause 2",c:'mundoaberto'},{i:'1919590',n:"NBA 2K23",c:'esportes'},
+
+    {i:'644930',n:"They Are Billions",c:'sobrevivencia'},{i:'2215200',n:"LEGO Batman: Legacy of the Dark Knight",c:'mundoaberto',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2215200/a07a9a6c0c9c1225f5b260b4f29fe40e6f099f6b/header.jpg'},{i:'532790',n:"Vampire: The Masquerade - Bloodlines 2",c:'rpg',nw:1,y:'2026'},
+
+    {i:'1462040',n:"FINAL FANTASY VII REMAKE INTERGRADE",c:'rpg'},{i:'1325200',n:"Nioh 2 – The Complete Edition",c:'rpg'},{i:'668580',n:"Atomic Heart",c:'terror'},
+
+    {i:'603850',n:"Age of History II",c:'mundoaberto'},{i:'2119830',n:"MISERY",c:'acao',nw:1,y:'2025'},{i:'1922560',n:"Plants vs. Zombies Garden Warfare 2: Deluxe Edition",c:'coop'},
+
+    {i:'1431300',n:"SAND: Raiders of Sophie",c:'fps',nw:1,y:'2026'},{i:'1657630',n:"Slime Rancher 2",c:'mundoaberto'},{i:'202970',n:"Call of Duty: Black Ops II",c:'fps'},
+
+    {i:'612880',n:"Wolfenstein II: The New Colossus",c:'fps'},{i:'994280',n:"Gujian3(古剑奇谭三)",c:'mundoaberto'},{i:'367500',n:"Dragon's Dogma: Dark Arisen",c:'mundoaberto'},
+
+    {i:'3070070',n:"TCG Card Shop Simulator",c:'simulador'},{i:'2322010',n:"God of War Ragnarök",c:'acao'},{i:'1971870',n:"Mortal Kombat 1",c:'acao'},
+
+    {i:'1669980',n:"Volcano Princess",c:'rpg'},{i:'920210',n:"LEGO Star Wars: The Skywalker Saga",c:'mundoaberto'},{i:'690790',n:"DiRT Rally 2.0",c:'corrida'},
+
+    {i:'4500',n:"S.T.A.L.K.E.R.: Shadow of Chernobyl",c:'terror'},{i:'2321470',n:"Deep Rock Galactic: Survivor",c:'acao'},{i:'313120',n:"Stranded Deep",c:'sobrevivencia'},
+
+    {i:'805550',n:"Assetto Corsa Competizione",c:'corrida'},{i:'1119730',n:"Ranch Simulator: Build, Hunt, Farm",c:'mundoaberto'},{i:'2141730',n:"Backrooms: Escape Together",c:'terror'},
+
+    {i:'269210',n:"Hero Siege",c:'rpg'},{i:'1244460',n:"Jurassic World Evolution 2",c:'sobrevivencia'},{i:'2186680',n:"Warhammer 40,000: Rogue Trader",c:'mundoaberto'},
+
+    {i:'236430',n:"DARK SOULS II",c:'terror'},{i:'1987080',n:"Inside the Backrooms",c:'terror'},{i:'244450',n:"Men of War: Assault Squad 2",c:'simulador'},
+
+    {i:'1418630',n:"Dread Hunger",c:'terror'},{i:'1449690',n:"The Walking Dead: The Telltale Definitive Series",c:'terror'},{i:'2322560',n:"Love Is All Around",c:'rpg'},
+
+    {i:'1430190',n:"Killing Floor 3",c:'fps',nw:1,y:'2025'},{i:'221910',n:"The Stanley Parable",c:'aventura'},{i:'200710',n:"Torchlight II",c:'rpg'},
+
+    {i:'1369630',n:"ENDER LILIES: Quietus of the Knights",c:'rpg'},{i:'2661300',n:"Grounded 2",c:'sobrevivencia',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2661300/c4fc47c7e6ece14e438f0957d066dc9ab2a3412a/header.jpg'},{i:'239820',n:"Game Dev Tycoon",c:'simulador'},
+
+    {i:'1088850',n:"Marvel's Guardians of the Galaxy",c:'mundoaberto'},{i:'302510',n:"Ryse: Son of Rome",c:'mundoaberto'},{i:'1845910',n:"Dragon Age: The Veilguard",c:'rpg'},
+
+    {i:'1562700',n:"SANABI",c:'aventura'},{i:'2406770',n:"Bodycam",c:'terror'},{i:'787480',n:"Phoenix Wright: Ace Attorney Trilogy",c:'aventura'},
+
+    {i:'1366800',n:"Crosshair X",c:'sobrevivencia'},{i:'1288310',n:"Firework",c:'terror'},{i:'666140',n:"My Time at Portia",c:'sobrevivencia'},
+
+    {i:'1210320',n:"Potion Craft: Alchemist Simulator",c:'rpg'},{i:'1984270',n:"Digimon Story Time Stranger",c:'rpg',nw:1,y:'2025'},{i:'310950',n:"Street Fighter V",c:'acao'},
+
+    {i:'2338770',n:"NBA 2K24",c:'esportes'},{i:'2212330',n:"Your Only Move Is HUSTLE",c:'simulador'},{i:'1809540',n:"Nine Sols",c:'aventura'},
+
+    {i:'2000950',n:"Call of Duty: Modern Warfare",c:'fps'},{i:'1256670',n:"Library Of Ruina",c:'terror'},{i:'2208920',n:"Assassin's Creed Valhalla",c:'mundoaberto'},
+
+    {i:'1557740',n:"ROUNDS",c:'indie'},{i:'204450',n:"Call of Juarez: Gunslinger",c:'mundoaberto'},{i:'751780',n:"Forager",c:'sobrevivencia'},
+
+    {i:'4069520',n:"Super Battle Golf",c:'esportes',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4069520/89e942c838b6cb0bb0c2127c113a86c59d6ce92f/header_alt_assets_1.jpg'},{i:'675010',n:"MudRunner",c:'corrida'},{i:'1876890',n:"Wandering Sword",c:'mundoaberto'},
+
+    {i:'1184370',n:"Pathfinder: Wrath of the Righteous - Enhanced Edition",c:'sobrevivencia'},{i:'527230',n:"For The King",c:'mundoaberto'},{i:'2231380',n:"Tom Clancy's Ghost Recon Breakpoint",c:'mundoaberto'},
+
+    {i:'1544020',n:"The Callisto Protocol",c:'terror'},{i:'242920',n:"Banished",c:'sobrevivencia'},{i:'261640',n:"Borderlands: The Pre-Sequel",c:'mundoaberto'},
+
+    {i:'42700',n:"Call of Duty: Black Ops",c:'fps'},{i:'834910',n:"ATLAS",c:'sobrevivencia'},{i:'32470',n:"STAR WARS Empire at War - Gold Pack",c:'simulador'},
+
+    {i:'1659420',n:"UNCHARTED: Legacy of Thieves Collection",c:'aventura'},{i:'2878980',n:"NBA 2K25",c:'esportes'},{i:'967050',n:"Pacify",c:'terror'},
+
+    {i:'2679460',n:"Metaphor: ReFantazio",c:'rpg'},{i:'337000',n:"Deus Ex: Mankind Divided",c:'mundoaberto'},{i:'704270',n:"Generation Zero",c:'terror'},
+
+    {i:'960990',n:"Beyond: Two Souls",c:'terror'},{i:'12200',n:"Bully: Scholarship Edition",c:'mundoaberto'},{i:'692850',n:"Bloodstained: Ritual of the Night",c:'rpg'},
+
+    {i:'420',n:"Half-Life 2: Episode Two",c:'fps'},{i:'225080',n:"Brothers - A Tale of Two Sons",c:'terror'},{i:'1392860',n:"Little Nightmares III",c:'terror',nw:1,y:'2025'},
+
+    {i:'228380',n:"Wreckfest",c:'corrida'},{i:'824270',n:"KovaaK's",c:'terror'},{i:'24240',n:"PAYDAY The Heist",c:'rpg'},
+
+    {i:'371660',n:"Far Cry Primal",c:'sobrevivencia'},{i:'1062090',n:"Timberborn",c:'sobrevivencia'},{i:'322500',n:"SUPERHOT",c:'fps'},
+
+    {i:'1135690',n:"Unpacking",c:'simulador'},{i:'555160',n:"Pavlov",c:'fps'},{i:'895400',n:"Deadside",c:'sobrevivencia'},
+
+    {i:'2186990',n:"Fatekeeper",c:'rpg',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2186990/b1bd8cbde331f9eac06c8a34bbc1b55b5350b88a/header.jpg'},{i:'310560',n:"DiRT Rally",c:'corrida'},{i:'2677660',n:"Indiana Jones and the Great Circle",c:'aventura',nw:1,y:'2025'},
+
+    {i:'1080110',n:"F1 2020",c:'corrida'},{i:'1884870',n:"The Wolf Among Us 2",c:'aventura',soon:1,dt:'a confirmar',o:99999999,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1884870/0d38aba1b9452dff25993cf241211c2c8c85221c/header.jpg'},{i:'3884860',n:"The Wolf Among Us Remastered",c:'acao',soon:1,dt:'a confirmar',o:99999999,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3884860/80ddd096b6fdd5ab25162251bee4131c78cdf351/header.jpg'},
+
+    {i:'250320',n:"The Wolf Among Us",c:'aventura'},{i:'1178830',n:"Bright Memory: Infinite",c:'fps'},{i:'2444750',n:"Shape of Dreams",c:'rpg',nw:1,y:'2025'},
+
+    {i:'115300',n:"Call of Duty: Modern Warfare 3 (2011)",c:'sobrevivencia'},{i:'42680',n:"Call of Duty: Modern Warfare 3 (2011)",c:'sobrevivencia'},{i:'1677280',n:"Company of Heroes 3",c:'coop'},
+
+    {i:'704850',n:"Thief Simulator",c:'mundoaberto'},{i:'745920',n:"Temtem",c:'rpg'},{i:'17410',n:"Mirror's Edge",c:'fps'},
+
+    {i:'701160',n:"Kingdom Two Crowns",c:'sobrevivencia'},{i:'597170',n:"Clone Drone in the Danger Zone",c:'sobrevivencia'},{i:'312530',n:"Duck Game",c:'terror'},
+
+    {i:'1296830',n:"暖雪 Warm Snow",c:'rpg'},{i:'1644960',n:"NBA 2K22",c:'esportes'},{i:'40800',n:"Super Meat Boy",c:'aventura'},
+
+    {i:'1225330',n:"NBA 2K21",c:'esportes'},{i:'1569580',n:"Blue Prince",c:'indie',nw:1,y:'2025'},{i:'485510',n:"Nioh: Complete Edition",c:'rpg'},
+
+    {i:'2378900',n:"The Coffin of Andy and Leyley",c:'terror'},{i:'992300',n:"嗜血印 Bloody Spell",c:'mundoaberto'},{i:'447530',n:"VA-11 Hall-A: Cyberpunk Bartender Action",c:'simulador'},
+
+    {i:'418240',n:"Shadow Tactics: Blades of the Shogun",c:'sobrevivencia'},{i:'3552140',n:"Retro Rewind - Video Store Simulator",c:'simulador',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3552140/5be699540829c76a0d5f7ac5db4bbaf23fa76013/header.jpg'},{i:'638230',n:"Journey",c:'coop'},
+
+    {i:'107100',n:"Bastion",c:'rpg'},{i:'1259970',n:"eFootball PES 2021 SEASON UPDATE",c:'esportes'},{i:'35450',n:"Red Orchestra 2: Heroes of Stalingrad with Rising Storm",c:'fps'},
+
+    {i:'1030830',n:"Mafia II: Definitive Edition",c:'mundoaberto'},{i:'993090',n:"Lossless Scaling",c:'fps'},{i:'1190000',n:"Car Mechanic Simulator 2021",c:'corrida'},
+
+    {i:'585420',n:"Trailmakers",c:'corrida'},{i:'383980',n:"Rivals of Aether",c:'indie'},{i:'413410',n:"Danganronpa: Trigger Happy Havoc",c:'terror'},
+
+    {i:'2475490',n:"Mouthwashing",c:'terror'},{i:'1601570',n:"The Alters",c:'sobrevivencia',nw:1,y:'2025'},{i:'10500',n:"Total War: EMPIRE – Definitive Edition",c:'aventura'},
+
+    {i:'554620',n:"Life is Strange: Before the Storm",c:'aventura'},{i:'475150',n:"Titan Quest Anniversary Edition",c:'sobrevivencia'},{i:'242860',n:"Verdun",c:'fps'},
+
+    {i:'325610',n:"Total War: ATTILA",c:'sobrevivencia'},{i:'3834090',n:"YAPYAP",c:'terror',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3834090/399b7aa5bd9ea359e6d77cec3032758ea27c597b/header.jpg'},{i:'24960',n:"Battlefield: Bad Company 2",c:'fps'},
+
+    {i:'4164420',n:"My Winter Car",c:'corrida',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4164420/7027a92a95a5394d838ea74b2f0f89229dcb7da0/header.jpg'},{i:'1235140',n:"Yakuza: Like a Dragon",c:'mundoaberto'},{i:'236870',n:"HITMAN",c:'mundoaberto'},
+
+    {i:'207140',n:"SpeedRunners",c:'corrida'},{i:'1859910',n:"Legend of Mortal",c:'rpg'},{i:'1336490',n:"Against the Storm",c:'sobrevivencia'},
+
+    {i:'2417610',n:"Metal Gear Solid Delta: Snake Eater",c:'acao',nw:1,y:'2025'},{i:'110800',n:"L.A. Noire",c:'mundoaberto'},{i:'740130',n:"Tales of ARISE",c:'mundoaberto'},
+
+    {i:'1144400',n:"Senren＊Banka",c:'terror'},{i:'622650',n:"Bendy and the Ink Machine",c:'terror'},{i:'655500',n:"MX Bikes",c:'corrida'},
+
+    {i:'939400',n:"LoveChoice",c:'rpg'},{i:'1282730',n:"Loop Hero",c:'rpg'},{i:'434570',n:"Blood and Bacon",c:'terror'},
+
+    {i:'823500',n:"BONEWORKS",c:'terror'},{i:'2407270',n:"AI LIMIT",c:'rpg'},{i:'334230',n:"Town of Salem",c:'terror'},
+
+    {i:'657200',n:"Hand Simulator",c:'terror'},{i:'4700',n:"Total War: MEDIEVAL II – Definitive Edition",c:'simulador'},{i:'266840',n:"Age of Mythology: Extended Edition",c:'rpg'},
+
+    {i:'1681430',n:"RoboCop: Rogue City",c:'rpg'},{i:'3672400',n:"Farever",c:'rpg',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3672400/74fc62ca20ce2a66578d001564022cae827bca3c/header_alt_assets_5.jpg'},{i:'304240',n:"Resident Evil",c:'terror'},
+
+    {i:'493490',n:"City Car Driving",c:'corrida'},{i:'1817230',n:"Hi-Fi RUSH",c:'mundoaberto'},{i:'2273430',n:"BlazBlue Entropy Effect",c:'aventura'},
+
+    {i:'1703340',n:"The Stanley Parable: Ultra Deluxe",c:'terror'},{i:'326460',n:"ShellShock Live",c:'coop'},{i:'57300',n:"Amnesia: The Dark Descent",c:'terror'},
+
+    {i:'1527950',n:"Wartales",c:'sobrevivencia'},{i:'2221490',n:"Tom Clancy’s The Division 2",c:'sobrevivencia'},{i:'625960',n:"Stoneshard",c:'sobrevivencia'},
+
+    {i:'2369390',n:"Far Cry 6",c:'sobrevivencia'},{i:'1483870',n:"Draw & Guess",c:'coop'},{i:'1663850',n:"REPLACED",c:'aventura',nw:1,y:'2026'},
+
+    {i:'1211020',n:"Wobbly Life",c:'mundoaberto'},{i:'640820',n:"Pathfinder: Kingmaker — Enhanced Plus Edition",c:'mundoaberto'},{i:'939960',n:"Far Cry New Dawn",c:'sobrevivencia'},
+
+    {i:'1134570',n:"F1 2021",c:'corrida'},{i:'535930',n:"Two Point Hospital",c:'simulador'},{i:'653530',n:"Return of the Obra Dinn",c:'terror'},
+
+    {i:'953490',n:"CARRION",c:'terror'},{i:'960170',n:"DJMAX RESPECT V",c:'esportes'},{i:'3117820',n:"Sultan's Game",c:'sobrevivencia'},
+
+    {i:'997070',n:"Marvel's Avengers - The Definitive Edition",c:'mundoaberto'},{i:'383120',n:"Empyrion - Galactic Survival",c:'sobrevivencia'},{i:'47890',n:"The Sims 3",c:'rpg'},
+
+    {i:'1466060',n:"Tainted Grail: The Fall of Avalon",c:'mundoaberto'},{i:'1392820',n:"Milk inside a bag of milk inside a bag of milk",c:'terror'},{i:'1963610',n:"Road to Vostok",c:'acao',nw:1,y:'2026'},
+
+    {i:'261030',n:"The Walking Dead: Season Two",c:'terror'},{i:'32370',n:"STAR WARS Knights of the Old Republic",c:'mundoaberto'},{i:'1049410',n:"Superliminal",c:'aventura'},
+
+    {i:'942970',n:"Unheard - Voices of Crime",c:'terror'},{i:'1262350',n:"SIGNALIS",c:'aventura'},{i:'1040200',n:"Crime Scene Cleaner",c:'simulador'},
+
+    {i:'641990',n:"The Escapists 2",c:'mundoaberto'},{i:'488790',n:"South Park: The Fractured But Whole",c:'mundoaberto'},{i:'394510',n:"HELLDIVERS Dive Harder Edition",c:'sobrevivencia'},
+
+    {i:'1359090',n:"Zero Hour",c:'fps'},{i:'268050',n:"The Evil Within",c:'terror'},{i:'55150',n:"Warhammer 40,000: Space Marine - Anniversary Edition",c:'coop'},
+
+    {i:'1268750',n:"Starship Troopers: Extermination",c:'fps'},{i:'1931770',n:"Chants of Sennaar",c:'terror'},{i:'1989270',n:"Slay the Princess — The Pristine Cut",c:'terror'},
+
+    {i:'955050',n:"Bright Memory",c:'mundoaberto'},{i:'637090',n:"BATTLETECH",c:'rpg'},{i:'460920',n:"Steep",c:'corrida'},
+
+    {i:'257510',n:"The Talos Principle",c:'indie'},{i:'274940',n:"Depth",c:'terror'},{i:'2486820',n:"Sonic Racing: CrossWorlds",c:'corrida',nw:1,y:'2025'},
+
+    {i:'368500',n:"Assassin's Creed Syndicate",c:'mundoaberto'},{i:'220440',n:"DmC: Devil May Cry",c:'aventura'},{i:'2515020',n:"FINAL FANTASY XVI",c:'rpg'},
+
+    {i:'373420',n:"Divinity: Original Sin - Enhanced Edition",c:'mundoaberto'},{i:'1584090',n:"Touhou Mystia's Izakaya",c:'rpg'},{i:'337320',n:"Paint the Town Red",c:'sobrevivencia'},
+
+    {i:'245170',n:"Skullgirls 2nd Encore",c:'indie'},{i:'413420',n:"Danganronpa 2: Goodbye Despair",c:'terror'},{i:'460790',n:"Bayonetta",c:'aventura'},
+
+    {i:'105450',n:"Age of Empires III (2007)",c:'sobrevivencia'},{i:'1066780',n:"Transport Fever 2",c:'mundoaberto'},{i:'517630',n:"Just Cause 4 Reloaded",c:'mundoaberto'},
+
+    {i:'7670',n:"BioShock",c:'terror'},{i:'1875580',n:"Mina the Hollower",c:'aventura',nw:1,y:'2026'},{i:'42910',n:"Magicka",c:'rpg'},
+
+    {i:'916440',n:"Anno 1800",c:'simulador'},{i:'209160',n:"Call of Duty: Ghosts",c:'fps'},{i:'287290',n:"Resident Evil Revelations 2",c:'terror'},
+
+    {i:'427730',n:"Who's Your Daddy?!",c:'terror'},{i:'954850',n:"Kerbal Space Program 2",c:'simulador'},{i:'8980',n:"Borderlands Game of the Year",c:'mundoaberto'},
+
+    {i:'521890',n:"Hello Neighbor",c:'terror'},{i:'699130',n:"World War Z",c:'terror'},{i:'230290',n:"Universe Sandbox",c:'mundoaberto'},
+
+    {i:'1189490',n:"觅长生",c:'mundoaberto'},{i:'1388880',n:"Doki Doki Literature Club Plus!",c:'indie'},{i:'1262580',n:"Need for Speed Payback",c:'corrida'},
+
+    {i:'2218750',n:"Halls of Torment",c:'rpg'},{i:'339800',n:"HuniePop",c:'terror'},{i:'1100600',n:"Football Manager 2020",c:'esportes'},
+
+    {i:'288160',n:"The Room",c:'terror'},{i:'299740',n:"Miscreated",c:'terror'},{i:'606160',n:"Routine",c:'terror',nw:1,y:'2026'},
+
+    {i:'41700',n:"S.T.A.L.K.E.R.: Call of Pripyat",c:'terror'},{i:'1718570',n:"ASTLIBRA Revision",c:'rpg'},{i:'380',n:"Half-Life 2: Episode One",c:'fps'},
+
+    {i:'4356430',n:"NBA 2K27",c:'esportes',soon:1,dt:'3 set 2026',o:20260903,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4356430/9152438fde7de9f4c20b4fd9072ba69f844dacab/header.jpg'},{i:'975370',n:"Dwarf Fortress",c:'sobrevivencia'},{i:'569480',n:"Kingdoms and Castles",c:'sobrevivencia'},
+
+    {i:'794260',n:"Outward Definitive Edition",c:'sobrevivencia'},{i:'237930',n:"Transistor",c:'rpg'},{i:'2290180',n:"Riders Republic",c:'corrida'},
+
+    {i:'47810',n:"Dragon Age: Origins - Ultimate Edition",c:'mundoaberto'},{i:'393420',n:"Hurtworld",c:'sobrevivencia'},{i:'571740',n:"Golf It!",c:'esportes'},
+
+    {i:'774801',n:"Crab Champions",c:'coop'},{i:'475550',n:"Beholder",c:'terror'},{i:'601430',n:"The Evil Within 2",c:'terror'},
+
+    {i:'474960',n:"Quantum Break",c:'terror'},{i:'280790',n:"Creativerse",c:'sobrevivencia'},{i:'2806050',n:"Halo: Campaign Evolved",c:'fps',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2806050/30d8542d35d7919b34e5f5dbe955d04c3f99e6da/header.jpg'},
+
+    {i:'249130',n:"LEGO Marvel Super Heroes",c:'mundoaberto'},{i:'1421250',n:"Tiny Bunny",c:'terror'},{i:'1189630',n:"Path Of Wuxia",c:'rpg'},
+
+    {i:'1252330',n:"DEATHLOOP",c:'fps'},{i:'39140',n:"FINAL FANTASY VII",c:'mundoaberto'},{i:'19680',n:"Alice: Madness Returns",c:'terror'},
+
+    {i:'282800',n:"100% Orange Juice",c:'fps'},{i:'960910',n:"Heavy Rain",c:'aventura'},{i:'409720',n:"BioShock 2 Remastered",c:'terror'},
+
+    {i:'1029690',n:"Sniper Elite 5",c:'mundoaberto'},{i:'1509960',n:"PICO PARK",c:'coop'},{i:'292730',n:"Call of Duty: Infinite Warfare",c:'mundoaberto'},
+
+    {i:'2420110',n:"Horizon Forbidden West",c:'mundoaberto'},{i:'248820',n:"Risk of Rain (2013)",c:'sobrevivencia'},{i:'2384580',n:"DYNASTY WARRIORS: ORIGINS",c:'rpg'},
+
+    {i:'238010',n:"Deus Ex: Human Revolution - Director's Cut",c:'mundoaberto'},{i:'392160',n:"X4: Foundations",c:'sobrevivencia'},{i:'12110',n:"Grand Theft Auto: Vice City",c:'mundoaberto'},
+
+    {i:'1455840',n:"Dorfromantik",c:'mundoaberto'},{i:'47780',n:"Dead Space 2",c:'terror'},{i:'341940',n:"Hatred",c:'terror'},
+
+    {i:'24010',n:"Train Simulator Classic",c:'simulador'},{i:'492720',n:"Tropico 6",c:'mundoaberto'},{i:'589290',n:"Holdfast: Nations At War",c:'mundoaberto'},
+
+    {i:'278360',n:"A Story About My Uncle",c:'terror'},{i:'1448440',n:"Wo Long: Fallen Dynasty",c:'rpg'},{i:'2142790',n:"Fields of Mistria",c:'mundoaberto'},
+
+    {i:'17470',n:"Dead Space (2008)",c:'terror'},{i:'1062520',n:"Dinkum",c:'mundoaberto'},{i:'1966900',n:"20 Minutes Till Dawn",c:'terror'},
+
+    {i:'1084600',n:"My Time at Sandrock",c:'mundoaberto'},{i:'50',n:"Half-Life: Opposing Force",c:'fps'},{i:'464920',n:"Surviving Mars",c:'sobrevivencia'},
+
+    {i:'1337520',n:"Risk of Rain Returns",c:'coop'},{i:'2280',n:"DOOM + DOOM II",c:'fps'},{i:'41070',n:"Serious Sam 3: BFE",c:'fps'},
+
+    {i:'584400',n:"Sonic Mania",c:'aventura'},{i:'1124300',n:"HUMANKIND",c:'sobrevivencia'},{i:'1262540',n:"Need for Speed",c:'corrida'},
+
+    {i:'934700',n:"Dead Island 2",c:'fps'},{i:'365360',n:"Battle Brothers",c:'mundoaberto'},{i:'22320',n:"The Elder Scrolls III: Morrowind Game of the Year Edition",c:'mundoaberto'},
+
+    {i:'557340',n:"My Friend Pedro",c:'indie'},{i:'2252570',n:"Football Manager 2024",c:'esportes'},{i:'1374490',n:"RuneScape: Dragonwilds",c:'sobrevivencia',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1374490/6f6bba2ddccb49f3a0abb831684ca085e453c721/header_alt_assets_3.jpg'},
+
+    {i:'104900',n:"ORION: Prelude",c:'mundoaberto'},{i:'238090',n:"Sniper Elite 3",c:'mundoaberto'},{i:'1106840',n:"Hydroneer",c:'sobrevivencia'},
+
+    {i:'578650',n:"The Outer Worlds",c:'mundoaberto'},{i:'213610',n:"Sonic Adventure 2",c:'acao'},{i:'80',n:"Counter-Strike: Condition Zero",c:'terror'},
+
+    {i:'1237320',n:"Sonic Frontiers",c:'mundoaberto'},{i:'1113560',n:"NieR Replicant ver.1.22474487139...",c:'rpg'},{i:'2138710',n:"Sifu",c:'acao'},
+
+    {i:'324800',n:"Shadow Warrior 2",c:'mundoaberto'},{i:'4121170',n:"Fears to Fathom - Scratch Creek",c:'indie',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4121170/803663dce78da494e9d061cf6652ade566b96331/header.jpg'},{i:'1222730',n:"STAR WARS: Squadrons",c:'mundoaberto'},
+
+    {i:'383150',n:"Dead Island Definitive Edition",c:'terror'},{i:'668630',n:"Tricolour Lovestory",c:'fps'},{i:'2362060',n:"Code Vein II",c:'rpg',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2362060/955e8f3fce6d832c286ac8013657ed6fc51f1f85/header.jpg'},
+
+    {i:'553640',n:"ICEY",c:'mundoaberto'},{i:'3059520',n:"F1 25",c:'corrida',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3059520/76dc8ac45f1bd6dec26e04434ca1c8814e7bb330/header.jpg'},{i:'729040',n:"Borderlands Game of the Year Enhanced",c:'mundoaberto'},
+
+    {i:'1127400',n:"Mindustry",c:'sobrevivencia'},{i:'1169040',n:"Necesse",c:'sobrevivencia'},{i:'391720',n:"Layers of Fear (2016)",c:'terror'},
+
+    {i:'384190',n:"ABZU",c:'mundoaberto'},{i:'3115220',n:"Town to City",c:'simulador',nw:1,y:'2026'},{i:'260230',n:"Valiant Hearts: The Great War / Soldats Inconnus : Mémoires de la Grande Guerre",c:'rpg'},
+
+    {i:'34030',n:"Total War: NAPOLEON – Definitive Edition",c:'simulador'},{i:'333600',n:"NEKOPARA Vol. 1",c:'terror'},{i:'1583320',n:"Pro Soccer Online",c:'esportes'},
+
+    {i:'1158160',n:"Coral Island",c:'mundoaberto'},{i:'1149620',n:"Gas Station Simulator",c:'mundoaberto'},{i:'541570',n:"Sally Face - Episode One",c:'terror'},
+
+    {i:'3526710',n:"Everything is Crab: The Animal Evolution Roguelite",c:'acao',nw:1,y:'2026'},{i:'7940',n:"Call of Duty 4: Modern Warfare (2007)",c:'fps'},{i:'494840',n:"UBOAT",c:'sobrevivencia'},
+
+    {i:'1549970',n:"Aliens: Fireteam Elite",c:'terror'},{i:'736190',n:"Chinese Parents",c:'terror'},{i:'204300',n:"Awesomenauts",c:'coop'},
+
+    {i:'859580',n:"Imperator: Rome",c:'mundoaberto'},{i:'1599600',n:"PlateUp!",c:'coop'},{i:'774181',n:"Rhythm Doctor",c:'coop'},
+
+    {i:'784150',n:"Workers & Resources: Soviet Republic",c:'sobrevivencia'},{i:'1262560',n:"Need for Speed Most Wanted",c:'corrida'},{i:'1601580',n:"Frostpunk 2",c:'simulador'},
+
+    {i:'233130',n:"Shadow Warrior",c:'mundoaberto'},{i:'2066020',n:"Soulstone Survivors",c:'rpg'},{i:'1171690',n:"Wayfinder",c:'mundoaberto'},
+
+    {i:'1940340',n:"Darkest Dungeon II",c:'rpg'},{i:'48190',n:"Assassin’s Creed Brotherhood",c:'mundoaberto'},{i:'1458140',n:"Pacific Drive",c:'sobrevivencia'},
+
+    {i:'412830',n:"STEINS;GATE",c:'terror'},{i:'2532550',n:"LIZARDS MUST DIE",c:'mundoaberto'},{i:'247080',n:"Crypt of the NecroDancer",c:'rpg'},
+
+    {i:'314160',n:"Microsoft Flight Simulator X: Steam Edition",c:'simulador'},{i:'609320',n:"FAR: Lone Sails",c:'sobrevivencia'},{i:'996470',n:"eFootball  PES 2020",c:'esportes'},
+
+    {i:'1182900',n:"A Plague Tale: Requiem",c:'aventura'},{i:'1645820',n:"SurrounDead",c:'sobrevivencia'},{i:'291650',n:"Pillars of Eternity",c:'mundoaberto'},
+
+    {i:'365450',n:"Hacknet",c:'terror'},{i:'332800',n:"Five Nights at Freddy's 2",c:'terror'},{i:'208580',n:"STAR WARS Knights of the Old Republic II - The Sith Lords",c:'rpg'},
+
+    {i:'629820',n:"Maneater",c:'mundoaberto'},{i:'2185060',n:"Two Point Museum",c:'simulador',nw:1,y:'2025'},{i:'447020',n:"Farming Simulator 17",c:'mundoaberto'},
+
+    {i:'531510',n:"Just Shapes & Beats",c:'coop'},{i:'2457220',n:"Avowed",c:'rpg',nw:1,y:'2025'},{i:'1240210',n:"There Is No Game: Wrong Dimension",c:'rpg'},
+
+    {i:'1466640',n:"Road 96",c:'aventura'},{i:'1692250',n:"F1 22",c:'corrida'},{i:'209650',n:"Call of Duty: Advanced Warfare - Gold Edition",c:'fps'},
+
+    {i:'71340',n:"Sonic Generations Collection",c:'acao'},{i:'63380',n:"Sniper Elite V2",c:'fps'},{i:'736220',n:"Squad 44",c:'mundoaberto'},
+
+    {i:'32440',n:"LEGO Star Wars - The Complete Saga",c:'mundoaberto'},{i:'1583230',n:"High On Life",c:'mundoaberto'},{i:'519860',n:"DUSK",c:'terror'},
+
+    {i:'1686940',n:"Bopl Battle",c:'coop'},{i:'756800',n:"Contraband Police",c:'sobrevivencia'},{i:'1432860',n:"Sun Haven",c:'rpg'},
+
+    {i:'221680',n:"Rocksmith 2014 Edition REMASTERED LEARN & PLAY",c:'simulador'},{i:'1783560',n:"The Last Caretaker",c:'sobrevivencia',nw:1,y:'2025'},{i:'2958130',n:"Jurassic World Evolution 3",c:'simulador',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2958130/df39f8c59232633e8e01ab63313b095402bdd0d5/header.jpg'},
+
+    {i:'15100',n:"Assassin's Creed: Director's Cut Edition",c:'mundoaberto'},{i:'410900',n:"Forts",c:'coop'},{i:'1044720',n:"Farthest Frontier",c:'sobrevivencia'},
+
+    {i:'1496790',n:"Gotham Knights",c:'mundoaberto'},{i:'221640',n:"Super Hexagon",c:'indie'},{i:'38400',n:"Fallout: A Post Nuclear Role Playing Game",c:'mundoaberto'},
+
+    {i:'427290',n:"Vampyr",c:'terror'},{i:'1227890',n:"Summer Memories",c:'rpg'},{i:'631510',n:"Devil May Cry HD Collection",c:'aventura'},
+
+    {i:'1948980',n:"Hero's Adventure: Road to Passion",c:'mundoaberto'},{i:'285920',n:"TerraTech",c:'sobrevivencia'},{i:'2698940',n:"The Crew Motorfest",c:'corrida'},
+
+    {i:'297000',n:"Heroes of Might & Magic III - HD Edition",c:'rpg'},{i:'837470',n:"Untitled Goose Game",c:'simulador'},{i:'274520',n:"Darkwood",c:'terror'},
+
+    {i:'1286680',n:"Tiny Tina's Wonderlands",c:'rpg'},{i:'1388770',n:"Cruelty Squad",c:'fps'},{i:'16900',n:"GROUND BRANCH",c:'fps'},
+
+    {i:'1401590',n:"Disney Dreamlight Valley",c:'simulador'},{i:'2828860',n:"The Forever Winter",c:'terror'},{i:'780310',n:"The Riftbreaker",c:'sobrevivencia'},
+
+    {i:'979690',n:"The Ascent",c:'mundoaberto'},{i:'627270',n:"Injustice 2",c:'mundoaberto'},{i:'736260',n:"Baba Is You",c:'indie'},
+
+    {i:'3010850',n:"Gears of War: E-Day",c:'fps',soon:1,dt:'6 out 2026',o:20261006},{i:'1097840',n:"Gears 5",c:'fps'},{i:'813230',n:"ANIMAL WELL",c:'terror'},
+
+    {i:'692890',n:"Roboquest",c:'fps'},{i:'2198150',n:"Tiny Glade",c:'simulador'},{i:'1127500',n:"Mini Motorways",c:'simulador'},
+
+    {i:'903950',n:"Last Oasis",c:'sobrevivencia'},{i:'2027330',n:"GoreBox",c:'fps'},{i:'1577120',n:"The Quarry",c:'terror'},
+
+    {i:'368260',n:"Marvel's Midnight Suns",c:'rpg'},{i:'302670',n:"Call to Arms",c:'fps'},{i:'2296990',n:"We Were Here Expeditions: The FriendShip",c:'coop'},
+
+    {i:'690830',n:"Foundation",c:'sobrevivencia'},{i:'1929610',n:"Demonologist",c:'terror'},{i:'239160',n:"Thief",c:'acao'},
+
+    {i:'434650',n:"Lost Castle / 失落城堡",c:'rpg'},{i:'1263850',n:"Football Manager 2021",c:'esportes'},{i:'450540',n:"Hot Dogs, Horseshoes & Hand Grenades",c:'terror'},
+
+    {i:'285190',n:"Warhammer 40,000: Dawn of War III",c:'simulador'},{i:'2799860',n:"INAZUMA ELEVEN: Victory Road",c:'esportes',nw:1,y:'2025'},{i:'1757300',n:"Jump Space",c:'acao',nw:1,y:'2025'},
+
+    {i:'246900',n:"Viscera Cleanup Detail",c:'terror'},{i:'2080690',n:"Sunkenland",c:'sobrevivencia'},{i:'2072450',n:"Like a Dragon: Infinite Wealth",c:'rpg'},
+
+    {i:'788100',n:"Neon Abyss",c:'rpg'},{i:'955900',n:"Amazing Cultivation Simulator",c:'sobrevivencia'},{i:'681280',n:"Descenders",c:'corrida'},
+
+    {i:'300',n:"Day of Defeat: Source",c:'fps'},{i:'1082430',n:"Before Your Eyes",c:'aventura'},{i:'1486920',n:"Tempest Rising",c:'simulador',nw:1,y:'2025'},
+
+    {i:'2239150',n:"Thronefall",c:'indie'},{i:'882100',n:"XCOM: Chimera Squad",c:'rpg'},{i:'1761390',n:"Hatsune Miku: Project DIVA Mega Mix+",c:'indie'},
+
+    {i:'350080',n:"Wolfenstein: The Old Blood",c:'terror'},{i:'834530',n:"Yakuza Kiwami",c:'mundoaberto'},{i:'323850',n:"Move or Die",c:'coop'},
+
+    {i:'303210',n:"The Beginner's Guide",c:'terror'},{i:'359870',n:"FINAL FANTASY X/X-2 HD Remaster",c:'rpg'},{i:'858820',n:"Tribes of Midgard",c:'sobrevivencia'},
+
+    {i:'1372880',n:"The Day Before",c:'coop'},{i:'1934680',n:"Age of Mythology: Retold",c:'coop'},{i:'65980',n:"Sid Meier's Civilization: Beyond Earth",c:'simulador'},
+
+    {i:'1433140',n:"The Texas Chain Saw Massacre",c:'terror'},{i:'1230140',n:"ATRI -My Dear Moments-",c:'fps'},{i:'4570720',n:"DragonSword : Awakening",c:'mundoaberto',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4570720/96a897e98f4472e656fbe6681191b3066cab6056/header.jpg'},
+
+    {i:'330020',n:"Children of Morta",c:'rpg'},{i:'1094520',n:"Sands of Salzaar",c:'mundoaberto'},{i:'392110',n:"ENDLESS Space 2",c:'sobrevivencia'},
+
+    {i:'512900',n:"Streets of Rogue",c:'rpg'},{i:'567640',n:"Danganronpa V3: Killing Harmony",c:'terror'},{i:'2968420',n:"PowerWash Simulator 2",c:'simulador',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2968420/91fea40a711c5a74cce1bb1a9e05c48a379f6aa0/header.jpg'},
+
+    {i:'1102190',n:"Monster Train",c:'rpg'},{i:'1985810',n:"Call of Duty: Black Ops Cold War",c:'fps'},{i:'2536520',n:"Diablo II: Resurrected – Infernal Edition",c:'rpg',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2536520/8cfd8f0d73075b10b3b58d9eccfee799baffab79/header.jpg'},
+
+    {i:'2768430',n:"ATLYSS",c:'rpg'},{i:'1669000',n:"Age of Wonders 4",c:'rpg'},{i:'362680',n:"Fran Bow",c:'terror'},
+
+    {i:'1451190',n:"Undisputed",c:'esportes'},{i:'2101960',n:"Cronos: The New Dawn",c:'terror',nw:1,y:'2025'},{i:'841370',n:"NBA 2K19",c:'esportes'},
+
+    {i:'816020',n:"JUMP FORCE",c:'mundoaberto'},{i:'997010',n:"Police Simulator: Patrol Officers",c:'simulador'},{i:'20510',n:"S.T.A.L.K.E.R.: Clear Sky",c:'terror'},
+
+    {i:'2215390',n:"Five Nights at Freddy's: Secret of the Mimic",c:'terror',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2215390/527bbebaa5764de58528487b3f2142c44a58b267/header.jpg'},{i:'1055540',n:"A Short Hike",c:'mundoaberto'},{i:'1096530',n:"Solasta: Crown of the Magister",c:'rpg'},
+
+    {i:'374040',n:"Portal Knights",c:'sobrevivencia'},{i:'2071280',n:"Ravenswatch",c:'rpg'},{i:'719040',n:"Wasteland 3",c:'mundoaberto'},
+
+    {i:'33930',n:"Arma 2: Operation Arrowhead",c:'mundoaberto'},{i:'509980',n:"BIGFOOT",c:'terror'},{i:'1161580',n:"Hardspace: Shipbreaker",c:'mundoaberto'},
+
+    {i:'996580',n:"Spyro Reignited Trilogy",c:'aventura'},{i:'527430',n:"Warhammer 40,000: Inquisitor - Martyr",c:'mundoaberto'},{i:'323470',n:"DRAGON BALL XENOVERSE",c:'mundoaberto'},
+
+    {i:'1604000',n:"Milk outside a bag of milk outside a bag of milk",c:'terror'},{i:'590380',n:"Into the Breach",c:'rpg'},{i:'447820',n:"Day of Infamy",c:'sobrevivencia'},
+
+    {i:'673950',n:"Farm Together",c:'simulador'},{i:'22300',n:"Fallout 3",c:'rpg'},{i:'329050',n:"Devil May Cry 4 Special Edition",c:'rpg'},
+
+    {i:'2646460',n:"Soulmask",c:'sobrevivencia'},{i:'35720',n:"Trine 2: Complete Story",c:'rpg'},{i:'311560',n:"Assassin’s Creed Rogue",c:'mundoaberto'},
+
+    {i:'895870',n:"Project Wingman",c:'simulador'},{i:'731490',n:"Crash Bandicoot N. Sane Trilogy",c:'coop'},{i:'2990',n:"FlatOut 2",c:'corrida'},
+
+    {i:'1637320',n:"Dome Keeper",c:'sobrevivencia'},{i:'606150',n:"Moonlighter",c:'rpg'},{i:'606880',n:"GreedFall",c:'mundoaberto'},
+
+    {i:'418530',n:"Spelunky 2",c:'coop'},{i:'894020',n:"Death's Door",c:'rpg'},{i:'1089090',n:"ONE PIECE: PIRATE WARRIORS 4",c:'mundoaberto'},
+
+    {i:'283640',n:"Salt and Sanctuary",c:'terror'},{i:'394690',n:"Tower Unite",c:'corrida'},{i:'667970',n:"VTOL VR",c:'simulador'},
+
+    {i:'2334730',n:"Death Must Die",c:'rpg'},{i:'425580',n:"The Room Two",c:'terror'},{i:'9480',n:"Saints Row 2",c:'mundoaberto'},
+
+    {i:'1291340',n:"Townscaper",c:'mundoaberto'},{i:'235600',n:"Tom Clancy’s Splinter Cell Blacklist",c:'acao'},{i:'2873080',n:"The NOexistenceN of you AND me",c:'rpg'},
+
+    {i:'1569040',n:"Football Manager 2022",c:'esportes'},{i:'429050',n:"Feed and Grow: Fish",c:'sobrevivencia'},{i:'1887840',n:"Another Crab's Treasure",c:'mundoaberto'},
+
+    {i:'235540',n:"Warhammer: End Times - Vermintide",c:'terror'},{i:'1789480',n:"Marauders",c:'mundoaberto'},{i:'866800',n:"The Walking Dead: The Final Season",c:'terror'},
+
+    {i:'10680',n:"Aliens vs. Predator",c:'terror'},{i:'928600',n:"F1 2019",c:'corrida'},{i:'2537590',n:"Microsoft Flight Simulator 2024",c:'simulador'},
+
+    {i:'292000',n:"No More Room in Hell 2",c:'sobrevivencia'},{i:'1222690',n:"Dragon Age Inquisition",c:'mundoaberto'},{i:'1029780',n:"Going Medieval",c:'sobrevivencia'},
+
+    {i:'210970',n:"The Witness",c:'indie'},{i:'1812450',n:"Bellwright",c:'sobrevivencia'},{i:'130',n:"Half-Life: Blue Shift",c:'fps'},
+
+    {i:'445980',n:"Wizard of Legend",c:'rpg'},{i:'40970',n:"Stronghold Crusader HD (2012)",c:'mundoaberto'},{i:'67370',n:"The Darkness II",c:'terror'},
+
+    {i:'1746030',n:"Murders on the Yangtze River",c:'rpg'},{i:'682990',n:"Drug Dealer Simulator",c:'mundoaberto'},{i:'3058630',n:"Assetto Corsa EVO",c:'corrida'},
+
+    {i:'1475810',n:"Ghostwire: Tokyo",c:'terror'},{i:'2248760',n:"Car For Sale Simulator 2023",c:'mundoaberto'},{i:'265300',n:"Lords Of The Fallen 2014",c:'mundoaberto'},
+
+    {i:'2668510',n:"Red Dead Redemption",c:'mundoaberto'},{i:'223850',n:"3DMark",c:'fps'},{i:'1904480',n:"Absolum",c:'acao',nw:1,y:'2025'},
+
+    {i:'2747330',n:"Species: Unknown",c:'terror',nw:1,y:'2025'},{i:'2114740',n:"Blasphemous 2",c:'terror'},{i:'201870',n:"Assassin's Creed Revelations",c:'mundoaberto'},
+
+    {i:'557600',n:"Gorogoa",c:'aventura'},{i:'2427700',n:"Backpack Battles",c:'indie'},{i:'388410',n:"Darksiders II Deathinitive Edition",c:'mundoaberto'},
+
+    {i:'760060',n:"Mutant Year Zero: Road to Eden",c:'terror'},{i:'265550',n:"Dead Rising 3 Apocalypse Edition",c:'terror'},{i:'1533420',n:"Neon White",c:'fps'},
+
+    {i:'40700',n:"Machinarium",c:'aventura'},{i:'1520370',n:"Mon Bazou",c:'corrida'},{i:'3917090',n:"Assetto Corsa Rally",c:'corrida',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3917090/e41c107ceaf4f35e2c895b23d292dd103cdc6c59/header_alt_assets_5.jpg'},
+
+    {i:'1178490',n:"港詭實錄ParanormalHK",c:'terror'},{i:'225260',n:"Brutal Legend",c:'mundoaberto'},{i:'337340',n:"Finding Paradise",c:'terror'},
+
+    {i:'2827200',n:"MIMESIS",c:'terror',nw:1,y:'2025'},{i:'1307550',n:"Craftopia",c:'sobrevivencia'},{i:'990630',n:"The Last Campfire",c:'aventura'},
+
+    {i:'1549180',n:"Propnight",c:'terror'},{i:'269950',n:"X-Plane 11",c:'mundoaberto'},{i:'1241510',n:"The Test",c:'terror'},
+
+    {i:'597820',n:"BIOMUTANT",c:'mundoaberto'},{i:'481510',n:"Night in the Woods",c:'terror'},{i:'242700',n:"Injustice: Gods Among Us Ultimate Edition",c:'coop'},
+
+    {i:'1999360',n:"Placid Plastic Duck Simulator",c:'indie'},{i:'3293010',n:"Easy Delivery Co.",c:'corrida',nw:1,y:'2025'},{i:'2742830',n:"Monster Train 2",c:'indie',nw:1,y:'2025'},
+
+    {i:'47870',n:"Need For Speed: Hot Pursuit",c:'corrida'},{i:'2404880',n:"Car Dealer Simulator",c:'simulador',nw:1,y:'2025'},{i:'42960',n:"Victoria II",c:'simulador'},
+
+    {i:'560130',n:"Pillars of Eternity II: Deadfire",c:'mundoaberto'},{i:'1592190',n:"BONELAB",c:'fps'},{i:'3244220',n:"A Game About Digging A Hole",c:'terror'},
+
+    {i:'2625420',n:"Drive Beyond Horizons",c:'corrida'},{i:'559650',n:"Witch It",c:'terror'},{i:'1904540',n:"Football Manager 2023",c:'esportes'},
+
+    {i:'292120',n:"FINAL FANTASY XIII",c:'rpg'},{i:'2780980',n:"LOCKDOWN Protocol",c:'fps'},{i:'242680',n:"Nuclear Throne",c:'rpg'},
+
+    {i:'251060',n:"Wargame: Red Dragon",c:'simulador'},{i:'503560',n:"911 Operator",c:'simulador'},{i:'1016920',n:"Unrailed!",c:'sobrevivencia'},
+
+    {i:'641320',n:"Cooking Simulator",c:'simulador'},{i:'1490890',n:"Demon Slayer -Kimetsu no Yaiba- The Hinokami Chronicles",c:'aventura'},{i:'233270',n:"Far Cry 3 - Blood Dragon",c:'mundoaberto'},
+
+    {i:'201790',n:"Orcs Must Die! 2",c:'rpg'},{i:'368070',n:"Sniper Ghost Warrior 3",c:'mundoaberto'},{i:'962730',n:"Skater XL - The Ultimate Skateboarding Game",c:'esportes'},
+
+    {i:'1190970',n:"House Flipper 2",c:'simulador'},{i:'411300',n:"ELEX",c:'mundoaberto'},{i:'985890',n:"Streets of Rage 4",c:'coop'},
+
+    {i:'3595270',n:"Call of Duty: Modern Warfare III",c:'fps',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3595270/7d0f21912a075c33bbb5ea558100e187ceb234ac/header.jpg'},{i:'3061810',n:"Like a Dragon: Pirate Yakuza in Hawaii",c:'acao',nw:1,y:'2025'},{i:'626690',n:"Sword Art Online: Fatal Bullet",c:'mundoaberto'},
+
+    {i:'330830',n:"Tales from the Borderlands",c:'rpg'},{i:'698670',n:"Scorn",c:'terror'},{i:'3722330',n:"Shift At Midnight",c:'terror',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3722330/759ecea2ffe1ad3819aefdda79e265b8b332bf8f/header.jpg'},
+
+    {i:'1012880',n:"60 Seconds! Reatomized",c:'terror'},{i:'21090',n:"F.E.A.R.",c:'terror'},{i:'339340',n:"Resident Evil 0",c:'sobrevivencia'},
+
+    {i:'859570',n:"Secret Neighbor: Hello Neighbor Multiplayer",c:'terror'},{i:'1435790',n:"Escape Simulator",c:'simulador'},{i:'1114150',n:"CarX Street",c:'corrida'},
+
+    {i:'669330',n:"Mechabellum",c:'simulador'},{i:'2399420',n:"Le Mans Ultimate",c:'corrida'},{i:'1543030',n:"Sword and Fairy 7",c:'mundoaberto'},
+
+    {i:'3830',n:"Psychonauts",c:'aventura'},{i:'3191030',n:"Nubby's Number Factory",c:'indie'},{i:'774861',n:"Project Winter",c:'sobrevivencia'},
+
+    {i:'2488620',n:"F1 24",c:'corrida'},{i:'289130',n:"ENDLESS Legend",c:'mundoaberto'},{i:'236090',n:"Dust: An Elysian Tail",c:'rpg'},
+
+    {i:'257850',n:"Hyper Light Drifter",c:'rpg'},{i:'1238820',n:"Battlefield 3",c:'mundoaberto'},{i:'1164940',n:"Trepang2",c:'terror'},
+
+    {i:'65800',n:"Dungeon Defenders",c:'sobrevivencia'},{i:'2627260',n:"Ninja Gaiden 4",c:'acao',nw:1,y:'2025'},{i:'429660',n:"Tales of Berseria",c:'rpg'},
+
+    {i:'237110',n:"Mortal Kombat Komplete Edition",c:'coop'},{i:'2909110',n:"Nuclear Nightmare",c:'mundoaberto'},{i:'241600',n:"Rogue Legacy",c:'rpg'},
+
+    {i:'577800',n:"NBA 2K18",c:'esportes'},{i:'1262240',n:"Plants vs. Zombies: Battle for Neighborville",c:'fps'},{i:'1128000',n:"Cube World",c:'sobrevivencia'},
+
+    {i:'34870',n:"Sniper: Ghost Warrior 2",c:'mundoaberto'},{i:'667530',n:"Drunken Wrestlers 2",c:'esportes'},{i:'367450',n:"Poly Bridge",c:'mundoaberto'},
+
+    {i:'1629520',n:"A Little to the Left",c:'indie'},{i:'493900',n:"Dungeons 3",c:'simulador'},{i:'462780',n:"Darksiders Warmastered Edition",c:'mundoaberto'},
+
+    {i:'2365810',n:"Pseudoregalia",c:'aventura'},{i:'228200',n:"Company of Heroes",c:'fps'},{i:'1238000',n:"Mass Effect: Andromeda Deluxe Edition",c:'mundoaberto'},
+
+    {i:'19900',n:"Far Cry 2",c:'sobrevivencia'},{i:'1341290',n:"We Were Here Forever",c:'terror'},{i:'71250',n:"Sonic Adventure DX",c:'acao'},
+
+    {i:'301640',n:"Zombie Army Trilogy",c:'terror'},{i:'463530',n:"Empires of the Undergrowth",c:'sobrevivencia'},{i:'605740',n:"Flashing Lights - Police, Firefighting, Emergency Services (EMS) Simulator",c:'corrida'},
+
+    {i:'1150440',n:"Aliens: Dark Descent",c:'terror'},{i:'1672970',n:"Minecraft Dungeons",c:'rpg'},{i:'536220',n:"The Walking Dead: A New Frontier",c:'terror'},
+
+    {i:'9450',n:"Warhammer 40,000: Dawn of War - Soulstorm",c:'coop'},{i:'489630',n:"Warhammer 40,000: Gladius - Relics of War",c:'coop'},{i:'2725260',n:"ENDER MAGNOLIA: Bloom in the Mist",c:'rpg'},
+
+    {i:'378860',n:"Project CARS 2",c:'corrida'},{i:'4380490',n:"Cat Mail Co.",c:'simulador',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4380490/9c206d8a7c8a6133230628b6326f4f08a683b40e/header.jpg'},{i:'1574820',n:"Until Then",c:'aventura'},
+
+    {i:'397950',n:"Clustertruck",c:'corrida'},{i:'232430',n:"Gone Home",c:'mundoaberto'},{i:'954740',n:"Terminator: Resistance",c:'mundoaberto'},
+
+    {i:'814540',n:"Changed",c:'terror'},{i:'368340',n:"CrossCode",c:'mundoaberto'},{i:'1465460',n:"Infection Free Zone",c:'sobrevivencia'},
+
+    {i:'1805320',n:"Romestead",c:'sobrevivencia',nw:1,y:'2026'},{i:'222480',n:"Resident Evil Revelations",c:'terror'},{i:'9200',n:"RAGE",c:'fps'},
+
+    {i:'65540',n:"Gothic 1",c:'mundoaberto'},{i:'763890',n:"Wildermyth",c:'rpg'},{i:'1361320',n:"The Room 4: Old Sins",c:'terror'},
+
+    {i:'490110',n:"The Precinct",c:'acao',nw:1,y:'2025'},{i:'1213740',n:"She Will Punish Them",c:'sobrevivencia'},{i:'775500',n:"SCARLET NEXUS",c:'mundoaberto'},
+
+    {i:'969990',n:"SpongeBob SquarePants: Battle for Bikini Bottom - Rehydrated",c:'acao'},{i:'2244210',n:"Echoes of Aincrad",c:'vr',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2244210/25fb6350451b21ca824562c8d1eebe89091347cc/header.jpg'},{i:'224540',n:"Ace of Spades: Battle Builder",c:'mundoaberto'},
+
+    {i:'553420',n:"TUNIC",c:'rpg'},{i:'1382330',n:"Persona 5 Strikers",c:'rpg'},{i:'311340',n:"METAL GEAR SOLID V: GROUND ZEROES",c:'mundoaberto'},
+
+    {i:'405640',n:"Pony Island",c:'terror'},{i:'498240',n:"Batman - The Telltale Series",c:'mundoaberto'},{i:'232890',n:"Stronghold Crusader 2",c:'sobrevivencia'},
+
+    {i:'1928980',n:"Nightingale",c:'sobrevivencia'},{i:'2005010',n:"Warhammer 40,000: Boltgun",c:'fps'},{i:'22490',n:"Fallout: New Vegas",c:'sobrevivencia'},
+
+    {i:'315210',n:"Suicide Squad: Kill the Justice League",c:'mundoaberto'},{i:'228280',n:"Baldur's Gate: Enhanced Edition",c:'rpg'},{i:'2060160',n:"The Farmer Was Replaced",c:'simulador',nw:1,y:'2025'},
+
+    {i:'278970',n:"Digger Online",c:'sobrevivencia'},{i:'212480',n:"Sonic & All-Stars Racing Transformed Collection",c:'corrida'},{i:'1895880',n:"Ratchet & Clank: Rift Apart",c:'mundoaberto'},
+
+    {i:'1139980',n:"Travellers Rest",c:'rpg'},{i:'858810',n:"Dawn of Man",c:'sobrevivencia'},{i:'385800',n:"NEKOPARA Vol. 0",c:'terror'},
+
+    {i:'3844970',n:"Burglin' Gnomes",c:'acao',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3844970/d6127e4eabda23e1d1c727a1875e6b6cb0e634ae/header.jpg'},{i:'3326230',n:"Hozy",c:'simulador',nw:1,y:'2026'},{i:'39510',n:"Gothic II: Gold Edition",c:'mundoaberto'},
+
+    {i:'293760',n:"Automation - The Car Company Tycoon Game",c:'corrida'},{i:'1880330',n:"Sanfu",c:'terror'},{i:'219890',n:"Antichamber",c:'indie'},
+
+    {i:'2373990',n:"Solo Leveling: ARISE OVERDRIVE",c:'rpg',nw:1,y:'2025'},{i:'3643170',n:"Roadside Research",c:'rpg',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3643170/573928872d1c356688774e5e7c65748b30645c58/header.jpg'},{i:'2108330',n:"F1 23",c:'esportes'},
+
+    {i:'257420',n:"Serious Sam 4",c:'fps'},{i:'927380',n:"Yakuza Kiwami 2",c:'mundoaberto'},{i:'865360',n:"We Were Here Together",c:'terror'},
+
+    {i:'986130',n:"Shadows of Doubt",c:'mundoaberto'},{i:'1296610',n:"Peglin",c:'rpg'},{i:'1372110',n:"JoJo's Bizarre Adventure: All-Star Battle R",c:'acao'},
+
+    {i:'1113120',n:"IXION",c:'sobrevivencia'},{i:'1715130',n:"Crysis Remastered",c:'sobrevivencia'},{i:'1371580',n:"Myth of Empires",c:'sobrevivencia'},
+
+    {i:'241540',n:"State of Decay",c:'terror'},{i:'1954200',n:"Kena: Bridge of Spirits",c:'aventura'},{i:'406150',n:"Refunct",c:'mundoaberto'},
+
+    {i:'488860',n:"MADNESS: Project Nexus",c:'coop'},{i:'371970',n:"Barony",c:'rpg'},{i:'1449110',n:"The Outer Worlds 2",c:'rpg',nw:1,y:'2025'},
+
+    {i:'1302240',n:"Labyrinthine",c:'terror'},{i:'38410',n:"Fallout 2: A Post Nuclear Role Playing Game",c:'mundoaberto'},{i:'1766740',n:"Choo-Choo Charles",c:'terror'},
+
+    {i:'233290',n:"Murdered: Soul Suspect",c:'terror'},{i:'606280',n:"Darksiders III",c:'mundoaberto'},{i:'202170',n:"Sleeping Dogs",c:'mundoaberto'},
+
+    {i:'437220',n:"The Culling",c:'sobrevivencia'},{i:'973760',n:"Thronebreaker: The Witcher Tales",c:'mundoaberto'},{i:'1277400',n:"Monster Hunter Stories 2: Wings of Ruin",c:'rpg'},
+
+    {i:'250400',n:"How to Survive",c:'sobrevivencia'},{i:'6000',n:"STAR WARS Republic Commando",c:'fps'},{i:'1556790',n:"Isonzo",c:'fps'},
+
+    {i:'241560',n:"The Crew",c:'corrida'},{i:'223100',n:"Homefront: The Revolution",c:'sobrevivencia'},{i:'341800',n:"Keep Talking and Nobody Explodes",c:'terror'},
+
+    {i:'248390',n:"Craft The World",c:'sobrevivencia'},{i:'548570',n:"RAGE 2",c:'fps'},{i:'228300',n:"Remember Me",c:'aventura'},
+
+    {i:'1061910',n:"Metal: Hellsinger",c:'fps'},{i:'45760',n:"Ultra Street Fighter IV",c:'aventura'},{i:'246420',n:"Kingdom Rush  - Tower Defense",c:'rpg'},
+
+    {i:'233720',n:"Surgeon Simulator",c:'simulador'},{i:'250760',n:"Shovel Knight: Treasure Trove",c:'rpg'},{i:'1971650',n:"OCTOPATH TRAVELER II",c:'mundoaberto'},
+
+    {i:'921570',n:"OCTOPATH TRAVELER",c:'mundoaberto'},{i:'936790',n:"Life is Strange: True Colors",c:'aventura'},{i:'1046030',n:"ISLANDERS",c:'indie'},
+
+    {i:'388090',n:"Five Nights at Freddy's 4",c:'terror'},{i:'3156770',n:"Witchfire",c:'rpg'},{i:'991780',n:"Notes of Soul",c:'corrida'},
+
+    {i:'270150',n:"RUNNING WITH RIFLES",c:'sobrevivencia'},{i:'2103140',n:"Magicraft",c:'rpg'},{i:'1515210',n:"The Past Within",c:'terror'},
+
+    {i:'4760',n:"Rome: Total War - Collection",c:'simulador'},{i:'280',n:"Half-Life: Source",c:'fps'},{i:'287980',n:"Mini Metro",c:'simulador'},
+
+    {i:'239350',n:"Spelunky",c:'coop'},{i:'448510',n:"Overcooked",c:'simulador'},{i:'17460',n:"Mass Effect (2007)",c:'mundoaberto'},
+
+    {i:'977880',n:"Eastward",c:'mundoaberto'},{i:'610370',n:"Desperados III",c:'sobrevivencia'},{i:'562810',n:"MONOPOLY PLUS",c:'sobrevivencia'},
+
+    {i:'1233570',n:"Mirror's Edge Catalyst",c:'mundoaberto'},{i:'2113850',n:"Spirit City: Lofi Sessions",c:'simulador'},{i:'738520',n:"Breathedge",c:'terror'},
+
+    {i:'2769570',n:"Fable",c:'rpg',soon:1,dt:'23 fev 2027',o:20270223},{i:'288470',n:"Fable Anniversary",c:'mundoaberto'},{i:'437920',n:"Tricky Towers",c:'coop'},
+
+    {i:'343780',n:"Cat Goes Fishing",c:'terror'},{i:'264200',n:"One Finger Death Punch",c:'indie'},{i:'204880',n:"Sins of a Solar Empire: Rebellion",c:'simulador'},
+
+    {i:'1548850',n:"Six Days in Fallujah",c:'terror'},{i:'2109460',n:"VillageRhapsody",c:'rpg'},{i:'2904000',n:"The Spell Brigade",c:'coop'},
+
+    {i:'1102130',n:"Florence",c:'aventura'},{i:'451340',n:"Gold Mining Simulator",c:'mundoaberto'},{i:'3483740',n:"Cast n Chill",c:'esportes',nw:1,y:'2025'},
+
+    {i:'313340',n:"Mountain",c:'corrida'},{i:'421020',n:"DiRT 4",c:'corrida'},{i:'1850740',n:"Ghost Watchers",c:'terror'},
+
+    {i:'40990',n:"Mafia",c:'mundoaberto'},{i:'224760',n:"FEZ",c:'aventura'},{i:'298630',n:"The Escapists",c:'sobrevivencia'},
+
+    {i:'314650',n:"SpaceEngine",c:'mundoaberto'},{i:'21000',n:"LEGO Batman: The Videogame",c:'mundoaberto'},{i:'617670',n:"Zup! S",c:'indie'},
+
+    {i:'3228590',n:"Deadzone: Rogue",c:'fps'},{i:'2104890',n:"RoadCraft",c:'simulador'},{i:'361280',n:"Turmoil",c:'sobrevivencia'},
+
+    {i:'333420',n:"Cossacks 3",c:'mundoaberto'},{i:'290340',n:"Armello",c:'rpg'},{i:'780290',n:"Gloomhaven",c:'rpg'},
+
+    {i:'1267910',n:"Melvor Idle",c:'rpg'},{i:'1364020',n:"Boundary",c:'fps'},{i:'214510',n:"LEGO The Lord of the Rings",c:'coop'},
+
+    {i:'6860',n:"Hitman: Blood Money",c:'fps'},{i:'1063660',n:"Bendy and the Dark Revival",c:'terror'},{i:'1676840',n:"For The King II",c:'mundoaberto'},
+
+    {i:'237990',n:"The Banner Saga",c:'rpg'},{i:'826630',n:"Iron Harvest",c:'coop'},{i:'35700',n:"Trine Enchanted Edition",c:'coop'},
+
+    {i:'17480',n:"Command & Conquer: Red Alert 3",c:'coop'},{i:'872410',n:"ROMANCE OF THE THREE KINGDOMS XIV",c:'rpg'},{i:'1574580',n:"Strange Horticulture",c:'simulador'},
+
+    {i:'214560',n:"Mark of the Ninja",c:'aventura'},{i:'1611600',n:"WARNO",c:'simulador'},{i:'313160',n:"Farming Simulator 15",c:'mundoaberto'},
+
+    {i:'282440',n:"Quake Live",c:'fps'},{i:'115320',n:"Prototype 2",c:'mundoaberto'},{i:'287450',n:"Rise of Nations: Extended Edition",c:'simulador'},
+
+    {i:'861650',n:"Session: Skate Sim",c:'esportes'},{i:'1056960',n:"Wolfenstein: Youngblood",c:'sobrevivencia'},{i:'1066890',n:"Automobilista 2",c:'corrida'},
+
+    {i:'12140',n:"Max Payne",c:'acao'},{i:'238430',n:"Contagion",c:'sobrevivencia'},{i:'1318690',n:"shapez",c:'mundoaberto'},
+
+    {i:'394310',n:"Punch Club",c:'esportes'},{i:'850190',n:"Goat Simulator 3",c:'mundoaberto'},{i:'393080',n:"Call of Duty: Modern Warfare Remastered (2017)",c:'fps'},
+
+    {i:'2310',n:"Quake",c:'fps'},{i:'332310',n:"LEGO Worlds",c:'simulador'},{i:'1216710',n:"Cyber Manhunt",c:'terror'},
+
+    {i:'784080',n:"MechWarrior 5: Mercenaries",c:'fps'},{i:'911400',n:"Assassin's Creed III Remastered",c:'rpg'},{i:'2634950',n:"Tokyo Xtreme Racer",c:'corrida'},
+
+    {i:'1805110',n:"Solarpunk",c:'sobrevivencia',nw:1,y:'2026'},{i:'24980',n:"Mass Effect 2 (2010 Edition)",c:'rpg'},{i:'1017900',n:"Age of Empires: Definitive Edition",c:'coop'},
+
+    {i:'6910',n:"Deus Ex: Game of the Year Edition",c:'rpg'},{i:'1547000',n:"Grand Theft Auto: San Andreas – The Definitive Edition",c:'aventura'},{i:'621830',n:"WRC 7 FIA World Rally Championship",c:'corrida'},
+
+    {i:'491950',n:"Orwell: Keeping an Eye On You",c:'simulador'},{i:'1016800',n:"Chernobylite Complete Edition",c:'terror'},{i:'1353230',n:"Bomb Rush Cyberfunk",c:'aventura'},
+
+    {i:'537800',n:"Bomber Crew",c:'sobrevivencia'},{i:'3767850',n:"SpiritVale",c:'mundoaberto',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3767850/7048933d069ef057bcd5571f99b4e2d5b8744b31/header.jpg'},{i:'428690',n:"Youtubers Life",c:'simulador'},
+
+    {i:'611790',n:"House Party",c:'terror'},{i:'1239690',n:"Retrowave",c:'corrida'},{i:'1093910',n:"Tales of the Black Forest",c:'terror'},
+
+    {i:'3501070',n:"Car Service Together",c:'corrida',nw:1,y:'2026'},{i:'746850',n:"Cloudpunk",c:'mundoaberto'},{i:'3920610',n:"FATAL FRAME II: Crimson Butterfly REMAKE",c:'terror',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3920610/f0ca97688410ecb4effbde0b77431443a5172cf8/header.jpg'},
+
+    {i:'320',n:"Half-Life 2: Deathmatch",c:'fps'},{i:'2600',n:"Vampire: The Masquerade - Bloodlines",c:'terror'},{i:'2513280',n:"SONIC X SHADOW GENERATIONS",c:'aventura'},
+
+    {i:'2429860',n:"Living With Sister: Monochrome Fantasy",c:'rpg'},{i:'1390350',n:"Webbed",c:'indie'},{i:'469600',n:"Legion TD 2 - Multiplayer Tower Defense",c:'sobrevivencia'},
+
+    {i:'2840770',n:"Avatar: Frontiers of Pandora",c:'coop'},{i:'813630',n:"Supraland",c:'terror'},{i:'70000',n:"Dino D-Day",c:'sobrevivencia'},
+
+    {i:'335670',n:"LISA: The Painful",c:'terror'},{i:'1782120',n:"ZERO Sievert",c:'sobrevivencia'},{i:'1424330',n:"Wobbledogs",c:'simulador'},
+
+    {i:'402710',n:"Osiris: New Dawn",c:'sobrevivencia'},{i:'1253920',n:"Rogue Legacy 2",c:'rpg'},{i:'872670',n:"SCP: 5K",c:'fps'},
+
+    {i:'1085510',n:"Garfield Kart - Furious Racing",c:'corrida'},{i:'1244090',n:"Sea of Stars",c:'indie'},{i:'2201320',n:"Date Everything!",c:'indie',nw:1,y:'2025'},
+
+    {i:'2381590',n:"Only Up",c:'mundoaberto'},{i:'424030',n:"War of Rights",c:'fps'},{i:'2162800',n:"shapez 2 - Factory",c:'simulador'},
+
+    {i:'8850',n:"BioShock 2",c:'terror'},{i:'1283410',n:"Tails of Iron",c:'rpg'},{i:'851100',n:"Touhou Luna Nights",c:'rpg'},
+
+    {i:'12100',n:"Grand Theft Auto III",c:'mundoaberto'},{i:'1522820',n:"Orcs Must Die! 3",c:'coop'},{i:'344760',n:"Reign Of Kings",c:'sobrevivencia'},
+
+    {i:'34900',n:"Bad Rats: the Rats' Revenge",c:'corrida'},{i:'712100',n:"A Total War Saga: THRONES OF BRITANNIA",c:'coop'},{i:'327030',n:"Worms W.M.D",c:'mundoaberto'},
+
+    {i:'473690',n:"Absolver",c:'mundoaberto'},{i:'1238060',n:"Dead Space 3",c:'sobrevivencia'},{i:'1338770',n:"Sniper Ghost Warrior Contracts 2",c:'fps'},
+
+    {i:'252530',n:"OMSI 2: Steam Edition",c:'mundoaberto'},{i:'1361510',n:"Teenage Mutant Ninja Turtles: Shredder's Revenge",c:'aventura'},{i:'2666510',n:"Rusty's Retirement",c:'simulador'},
+
+    {i:'311310',n:"Naval Action",c:'corrida'},{i:'875210',n:"Kingdom Heroes 8",c:'rpg'},{i:'1488200',n:"Symphony of War: The Nephilim Saga",c:'rpg'},
+
+    {i:'1162520',n:"Richman10",c:'coop'},{i:'209080',n:"Guns of Icarus Online",c:'fps'},{i:'1084160',n:"Jagged Alliance 3",c:'rpg'},
+
+    {i:'386070',n:"Planetary Annihilation: TITANS",c:'mundoaberto'},{i:'1611910',n:"Warhammer 40,000: Chaos Gate - Daemonhunters",c:'rpg'},{i:'320300',n:"Car Mechanic Simulator 2015",c:'corrida'},
+
+    {i:'2075070',n:"KinitoPET",c:'simulador'},{i:'1785150',n:"Friends vs Friends",c:'fps'},{i:'673880',n:"Warhammer 40,000: Mechanicus",c:'rpg'},
+
+    {i:'858210',n:"Nova Drift",c:'indie'},{i:'445220',n:"Avorion",c:'sobrevivencia'},{i:'234630',n:"Project CARS",c:'corrida'},
+
+    {i:'601840',n:"Griftlands",c:'rpg'},{i:'12150',n:"Max Payne 2: The Fall of Max Payne",c:'aventura'},{i:'350640',n:"Sherlock Holmes: The Devil's Daughter",c:'mundoaberto'},
+
+    {i:'847370',n:"Sunset Overdrive",c:'mundoaberto'},{i:'245620',n:"Tropico 5",c:'mundoaberto'},{i:'234670',n:"NARUTO SHIPPUDEN: Ultimate Ninja STORM 3 Full Burst HD",c:'mundoaberto'},
+
+    {i:'210770',n:"Sanctum 2",c:'sobrevivencia'},{i:'743450',n:"Monster Prom",c:'terror'},{i:'544750',n:"SOULCALIBUR VI",c:'mundoaberto'},
+
+    {i:'607080',n:"Psychonauts 2",c:'aventura'},{i:'1810580',n:"Nobody - The Turnaround",c:'sobrevivencia'},{i:'9420',n:"Supreme Commander: Forged Alliance",c:'coop'},
+
+    {i:'1273400',n:"Construction Simulator",c:'mundoaberto'},{i:'914620',n:"Mist Survival",c:'sobrevivencia'},{i:'690640',n:"Trine 4: The Nightmare Prince",c:'rpg'},
+
+    {i:'1328660',n:"Need for Speed Hot Pursuit Remastered",c:'corrida'},{i:'208480',n:"Assassin’s Creed III",c:'mundoaberto'},{i:'1324780',n:"Easy Red 2",c:'fps'},
+
+    {i:'878750',n:"Hentai Girl",c:'fps'},{i:'415200',n:"Motorsport Manager",c:'corrida'},{i:'589780',n:"The Red Strings Club",c:'aventura'},
+
+    {i:'362930',n:"Garfield Kart",c:'corrida'},{i:'377840',n:"FINAL FANTASY IX",c:'mundoaberto'},{i:'204340',n:"Serious Sam II",c:'mundoaberto'},
+
+    {i:'244160',n:"Homeworld Remastered Collection",c:'sobrevivencia'},{i:'214340',n:"Deponia",c:'aventura'},{i:'2688950',n:"Planet Coaster 2",c:'simulador'},
+
+    {i:'688420',n:"Bad North: Jotunn Edition",c:'sobrevivencia'},{i:'10150',n:"Prototype",c:'mundoaberto'},{i:'1115690',n:"Yes, Your Grace",c:'sobrevivencia'},
+
+    {i:'278080',n:"DYNASTY WARRIORS 8: Xtreme Legends Complete Edition",c:'rpg'},{i:'249050',n:"Dungeon of the ENDLESS",c:'sobrevivencia'},{i:'714120',n:"Little Misfortune",c:'aventura'},
+
+    {i:'1229380',n:"Everhood",c:'rpg'},{i:'718670',n:"Cultist Simulator",c:'rpg'},{i:'48720',n:"Mount & Blade: With Fire & Sword",c:'mundoaberto'},
+
+    {i:'382310',n:"Eco",c:'sobrevivencia'},{i:'423230',n:"Furi",c:'indie'},{i:'3107330',n:"Nodebuster",c:'simulador'},
+
+    {i:'1205450',n:"Turnip Boy Commits Tax Evasion",c:'rpg'},{i:'3121110',n:"Zort",c:'fps'},{i:'1170950',n:"Mortal Online 2",c:'sobrevivencia'},
+
+    {i:'15620',n:"Warhammer 40,000: Dawn of War II - Anniversary Edition (Classic)",c:'rpg'},{i:'108800',n:"Crysis 2 - Maximum Edition",c:'sobrevivencia'},{i:'238370',n:"Magicka 2",c:'mundoaberto'},
+
+    {i:'939850',n:"The Dark Pictures Anthology: Man of Medan",c:'coop'},{i:'1559390',n:"Fate Seeker II",c:'mundoaberto'},{i:'6020',n:"STAR WARS Jedi Knight - Jedi Academy",c:'rpg'},
+
+    {i:'399810',n:"Call of Cthulhu",c:'mundoaberto'},{i:'2181930',n:"DR LIVESEY ROM AND DEATH EDITION",c:'rpg'},{i:'362490',n:"Exanima",c:'sobrevivencia'},
+
+    {i:'320240',n:"We Happy Few",c:'sobrevivencia'},{i:'297130',n:"Titan Souls",c:'aventura'},{i:'418030',n:"Subsistence",c:'sobrevivencia'},
+
+    {i:'221260',n:"Little Inferno",c:'aventura'},{i:'1177980',n:"Little Kitty, Big City",c:'mundoaberto'},{i:'1796470',n:"Haste",c:'corrida'},
+
+    {i:'410340',n:"Liftoff: FPV Drone Racing",c:'corrida'},{i:'1766060',n:"HumanitZ",c:'coop'},{i:'1188930',n:"Chrono Ark",c:'rpg'},
+
+    {i:'234650',n:"Shadowrun Returns",c:'rpg'},{i:'2194530',n:"Yog-Sothoth’s Yard",c:'rpg'},{i:'21100',n:"F.E.A.R. 3",c:'fps'},
+
+    {i:'1504570',n:"Cultivation Tales",c:'coop'},{i:'1566690',n:"Outpost: Infinity Siege",c:'sobrevivencia'},{i:'710920',n:"Darksiders Genesis",c:'rpg'},
+
+    {i:'515180',n:"Bus Simulator 18",c:'mundoaberto'},{i:'885970',n:"Total War: ROME REMASTERED",c:'acao'},{i:'2163330',n:"Yet Another Zombie Survivors",c:'sobrevivencia'},
+
+    {i:'1105670',n:"The Last Spell",c:'rpg'},{i:'202990',n:"Call of Duty: Black Ops II",c:'terror'},{i:'340',n:"Half-Life 2: Lost Coast",c:'fps'},
+
+    {i:'737800',n:"F1 2018",c:'corrida'},{i:'1605220',n:"Dune: Spice Wars",c:'simulador'},{i:'874260',n:"The Forgotten City",c:'mundoaberto'},
+
+    {i:'867210',n:"Songs of Conquest",c:'rpg'},{i:'300380',n:"Road Redemption",c:'corrida'},{i:'256290',n:"Child of Light",c:'rpg'},
+
+    {i:'24740',n:"Burnout Paradise: The Ultimate Box",c:'corrida'},{i:'2993780',n:"FANTASY LIFE i: The Girl Who Steals Time",c:'rpg'},{i:'1239080',n:"Door Kickers 2: Task Force North",c:'simulador'},
+
+    {i:'3195790',n:"White Knuckle",c:'acao'},{i:'882790',n:"Fate Seeker",c:'rpg'},{i:'17300',n:"Crysis",c:'mundoaberto'},
+
+    {i:'55100',n:"Homefront",c:'sobrevivencia'},{i:'4920',n:"Natural Selection 2",c:'fps'},{i:'707030',n:"POSTAL 4: No Regerts",c:'sobrevivencia'},
+
+    {i:'613830',n:"CHRONO TRIGGER",c:'rpg'},{i:'1065310',n:"Evil West",c:'rpg'},{i:'456750',n:"The Room Three",c:'coop'},
+
+    {i:'206190',n:"Gunpoint",c:'aventura'},{i:'1061090',n:"Jump King",c:'aventura'},{i:'362960',n:"Tyranny",c:'mundoaberto'},
+
+    {i:'1331550',n:"Big Ambitions",c:'mundoaberto'},{i:'2445690',n:"Lost Castle 2",c:'rpg'},{i:'294860',n:"Valkyria Chronicles",c:'rpg'},
+
+    {i:'614570',n:"Dishonored: Death of the Outsider",c:'mundoaberto'},{i:'700600',n:"Evil Genius 2: World Domination",c:'simulador'},{i:'593600',n:"PixARK",c:'sobrevivencia'},
+
+    {i:'1563180',n:"Internet Cafe Simulator 2",c:'mundoaberto'},{i:'973580',n:"Sniper Ghost Warrior Contracts",c:'mundoaberto'},{i:'1004640',n:"FINAL FANTASY TACTICS - The Ivalice Chronicles",c:'rpg',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1004640/2d8e4389e157b62f07bdc7c9468bf04010d574c0/header.jpg'},
+
+    {i:'1525700',n:"Tavern Master",c:'simulador'},{i:'2291760',n:"Papa's Freezeria Deluxe",c:'simulador'},{i:'764790',n:"The Messenger",c:'aventura'},
+
+    {i:'926990',n:"WolfQuest: Anniversary Edition",c:'sobrevivencia'},{i:'329430',n:"State of Decay: YOSE",c:'sobrevivencia'},{i:'732690',n:"FIVE NIGHTS AT FREDDY'S: HELP WANTED",c:'terror'},
+
+    {i:'528230',n:"SYNTHETIK: Legion Rising",c:'coop'},{i:'1042550',n:"Digimon Story Cyber Sleuth: Complete Edition",c:'rpg'},{i:'56437',n:"Warhammer 40,000: Dawn of War II: Retribution",c:'rpg'},
+
+    {i:'253250',n:"Stonehearth",c:'sobrevivencia'},{i:'1938010',n:"WILD HEARTS",c:'rpg'},{i:'1385380',n:"Across the Obelisk",c:'rpg'},
+
+    {i:'102500',n:"Kingdoms of Amalur: Reckoning",c:'mundoaberto'},{i:'280160',n:"Aragami",c:'mundoaberto'},{i:'1571440',n:"Lunch Lady",c:'fps'},
+
+    {i:'383180',n:"Dead Island: Riptide Definitive Edition",c:'sobrevivencia'},{i:'1128920',n:"EVERSPACE 2",c:'mundoaberto'},{i:'40100',n:"Supreme Commander 2",c:'coop'},
+
+    {i:'1594940',n:"Little Witch in the Woods",c:'rpg'},{i:'50620',n:"Darksiders",c:'mundoaberto'},{i:'1801110',n:"BOKURA",c:'coop'},
+
+    {i:'395170',n:"DISTRAINT: Deluxe Edition",c:'aventura'},{i:'3634520',n:"Samson",c:'corrida',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3634520/139e0f223c1c0cb4f2e763c41ae7fe6e4e3e59a2/header.jpg'},{i:'2004680',n:"Voidling Bound",c:'rpg',nw:1,y:'2026'},
+
+    {i:'2695940',n:"PANICORE",c:'sobrevivencia'},{i:'420110',n:"NEKOPARA Vol. 2",c:'aventura'},{i:'1382070',n:"Viewfinder",c:'aventura'},
+
+    {i:'482400',n:"System Shock",c:'sobrevivencia'},{i:'226840',n:"Age of Wonders III",c:'rpg'},{i:'1182620',n:"Impostor Factory",c:'rpg'},
+
+    {i:'1620730',n:"Hell is Us",c:'aventura',nw:1,y:'2025'},{i:'211400',n:"Deadlight",c:'sobrevivencia'},{i:'799600',n:"Cosmoteer: Starship Architect & Commander",c:'sobrevivencia'},
+
+    {i:'268650',n:"From the Depths",c:'sobrevivencia'},{i:'57690',n:"Tropico 4",c:'simulador'},{i:'690040',n:"SUPERHOT: MIND CONTROL DELETE",c:'fps'},
+
+    {i:'1674170',n:"Sprocket",c:'acao'},{i:'48240',n:"Anno 2070",c:'simulador'},{i:'2749950',n:"Esports Manager 2026",c:'esportes',nw:1,y:'2026'},
+
+    {i:'1622910',n:"Still Wakes the Deep",c:'sobrevivencia'},{i:'2440510',n:"Forza Motorsport",c:'corrida'},{i:'2707940',n:"FPV Kamikaze Drone",c:'simulador'},
+
+    {i:'224600',n:"Defiance",c:'sobrevivencia'},{i:'658850',n:"Do Not Feed the Monkeys",c:'simulador'},{i:'814370',n:"Monster Sanctuary",c:'mundoaberto'},
+
+    {i:'1147550',n:"Not For Broadcast",c:'simulador'},{i:'506610',n:"Five Nights at Freddy's: Sister Location",c:'sobrevivencia'},{i:'2408820',n:"Luma Island",c:'rpg'},
+
+    {i:'356570',n:"Party Hard",c:'indie'},{i:'1902960',n:"Lost Records: Bloom & Rage",c:'aventura',nw:1,y:'2025'},{i:'2187290',n:"Wall World",c:'acao'},
+
+    {i:'375230',n:"Warhammer 40,000: Eternal Crusade",c:'coop'},{i:'333640',n:"Caves of Qud",c:'sobrevivencia'},{i:'2375550',n:"Like a Dragon Gaiden: The Man Who Erased His Name",c:'mundoaberto'},
+
+    {i:'1875830',n:"Shin Megami Tensei V: Vengeance",c:'rpg'},{i:'914800',n:"Coffee Talk",c:'simulador'},{i:'872790',n:"Football Manager 2019",c:'esportes'},
+
+    {i:'731040',n:"The Invincible",c:'aventura'},{i:'773951',n:"Freeman: Guerrilla Warfare",c:'rpg'},{i:'1272320',n:"Diplomacy is Not an Option",c:'sobrevivencia'},
+
+    {i:'464060',n:"RUINER",c:'mundoaberto'},{i:'1259980',n:"RIDE 4",c:'corrida'},{i:'2239550',n:"Watch Dogs: Legion",c:'rpg'},
+
+    {i:'218680',n:"Scribblenauts Unlimited",c:'mundoaberto'},{i:'1285670',n:"Post Void",c:'fps'},{i:'496300',n:"Kingdom: New Lands",c:'sobrevivencia'},
+
+    {i:'39500',n:"Gothic 3",c:'mundoaberto'},{i:'611670',n:"The Elder Scrolls V: Skyrim VR",c:'sobrevivencia'},{i:'2933130',n:"The Lord of the Rings: Return to Moria",c:'sobrevivencia'},
+
+    {i:'282900',n:"Hyperdimension Neptunia Re;Birth1",c:'rpg'},{i:'400910',n:"Rabi-Ribi",c:'rpg'},{i:'616560',n:"Ultimate Epic Battle Simulator",c:'sobrevivencia'},
+
+    {i:'242550',n:"Rayman Legends",c:'coop'},{i:'2569760',n:"The Mound: Omen of Cthulhu",c:'sobrevivencia',nw:1,y:'2026'},{i:'1944430',n:"Amnesia: The Bunker",c:'sobrevivencia'},
+
+    {i:'673750',n:"Super Bunny Man",c:'coop'},{i:'586140',n:"BlazBlue Centralfiction",c:'acao'},{i:'4731620',n:"Fortune Mill",c:'simulador',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4731620/5a99f3ec0fa5a7b11d434d847b92131884e6ad93/header.jpg'},
+
+    {i:'32430',n:"STAR WARS - The Force Unleashed Ultimate Sith Edition",c:'rpg'},{i:'495890',n:"Montaro",c:'sobrevivencia'},{i:'34270',n:"SEGA Mega Drive and Genesis Classics",c:'rpg'},
+
+    {i:'2495100',n:"Hello Kitty Island Adventure",c:'simulador'},{i:'378540',n:"The Surge",c:'rpg'},{i:'505230',n:"Pathologic 2",c:'sobrevivencia'},
+
+    {i:'49540',n:"Aliens: Colonial Marines Collection",c:'sobrevivencia'},{i:'792300',n:"The Beast Inside",c:'sobrevivencia'},{i:'388880',n:"Oxenfree",c:'aventura'},
+
+    {i:'427100',n:"Fernbus Simulator",c:'fps'},{i:'1249970',n:"Test Drive Unlimited Solar Crown",c:'corrida'},{i:'239200',n:"Amnesia: A Machine for Pigs",c:'sobrevivencia'},
+
+    {i:'2842040',n:"Star Wars Outlaws",c:'mundoaberto'},{i:'290080',n:"Life is Feudal: Your Own",c:'sobrevivencia'},{i:'65930',n:"The Bureau: XCOM Declassified",c:'rpg'},
+
+    {i:'602520',n:"NEKOPARA Vol. 3",c:'aventura'},{i:'1043810',n:"Tactical Breach Wizards",c:'rpg'},{i:'3035570',n:"Assassin's Creed Mirage",c:'aventura'},
+
+    {i:'702670',n:"Donut County",c:'aventura'},{i:'2058180',n:"Judgment",c:'aventura'},{i:'1898300',n:"ASKA",c:'sobrevivencia'},
+
+    {i:'1295510',n:"DRAGON QUEST XI S: Echoes of an Elusive Age - Definitive Edition",c:'mundoaberto'},{i:'1714320',n:"Find Love or Die Trying",c:'indie'},{i:'1361000',n:"In Silence",c:'sobrevivencia'},
+
+    {i:'1202130',n:"Starship Troopers: Terran Command",c:'simulador'},{i:'244930',n:"SNOW - The Ultimate Edition",c:'esportes'},{i:'306020',n:"Bloons TD 5",c:'sobrevivencia'},
+
+    {i:'230230',n:"Divinity: Original Sin (Classic)",c:'mundoaberto'},{i:'4570',n:"Warhammer 40,000: Dawn of War - Anniversary Edition (Classic)",c:'acao'},{i:'1054490',n:"Wingspan",c:'coop'},
+
+    {i:'790740',n:"Tick Tock: A Tale for Two",c:'coop'},{i:'428550',n:"Momodora: Reverie Under The Moonlight",c:'aventura'},{i:'1377380',n:"Night of the Dead",c:'sobrevivencia'},
+
+    {i:'529180',n:"Dark and Light",c:'sobrevivencia'},{i:'536270',n:"Ancestors: The Humankind Odyssey",c:'sobrevivencia'},{i:'407530',n:"ARK: Survival Of The Fittest",c:'sobrevivencia'},
+
+    {i:'2169200',n:"Sniper Elite: Resistance",c:'fps',nw:1,y:'2025'},{i:'555220',n:"Detention",c:'terror'},{i:'1272160',n:"The Life and Suffering of Sir Brante",c:'rpg'},
+
+    {i:'861540',n:"Dicey Dungeons",c:'rpg'},{i:'13520',n:"Far Cry",c:'sobrevivencia'},{i:'368360',n:"60 Seconds!",c:'sobrevivencia'},
+
+    {i:'1207650',n:"Suzerain",c:'rpg'},{i:'1307580',n:"TOEM: A Photo Adventure",c:'aventura'},{i:'572890',n:"Pikuniku",c:'coop'},
+
+    {i:'10190',n:"Call of Duty: Modern Warfare 2 (2009)",c:'fps'},{i:'242640',n:"Styx: Master of Shadows",c:'mundoaberto'},{i:'332570',n:"Amazing Frog?",c:'mundoaberto'},
+
+    {i:'2584270',n:"Mortal Shell II",c:'terror',soon:1,dt:'20 ago 2026',o:20260820,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2584270/c938ec2ae21d6e5c35b025ddcbdb766684ed87a7/header_alt_assets_1.jpg'},{i:'1110910',n:"Mortal Shell",c:'rpg'},{i:'418340',n:"RWBY: Grimm Eclipse",c:'coop'},
+
+    {i:'3108510',n:"FlyKnight",c:'rpg'},{i:'57900',n:"Duke Nukem Forever",c:'fps'},{i:'732430',n:"Superflight",c:'corrida'},
+
+    {i:'2849080',n:"Kingdom Rush 5: Alliance TD",c:'aventura'},{i:'2458530',n:"魔女的夜宴",c:'fps'},{i:'3230400',n:"EA SPORTS Madden NFL 26",c:'esportes',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3230400/979a5bffcde6f49d7e56ca9db6980256d3a96ad6/header.jpg'},
+
+    {i:'1404850',n:"Luck be a Landlord",c:'simulador'},{i:'1007040',n:"EARTH DEFENSE FORCE 5",c:'coop'},{i:'1030210',n:"Torchlight III",c:'coop'},
+
+    {i:'803330',n:"Destroy All Humans!",c:'mundoaberto'},{i:'396750',n:"EVERSPACE",c:'sobrevivencia'},{i:'2630',n:"Call of Duty 2",c:'fps'},
+
+    {i:'384300',n:"CPUCores :: Maximize Your FPS",c:'rpg'},{i:'2132850',n:"Rabbit and Steel",c:'rpg'},{i:'1286350',n:"BPM: BULLETS PER MINUTE",c:'fps'},
+
+    {i:'2144740',n:"Ghostrunner 2",c:'aventura'},{i:'1275890',n:"Baldi's Basics Plus",c:'indie'},{i:'2653790',n:"The Exit 8",c:'simulador'},
+
+    {i:'578330',n:"LEGO City Undercover",c:'corrida'},{i:'1745510',n:"Lunacid",c:'rpg'},{i:'383270',n:"Hue",c:'aventura'},
+
+    {i:'1849250',n:"EA SPORTS WRC",c:'corrida'},{i:'1594320',n:"Captain of Industry",c:'sobrevivencia'},{i:'1276790',n:"Ruined King: A League of Legends Story",c:'rpg'},
+
+    {i:'252150',n:"Grimm",c:'aventura'},{i:'446020',n:"Jalopy",c:'corrida'},{i:'312670',n:"Strange Brigade",c:'sobrevivencia'},
+
+    {i:'1012790',n:"Into the Radius VR",c:'sobrevivencia'},{i:'469820',n:"Genital Jousting",c:'mundoaberto'},{i:'354140',n:"Five Nights at Freddy's 3",c:'sobrevivencia'},
+
+    {i:'3717070',n:"WWE 2K26",c:'esportes',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3717070/b9e2584cefde9280c41b23607213dbca1ad8e015/header_alt_assets_0.jpg'},{i:'352400',n:"LEGO Jurassic World",c:'simulador'},{i:'1995520',n:"Pax Dei",c:'coop'},
+
+    {i:'801800',n:"Atomfall",c:'aventura',nw:1,y:'2025'},{i:'1071870',n:"Biped",c:'corrida'},{i:'443810',n:"This Is the Police",c:'simulador'},
+
+    {i:'677160',n:"We Were Here Too",c:'coop'},{i:'398710',n:"Timberman",c:'indie'},{i:'1324130',n:"Stranded: Alien Dawn",c:'sobrevivencia'},
+
+    {i:'253430',n:"CastleMiner Z",c:'sobrevivencia'},{i:'2552430',n:"KINGDOM HEARTS -HD 1.5+2.5 ReMIX-",c:'rpg'},{i:'589360',n:"Ni no Kuni II: Revenant Kingdom",c:'sobrevivencia'},
+
+    {i:'893180',n:"Catherine Classic",c:'rpg'},{i:'1059990',n:"Trombone Champ",c:'indie'},{i:'47790',n:"Medal of Honor",c:'fps'},
+
+    {i:'1288320',n:"Way of the Hunter",c:'esportes'},{i:'12900',n:"AudioSurf",c:'corrida'},{i:'1359980',n:"POSTAL: Brain Damaged",c:'sobrevivencia'},
+
+    {i:'1846170',n:"Iron Lung",c:'aventura'},{i:'694280',n:"Zombie Army 4: Dead War",c:'coop'},{i:'4244510',n:"Pratfall",c:'fps',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4244510/19e553d7778600c200cb74d8d25c277d2354133a/header_alt_assets_2.jpg'},
+
+    {i:'3981100',n:"Leaf it Alone",c:'simulador',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3981100/843d859123e902ca5c15ff53200c4bcb780c3304/header.jpg'},{i:'520440',n:"GUILTY GEAR Xrd REV 2",c:'acao'},{i:'952860',n:"河洛群俠傳 (Ho Tu Lo Shu ： The Books of Dragon)",c:'rpg'},
+
+    {i:'482730',n:"Football Manager 2017",c:'esportes'},{i:'360170',n:"How to Survive 2",c:'sobrevivencia'},{i:'979110',n:"Space Haven",c:'sobrevivencia'},
+
+    {i:'962400',n:"Granny",c:'coop'},{i:'573100',n:"Battlefleet Gothic: Armada 2",c:'simulador'},{i:'1321440',n:"Cassette Beasts",c:'mundoaberto'},
+
+    {i:'252410',n:"SteamWorld Dig",c:'rpg'},{i:'1649240',n:"Returnal",c:'coop'},{i:'331600',n:"One Piece Pirate Warriors 3",c:'coop'},
+
+    {i:'397340',n:"SimplePlanes",c:'corrida'},{i:'2638370',n:"Five Nights at Freddy's: Into the Pit",c:'aventura'},{i:'218640',n:"Lucius",c:'aventura'},
+
+    {i:'594330',n:"Visage",c:'simulador'},{i:'217200',n:"Worms Armageddon",c:'coop'},{i:'1281590',n:"The Dark Pictures Anthology: House of Ashes",c:'aventura'},
+
+    {i:'816090',n:"Space Hulk: Deathwing Enhanced Edition",c:'rpg'},{i:'257350',n:"Baldur's Gate II: Enhanced Edition",c:'mundoaberto'},{i:'446800',n:"Transport Fever",c:'mundoaberto'},
+
+    {i:'1677770',n:"The Case of the Golden Idol",c:'aventura'},{i:'530700',n:"Argo",c:'fps'},{i:'324160',n:"CLANNAD",c:'aventura'},
+
+    {i:'1137460',n:"ALTF4",c:'sobrevivencia'},{i:'327410',n:"A Bird Story",c:'rpg'},{i:'1340990',n:"Rise of the Ronin",c:'coop'},
+
+    {i:'1367550',n:"Kingdom Rush Vengeance - Tower Defense",c:'aventura'},{i:'1708520',n:"F1 Manager 2022",c:'corrida'},{i:'40300',n:"Risen",c:'rpg'},
+
+    {i:'2285150',n:"The Front",c:'sobrevivencia'},{i:'1740720',n:"Have a Nice Death",c:'indie'},{i:'2088570',n:"Tiny Rogues",c:'rpg'},
+
+    {i:'266510',n:"Hand of Fate",c:'rpg'},{i:'224480',n:"Octodad: Dadliest Catch",c:'simulador'},{i:'1194630',n:"The Dark Pictures Anthology: Little Hope",c:'sobrevivencia'},
+
+    {i:'1265920',n:"Life is Strange Remastered",c:'aventura'},{i:'587620',n:"Okami HD",c:'mundoaberto'},{i:'1158940',n:"Blazing Sails",c:'sobrevivencia'},
+
+    {i:'202750',n:"Alan Wake's American Nightmare",c:'sobrevivencia'},{i:'485610',n:"Soccer Online: Ball 3D",c:'esportes'},{i:'593280',n:"Cat Quest",c:'mundoaberto'},
+
+    {i:'1293230',n:"House of Detention",c:'esportes'},{i:'352720',n:"The Universim",c:'sobrevivencia'},{i:'227860',n:"Castle Story",c:'sobrevivencia'},
+
+    {i:'458710',n:"Kingdom Rush Frontiers - Tower Defense",c:'aventura'},{i:'222940',n:"THE KING OF FIGHTERS XIII STEAM EDITION",c:'acao'},{i:'330840',n:"Game of Thrones - A Telltale Games Series",c:'aventura'},
+
+    {i:'285160',n:"LEGO The Hobbit",c:'rpg'},{i:'1426450',n:"Age of Darkness: Final Stand",c:'sobrevivencia'},{i:'675260',n:"Batman: The Enemy Within - The Telltale Series",c:'aventura'},
+
+    {i:'686200',n:"Door Kickers: Action Squad",c:'simulador'},{i:'1202900',n:"Assemble with Care",c:'simulador'},{i:'2495450',n:"Winter Memories",c:'rpg'},
+
+    {i:'70300',n:"VVVVVV",c:'mundoaberto'},{i:'17450',n:"Dragon Age: Origins",c:'mundoaberto'},{i:'552620',n:"ATOM RPG: Post-apocalyptic indie game",c:'sobrevivencia'},
+
+    {i:'589590',n:"Kindergarten",c:'sobrevivencia'},{i:'1372280',n:"MELTY BLOOD: TYPE LUMINA",c:'acao'},{i:'410320',n:"EARTH DEFENSE FORCE 4.1 The Shadow of New Despair",c:'coop'},
+
+    {i:'3641000',n:"The Incident at Galley House",c:'aventura',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3641000/c36fe32e992c59c8eb560fd5d97bed0f96c08ff5/header.jpg'},{i:'648100',n:"Raging Loop",c:'aventura'},{i:'1708150',n:"Juice Galaxy",c:'rpg'},
+
+    {i:'252610',n:"Death Road to Canada",c:'sobrevivencia'},{i:'313690',n:"LEGO Batman 3: Beyond Gotham",c:'coop'},{i:'435120',n:"Rusty Lake Hotel",c:'aventura'},
+
+    {i:'2676840',n:"No Case Should Remain Unsolved",c:'aventura'},{i:'1957780',n:"Ghosts of Tabor",c:'acao'},{i:'2901520',n:"An alt girl for skoof",c:'indie'},
+
+    {i:'40950',n:"Stronghold HD (2012)",c:'mundoaberto'},{i:'2420660',n:"Neva",c:'aventura'},{i:'403190',n:"Planetbase",c:'sobrevivencia'},
+
+    {i:'226860',n:"Galactic Civilizations III",c:'rpg'},{i:'1874000',n:"Life is Strange: Double Exposure",c:'aventura'},{i:'1578650',n:"Citizen Sleeper",c:'rpg'},
+
+    {i:'3399950',n:"Your Mother",c:'fps'},{i:'368370',n:"Her Story",c:'simulador'},{i:'1416920',n:"Chinese Online Game",c:'rpg'},
+
+    {i:'768200',n:"Smalland: Survive the Wilds",c:'sobrevivencia'},{i:'1316680',n:"VLADiK BRUTAL",c:'fps'},{i:'251150',n:"The Legend of Heroes: Trails in the Sky",c:'rpg'},
+
+    {i:'3059070',n:"The Headliners",c:'coop'},{i:'4231820',n:"Castlevania: Belmont's Curse",c:'rpg',soon:1,dt:'14 out 2026',o:20261014,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4231820/6b65aec2c398006aea8b76e1463cc34d0e4ba68b/header.jpg'},{i:'234080',n:"Castlevania: Lords of Shadow – Ultimate Edition",c:'rpg'},
+
+    {i:'1136160',n:"Internet Cafe Simulator",c:'simulador'},{i:'1735700',n:"Back to the Dawn",c:'simulador'},{i:'2933080',n:"Crime Boss: Rockay City",c:'fps'},
+
+    {i:'258970',n:"Gauntlet Slayer Edition",c:'rpg'},{i:'2140020',n:"Stronghold: Definitive Edition",c:'simulador'},{i:'1911610',n:"Windblown",c:'coop'},
+
+    {i:'1608230',n:"Planet of Lana",c:'aventura'},{i:'597220',n:"West of Loathing",c:'mundoaberto'},{i:'2320',n:"Quake II",c:'fps'},
+
+    {i:'1857090',n:"Norland",c:'sobrevivencia'},{i:'1111460',n:"小白兔电商~Bunny e-Shop",c:'rpg'},{i:'519190',n:"Next Day: Survival",c:'sobrevivencia'},
+
+    {i:'215530',n:"The Incredible Adventures of Van Helsing",c:'rpg'},{i:'2168680',n:"Nuclear Option",c:'simulador'},{i:'2683150',n:"Ale & Tale Tavern",c:'simulador'},
+
+    {i:'1507580',n:"Enigma of Fear",c:'mundoaberto'},{i:'360940',n:"The Mean Greens - Plastic Warfare",c:'fps'},{i:'730310',n:"DYNASTY WARRIORS 9",c:'coop'},
+
+    {i:'1701520',n:"Afterimage",c:'rpg'},{i:'410110',n:"12 is Better Than 6",c:'rpg'},{i:'1088710',n:"Yakuza 3 Remastered",c:'rpg'},
+
+    {i:'1262600',n:"Need for Speed Rivals",c:'corrida'},{i:'1293160',n:"The Medium",c:'aventura'},{i:'765410',n:"Bean Battles",c:'fps'},
+
+    {i:'1227690',n:"Severed Steel",c:'fps'},{i:'647830',n:"LEGO Marvel Super Heroes 2",c:'coop'},{i:'595520',n:"FINAL FANTASY XII THE ZODIAC AGE",c:'rpg'},
+
+    {i:'351920',n:"Crazy Machines 3",c:'simulador'},{i:'12220',n:"Grand Theft Auto: Episodes from Liberty City",c:'mundoaberto'},{i:'897450',n:"The Survivalists",c:'sobrevivencia'},
+
+    {i:'2195120',n:"Go-Go Town!",c:'simulador',nw:1,y:'2026'},{i:'916840',n:"The Walking Dead: Saints & Sinners",c:'sobrevivencia'},{i:'1049890',n:"Little Witch Nobeta",c:'rpg'},
+
+    {i:'248610',n:"Door Kickers",c:'simulador'},{i:'359050',n:"Shower With Your Dad Simulator 2015: Do You Still Shower With Your Dad",c:'corrida'},{i:'1714510',n:"Kusan: City of Wolves",c:'acao',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1714510/7258db370b41b8e1740476e53927cb654b6a6186/header.jpg'},
+
+    {i:'1478500',n:"Big Walk",c:'aventura',soon:1,dt:'4 ago 2026',o:20260804,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1478500/62eeee1507dbac905e128a62f2ce690550238db0/header.jpg'},{i:'3787240',n:"MARVEL Tōkon: Fighting Souls",c:'acao',soon:1,dt:'6 ago 2026',o:20260806,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3787240/943fda32c11b3e3f451458ffa95a4adca1f316a4/header.jpg'},{i:'2212910',n:"Expeditions: Samurai",c:'rpg',soon:1,dt:'7 ago 2026',o:20260807,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2212910/7882263290d29dd972fc0439eb6a10c708f8c004/header.jpg'},
+
+    {i:'2075800',n:"STAR WARS Zero Company",c:'simulador',soon:1,dt:'27 ago 2026',o:20260827,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2075800/2c7d5dad080c4888faaa03c4a955136c50f5bfae/header.jpg'},{i:'4115450',n:"Phantom Blade Zero",c:'rpg',soon:1,dt:'28 out 2026',o:20261028,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4115450/5930310dc5f043a1df400d9dc70ddb43843480fc/header.jpg'},{i:'3080070',n:"Order: The New Dawn",c:'rpg',soon:1,dt:'2026',o:20261231,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3080070/0927fc71641728bba30f230da0111425c2054d44/header.jpg'},
+
+    {i:'388860',n:"Judas",c:'acao',soon:1,dt:'a confirmar',o:99999999,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/388860/93e7815cd551e5e796310ae2a8c6efd980b463dc/header.jpg'},{i:'2001760',n:"Beast of Reincarnation",c:'rpg',soon:1,dt:'3 ago 2026',o:20260803,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2001760/d068139fe039e26a6a9d9f57ac5d89785b984d33/header.jpg'},{i:'3751260',n:"The Blood of Dawnwalker",c:'rpg',soon:1,dt:'2 set 2026',o:20260902,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3751260/a7062f3b59d491c2678e3fd7ce2672858e480641/header.jpg'},
+
+    {i:'3292470',n:"Tides of Annihilation",c:'acao',soon:1,dt:'a confirmar',o:99999999},{i:'247000',n:"Talisman: Digital Classic Edition",c:'rpg'},{i:'702050',n:"The Song of Saya",c:'fps'},
+
+    {i:'1069740',n:"Seen",c:'aventura'},{i:'632300',n:"Hobo: Tough Life",c:'sobrevivencia'},{i:'933820',n:"Endzone - A World Apart",c:'sobrevivencia'},
+
+    {i:'2825530',n:"Beholder: Conductor",c:'simulador',nw:1,y:'2025'},{i:'1764390',n:"BAD END THEATER",c:'simulador'},{i:'26800',n:"Braid",c:'aventura'},
+
+    {i:'1255630',n:"WWE 2K22",c:'esportes'},{i:'899440',n:"GOD EATER 3",c:'rpg'},{i:'1343240',n:"Thymesia",c:'rpg'},
+
+    {i:'838380',n:"DEAD OR ALIVE 6",c:'fps'},{i:'321360',n:"Primal Carnage: Extinction",c:'sobrevivencia'},{i:'1473350',n:"(the) Gnorp Apologue",c:'simulador'},
+
+    {i:'307960',n:"IL-2 Sturmovik: Battle of Stalingrad",c:'fps'},{i:'900270',n:"Reventure",c:'aventura'},{i:'924140',n:"Hand Simulator: Survival",c:'sobrevivencia'},
+
+    {i:'604240',n:"Shotgun Farmers",c:'fps'},{i:'656350',n:"UnderMine",c:'rpg'},{i:'1615290',n:"Ravenous Devils",c:'simulador'},
+
+    {i:'2378620',n:"Anomaly Agent",c:'aventura'},{i:'2461850',n:"Senua's Saga: Hellblade II",c:'acao'},{i:'913740',n:"WORLD OF HORROR",c:'sobrevivencia'},
+
+    {i:'24780',n:"SimCity 4 Deluxe Edition",c:'simulador'},{i:'470310',n:"TROUBLESHOOTER: Abandoned Children",c:'rpg'},{i:'633460',n:"Tannenberg",c:'sobrevivencia'},
+
+    {i:'301910',n:"Saints Row: Gat out of Hell",c:'coop'},{i:'2217000',n:"Rivals of Aether II",c:'coop'},{i:'394230',n:"Battleborn",c:'rpg'},
+
+    {i:'1159690',n:"Voidtrain",c:'simulador'},{i:'719890',n:"Beasts of Bermuda",c:'sobrevivencia'},{i:'1186640',n:"Pumpkin Jack",c:'aventura'},
+
+    {i:'375480',n:"Chronicon",c:'rpg'},{i:'503940',n:"Railway Empire",c:'simulador'},{i:'28000',n:"Kane & Lynch 2: Dog Days",c:'fps'},
+
+    {i:'1307890',n:"Kingdoms Reborn",c:'sobrevivencia'},{i:'31280',n:"Poker Night at the Inventory",c:'esportes'},{i:'2124120',n:"SULFUR",c:'fps'},
+
+    {i:'539470',n:"Police Stories",c:'simulador'},{i:'617830',n:"SUPERHOT VR",c:'fps'},{i:'1585180',n:"Drova - Forsaken Kin",c:'rpg'},
+
+    {i:'1205520',n:"Pentiment",c:'rpg'},{i:'208140',n:"ENDLESS Space - Definitive Edition",c:'simulador'},{i:'3808690',n:"Pathogenic",c:'sobrevivencia',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3808690/61607b65d95681ef02bae9bf79099bc6fe511b56/header.jpg'},
+
+    {i:'2916430',n:"Fast Food Simulator",c:'simulador'},{i:'1176470',n:"Terra Invicta",c:'simulador'},{i:'1249800',n:"Xuan-Yuan Sword VII",c:'rpg'},
+
+    {i:'753420',n:"Dungreed",c:'rpg'},{i:'501590',n:"Bulletstorm: Full Clip Edition",c:'sobrevivencia'},{i:'1718870',n:"Spaceflight Simulator",c:'simulador'},
+
+    {i:'919640',n:"Steel Division 2",c:'simulador'},{i:'304650',n:"SUNLESS SEA",c:'sobrevivencia'},{i:'435400',n:"Hidden Folks",c:'aventura'},
+
+    {i:'2058190',n:"Lost Judgment",c:'aventura'},{i:'677120',n:"Heroes of Hammerwatch",c:'rpg'},{i:'644830',n:"The Surge 2",c:'rpg'},
+
+    {i:'428660',n:"Deliver Us The Moon",c:'sobrevivencia'},{i:'704450',n:"Neverwinter Nights: Enhanced Edition",c:'rpg'},{i:'4580',n:"Warhammer 40,000: Dawn of War - Dark Crusade",c:'fps'},
+
+    {i:'32800',n:"Lord of the Rings: War in the North",c:'rpg'},{i:'21130',n:"LEGO Harry Potter: Years 1-4",c:'coop'},{i:'588030',n:"Derail Valley",c:'simulador'},
+
+    {i:'39150',n:"FINAL FANTASY VIII",c:'rpg'},{i:'16450',n:"F.E.A.R. 2: Project Origin",c:'fps'},{i:'449960',n:"Book of Demons",c:'rpg'},
+
+    {i:'213330',n:"LEGO Batman 2: DC Super Heroes",c:'coop'},{i:'3606480',n:"Call of Duty: Black Ops 7",c:'fps',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3606480/d7041a15f572f7702d5f4bc97e498cd3e1cc62e2/header.jpg'},{i:'435530',n:"The Final Station",c:'sobrevivencia'},
+
+    {i:'459220',n:"Halo Wars: Definitive Edition",c:'fps'},{i:'1369670',n:"Motor Town: Behind The Wheel",c:'corrida'},{i:'2704110',n:"Aliya: Timelink",c:'rpg'},
+
+    {i:'422970',n:"Devil Daggers",c:'sobrevivencia'},{i:'2111190',n:"MULLET MADJACK",c:'fps'},{i:'597760',n:"Yuppie Psycho: Executive Edition",c:'aventura'},
+
+    {i:'220780',n:"Thomas Was Alone",c:'aventura'},{i:'1504500',n:"OPUS: Echo of Starsong - Full Bloom Edition",c:'aventura'},{i:'12130',n:"Manhunt",c:'acao'},
+
+    {i:'1158850',n:"The Great Ace Attorney Chronicles",c:'aventura'},{i:'674140',n:"Bugsnax",c:'aventura'},{i:'462770',n:"Pyre",c:'esportes'},
+
+    {i:'1239020',n:"TOGETHER BnB",c:'fps'},{i:'948740',n:"AI: The Somnium Files",c:'aventura'},{i:'1934570',n:"South of Midnight",c:'aventura',nw:1,y:'2025'},
+
+    {i:'1172450',n:"Carto",c:'rpg'},{i:'252330',n:"Slender: The Arrival",c:'sobrevivencia'},{i:'951440',n:"Volcanoids",c:'sobrevivencia'},
+
+    {i:'1606180',n:"下一站江湖Ⅱ",c:'sobrevivencia'},{i:'2096600',n:"Crysis 2 Remastered",c:'fps'},{i:'342180',n:"Arizona Sunshine VR Legacy",c:'sobrevivencia'},
+
+    {i:'496240',n:"Onward",c:'fps'},{i:'2239710',n:"Into the Dead: Our Darkest Days",c:'simulador'},{i:'351970',n:"Tales of Zestiria",c:'rpg'},
+
+    {i:'999220',n:"Amnesia: Rebirth",c:'coop'},{i:'952070',n:"RESIDENT EVIL RESISTANCE",c:'coop'},{i:'665360',n:"Comedy Night",c:'rpg'},
+
+    {i:'4249120',n:"Resident Evil 3 Nemesis (1999)",c:'terror',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4249120/a882eb9852c45108a0e4d725cd15132387ab038e/header.jpg'},{i:'407130',n:"Tank Mechanic Simulator",c:'simulador'},{i:'24790',n:"Command & Conquer 3: Tiberium Wars",c:'acao'},
+
+    {i:'32510',n:"LEGO Star Wars III - The Clone Wars",c:'coop'},{i:'868360',n:"Project Hospital",c:'simulador'},{i:'20',n:"Team Fortress Classic",c:'fps'},
+
+    {i:'48220',n:"Might & Magic: Heroes VI",c:'aventura'},{i:'584980',n:"Late Shift",c:'simulador'},{i:'2660460',n:"Aviassembly",c:'simulador'},
+
+    {i:'365960',n:"rFactor 2",c:'corrida'},{i:'319910',n:"Trine 3: The Artifacts of Power",c:'coop'},{i:'1123770',n:"Curse of the Dead Gods",c:'aventura'},
+
+    {i:'9010',n:"Return to Castle Wolfenstein",c:'fps'},{i:'544550',n:"Stationeers",c:'sobrevivencia'},{i:'236690',n:"Blood Bowl 2: Legendary Edition (Classic)",c:'esportes'},
+
+    {i:'476620',n:"Call of Duty: WWII",c:'mundoaberto'},{i:'200170',n:"Worms Revolution",c:'coop'},{i:'1498570',n:"THE KING OF FIGHTERS XV",c:'acao'},
+
+    {i:'250180',n:"METAL SLUG 3",c:'coop'},{i:'2060130',n:"Return to Monkey Island",c:'aventura'},{i:'2300',n:"DOOM II",c:'fps'},
+
+    {i:'571310',n:"SteamWorld Dig 2",c:'rpg'},{i:'937170',n:"Otaku's Adventure",c:'rpg'},{i:'25000',n:"Overgrowth",c:'simulador'},
+
+    {i:'2340650',n:"古龙风云录",c:'simulador'},{i:'1225570',n:"Unravel Two",c:'coop'},{i:'1955830',n:"Touhou Hero of Ice Fairy",c:'rpg'},
+
+    {i:'2135150',n:"Elin",c:'rpg'},{i:'1493640',n:"Banishers: Ghosts of New Eden",c:'aventura'},{i:'2116120',n:"Incursion Red River",c:'fps'},
+
+    {i:'1624540',n:"Storyteller",c:'aventura'},{i:'1162750',n:"Songs of Syx",c:'sobrevivencia'},{i:'1070710',n:"Kind Words (lo fi chill beats to write to)",c:'indie'},
+
+    {i:'272510',n:"NARUTO SHIPPUDEN: Ultimate Ninja STORM Revolution",c:'coop'},{i:'258520',n:"The Vanishing of Ethan Carter",c:'aventura'},{i:'1546990',n:"Grand Theft Auto: Vice City – The Definitive Edition",c:'aventura'},
+
+    {i:'1443200',n:"Class of '09",c:'rpg'},{i:'366090',n:"Colony Survival",c:'sobrevivencia'},{i:'1003590',n:"Tetris Effect: Connected",c:'coop'},
+
+    {i:'397740',n:"Hylics",c:'rpg'},{i:'1349230',n:"5D Chess With Multiverse Time Travel",c:'indie'},{i:'2786680',n:"Knowledge, or know Lady",c:'rpg'},
+
+    {i:'532110',n:"Rusty Lake: Roots",c:'aventura'},{i:'742120',n:"DRAGON QUEST XI: Echoes of an Elusive Age - Digital Edition of Light",c:'rpg'},{i:'533300',n:"Zup!",c:'indie'},
+
+    {i:'367580',n:"Hook",c:'indie'},{i:'41000',n:"Serious Sam HD: The First Encounter",c:'fps'},{i:'468920',n:"Ultimate Fishing Simulator",c:'esportes'},
+
+    {i:'2920570',n:"Dale & Dawson Stationery Supplies",c:'rpg'},{i:'1122720',n:"Sayonara Wild Hearts",c:'aventura'},{i:'281610',n:"Homeworld: Deserts of Kharak",c:'coop'},
+
+    {i:'1608070',n:"CRISIS CORE –FINAL FANTASY VII– REUNION",c:'rpg'},{i:'405310',n:"LEGO MARVEL's Avengers",c:'coop'},{i:'1328840',n:"Lost in Play",c:'aventura'},
+
+    {i:'1373960',n:"INDIKA",c:'aventura'},{i:'644570',n:"Material Girl",c:'sobrevivencia'},{i:'316790',n:"Grim Fandango Remastered",c:'aventura'},
+
+    {i:'1497440',n:"COCOON",c:'aventura'},{i:'351290',n:"SURVIVAL: Postapocalypse Now",c:'fps'},{i:'1406990',n:"NEKOPARA Vol. 4",c:'aventura'},
+
+    {i:'45740',n:"Dead Rising 2",c:'sobrevivencia'},{i:'3009300',n:"Teamfight Manager 2",c:'esportes',nw:1,y:'2026'},{i:'1335790',n:"Operation: Tango",c:'coop'},
+
+    {i:'1121560',n:"Atelier Ryza: Ever Darkness & the Secret Hideout",c:'rpg'},{i:'385760',n:"NBA 2K17",c:'esportes'},{i:'1179080',n:"FAITH: The Unholy Trinity",c:'aventura'},
+
+    {i:'34830',n:"Sniper: Ghost Warrior",c:'fps'},{i:'611660',n:"Fallout 4 VR",c:'fps'},{i:'674500',n:"Total Tank Simulator",c:'fps'},
+
+    {i:'2524850',n:"Denshattack!",c:'acao',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2524850/9e82089d034705eaa84ecb130d04ed1084ce574c/header.jpg'},{i:'255220',n:"GRID Autosport",c:'corrida'},{i:'261110',n:"Killer is Dead - Nightmare Edition",c:'aventura'},
+
+    {i:'1227530',n:"Partisans 1941",c:'indie'},{i:'1840080',n:"Homeworld 3",c:'coop'},{i:'1771980',n:"The Operator",c:'rpg'},
+
+    {i:'1148590',n:"DOOM 64",c:'fps'},{i:'2186320',n:"Ages of Conflict: World War Simulator",c:'simulador'},{i:'295790',n:"Never Alone (Kisima Ingitchuna)",c:'coop'},
+
+    {i:'1295920',n:"The Mortuary Assistant",c:'simulador'},{i:'3940610',n:"EA SPORTS Madden NFL 27",c:'esportes',soon:1,dt:'13 ago 2026',o:20260813,u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3940610/7ed2213f0170c1b55410b82ed89a8bab3911c6ea/header.jpg'},{i:'2140330',n:"Madden NFL 24",c:'esportes'},
+
+    {i:'3712080',n:"Funnel Runners",c:'sobrevivencia',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3712080/5e03554f7fd68edf54813a8d5a576a8791672227/header.jpg'},{i:'598700',n:"The Vagrant",c:'rpg'},{i:'1927720',n:"Monument Valley",c:'aventura'},
+
+    {i:'312840',n:"Fahrenheit: Indigo Prophecy Remastered",c:'aventura'},{i:'1677310',n:"In Stars And Time",c:'rpg'},{i:'620590',n:"Ancestors Legacy",c:'coop'},
+
+    {i:'369990',n:"Gremlins, Inc.",c:'indie'},{i:'1641960',n:"Forever Skies",c:'sobrevivencia'},{i:'357070',n:"UBERMOSH",c:'acao'},
+
+    {i:'2255370',n:"Directive 8020",c:'terror',nw:1,y:'2026'},{i:'742420',n:"Saints Row",c:'coop'},{i:'360740',n:"Downwell",c:'aventura'},
+
+    {i:'637100',n:"Sonic Forces",c:'aventura'},{i:'269770',n:"Secrets of Grindea",c:'rpg'},{i:'1173770',n:"FINAL FANTASY",c:'rpg'},
+
+    {i:'1812620',n:"DSX",c:'simulador'},{i:'3014080',n:"The Hundred Line -Last Defense Academy-",c:'simulador'},{i:'323580',n:"Jotun: Valhalla Edition",c:'rpg'},
+
+    {i:'502520',n:"Ultimate General: Civil War",c:'simulador'},{i:'753650',n:"Due Process",c:'fps'},{i:'1575940',n:"Sins of a Solar Empire II",c:'coop'},
+
+    {i:'96100',n:"Defy Gravity Extended",c:'corrida'},{i:'1090630',n:"Granblue Fantasy: Versus",c:'rpg'},{i:'113020',n:"Monaco: What's Yours Is Mine",c:'coop'},
+
+    {i:'3167550',n:"Tiny Pasture",c:'simulador'},{i:'2067920',n:"Rogue: Genesia",c:'sobrevivencia'},{i:'2478970',n:"Tomb Raider I-III Remastered Starring Lara Croft",c:'aventura'},
+
+    {i:'1684930',n:"CULTIC",c:'fps'},{i:'1680880',n:"Forspoken",c:'aventura'},{i:'102600',n:"Orcs Must Die!",c:'rpg'},
+
+    {i:'1238080',n:"Burnout Paradise Remastered",c:'corrida'},{i:'2424420',n:"Avatar Legends: The Fighting Game",c:'acao',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2424420/30d44f94173fde20d7338f01611c6b5c7618e07e/header.jpg'},{i:'1280930',n:"Astral Ascent",c:'coop'},
+
+    {i:'1970580',n:"Backpack Hero",c:'rpg'},{i:'1166290',n:"Death and Taxes",c:'simulador'},{i:'1458100',n:"Cozy Grove",c:'indie'},
+
+    {i:'1000360',n:"Hellish Quart",c:'esportes'},{i:'473950',n:"Manifold Garden",c:'aventura'},{i:'1967430',n:"Ghost Trick: Phantom Detective",c:'aventura'},
+
+    {i:'690530',n:"灵魂筹码 Soul at Stake",c:'sobrevivencia'},{i:'276810',n:"Mordheim: City of the Damned",c:'indie'},{i:'1063420',n:"Void Crew",c:'coop'},
+
+    {i:'543460',n:"Dead Rising 4",c:'coop'},{i:'290300',n:"Rebel Galaxy",c:'rpg'},{i:'1121640',n:"The Wandering Village",c:'simulador'},
+
+    {i:'1070330',n:"Russian Life Simulator",c:'esportes'},{i:'9050',n:"DOOM 3",c:'fps'},{i:'303390',n:"Dead Bits",c:'fps'},
+
+    {i:'491540',n:"The Bus",c:'simulador'},{i:'601220',n:"Zup! F",c:'indie'},{i:'4249110',n:"Resident Evil 2 (1998)",c:'terror',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4249110/db95a4fbb11b56b6dc065dc0d6c662dab47498e5/header.jpg'},
+
+    {i:'994730',n:"Banner of the Maid",c:'rpg'},{i:'1199030',n:"Tainted Grail: Conquest",c:'sobrevivencia'},{i:'373930',n:"Sudden Strike 4",c:'coop'},
+
+    {i:'274920',n:"FaceRig",c:'fps'},{i:'673610',n:"Airport CEO",c:'simulador'},{i:'973230',n:"We Who Are About To Die",c:'rpg'},
+
+    {i:'2276930',n:"Chillquarium",c:'simulador'},{i:'205950',n:"Jet Set Radio",c:'acao'},{i:'1150760',n:"Gloomwood",c:'fps'},
+
+    {i:'376870',n:"Minecraft: Story Mode - A Telltale Games Series",c:'sobrevivencia'},{i:'250620',n:"Among the Sleep - Enhanced Edition",c:'sobrevivencia'},{i:'825630',n:"STEINS;GATE 0",c:'aventura'},
+
+    {i:'2366980',n:"Thank Goodness You're Here!",c:'aventura'},{i:'200900',n:"Cave Story+",c:'aventura'},{i:'204030',n:"Fable - The Lost Chapters",c:'rpg'},
+
+    {i:'1282590',n:"Train Sim World 2",c:'simulador'},{i:'203750',n:"Binary Domain",c:'rpg'},{i:'285310',n:"RollerCoaster Tycoon: Deluxe",c:'simulador'},
+
+    {i:'266010',n:"LYNE",c:'aventura'},{i:'430960',n:"Lucy -The Eternity She Wished For-",c:'simulador'},{i:'807120',n:"Iratus: Lord of the Dead",c:'rpg'},
+
+    {i:'1388590',n:"Yakuza 6: The Song of Life",c:'rpg'},{i:'347620',n:"Gaokao.Love.100Days",c:'fps'},{i:'250260',n:"Jazzpunk: Director's Cut",c:'simulador'},
+
+    {i:'1062160',n:"Poly Bridge 2",c:'simulador'},{i:'578620',n:"GORN",c:'fps'},{i:'245280',n:"ENSLAVED: Odyssey to the West Premium Edition",c:'aventura'},
+
+    {i:'2302660',n:"Homicipher",c:'aventura'},{i:'236450',n:"PAC-MAN Championship Edition DX+",c:'acao'},{i:'429570',n:"The Walking Dead: Michonne - A Telltale Miniseries",c:'sobrevivencia'},
+
+    {i:'2190290',n:"To Be or Not to Be",c:'rpg'},{i:'1337010',n:"Alba: A Wildlife Adventure",c:'aventura'},{i:'232790',n:"Broken Age",c:'aventura'},
+
+    {i:'1782460',n:"Hell Clock",c:'indie',nw:1,y:'2025'},{i:'2208570',n:"Dark Hours",c:'terror',nw:1,y:'2025'},{i:'964800',n:"Prodeus",c:'fps'},
+
+    {i:'233980',n:"UnEpic",c:'rpg'},{i:'1250760',n:"Far Away",c:'rpg'},{i:'758190',n:"Dragon Cliff",c:'rpg'},
+
+    {i:'728530',n:"SD GUNDAM G GENERATION CROSS RAYS",c:'rpg'},{i:'2052410',n:"WITCH ON THE HOLY NIGHT",c:'aventura'},{i:'298050',n:"Master of Orion",c:'coop'},
+
+    {i:'291860',n:"Pit People",c:'rpg'},{i:'619150',n:"while True: learn()",c:'simulador'},{i:'1585220',n:"Melatonin",c:'indie'},
+
+    {i:'401680',n:"POSTAL Redux",c:'coop'},{i:'829110',n:"LEGO DC Super-Villains",c:'coop'},{i:'1634860',n:"Minishoot' Adventures",c:'rpg'},
+
+    {i:'2015270',n:"Rotwood",c:'coop'},{i:'1913370',n:"OPERATOR",c:'fps'},{i:'1958220',n:"WitchSpring R",c:'rpg'},
+
+    {i:'453090',n:"Parkitect",c:'simulador'},{i:'526160',n:"The Wild Eight",c:'simulador'},{i:'474750',n:"Reigns",c:'rpg'},
+
+    {i:'240760',n:"Wasteland 2: Director's Cut",c:'sobrevivencia'},{i:'230190',n:"War for the Overworld",c:'simulador'},{i:'1649080',n:"Two Point Campus",c:'simulador'},
+
+    {i:'761620',n:"Beholder 2",c:'simulador'},{i:'1041720',n:"Kingdoms of Amalur: Re-Reckoning",c:'coop'},{i:'78000',n:"Bejeweled 3",c:'aventura'},
+
+    {i:'2096610',n:"Crysis 3 Remastered",c:'fps'},{i:'671510',n:"DESOLATE",c:'fps'},{i:'1092660',n:"Blair Witch",c:'sobrevivencia'},
+
+    {i:'3361470',n:"Digseum",c:'simulador'},{i:'640590',n:"The LEGO NINJAGO Movie Video Game",c:'coop'},{i:'1243830',n:"Overcooked! All You Can Eat",c:'simulador'},
+
+    {i:'1367590',n:"Tormented Souls",c:'sobrevivencia'},{i:'1229240',n:"Chained Echoes",c:'rpg'},{i:'1097200',n:"Twelve Minutes",c:'aventura'},
+
+    {i:'1072420',n:"DRAGON QUEST BUILDERS 2",c:'sobrevivencia'},{i:'970830',n:"The Dungeon Of Naheulbeuk: The Amulet Of Chaos",c:'rpg'},{i:'2306590',n:"Apewar",c:'fps'},
+
+    {i:'499520',n:"The Turing Test",c:'fps'},{i:'3020510',n:"Legend of Heroes: Three Kingdoms",c:'simulador'},{i:'639790',n:"DEEP SPACE WAIFU",c:'indie'},
+
+    {i:'91700',n:"E.Y.E: Divine Cybermancy",c:'rpg'},{i:'1509510',n:"Settlement Survival",c:'sobrevivencia'},{i:'17430',n:"Need for Speed Undercover",c:'corrida'},
+
+    {i:'286570',n:"F1 2015",c:'corrida'},{i:'1001270',n:"Kebab Chefs! - Restaurant Simulator",c:'fps'},{i:'1996010',n:"Crow Country",c:'indie'},
+
+    {i:'311260',n:"The Guild 3",c:'simulador'},{i:'1016120',n:"PGA TOUR 2K21",c:'esportes'},{i:'32500',n:"STAR WARS: The Force Unleashed II",c:'aventura'},
+
+    {i:'1218210',n:"Coromon",c:'rpg'},{i:'1048540',n:"Kao the Kangaroo: Round 2 (2003 re-release)",c:'corrida'},{i:'1705180',n:"Gunner, HEAT, PC!",c:'fps'},
+
+    {i:'1222370',n:"Necromunda: Hired Gun",c:'fps'},{i:'241260',n:"Sherlock Holmes: Crimes and Punishments",c:'fps'},{i:'2315690',n:"WWE 2K24",c:'esportes'},
+
+    {i:'816340',n:"Kingdom Rush Origins - Tower Defense",c:'rpg'},{i:'1069660',n:"Ultimate Admiral: Dreadnoughts",c:'simulador'},{i:'460810',n:"Vanquish",c:'fps'},
+
+    {i:'311290',n:"SpellForce 3 Reforced",c:'rpg'},{i:'237630',n:"DuckTales: Remastered",c:'fps'},{i:'94400',n:"Nidhogg",c:'esportes'},
+
+    {i:'1261040',n:"Streamer Life Simulator",c:'simulador'},{i:'236370',n:"Interstellar Marines",c:'fps'},{i:'1836730',n:"Echo Point Nova",c:'fps'},
+
+    {i:'1079260',n:"Fireworks Mania - An Explosive Simulator",c:'fps'},{i:'820520',n:"Deceive Inc.",c:'sobrevivencia'},{i:'1088090',n:"Day of Dragons",c:'simulador'},
+
+    {i:'1696440',n:"The Matchless Kungfu",c:'sobrevivencia'},{i:'1335830',n:"Len's Island",c:'indie'},{i:'1292940',n:"Cube Escape Collection",c:'aventura'},
+
+    {i:'4032350',n:"EA SPORTS College Football 27",c:'esportes',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4032350/1c628b40d5aa8dcf26e0ac9d394f0fbe1b8dc879/header.jpg'},{i:'601050',n:"Attack on Titan 2 - A.O.T.2",c:'rpg'},{i:'1202540',n:"Marco & The Galaxy Dragon",c:'simulador'},
+
+    {i:'362620',n:"Software Inc.",c:'simulador'},{i:'357190',n:"ULTIMATE MARVEL VS. CAPCOM 3",c:'acao'},{i:'328080',n:"Rise to Ruins",c:'sobrevivencia'},
+
+    {i:'1963370',n:"No One Survived",c:'coop'},{i:'2620',n:"Call of Duty (2003)",c:'fps'},{i:'1009560',n:"The Tenants",c:'simulador'},
+
+    {i:'3910',n:"Sid Meier's Civilization III Complete",c:'simulador'},{i:'24720',n:"SPORE Galactic Adventures",c:'rpg'},{i:'1342330',n:"Mad Games Tycoon 2",c:'simulador'},
+
+    {i:'4800590',n:"Supermarket Chaos",c:'simulador',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4800590/12972366c9e8812cbd1ba7a3e367d7dfc100314a/header.jpg'},{i:'1623940',n:"Bramble: The Mountain King",c:'aventura'},{i:'1702010',n:"Sengoku Dynasty",c:'simulador'},
+
+    {i:'1010750',n:"Blood Fresh Supply",c:'fps'},{i:'1651560',n:"Fabledom",c:'simulador'},{i:'1699480',n:"KLETKA",c:'coop'},
+
+    {i:'20500',n:"Red Faction Guerrilla Steam Edition",c:'sobrevivencia'},{i:'331870',n:"AER Memories of Old",c:'aventura'},{i:'607890',n:"Sword Art Online: Hollow Realization Deluxe Edition",c:'rpg'},
+
+    {i:'673130',n:"AMID EVIL",c:'fps'},{i:'348550',n:"GUILTY GEAR XX ACCENT CORE PLUS R",c:'acao'},{i:'296470',n:"Mount Your Friends",c:'esportes'},
+
+    {i:'2254890',n:"The Killing Antidote",c:'aventura'},{i:'1126290',n:"Lost",c:'rpg'},{i:'12360',n:"FlatOut: Ultimate Carnage Collector's Edition",c:'corrida'},
+
+    {i:'1201270',n:"A Space for the Unbound",c:'aventura'},{i:'232010',n:"Euro Truck Simulator",c:'corrida'},{i:'1184050',n:"Gears Tactics",c:'coop'},
+
+    {i:'1634150',n:"Behind the Frame: The Finest Scenery",c:'rpg'},{i:'2820820',n:"Jotunnslayer: Hordes of Hel",c:'indie'},{i:'960690',n:"One Step From Eden",c:'coop'},
+
+    {i:'927350',n:"Hood: Outlaws & Legends",c:'fps'},{i:'1942660',n:"WWE 2K23",c:'esportes'},{i:'2303350',n:"Sticky Business",c:'simulador'},
+
+    {i:'1635450',n:"Longvinter",c:'coop'},{i:'377530',n:"侠客风云传(Tale of Wuxia)",c:'simulador'},{i:'3656800',n:"Train Sim World 6",c:'simulador',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3656800/ea750f90cc32c79a12a471b1e67fcc57e23173f9/header.jpg'},
+
+    {i:'363150',n:"Romance of the Three Kingdoms XIII",c:'simulador'},{i:'555950',n:"Danganronpa Another Episode: Ultra Despair Girls",c:'aventura'},{i:'268750',n:"Magicite",c:'sobrevivencia'},
+
+    {i:'1271700',n:"HOT WHEELS UNLEASHED",c:'corrida'},{i:'773790',n:"Ostriv",c:'sobrevivencia'},{i:'231160',n:"The Swapper",c:'aventura'},
+
+    {i:'310080',n:"Hatoful Boyfriend",c:'simulador'},{i:'1408610',n:"Call of the Wild: The Angler",c:'esportes'},{i:'1682970',n:"Uncrashed : FPV Drone Simulator",c:'corrida'},
+
+    {i:'233610',n:"Distance",c:'corrida'},{i:'234270',n:"Ken Follett's The Pillars of the Earth",c:'rpg'},{i:'915810',n:"Midnight Ghost Hunt",c:'fps'},
+
+    {i:'1238040',n:"Dragon Age II: Ultimate Edition",c:'aventura'},{i:'2679100',n:"Witchspire",c:'rpg',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2679100/fb7f504258d3ace8267a937de3fb9be130c246d8/header.jpg'},{i:'1058650',n:"Beyond The Wire",c:'fps'},
+
+    {i:'1032430',n:"Blood Trail",c:'fps'},{i:'3920',n:"Sid Meier's Pirates!",c:'rpg'},{i:'70400',n:"Recettear: An Item Shop's Tale",c:'rpg'},
+
+    {i:'1157390',n:"King Arthur: Knight's Tale",c:'rpg'},{i:'1184160',n:"RUSSIAPHOBIA",c:'simulador'},{i:'520720',n:"Dear Esther: Landmark Edition",c:'aventura'},
+
+    {i:'2016460',n:"Tales of the Shire",c:'simulador',nw:1,y:'2025'},{i:'2561580',n:"Horizon Zero Dawn Remastered",c:'acao'},{i:'1088790',n:"Rebel Inc: Escalation",c:'simulador'},
+
+    {i:'2095300',n:"Breakout 13",c:'rpg'},{i:'684410',n:"Bridge Constructor Portal",c:'simulador'},{i:'228180',n:"Action! - Gameplay Recording and Streaming",c:'acao'},
+
+    {i:'647960',n:"Rusted Warfare - RTS",c:'coop'},{i:'49600',n:"Beat Hazard",c:'coop'},{i:'1128860',n:"Men of War II",c:'coop'},
+
+    {i:'1150080',n:"Azur Lane Crosswave",c:'fps'},{i:'744190',n:"Rusty Lake Paradise",c:'aventura'},{i:'1328350',n:"Turbo Overkill",c:'fps'},
+
+    {i:'1147860',n:"UFO 50",c:'esportes'},{i:'266410',n:"iRacing",c:'corrida'},{i:'1105500',n:"Yakuza 4 Remastered",c:'rpg'},
+
+    {i:'234710',n:"Poker Night 2",c:'esportes'},{i:'893850',n:"THE LONGING",c:'rpg'},{i:'1468720',n:"Ultimate Epic Battle Simulator 2",c:'simulador'},
+
+    {i:'268130',n:"Heat Signature",c:'aventura'},{i:'1203630',n:"Record of Lodoss War-Deedlit in Wonder Labyrinth-",c:'rpg'},{i:'259680',n:"Tales of Maj'Eyal",c:'rpg'},
+
+    {i:'370240',n:"NBA 2K16",c:'esportes'},{i:'8000',n:"Tomb Raider: Anniversary",c:'aventura'},{i:'1972440',n:"Shotgun King: The Final Checkmate",c:'acao'},
+
+    {i:'451020',n:"Battle Chasers: Nightwar",c:'rpg'},{i:'1937500',n:"Let's School",c:'simulador'},{i:'1434950',n:"HighFleet",c:'simulador'},
+
+    {i:'264140',n:"Pixel Piracy",c:'simulador'},{i:'30',n:"Day of Defeat",c:'fps'},{i:'1104280',n:"The Slormancer",c:'aventura'},
+
+    {i:'41500',n:"Torchlight",c:'rpg'},{i:'1161170',n:"The Rewinder",c:'aventura'},{i:'1874490',n:"Potionomics",c:'rpg'},
+
+    {i:'938560',n:"INMOST",c:'aventura'},{i:'235380',n:"Blitzkrieg 3",c:'simulador'},{i:'1546970',n:"Grand Theft Auto III – The Definitive Edition",c:'acao'},
+
+    {i:'333950',n:"Medieval Engineers",c:'simulador'},{i:'2870',n:"X Rebirth",c:'acao'},{i:'1216320',n:"Shieldwall",c:'simulador'},
+
+    {i:'1105510',n:"Yakuza 5 Remastered",c:'aventura'},{i:'1070580',n:"Drift86",c:'corrida'},{i:'793460',n:"112 Operator",c:'simulador'},
+
+    {i:'293780',n:"Crawl",c:'rpg'},{i:'477740',n:"Zero Escape: The Nonary Games",c:'aventura'},{i:'318600',n:"The Flame in the Flood",c:'coop'},
+
+    {i:'4560',n:"Company of Heroes - Legacy Edition",c:'fps'},{i:'1787090',n:"MyDockFinder",c:'indie'},{i:'245470',n:"Democracy 3",c:'simulador'},
+
+    {i:'522470',n:"The House of Da Vinci",c:'aventura'},{i:'214730',n:"Space Rangers HD: A War Apart",c:'rpg'},{i:'2166060',n:"Amanda the Adventurer",c:'aventura'},
+
+    {i:'1220010',n:"Home Behind 2",c:'sobrevivencia'},{i:'427190',n:"DEAD RISING",c:'sobrevivencia'},{i:'397060',n:"Faeria",c:'sobrevivencia'},
+
+    {i:'799640',n:"Dungeon Munchies",c:'rpg'},{i:'1283400',n:"Steelrising",c:'aventura'},{i:'1519350',n:"Madden NFL 22",c:'esportes'},
+
+    {i:'250520',n:"UnderRail",c:'aventura'},{i:'352520',n:"The Silent Age",c:'sobrevivencia'},{i:'914710',n:"Cat Quest II",c:'rpg'},
+
+    {i:'321960',n:"Might & Magic Heroes VII",c:'coop'},{i:'2291060',n:"EARTH DEFENSE FORCE 6",c:'coop'},{i:'351940',n:"The Descendant",c:'aventura'},
+
+    {i:'1206610',n:"Rubber Bandits",c:'coop'},{i:'495140',n:"NARUTO: Ultimate Ninja STORM",c:'aventura'},{i:'615530',n:"Love, Money, Rock'n'Roll",c:'simulador'},
+
+    {i:'1330470',n:"F.I.S.T.: Forged In Shadow Torch",c:'simulador'},{i:'251990',n:"Long Live The Queen",c:'rpg'},{i:'3105890',n:"PIONER",c:'fps',nw:1,y:'2025'},
+
+    {i:'1181550',n:"Carnival Hunt",c:'terror',nw:1,y:'2026'},{i:'558990',n:"Opus Magnum",c:'simulador'},{i:'275390',n:"Guacamelee! Super Turbo Championship Edition",c:'coop'},
+
+    {i:'2106840',n:"PARANORMASIGHT: The Seven Mysteries of Honjo",c:'simulador'},{i:'790820',n:"Valkyria Chronicles 4 Complete Edition",c:'rpg'},{i:'511470',n:"Glass Masquerade",c:'indie'},
+
+    {i:'2157560',n:"Granblue Fantasy Versus: Rising",c:'acao'},{i:'438640',n:"LEGO STAR WARS: The Force Awakens",c:'sobrevivencia'},{i:'296300',n:"Ballistic Overkill",c:'fps'},
+
+    {i:'518150',n:"Intruder",c:'fps'},{i:'7520',n:"Two Worlds II HD",c:'coop'},{i:'1506980',n:"Lay a Beauty to Rest: The Darkness Peach Blossom Spring",c:'rpg'},
+
+    {i:'579180',n:"Ys VIII: Lacrimosa of DANA",c:'coop'},{i:'1038250',n:"DIRT 5",c:'corrida'},{i:'530070',n:"Train Sim World 2020",c:'simulador'},
+
+    {i:'1902690',n:"Fate/Samurai Remnant",c:'rpg'},{i:'1277930',n:"Riddle Joker",c:'fps'},{i:'1360000',n:"The Infected",c:'sobrevivencia'},
+
+    {i:'582550',n:"Passpartout: The Starving Artist",c:'simulador'},{i:'1135230',n:"Ember Knights",c:'rpg'},{i:'355790',n:"Styx: Shards of Darkness",c:'coop'},
+
+    {i:'2703850',n:"Rooftops & Alleys: The Parkour Game",c:'esportes'},{i:'2890830',n:"Streamer Life Simulator 2",c:'simulador'},{i:'3440070',n:"Dinoblade",c:'rpg',nw:1,y:'2026'},
+
+    {i:'1689620',n:"BLEACH Rebirth of Souls",c:'acao'},{i:'263980',n:"Out There Somewhere",c:'corrida'},{i:'2084000',n:"Shogun Showdown",c:'indie'},
+
+    {i:'2291850',n:"Underground Blossom",c:'aventura'},{i:'1003890',n:"Blacksad: Under the Skin",c:'aventura'},{i:'332500',n:"GRAV",c:'coop'},
+
+    {i:'860950',n:"Mark of the Ninja: Remastered",c:'aventura'},{i:'973810',n:"Journey To The Savage Planet",c:'coop'},{i:'1146630',n:"Yokai's Secret",c:'rpg'},
+
+    {i:'900040',n:"ELEX II",c:'aventura'},{i:'562220',n:"Zup! 2",c:'aventura'},{i:'343710',n:"Kholat",c:'aventura'},
+
+    {i:'1119980',n:"In Sound Mind",c:'fps'},{i:'1293820',n:"YOU and ME and HER: A Love Story",c:'aventura'},{i:'1057750',n:"The Suicide of Rachel Foster",c:'aventura'},
+
+    {i:'8140',n:"Tomb Raider: Underworld",c:'aventura'},{i:'2591280',n:"F1 Manager 2024",c:'corrida'},{i:'1432050',n:"Nobody Saves the World",c:'coop'},
+
+    {i:'313740',n:"Sakura Spirit",c:'simulador'},{i:'712840',n:"King Exit",c:'rpg'},{i:'289950',n:"Construction Simulator 2015",c:'simulador'},
+
+    {i:'2751000',n:"Prince of Persia The Lost Crown",c:'acao'},{i:'292910',n:"Deponia: The Complete Journey",c:'aventura'},{i:'1167450',n:"DAEMON X MACHINA",c:'coop'},
+
+    {i:'2200780',n:"My Dream Setup",c:'simulador'},{i:'1009290',n:"SWORD ART ONLINE Alicization Lycoris",c:'coop'},{i:'1829980',n:"Café Stella and the Reaper's Butterflies",c:'fps'},
+
+    {i:'894940',n:"Littlewood",c:'rpg'},{i:'1264670',n:"The Wind Road",c:'aventura'},{i:'508900',n:"Zup! X",c:'indie'},
+
+    {i:'95400',n:"ibb & obb",c:'coop'},{i:'1477070',n:"Depersonalization",c:'aventura'},{i:'46500',n:"Syberia",c:'aventura'},
+
+    {i:'398850',n:"Epistory - Typing Chronicles",c:'rpg'},{i:'1215390',n:"Animal Revolt Battle Simulator",c:'sobrevivencia'},{i:'2131650',n:"METAL GEAR SOLID 3: Snake Eater - Master Collection Version",c:'aventura'},
+
+    {i:'3198890',n:"Scale the Depths",c:'simulador',nw:1,y:'2026'},{i:'3320',n:"Insaniquarium Deluxe",c:'simulador'},{i:'1977170',n:"Jusant",c:'aventura'},
+
+    {i:'1145960',n:"The White Door",c:'aventura'},{i:'1120810',n:"Eastern Exorcist",c:'aventura'},{i:'40390',n:"Risen 2: Dark Waters",c:'aventura'},
+
+    {i:'3330',n:"Zuma Deluxe",c:'indie'},{i:'978460',n:"Emily is Away <3",c:'simulador'},{i:'597180',n:"Old World",c:'simulador'},
+
+    {i:'562860',n:"Ion Fury",c:'fps'},{i:'454120',n:"Starbase",c:'fps'},{i:'391730',n:"Crashlands",c:'sobrevivencia'},
+
+    {i:'1411910',n:"Fallen Aces",c:'fps'},{i:'11450',n:"Overlord",c:'rpg'},{i:'952040',n:"MUSYNX",c:'corrida'},
+
+    {i:'3021100',n:"Five Hearts Under One Roof",c:'simulador'},{i:'22100',n:"Mount & Blade",c:'rpg'},{i:'1266840',n:"The Last Stand: Aftermath",c:'aventura'},
+
+    {i:'770810',n:"Good Pizza, Great Pizza - Cooking Simulator Game",c:'simulador'},{i:'378610',n:"Valley",c:'sobrevivencia'},{i:'207170',n:"Legend of Grimrock",c:'rpg'},
+
+    {i:'541300',n:"Survive the Nights",c:'fps'},{i:'1123050',n:"GRIME",c:'aventura'},{i:'307880',n:"Savage Lands",c:'fps'},
+
+    {i:'2250500',n:"Rhythia",c:'indie',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2250500/7466f597a3eb3bad16b0180be3deef182d222690/header.jpg'},{i:'1138660',n:"Black Book",c:'aventura'},{i:'207690',n:"Botanicula",c:'aventura'},
+
+    {i:'483980',n:"Mad Father",c:'aventura'},{i:'553310',n:"Lethal League Blaze",c:'esportes'},{i:'530890',n:"Haydee",c:'sobrevivencia'},
+
+    {i:'2637990',n:"Duck Detective: The Secret Salami",c:'aventura'},{i:'232910',n:"TrackMania² Stadium",c:'corrida'},{i:'361800',n:"Tree of Life",c:'fps'},
+
+    {i:'736820',n:"Knights of Honor II: Sovereign",c:'simulador'},{i:'1163550',n:"Captain Tsubasa: Rise of New Champions",c:'esportes'},{i:'976590',n:"Bus Simulator 21 Next Stop",c:'simulador'},
+
+    {i:'703860',n:"GRID",c:'corrida'},{i:'434170',n:"The Jackbox Party Pack 3",c:'coop'},{i:'96000',n:"The Tiny Bang Story",c:'aventura'},
+
+    {i:'1562420',n:"FOREWARNED",c:'sobrevivencia'},{i:'728540',n:"Islands of Nyne: Battle Royale",c:'fps'},{i:'718850',n:"Age of Wonders: Planetfall",c:'coop'},
+
+    {i:'253980',n:"Enclave",c:'aventura'},{i:'848350',n:"Katamari Damacy REROLL",c:'acao'},{i:'1332720',n:"Thief Simulator 2",c:'simulador'},
+
+    {i:'1484720',n:"Dead Estate",c:'indie'},{i:'2678990',n:"Minami Lane",c:'simulador'},{i:'426000',n:"HunieCam Studio",c:'simulador'},
+
+    {i:'6220',n:"FlatOut",c:'corrida'},{i:'1587130',n:"Blood West",c:'fps'},{i:'439190',n:"Stories: The Path of Destinies",c:'rpg'},
+
+    {i:'1368030',n:"ANNO: Mutationem",c:'aventura'},{i:'1796220',n:"Laika: Aged Through Blood",c:'aventura'},{i:'2878960',n:"WWE 2K25",c:'esportes'},
+
+    {i:'332200',n:"Axiom Verge",c:'aventura'},{i:'342560',n:"Airships: Conquer the Skies",c:'simulador'},{i:'22000',n:"World of Goo",c:'indie'},
+
+    {i:'785740',n:"This Is the Police 2",c:'simulador'},{i:'300550',n:"Shadowrun: Dragonfall - Director's Cut",c:'aventura'},{i:'1845250',n:"Rubinite",c:'rpg',nw:1,y:'2026'},
+
+    {i:'666150',n:"Prehistoric Kingdom",c:'simulador'},{i:'1276760',n:"DRAGON BALL: THE BREAKERS",c:'coop'},{i:'303310',n:"The House in Fata Morgana",c:'aventura'},
+
+    {i:'1044620',n:"Aokana - Four Rhythms Across the Blue",c:'esportes'},{i:'434050',n:"Duke Nukem 3D: 20th Anniversary World Tour",c:'fps'},{i:'359510',n:"Tangle Tower",c:'aventura'},
+
+    {i:'1913120',n:"Tears of Metal",c:'indie',nw:1,y:'2026'},{i:'239070',n:"Hammerwatch",c:'rpg'},{i:'550320',n:"art of rally",c:'corrida'},
+
+    {i:'1213700',n:"Spirit of the North",c:'aventura'},{i:'1294760',n:"HARD BULLET",c:'simulador'},{i:'1732190',n:"FATAL FRAME / PROJECT ZERO: Maiden of Black Water",c:'fps'},
+
+    {i:'824600',n:"HROT",c:'fps'},{i:'3265250',n:"MindsEye",c:'acao',nw:1,y:'2025'},{i:'1588010',n:"PGA TOUR 2K23",c:'esportes'},
+
+    {i:'898750',n:"Super Robot Wars 30",c:'simulador'},{i:'239250',n:"Castlevania: Lords of Shadow 2",c:'aventura'},{i:'1545560',n:"Shadow Gambit: The Cursed Crew",c:'aventura'},
+
+    {i:'829590',n:"CryoFall",c:'simulador'},{i:'581630',n:"Sword With Sauce",c:'fps'},{i:'1098292',n:"DOOM Eternal: The Ancient Gods - Part One",c:'fps'},
+
+    {i:'249230',n:"Risen 3 - Titan Lords",c:'coop'},{i:'345180',n:"Victor Vran ARPG",c:'coop'},{i:'2336220',n:"Feed the Cups",c:'simulador'},
+
+    {i:'679900',n:"Swords & Souls: Neverseen",c:'aventura'},{i:'1109570',n:"Word Game",c:'aventura'},{i:'65790',n:"ARMA: Cold War Assault",c:'fps'},
+
+    {i:'774241',n:"Warhammer: Chaosbane",c:'coop'},{i:'757310',n:"Sable",c:'corrida'},{i:'619820',n:"Heroes of Hammerwatch II",c:'acao'},
+
+    {i:'274900',n:"Murder Miners",c:'fps'},{i:'292140',n:"FINAL FANTASY XIII-2",c:'fps'},{i:'1410710',n:"Democracy 4",c:'simulador'},
+
+    {i:'688130',n:"Pogostuck: Rage With Your Friends",c:'coop'},{i:'2059170',n:"Quasimorph",c:'simulador'},{i:'1805480',n:"Like a Dragon: Ishin!",c:'aventura'},
+
+    {i:'253030',n:"Race The Sun",c:'corrida'},{i:'1567800',n:"星空列车与白的旅行",c:'aventura'},{i:'2014780',n:"X-Plane 12",c:'simulador'},
+
+    {i:'699170',n:"Fell Seal: Arbiter's Mark",c:'indie'},{i:'1329500',n:"SpiderHeck",c:'coop'},{i:'1024380',n:"Second Extinction",c:'fps'},
+
+    {i:'375910',n:"Anno 2205",c:'simulador'},{i:'2068280',n:"Nordic Ashes: Survivors of Ragnarok",c:'indie'},{i:'572410',n:"Steel Division: Normandy 44",c:'simulador'},
+
+    {i:'1436990',n:"Feign",c:'coop'},{i:'757320',n:"Atomicrops",c:'simulador'},{i:'1042490',n:"Call of the Sea",c:'aventura'},
+
+    {i:'840800',n:"Outlaws of the Old West",c:'indie'},{i:'1794960',n:"Sonic Origins",c:'acao'},{i:'2209900',n:"Moonlight Peaks",c:'rpg',nw:1,y:'2026'},
+
+    {i:'356040',n:"Sheltered",c:'simulador'},{i:'604540',n:"Empire of Sin",c:'acao'},{i:'654880',n:"Dream Daddy: A Dad Dating Simulator",c:'fps'},
+
+    {i:'1507190',n:"Machinika: Museum",c:'aventura'},{i:'2506160',n:"Fears to Fathom - Ironbark Lookout",c:'aventura'},{i:'60',n:"Ricochet",c:'esportes'},
+
+    {i:'755500',n:"ONE PIECE World Seeker",c:'coop'},{i:'253110',n:"The Cat Lady",c:'aventura'},{i:'1049280',n:"Pilgrims",c:'aventura'},
+
+    {i:'1477590',n:"EZ2ON REBOOT : R",c:'esportes'},{i:'70600',n:"Worms Ultimate Mayhem",c:'fps'},{i:'1139890',n:"Dictators:No Peace Countryballs",c:'simulador'},
+
+    {i:'3168600',n:"Among Us 3D",c:'indie',nw:1,y:'2025'},{i:'230050',n:"DLC Quest",c:'aventura'},{i:'801480',n:"Agent A: A puzzle in disguise",c:'aventura'},
+
+    {i:'1760250',n:"Madden NFL 23",c:'esportes'},{i:'606800',n:"Startup Company",c:'simulador'},{i:'1286220',n:"Sea Power : Naval Combat in the Missile Age",c:'simulador'},
+
+    {i:'1340480',n:"The Cosmic Wheel Sisterhood",c:'aventura'},{i:'523780',n:"Emily is Away Too",c:'aventura'},{i:'322190',n:"SteamWorld Heist",c:'aventura'},
+
+    {i:'624270',n:"The Painscreek Killings",c:'aventura'},{i:'32360',n:"The Secret of Monkey Island: Special Edition",c:'aventura'},{i:'10220',n:"Postal III",c:'acao'},
+
+    {i:'921630',n:"音灵 INVAXION",c:'corrida'},{i:'461950',n:"Beat Cop",c:'simulador'},{i:'893680',n:"Project Warlock",c:'fps'},
+
+    {i:'207490',n:"Rayman Origins",c:'coop'},{i:'815780',n:"PIPE by BMX Streets",c:'esportes'},{i:'433950',n:"Bit Blaster XL",c:'sobrevivencia'},
+
+    {i:'382560',n:"Hot Lava",c:'corrida'},{i:'1286580',n:"Ship of Fools",c:'coop'},{i:'2961880',n:"Grocery Store Simulator",c:'simulador'},
+
+    {i:'467960',n:"Home Behind",c:'simulador'},{i:'1053680',n:"Granny Simulator",c:'simulador'},{i:'203810',n:"Dear Esther",c:'simulador'},
+
+    {i:'1140270',n:"Monster Prom 2: Monster Camp",c:'simulador'},{i:'115800',n:"Owlboy",c:'aventura'},{i:'1538550',n:"LEGO Voyagers",c:'coop',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1538550/db718ae2be60558df2ef9fcd65302ad87a6045d4/header.jpg'},
+
+    {i:'824550',n:"SD GUNDAM BATTLE ALLIANCE",c:'coop'},{i:'1621070',n:"DeadPoly",c:'acao'},{i:'15120',n:"Tom Clancy's Rainbow Six Vegas 2",c:'fps'},
+
+    {i:'795100',n:"Friday the 13th: Killer Puzzle",c:'simulador'},{i:'25890',n:"Hearts of Iron III",c:'simulador'},{i:'432350',n:"Epic Battle Fantasy 5",c:'aventura'},
+
+    {i:'983970',n:"Haven",c:'coop'},{i:'261180',n:"Lethal League",c:'esportes'},{i:'1903620',n:"Killer Frequency",c:'simulador'},
+
+    {i:'1586800',n:"Lil Gator Game",c:'aventura'},{i:'7000',n:"Tomb Raider: Legend",c:'aventura'},{i:'1644940',n:"Loddlenaut",c:'aventura'},
+
+    {i:'307110',n:"We Need To Go Deeper",c:'simulador'},{i:'466630',n:"The Pedestrian",c:'aventura'},{i:'212630',n:"Tom Clancy's Ghost Recon: Future Soldier",c:'fps'},
+
+    {i:'363680',n:"Battlefleet Gothic: Armada (Classic)",c:'coop'},{i:'235800',n:"Audiosurf 2",c:'corrida'},{i:'209670',n:"Cortex Command",c:'indie'},
+
+    {i:'956030',n:"Creaks",c:'aventura'},{i:'496460',n:"Life is Feudal: Forest Village",c:'simulador'},{i:'981430',n:"Gordian Quest",c:'aventura'},
+
+    {i:'2073250',n:"Rift of the NecroDancer",c:'indie'},{i:'214770',n:"Guacamelee! Gold Edition",c:'coop'},{i:'1082710',n:"Bug Fables: The Everlasting Sapling",c:'aventura'},
+
+    {i:'267530',n:"The LEGO Movie - Videogame",c:'coop'},{i:'1590910',n:"Forgive Me Father",c:'fps'},{i:'222730',n:"Reus",c:'simulador'},
+
+    {i:'1461810',n:"《蜀山：初章》买断版",c:'aventura'},{i:'1492070',n:"Sker Ritual",c:'fps'},{i:'844930',n:"Fox Hime Zero",c:'fps'},
+
+    {i:'233470',n:"Evoland",c:'aventura'},{i:'515220',n:"F1 2017",c:'corrida'},{i:'400630',n:"Wuppo: Definitive Edition",c:'coop'},
+
+    {i:'324080',n:"Rising World",c:'fps'},{i:'2400',n:"The Ship: Murder Party",c:'fps'},{i:'874390',n:"The Battle of Polytopia",c:'simulador'},
+
+    {i:'518030',n:"Aim Hero",c:'fps'},{i:'327890',n:"I Am Bread",c:'simulador'},{i:'486310',n:"Meadow - A Shelter Game",c:'simulador'},
+
+    {i:'265210',n:"Viscera Cleanup Detail: Santa's Rampage",c:'simulador'},{i:'2299900',n:"Felvidek",c:'indie'},{i:'598980',n:"The Coin Game",c:'simulador'},
+
+    {i:'770240',n:"PRO EVOLUTION SOCCER 2019",c:'esportes'},{i:'559210',n:"Rakuen",c:'aventura'},{i:'1148650',n:"The Legend of Bum-Bo",c:'aventura'},
+
+    {i:'1282200',n:"The Test: Hypothesis Rising",c:'rpg'},{i:'514900',n:">observer_",c:'aventura'},{i:'389140',n:"Horizon Chase Turbo",c:'corrida'},
+
+    {i:'42670',n:"Singularity",c:'fps'},{i:'265890',n:"Hexcells",c:'indie'},{i:'1153410',n:"JDM: Japanese Drift Master",c:'corrida'},
+
+    {i:'1263240',n:"Skate Story",c:'esportes',nw:1,y:'2025'},{i:'421040',n:"Plantera",c:'simulador'},{i:'1843760',n:"Rogue Tower",c:'indie'},
+
+    {i:'263760',n:"Turbo Dismount",c:'corrida'},{i:'1930',n:"Two Worlds Epic Edition",c:'coop'},{i:'406970',n:"The Uncertain: Last Quiet Day",c:'aventura'},
+
+    {i:'1087760',n:"The Gunk",c:'acao'},{i:'538680',n:"The Legend of Heroes: Trails of Cold Steel",c:'aventura'},{i:'487120',n:"Citadel: Forged with Fire",c:'aventura'},
+
+    {i:'1372810',n:"Teamfight Manager",c:'esportes'},{i:'457330',n:"High Octane Drift",c:'corrida'},{i:'1708850',n:"Drug Dealer Simulator 2",c:'simulador'},
+
+    {i:'1494810',n:"Mortal Sin",c:'indie'},{i:'1545450',n:"Incredibox",c:'indie'},{i:'858710',n:"Gravity Circuit",c:'acao'},
+
+    {i:'1015500',n:"WWE 2K20",c:'esportes'},{i:'2344320',n:"Eldegarde",c:'acao'},{i:'555150',n:"The First Tree",c:'simulador'},
+
+    {i:'285330',n:"RollerCoaster Tycoon 2: Triple Thrill Pack",c:'simulador'},{i:'2000890',n:"MechWarrior 5: Clans",c:'fps'},{i:'1237980',n:"STAR WARS Battlefront",c:'fps'},
+
+    {i:'24800',n:"Command & Conquer: Red Alert 3 - Uprising",c:'coop'},{i:'24810',n:"Command & Conquer 3: Kane’s Wrath",c:'coop'},{i:'1118240',n:"Lake",c:'aventura'},
+
+    {i:'456670',n:"Hand of Fate 2",c:'indie'},{i:'759740',n:"RIDE 3",c:'corrida'},{i:'1418100',n:"Swords of Legends Online",c:'coop'},
+
+    {i:'1456200',n:"Initial Drift Online",c:'corrida'},{i:'274500',n:"Brigador: Up-Armored Edition",c:'indie'},{i:'215470',n:"Primal Carnage",c:'fps'},
+
+    {i:'1306630',n:"Lost Ruins",c:'aventura'},{i:'1067850',n:"Kindergarten 2",c:'aventura'},{i:'13570',n:"Tom Clancy's Splinter Cell Chaos Theory",c:'coop'},
+
+    {i:'243970',n:"Invisible, Inc.",c:'simulador'},{i:'298900',n:"Space Hulk: Deathwing",c:'coop'},{i:'803050',n:"Per Aspera",c:'simulador'},
+
+    {i:'785770',n:"Emergency Call 112 – The Fire Fighting Simulation 2",c:'coop'},{i:'924980',n:"Trials of Mana",c:'coop'},{i:'40960',n:"Stronghold 2: Steam Edition",c:'simulador'},
+
+    {i:'901735',n:"The Stronghold Collection",c:'simulador'},{i:'252870',n:"PULSAR: Lost Colony",c:'fps'},{i:'382140',n:"SKYHILL",c:'simulador'},
+
+    {i:'978780',n:"STORY OF SEASONS: Friends of Mineral Town",c:'simulador'},{i:'1260520',n:"Patrick's Parabox",c:'indie'},{i:'1377360',n:"Vampires' Melody",c:'aventura'},
+
+    {i:'236510',n:"Takedown: Red Sabre",c:'acao'},{i:'1321680',n:"Hello Neighbor 2",c:'acao'},{i:'1356670',n:"Sakuna: Of Rice and Ruin",c:'simulador'},
+
+    {i:'247020',n:"Cook, Serve, Delicious!",c:'simulador'},{i:'271240',n:"Offworld Trading Company",c:'simulador'},{i:'269790',n:"DreadOut",c:'coop'},
+
+    {i:'256190',n:"Enemy Front",c:'fps'},{i:'570780',n:"古剑奇谭(GuJian)",c:'aventura'},{i:'543900',n:"METAL GEAR SURVIVE",c:'coop'},
+
+    {i:'311770',n:"LEGO Pirates of the Caribbean: The Video Game",c:'coop'},{i:'224460',n:"Contrast",c:'aventura'},{i:'3084280',n:"Threefold Recital",c:'indie'},
+
+    {i:'493540',n:"Figment",c:'aventura'},{i:'1895350',n:"I Wani Hug that Gator!",c:'indie'},{i:'1414850',n:"Nickelodeon All-Star Brawl",c:'acao'},
+
+    {i:'1809700',n:"Persona 3 Portable",c:'aventura'},{i:'1556200',n:"Predator: Hunting Grounds",c:'fps'},{i:'538030',n:"Xenonauts 2",c:'acao'},
+
+    {i:'1016950',n:"Blood Bowl 3",c:'esportes'},{i:'394970',n:"DEADBOLT",c:'indie'},{i:'2131630',n:"METAL GEAR SOLID - Master Collection Version",c:'acao'},
+
+    {i:'1570010',n:"FAR: Changing Tides",c:'aventura'},{i:'2497920',n:"A Difficult Game About Climbing",c:'aventura'},{i:'1036890',n:"Shadow Warrior 3: Definitive Edition",c:'fps'},
+
+    {i:'323320',n:"Grow Home",c:'aventura'},{i:'575640',n:"Zup! 3",c:'coop'},{i:'363930',n:"Dead Age",c:'simulador'},
+
+    {i:'1208260',n:"Hentai Vs Furries",c:'aventura'},{i:'831560',n:"WARRIORS OROCHI 4",c:'coop'},{i:'1274600',n:"The Last Faith",c:'indie'},
+
+    {i:'2421410',n:"Cyber Manhunt 2: New World - The Hacking Simulator",c:'simulador'},{i:'1330460',n:"Becastled",c:'coop'},{i:'354240',n:"Please, Don’t Touch Anything",c:'indie'},
+
+    {i:'2501600',n:"DICEOMANCER",c:'indie'},{i:'2307350',n:"Into the Radius 2",c:'acao'},{i:'1282690',n:"Crysis 3",c:'fps'},
+
+    {i:'329440',n:"Sonic Lost World",c:'coop'},{i:'404680',n:"Hob",c:'aventura'},{i:'546050',n:"Puyo PuyoTetris",c:'acao'},
+
+    {i:'356650',n:"Death's Gambit: Afterlife",c:'aventura'},{i:'1203190',n:"Wreckfest 2",c:'corrida'},{i:'485980',n:"Syrian Warfare",c:'simulador'},
+
+    {i:'466300',n:"Planescape: Torment: Enhanced Edition",c:'aventura'},{i:'507010',n:"Mr.President!",c:'fps'},{i:'360',n:"Half-Life Deathmatch: Source",c:'fps'},
+
+    {i:'1486630',n:"Intravenous",c:'fps'},{i:'635730',n:"Dragonia",c:'fps'},{i:'2313700',n:"Constance",c:'aventura',nw:1,y:'2025'},
+
+    {i:'1225560',n:"Unravel",c:'coop'},{i:'2597080',n:"Realm of Ink",c:'acao'},{i:'1195290',n:"Moncage",c:'simulador'},
+
+    {i:'421120',n:"Samorost 3",c:'aventura'},{i:'525510',n:"Guns, Gore and Cannoli 2",c:'coop'},{i:'963000',n:"Frog Detective 1: The Haunted Island",c:'aventura'},
+
+    {i:'510420',n:"The Hex",c:'aventura'},{i:'1135300',n:"King's Bounty II",c:'coop'},{i:'844590',n:"Hypnospace Outlaw",c:'simulador'},
+
+    {i:'250340',n:"Blockland",c:'corrida'},{i:'1144770',n:"SLUDGE LIFE",c:'fps'},{i:'1876590',n:"I Am Your Beast",c:'fps'},
+
+    {i:'1108370',n:"Ratropolis",c:'simulador'},{i:'322780',n:"Worlds Adrift",c:'indie'},{i:'200940',n:"Sonic CD",c:'aventura'},
+
+    {i:'558420',n:"Stories Untold",c:'aventura'},{i:'2915460',n:"OneShot: World Machine Edition",c:'indie'},{i:'502800',n:"SENRAN KAGURA ESTIVAL VERSUS",c:'fps'},
+
+    {i:'1098293',n:"DOOM Eternal: The Ancient Gods - Part Two",c:'acao'},{i:'750130',n:"The Sinking City Remastered",c:'acao'},{i:'1920430',n:"FUMES",c:'corrida',nw:1,y:'2025'},
+
+    {i:'588040',n:"WILL: A Wonderful World / WILL：美好世界",c:'aventura'},{i:'715560',n:"Eastshade",c:'aventura'},{i:'1444480',n:"Turing Complete",c:'simulador'},
+
+    {i:'108200',n:"Ticket to Ride: Classic Edition",c:'indie'},{i:'1347430',n:"Cute Honey",c:'fps'},{i:'1179210',n:"Kill It With Fire",c:'simulador'},
+
+    {i:'965580',n:"Root",c:'simulador'},{i:'2155180',n:"Pioneers of Pagonia",c:'simulador'},{i:'978520',n:"Legend of Keepers: Career of a Dungeon Manager",c:'indie'},
+
+    {i:'1618540',n:"Ghost Exorcism INC.",c:'acao'},{i:'2019810',n:"Boxes: Lost Fragments",c:'indie'},{i:'448280',n:"Job Simulator",c:'fps'},
+
+    {i:'857980',n:"Void Bastards",c:'fps'},{i:'98800',n:"Dungeons of Dredmor",c:'aventura'},{i:'2361680',n:"Path of Kung Fu",c:'indie'},
+
+    {i:'2351560',n:"Apocalypse Party",c:'coop'},{i:'618140',n:"Barro",c:'corrida'},{i:'761830',n:"Mr. Prepper",c:'simulador'},
+
+    {i:'1422130',n:"SimRail - The Railway Simulator",c:'simulador'},{i:'2106520',n:"私のリアルは充実しすぎている フルボイス版",c:'aventura'},{i:'248860',n:"NEO Scavenger",c:'simulador'},
+
+    {i:'1937780',n:"Total War: PHARAOH",c:'acao'},{i:'1557990',n:"Retail Royale",c:'fps'},{i:'360830',n:"Yooka-Laylee",c:'aventura'},
+
+    {i:'361300',n:"Mother Russia Bleeds",c:'coop'},{i:'299460',n:"Woodle Tree Adventures",c:'indie'},{i:'1000010',n:"Crown Trick",c:'aventura'},
+
+    {i:'1428310',n:"The Test: Final Revelation",c:'simulador'},{i:'1920490',n:"The Outer Worlds: Spacer's Choice Edition",c:'acao'},{i:'1337760',n:"Potion Permit",c:'simulador'},
+
+    {i:'18500',n:"Defense Grid: The Awakening",c:'aventura'},{i:'220260',n:"Farming Simulator 2013 Titanium Edition",c:'fps'},{i:'584640',n:"SUPER CHICKEN JUMPER",c:'corrida'},
+
+    {i:'537110',n:"Angels of Death",c:'aventura'},{i:'2418520',n:"Farm Together 2",c:'simulador'},{i:'1944570',n:"Boneraiser Minions",c:'indie'},
+
+    {i:'3372060',n:"Hell Maiden",c:'rpg',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3372060/c54405ee570fbf01dc92dc8bbbb5f26ef1f300cc/header.jpg'},{i:'100',n:"Counter-Strike: Condition Zero",c:'terror'},{i:'268870',n:"Satellite Reign",c:'coop'},
+
+    {i:'1949190',n:"Necrosmith",c:'simulador'},{i:'363440',n:"Mega Man Legacy Collection",c:'indie'},{i:'2287520',n:"Five Nights at Freddy's: Help Wanted 2",c:'fps'},
+
+    {i:'742300',n:"Mega Man 11",c:'aventura'},{i:'1136370',n:"Bear and Breakfast",c:'simulador'},{i:'1238880',n:"Battlefield Hardline",c:'acao'},
+
+    {i:'1351080',n:"Pharaoh: A New Era",c:'simulador'},{i:'219780',n:"Divinity II: Developer's Cut",c:'coop'},{i:'6880',n:"Just Cause",c:'acao'},
+
+    {i:'2963880',n:"Murky Divers",c:'coop'},{i:'420560',n:"Firefighting Simulator - The Squad",c:'simulador'},{i:'417290',n:"Ghost of a Tale",c:'aventura'},
+
+    {i:'3243190',n:"Psychopomp GOLD",c:'indie'},{i:'222440',n:"THE KING OF FIGHTERS 2002 UNLIMITED MATCH",c:'acao'},{i:'262280',n:"Dungeons 2",c:'simulador'},
+
+    {i:'2542120',n:"Ninja Gaiden: Ragebound",c:'acao',nw:1,y:'2025'},{i:'607050',n:"Wargroove",c:'coop'},{i:'1283190',n:"Neighbours back From Hell",c:'aventura'},
+
+    {i:'2854740',n:"Nunholy",c:'acao'},{i:'1462570',n:"Lost in Random",c:'coop'},{i:'334940',n:"Yoku's Island Express",c:'aventura'},
+
+    {i:'798490',n:"Othercide",c:'indie'},{i:'2380050',n:"Star Trucker",c:'simulador'},{i:'228400',n:"Ace Combat Assault Horizon - Enhanced Edition",c:'coop'},
+
+    {i:'1166860',n:"Rival Stars Horse Racing: Desktop Edition",c:'corrida'},{i:'2700',n:"RollerCoaster Tycoon 3: Platinum",c:'simulador'},{i:'1901370',n:"Ib",c:'aventura'},
+
+    {i:'773370',n:"Exo One",c:'simulador'},{i:'2878420',n:"Old Market Simulator",c:'coop'},{i:'13600',n:"Prince of Persia: The Sands of Time",c:'aventura'},
+
+    {i:'440650',n:"Niche - a genetics survival game",c:'simulador'},{i:'916730',n:"Gato Roboto",c:'aventura'},{i:'320040',n:"Moon Hunters",c:'coop'},
+
+    {i:'985830',n:"SUCCUBUS",c:'acao'},{i:'2342950',n:"God Of Weapons",c:'acao'},{i:'368390',n:"The Darkside Detective",c:'aventura'},
+
+    {i:'315810',n:"eden*",c:'aventura'},{i:'493200',n:"RiME",c:'aventura'},{i:'1205970',n:"MX vs ATV Legends",c:'corrida'},
+
+    {i:'720620',n:"TaleSpire",c:'simulador'},{i:'563840',n:"LOST EMBER",c:'aventura'},{i:'372360',n:"Tales of Symphonia",c:'coop'},
+
+    {i:'1142500',n:"Fun with Ragdolls: The Game",c:'simulador'},{i:'906100',n:"Observation",c:'indie'},{i:'1607680',n:"Bread & Fred",c:'coop'},
+
+    {i:'1009850',n:"OVR Advanced Settings",c:'indie'},{i:'64000',n:"Men of War: Assault Squad",c:'fps'},{i:'1988550',n:"To The Core",c:'aventura'},
+
+    {i:'535480',n:"Sundered: Eldritch Edition",c:'aventura'},{i:'1227650',n:"Bang-On Balls: Chronicles",c:'coop'},{i:'1291010',n:"Warpips",c:'indie'},
+
+    {i:'270850',n:"Car Mechanic Simulator 2014",c:'corrida'},{i:'1239520',n:"Madden NFL 21",c:'esportes'},{i:'366250',n:"METAL SLUG",c:'coop'},
+
+    {i:'1792250',n:"Serious Sam: Siberian Mayhem",c:'fps'},{i:'33220',n:"Tom Clancy's Splinter Cell Conviction",c:'coop'},{i:'33229',n:"Tom Clancy's Splinter Cell Conviction",c:'coop'},
+
+    {i:'396900',n:"GRIP: Combat Racing",c:'corrida'},{i:'2442460',n:"Citizen Sleeper 2",c:'rpg',nw:1,y:'2025'},{i:'798460',n:"Ni no Kuni Wrath of the White Witch Remastered",c:'aventura'},
+
+    {i:'2582560',n:"EA SPORTS Madden NFL 25",c:'esportes'},{i:'1155970',n:"Roadwarden",c:'aventura'},{i:'34010',n:"Alpha Protocol",c:'aventura'},
+
+    {i:'2172010',n:"Until Dawn",c:'terror'},{i:'1718130',n:"SCP: Secret Files",c:'aventura'},{i:'1393350',n:"Swaying Girl",c:'fps'},
+
+    {i:'22600',n:"Worms Reloaded",c:'coop'},{i:'92800',n:"SpaceChem",c:'simulador'},{i:'898920',n:"Axis & Allies 1942 Online",c:'coop'},
+
+    {i:'966330',n:"Flower",c:'indie'},{i:'1592280',n:"Selaco",c:'fps'},{i:'998740',n:"Ring of Pain",c:'indie'},
+
+    {i:'3107230',n:"Pantheon: Rise of the Fallen",c:'indie'},{i:'6900',n:"Hitman: Codename 47",c:'acao'},{i:'976890',n:"Hidden Deep",c:'coop'},
+
+    {i:'223830',n:"Xenonauts",c:'simulador'},{i:'24840',n:"Medal of Honor: Airborne",c:'fps'},{i:'1104660',n:"MO:Astray",c:'aventura'},
+
+    {i:'1434480',n:"Maitetsu:Last Run!!",c:'fps'},{i:'21980',n:"Call of Juarez: Bound in Blood",c:'fps'},{i:'8800',n:"Civilization IV: Beyond the Sword",c:'simulador'},
+
+    {i:'480650',n:"Yu-Gi-Oh! Legacy of the Duelist",c:'simulador'},{i:'1608290',n:"GNOSIA",c:'indie'},{i:'828740',n:"Tales of the Neon Sea",c:'indie'},
+
+    {i:'323220',n:"Vagante",c:'coop'},{i:'568090',n:"Tattletail",c:'aventura'},{i:'425220',n:"One Piece Burning Blood",c:'coop'},
+
+    {i:'1112890',n:"Calico",c:'simulador'},{i:'2161440',n:"Sailing Era",c:'simulador'},{i:'55110',n:"Red Faction: Armageddon",c:'fps'},
+
+    {i:'1953520',n:"WRC Generations – The FIA WRC Official Game",c:'corrida'},{i:'393520',n:"Iconoclasts",c:'aventura'},{i:'1410640',n:"Syberia: The World Before",c:'aventura'},
+
+    {i:'1737340',n:"Noobs Want to Live",c:'aventura'},{i:'507490',n:"Ashes of the Singularity: Escalation",c:'simulador'},{i:'2377280',n:"Eriksholm: The Stolen Dream",c:'aventura',nw:1,y:'2025'},
+
+    {i:'253900',n:"Knights and Merchants",c:'simulador'},{i:'12810',n:"Overlord II",c:'aventura'},{i:'979120',n:"Autonauts",c:'simulador'},
+
+    {i:'877200',n:"Zero Caliber VR",c:'fps'},{i:'353560',n:"Plug & Play",c:'fps'},{i:'6030',n:"STAR WARS Jedi Knight II - Jedi Outcast",c:'fps'},
+
+    {i:'98400',n:"Hard Reset Extended Edition",c:'fps'},{i:'3417410',n:"Storebound",c:'terror',nw:1,y:'2026'},{i:'1211630',n:"The Jackbox Party Pack 7",c:'coop'},
+
+    {i:'1609080',n:"Summer of '58",c:'simulador'},{i:'1282150',n:"SpongeBob SquarePants: The Cosmic Shake",c:'coop'},{i:'1479730',n:"Commandos: Origins",c:'acao',nw:1,y:'2025'},
+
+    {i:'307670',n:"Hard West",c:'indie'},{i:'897220',n:"Summer Pockets",c:'fps'},{i:'277430',n:"Halo: Spartan Assault",c:'fps'},
+
+    {i:'743890',n:"Mega Man X Legacy Collection",c:'acao'},{i:'248310',n:"Freedom Planet",c:'aventura'},{i:'304530',n:"Agents of Mayhem",c:'coop'},
+
+    {i:'738540',n:"Tales of Vesperia: Definitive Edition",c:'coop'},{i:'1304680',n:"Voidigo",c:'aventura'},{i:'395200',n:"Ben and Ed",c:'esportes'},
+
+    {i:'6850',n:"Hitman 2: Silent Assassin",c:'fps'},{i:'259550',n:"Hero of the Kingdom",c:'aventura'},{i:'743390',n:"DISTRAINT 2",c:'aventura'},
+
+    {i:'1494420',n:"Silica",c:'fps'},{i:'1150640',n:"Yu-Gi-Oh! Legacy of the Duelist : Link Evolution",c:'simulador'},{i:'2497900',n:"DON'T SCREAM",c:'indie'},
+
+    {i:'1051310',n:"Paper Dolls: Original / 纸人",c:'aventura'},{i:'2078450',n:"Warhammer 40,000: Speed Freeks",c:'corrida'},{i:'301860',n:"Submerged",c:'indie'},
+
+    {i:'314020',n:"Morphopolis",c:'corrida'},{i:'523650',n:"Lust for Darkness",c:'acao'},{i:'703700',n:"Our End of the World",c:'fps'},
+
+    {i:'1407450',n:"The World of Kungfu: Dragon and Eagle",c:'indie'},{i:'405710',n:"Staxel",c:'simulador'},{i:'411370',n:"Melty Blood Actress Again Current Code",c:'acao'},
+
+    {i:'513510',n:"Intralism",c:'indie'},{i:'1654660',n:"En Garde!",c:'indie'},{i:'711660',n:"CHUCHEL",c:'indie'},
+
+    {i:'299970',n:"Project Motor Racing",c:'corrida',nw:1,y:'2025'},{i:'1101190',n:"Dungeon Defenders: Awakened",c:'coop'},{i:'2840470',n:"SimplePlanes 2",c:'simulador',nw:1,y:'2026'},
+
+    {i:'346940',n:"Shadowrun: Hong Kong - Extended Edition",c:'aventura'},{i:'280220',n:"Creeper World 3: Arc Eternal",c:'simulador'},{i:'1579380',n:"Shadow Tactics: Aiko's Choice",c:'aventura'},
+
+    {i:'2826180',n:"Chill Pulse",c:'simulador'},{i:'270210',n:"Melody's Escape",c:'aventura'},{i:'1369340',n:"Cats Organized Neatly",c:'indie'},
+
+    {i:'423580',n:"Project Highrise",c:'simulador'},{i:'1310410',n:"Alone in the Dark",c:'acao'},{i:'855740',n:"Bum Simulator",c:'simulador'},
+
+    {i:'345350',n:"LIGHTNING RETURNS: FINAL FANTASY XIII",c:'acao'},{i:'35000',n:"Mini Ninjas",c:'coop'},{i:'343860',n:"Tacoma",c:'aventura'},
+
+    {i:'2486740',n:"Sledders",c:'corrida'},{i:'921800',n:"Encased: A Sci-Fi Post-Apocalyptic RPG",c:'indie'},{i:'2244130',n:"Ratopia",c:'indie'},
+
+    {i:'1018800',n:"DEEEER Simulator: Your Average Everyday Deer Game",c:'simulador'},{i:'35130',n:"Lara Croft and the Guardian of Light",c:'coop'},{i:'785790',n:"WHAT THE GOLF?",c:'simulador'},
+
+    {i:'1122050',n:"Gensokyo Night Festival",c:'indie'},{i:'1035510',n:"Ultimate Zombie Defense",c:'coop'},{i:'2022180',n:"Miss Neko 3",c:'fps'},
+
+    {i:'1515950',n:"Capcom Arcade Stadium",c:'acao'},{i:'247660',n:"Deadly Premonition: The Director's Cut",c:'indie'},{i:'2477340',n:"Expeditions: A MudRunner Game",c:'corrida'},
+
+    {i:'1695840',n:"Fear Therapy",c:'coop'},{i:'1148760',n:"I Was a Teenage Exocolonist",c:'simulador'},{i:'1269370',n:"171",c:'indie'},
+
+    {i:'2396980',n:"Fate/stay night REMASTERED",c:'acao'},{i:'33100',n:"Alien Shooter",c:'indie'},{i:'541210',n:"Cold Waters",c:'fps'},
+
+    {i:'438490',n:"GOD EATER 2 Rage Burst",c:'coop'},{i:'622220',n:"Fate/EXTELLA LINK",c:'aventura'},{i:'471550',n:"Nine Parchments",c:'coop'},
+
+    {i:'1084020',n:"TheoTown",c:'indie'},{i:'632350',n:"Cyberdimension Neptunia: 4 Goddesses Online",c:'aventura'},{i:'227100',n:"Sniper Elite: Nazi Zombie Army",c:'fps'},
+
+    {i:'848480',n:"Creeper World 4",c:'simulador'},{i:'2318310',n:"Class of '09: The Re-Up",c:'simulador'},{i:'1981820',n:"Strike Force Heroes",c:'coop'},
+
+    {i:'1521580',n:"Perfect Heist 2",c:'fps'},{i:'304410',n:"Hexcells Infinite",c:'indie'},{i:'242820',n:"140",c:'indie'},
+
+    {i:'635320',n:"Last Day of June",c:'aventura'},{i:'388210',n:"Day of the Tentacle Remastered",c:'aventura'},{i:'91200',n:"Anomaly: Warzone Earth",c:'indie'},
+
+    {i:'1058020',n:"STAR WARS Battlefront (Classic, 2004)",c:'fps'},{i:'499440',n:"klocki",c:'indie'},{i:'375820',n:"Human Resource Machine",c:'simulador'},
+
+    {i:'702890',n:"BlazBlue: Cross Tag Battle",c:'acao'},{i:'356500',n:"STAR WARS Galactic Battlegrounds Saga",c:'acao'},{i:'559100',n:"Phantom Doctrine",c:'acao'},
+
+    {i:'963930',n:"Contractors",c:'fps'},{i:'2644470',n:"PICO PARK 2",c:'coop'},{i:'712730',n:"SIMULACRA",c:'simulador'},
+
+    {i:'3226450',n:"iRacing Arcade",c:'corrida',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3226450/be5f3bc2000160583baf146d85f5cba767a8fa67/header.jpg'},{i:'517710',n:"Redout: Enhanced Edition",c:'corrida'},{i:'1263370',n:"Seek Girl:Fog Ⅰ",c:'fps'},
+
+    {i:'373770',n:"LiEat",c:'aventura'},{i:'315430',n:"Polarity",c:'corrida'},{i:'2529820',n:"Wedding Witch",c:'acao'},
+
+    {i:'388080',n:"Borderless Gaming",c:'indie'},{i:'595690',n:"One Hour One Life",c:'simulador'},{i:'2608270',n:"Intravenous 2",c:'acao'},
+
+    {i:'1201540',n:"HELLCARD",c:'coop'},{i:'384490',n:"NECROPOLIS: BRUTAL EDITION",c:'coop'},{i:'1602010',n:"Persona 4 Arena Ultimax",c:'acao'},
+
+    {i:'1069640',n:"This Land Is My Land",c:'coop'},{i:'2395210',n:"Tony Hawk's Pro Skater 1 + 2",c:'esportes'},{i:'255520',n:"Viscera Cleanup Detail: Shadow Warrior",c:'fps'},
+
+    {i:'1887400',n:"ANTONBLAST",c:'indie'},{i:'441870',n:"OutDrive",c:'corrida'},{i:'224960',n:"Tomb Raider I (1996)",c:'aventura'},
+
+    {i:'680360',n:"Regions Of Ruin",c:'simulador'},{i:'1262460',n:"Zompiercer",c:'acao'},{i:'2273980',n:"Orcs Must Die! Deathtrap",c:'acao'},
+
+    {i:'326480',n:"If My Heart Had Wings",c:'fps'},{i:'2272540',n:"FBC: Firebreak",c:'coop',nw:1,y:'2025'},{i:'1944790',n:"Train Sim World 3",c:'simulador'},
+
+    {i:'1807080',n:"Ghost Exile",c:'coop'},{i:'2385530',n:"PGA TOUR 2K25",c:'esportes'},{i:'1197570',n:"Until We Die",c:'acao'},
+
+    {i:'2221920',n:"Immortals Fenyx Rising",c:'acao'},{i:'2814990',n:"Screamer",c:'corrida',nw:1,y:'2026'},{i:'1658040',n:"I Am Future: Cozy Apocalypse Survival",c:'simulador'},
+
+    {i:'1153640',n:"Chorus",c:'indie'},{i:'978300',n:"Saints Row: The Third Remastered",c:'acao'},{i:'1158370',n:"Aragami 2",c:'coop'},
+
+    {i:'213850',n:"Magic 2014 — Duels of the Planeswalkers",c:'coop'},{i:'1658280',n:"Eiyuden Chronicle: Hundred Heroes",c:'indie'},{i:'251130',n:"Chroma Squad",c:'simulador'},
+
+    {i:'1293180',n:"SuchArt: Genius Artist Simulator",c:'fps'},{i:'12320',n:"Sacred Gold",c:'coop'},{i:'1358700',n:"STRANGER OF PARADISE FINAL FANTASY ORIGIN",c:'acao'},
+
+    {i:'384110',n:"Pathologic Classic HD",c:'indie'},{i:'322110',n:"20XX",c:'coop'},{i:'2758000',n:"Vanity Fair: The Pursuit",c:'simulador'},
+
+    {i:'684450',n:"Surviving the Aftermath",c:'coop'},{i:'1591520',n:"Clownfield 2042",c:'fps'},{i:'449540',n:"There's Poop In My Soup",c:'fps'},
+
+    {i:'42710',n:"Call of Duty: Black Ops",c:'fps'},{i:'475190',n:"Scanner Sombre",c:'indie'},{i:'1076200',n:"Roguebook",c:'indie'},
+
+    {i:'2088840',n:"Picayune Dreams",c:'acao'},{i:'745880',n:"Touhou Tenkuushou ~ Hidden Star in Four Seasons.",c:'indie'},{i:'873940',n:"Crying Suns",c:'indie'},
+
+    {i:'352460',n:"Dead Realm",c:'coop'},{i:'452060',n:"Caveblazers",c:'coop'},{i:'1278540',n:"Esports Godfather",c:'esportes'},
+
+    {i:'15700',n:"Oddworld: Abe's Oddysee",c:'indie'},{i:'2059790',n:"再刷一把 PlayAgain",c:'indie'},{i:'237850',n:"Dreamfall Chapters",c:'indie'},
+
+    {i:'233150',n:"LUFTRAUSERS",c:'simulador'},{i:'1245560',n:"Roots of Pacha",c:'simulador'},{i:'391040',n:"F1 2016",c:'corrida'},
+
+    {i:'838310',n:"Bloodstained: Curse of the Moon",c:'aventura'},{i:'3020',n:"Call of Juarez",c:'acao'},{i:'1049100',n:"泡沫冬景",c:'aventura'},
+
+    {i:'1161590',n:"Punch Club 2: Fast Forward",c:'esportes'},{i:'574980',n:"Them's Fightin' Herds",c:'indie'},{i:'504210',n:"SHENZHEN I/O",c:'simulador'},
+
+    {i:'628670',n:"Hellpoint",c:'coop'},{i:'358130',n:"Curious Expedition",c:'simulador'},{i:'1755830',n:"Astrea: Six-Sided Oracles",c:'indie'},
+
+    {i:'21970',n:"R.U.S.E.",c:'acao'},{i:'980300',n:"One Finger Death Punch 2",c:'coop'},{i:'491530',n:"Notruf 112 | Emergency Call 112",c:'acao'},
+
+    {i:'404590',n:"Vikings - Wolves of Midgard",c:'acao'},{i:'1160220',n:"Paradise Killer",c:'aventura'},{i:'2262770',n:"Garten of Banban 2",c:'acao'},
+
+    {i:'466130',n:"White Day: A Labyrinth Named School",c:'indie'},{i:'2070550',n:"A Castle Full of Cats",c:'aventura'},{i:'1776970',n:"月に寄りそう乙女の作法",c:'fps'},
+
+    {i:'1230530',n:"Atlas Fallen: Reign Of Sand",c:'acao'},{i:'805940',n:"RUSSIA BATTLEGROUNDS",c:'fps'},{i:'553540',n:"Phantom Brigade",c:'acao'},
+
+    {i:'1101450',n:"Miss Neko",c:'fps'},{i:'511680',n:"Fate/EXTELLA",c:'acao'},{i:'860890',n:"Factory Town",c:'simulador'},
+
+    {i:'1094780',n:"Fisher Online",c:'simulador'},{i:'1137300',n:"Sherlock Holmes Chapter One",c:'acao'},{i:'641780',n:"The Drone Racing League Simulator",c:'corrida'},
+
+    {i:'1138850',n:"Heavenly Bodies",c:'simulador'},{i:'1143810',n:"Black Skylands",c:'indie'},{i:'1534980',n:"Terminus: Zombie Survivors",c:'aventura'},
+
+    {i:'13240',n:"Unreal Tournament: Game of the Year Edition",c:'fps'},{i:'1054510',n:"Survivalist: Invisible Strain",c:'coop'},{i:'222750',n:"Wargame: Airland Battle",c:'simulador'},
+
+    {i:'799070',n:"Zup! 8",c:'indie'},{i:'1097350',n:"Weird West: Definitive Edition",c:'indie'},{i:'1969080',n:"A Building Full of Cats",c:'aventura'},
+
+    {i:'1270580',n:"Mind Over Magic",c:'indie'},{i:'1924490',n:"Gigantic: Rampage Edition",c:'acao'},{i:'246840',n:"FATE",c:'aventura'},
+
+    {i:'231200',n:"Kentucky Route Zero: PC Edition",c:'indie'},{i:'1750770',n:"Starcom: Unknown Space",c:'indie'},{i:'1578220',n:"Mister Furry: Hot Muscles",c:'esportes'},
+
+    {i:'389170',n:"Songs for a Hero - Definitive Edition",c:'aventura'},{i:'991170',n:"Barn Finders",c:'simulador'},{i:'341000',n:"Mad Games Tycoon",c:'simulador'},
+
+    {i:'586980',n:"MadOut2 BigCityOnline [CLOSED]",c:'corrida'},{i:'1164850',n:"Sinking Simulator",c:'simulador'},{i:'1730590',n:"The Entropy Centre",c:'fps'},
+
+    {i:'667720',n:"Red Faction Guerrilla Re-Mars-tered",c:'coop'},{i:'1599660',n:"Sackboy: A Big Adventure",c:'coop'},{i:'289690',n:"LARA CROFT AND THE TEMPLE OF OSIRIS",c:'coop'},
+
+    {i:'1286320',n:"Exoprimal",c:'acao'},{i:'2684630',n:"Endacopia",c:'terror',nw:1,y:'2026'},{i:'1164050',n:"When The Past Was Around",c:'aventura'},
+
+    {i:'1900340',n:"Ten Trials of Babel: The Doppelganger Maze",c:'aventura'},{i:'356400',n:"Thumper",c:'corrida'},{i:'386880',n:"Rake",c:'coop'},
+
+    {i:'1028310',n:"BOOK OF HOURS",c:'simulador'},{i:'296490',n:"GemCraft - Chasing Shadows",c:'indie'},{i:'523660',n:"HYPERCHARGE: Unboxed",c:'esportes'},
+
+    {i:'1341820',n:"As Dusk Falls",c:'coop'},{i:'32330',n:"LEGO Indiana Jones: The Original Adventures",c:'coop'},{i:'598550',n:"HUNTDOWN",c:'coop'},
+
+    {i:'359840',n:"Shift Happens",c:'coop'},{i:'887570',n:"NEBULOUS: Fleet Command",c:'coop'},{i:'1848450',n:"Nightmare of Decay",c:'fps'},
+
+    {i:'953880',n:"First Class Trouble",c:'coop'},{i:'809140',n:"Cliff Empire",c:'simulador'},{i:'871540',n:"BMX Streets",c:'esportes'},
+
+    {i:'292410',n:"Street Racing Syndicate",c:'corrida'},{i:'272270',n:"Torment: Tides of Numenera",c:'indie'},{i:'1108590',n:"Eldest Souls",c:'indie'},
+
+    {i:'1406850',n:"The Legend of Tianding",c:'acao'},{i:'204240',n:"The Bridge",c:'aventura'},{i:'4720',n:"Condemned: Criminal Origins",c:'fps'},
+
+    {i:'375530',n:"Football, Tactics & Glory",c:'esportes'},{i:'1025600',n:"Battle Realms: Zen Edition",c:'acao'},{i:'1395560',n:"Kandidatos",c:'indie'},
+
+    {i:'214870',n:"Painkiller Hell & Damnation",c:'coop'},{i:'604450',n:"Another Adventure",c:'aventura'},{i:'251290',n:"The Legend of Heroes: Trails in the Sky SC",c:'acao'},
+
+    {i:'466500',n:"35MM",c:'coop'},{i:'915310',n:"SNKRX",c:'acao'},{i:'1218900',n:"Zup! Z",c:'indie'},
+
+    {i:'1919460',n:"Seraph's Last Stand",c:'indie'},{i:'1269950',n:"Buddy Simulator 1984",c:'simulador'},{i:'290790',n:"Grey Goo",c:'indie'},
+
+    {i:'1201230',n:"Immortal Life",c:'acao'},{i:'1520',n:"DEFCON",c:'simulador'},{i:'2201710',n:"Three Kingdoms Zhao Yun",c:'acao'},
+
+    {i:'275100',n:"Shelter 2",c:'simulador'},{i:'990380',n:"Metal Eden",c:'fps',nw:1,y:'2025'},{i:'2270',n:"Wolfenstein 3D",c:'fps'},
+
+    {i:'1544360',n:"LEGO Builder's Journey",c:'indie'},{i:'322210',n:"Guns, Gore & Cannoli",c:'coop'},{i:'2327720',n:"City Car Driving 2.0",c:'corrida',nw:1,y:'2026'},
+
+    {i:'895620',n:"Spellcaster University",c:'indie'},{i:'315460',n:"Dig or Die",c:'coop'},{i:'15170',n:"Heroes of Might & Magic V",c:'coop'},
+
+    {i:'696170',n:"SENRAN KAGURA Peach Beach Splash",c:'fps'},{i:'2019620',n:"GERONIMO",c:'vr',nw:1,y:'2026'},{i:'4210580',n:"Ore Factory Squad",c:'simulador',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4210580/b305646840dc9db685bc40596da7bdaea388c694/header.jpg'},
+
+    {i:'45770',n:"Dead Rising 2: Off the Record",c:'coop'},{i:'522210',n:"Serial Cleaner",c:'indie'},{i:'1826420',n:"CarX Drift Racing Online 2",c:'corrida',nw:1,y:'2026'},
+
+    {i:'842100',n:"Daymare: 1998",c:'coop'},{i:'489360',n:"CASE: Animatronics",c:'indie'},{i:'461430',n:"EmergeNYC",c:'corrida'},
+
+    {i:'1599020',n:"Tinykin",c:'acao'},{i:'525480',n:".hack//G.U. Last Recode",c:'acao'},{i:'2656540',n:"Ballads of Hongye: REBORN",c:'indie'},
+
+    {i:'39190',n:"Dungeon Siege",c:'coop'},{i:'1902710',n:"Weird RPG",c:'acao'},{i:'581270',n:"Old Man's Journey",c:'indie'},
+
+    {i:'1058830',n:"Spin Rhythm XD",c:'indie'},{i:'235210',n:"STRIDER / ストライダー飛竜",c:'acao'},{i:'543870',n:"NARUTO SHIPPUDEN: Ultimate Ninja STORM 2",c:'acao'},
+
+    {i:'208500',n:"F1 2012",c:'corrida'},{i:'13230',n:"Unreal Tournament 2004: Editor's Choice Edition",c:'fps'},{i:'1522870',n:"Supraland Six Inches Under",c:'fps'},
+
+    {i:'571260',n:"THE KING OF FIGHTERS XIV STEAM EDITION",c:'acao'},{i:'544610',n:"Battlestar Galactica Deadlock",c:'coop'},{i:'568570',n:"Force of Nature",c:'coop'},
+
+    {i:'1343670',n:"Dealer's Life 2",c:'indie'},{i:'13210',n:"Unreal Tournament 3 Black",c:'fps'},{i:'405820',n:"Turok",c:'fps'},
+
+    {i:'433550',n:"DARQ: Complete Edition",c:'aventura'},{i:'1672500',n:"GUNDAM BREAKER 4",c:'coop'},{i:'247910',n:"Sniper Elite: Nazi Zombie Army 2",c:'fps'},
+
+    {i:'671440',n:"Rise of Industry",c:'coop'},{i:'1002560',n:"Tiny Snow",c:'aventura'},{i:'1216060',n:"DNF Duel",c:'acao'},
+
+    {i:'569860',n:"Thimbleweed Park",c:'indie'},{i:'234190',n:"Receiver",c:'indie'},{i:'445190',n:"Expeditions: Viking",c:'indie'},
+
+    {i:'3700',n:"Sniper Elite",c:'coop'},{i:'1808680',n:"Snufkin: Melody of Moominvalley",c:'indie'},{i:'1130410',n:"Cyber Hook",c:'corrida'},
+
+    {i:'1578390',n:"My Garage",c:'corrida'},{i:'1249040',n:"American Arcadia",c:'indie'},{i:'1156990',n:"Return to Shironagasu Island",c:'indie'},
+
+    {i:'834740',n:"Circle Empires",c:'indie'},{i:'502280',n:"BERSERK and the Band of the Hawk",c:'acao'},{i:'2305840',n:"Cat Quest III",c:'acao'},
+
+    {i:'442070',n:"Drawful 2",c:'coop'},{i:'1267540',n:"WRC 9 FIA World Rally Championship",c:'corrida'},{i:'1560250',n:"Rising Front",c:'acao'},
+
+    {i:'205910',n:"Tiny and Big: Grandpa's Leftovers",c:'aventura'},{i:'211600',n:"Thief Gold (1999)",c:'fps'},{i:'408410',n:"X-Morph: Defense",c:'coop'},
+
+    {i:'747200',n:"Keplerth",c:'simulador'},{i:'552590',n:"The Sexy Brutale",c:'indie'},{i:'286000',n:"Tooth and Tail",c:'coop'},
+
+    {i:'22180',n:"Penumbra Overture",c:'indie'},{i:'1888430',n:"10 Minutes Till Dawn",c:'acao'},{i:'266210',n:"One Way Heroics",c:'aventura'},
+
+    {i:'1889040',n:"Birth",c:'indie'},{i:'497180',n:"Street Legal Racing: Redline v2.3.1",c:'corrida'},{i:'592580',n:"PRO EVOLUTION SOCCER 2018",c:'esportes'},
+
+    {i:'1040230',n:"Curious Expedition 2",c:'simulador'},{i:'23310',n:"The Last Remnant",c:'acao'},{i:'1785650',n:"TopSpin 2K25",c:'esportes'},
+
+    {i:'1927740',n:"Monument Valley 2",c:'acao'},{i:'1028630',n:"Cricket 19",c:'esportes'},{i:'1182110',n:"Weed Shop 3",c:'fps'},
+
+    {i:'1239320',n:"Animal Shelter",c:'indie'},{i:'243800',n:"Gas Guzzlers Extreme",c:'corrida'},{i:'1154810',n:"Going Under",c:'acao'},
+
+    {i:'236150',n:"Starpoint Gemini 2",c:'coop'},{i:'688470',n:"Han Xiongnu Wars",c:'acao'},{i:'1079800',n:"Pistol Whip",c:'esportes'},
+
+    {i:'956680',n:"M.A.S.S. Builder",c:'fps'},{i:'1146970',n:"My Vow to My Liege",c:'indie'},{i:'246580',n:"The Typing of The Dead: Overkill",c:'fps'},
+
+    {i:'370360',n:"TIS-100",c:'simulador'},{i:'13500',n:"Prince of Persia: Warrior Within",c:'acao'},{i:'821880',n:"Idol Manager",c:'simulador'},
+
+    {i:'329130',n:"Reassembly",c:'simulador'},{i:'1547890',n:"Let's Build a Zoo",c:'coop'},{i:'115100',n:"Costume Quest",c:'indie'},
+
+    {i:'2181610',n:"Heretic's Fork",c:'acao'},{i:'409590',n:"KINGDOMS",c:'indie'},{i:'17330',n:"Crysis Warhead",c:'acao'},
+
+    {i:'447150',n:"APE OUT",c:'indie'},{i:'402330',n:"Press X to Not Die",c:'fps'},{i:'646270',n:"60 Parsecs!",c:'indie'},
+
+    {i:'2200',n:"Quake III Arena",c:'fps'},{i:'540840',n:"Lara Croft GO",c:'indie'},{i:'421050',n:"Deponia Doomsday",c:'indie'},
+
+    {i:'555000',n:"GOAT OF DUTY",c:'coop'},{i:'2201940',n:"Ship Graveyard Simulator 2",c:'acao'},{i:'2527390',n:"Dead Rising Deluxe Remaster",c:'acao'},
+
+    {i:'494150',n:"The Thrill of the Fight - VR Boxing",c:'esportes'},{i:'885810',n:"The Witch's House MV",c:'indie'},{i:'1043260',n:"Gladiator Guild Manager",c:'indie'},
+
+    {i:'3378960',n:"Lost Soul Aside",c:'acao',nw:1,y:'2025'},{i:'220820',n:"Zombie Driver HD",c:'corrida'},{i:'322920',n:"theHunter: Primal",c:'acao'},
+
+    {i:'251730',n:"Legend of Grimrock 2",c:'indie'},{i:'720280',n:"Fox Hime",c:'indie'},{i:'252110',n:"Lovers in a Dangerous Spacetime",c:'simulador'},
+
+    {i:'623940',n:"HIVESWAP: ACT 1",c:'indie'},{i:'22230',n:"Rock of Ages",c:'corrida'},{i:'6120',n:"Shank",c:'coop'},
+
+    {i:'899970',n:"NEKOPARA Extra",c:'fps'},{i:'512790',n:"Quern - Undying Thoughts",c:'indie'},{i:'1378990',n:"Crash Bandicoot 4: It’s About Time",c:'coop'},
+
+    {i:'598330',n:"SimAirport",c:'indie'},{i:'257750',n:"Bloody Trapland",c:'coop'},{i:'55140',n:"MX vs. ATV Reflex",c:'corrida'},
+
+    {i:'728740',n:"Sniper Elite V2 Remastered",c:'acao'},{i:'1648390',n:"ScooterFlow",c:'esportes'},{i:'1196630',n:"Nexomon: Extinction",c:'indie'},
+
+    {i:'243930',n:"Bound By Flame",c:'acao'},{i:'269190',n:"Edge Of Eternity",c:'indie'},{i:'230070',n:"The Age of Decadence",c:'indie'},
+
+    {i:'1978590',n:"Anger Foot",c:'indie'},{i:'6800',n:"Commandos: Behind Enemy Lines",c:'coop'},{i:'214170',n:"Divine Divinity",c:'indie'},
+
+    {i:'433530',n:"Heliborne Collection",c:'coop'},{i:'2230650',n:"TEVI",c:'acao'},{i:'2362300',n:"Train Sim World 4",c:'acao'},
+
+    {i:'1700870',n:"Clanfolk",c:'indie'},{i:'416680',n:"Zombie Night Terror",c:'indie'},{i:'1245430',n:"Golden Light",c:'coop'},
+
+    {i:'1104380',n:"The Room VR: A Dark Matter",c:'indie'},{i:'7760',n:"X-COM: UFO Defense",c:'simulador'},{i:'13560',n:"Tom Clancy's Splinter Cell",c:'coop'},
+
+    {i:'6550',n:"Devil May Cry 3 Special Edition",c:'acao'},{i:'370910',n:"Kathy Rain",c:'indie'},{i:'1123450',n:"Chicory: A Colorful Tale",c:'coop'},
+
+    {i:'2893570',n:"Dragon Quest I & II HD-2D Remake",c:'rpg',nw:1,y:'2025'},{i:'1233270',n:"OshiRabu: Waifus Over Husbandos",c:'fps'},{i:'306760',n:"Obduction",c:'indie'},
+
+    {i:'406350',n:"KartKraft",c:'corrida'},{i:'2238900',n:"STAR OCEAN THE SECOND STORY R",c:'acao'},{i:'868520',n:"killer7",c:'acao'},
+
+    {i:'411830',n:"SENRAN KAGURA SHINOVI VERSUS",c:'acao'},{i:'308420',n:"Ziggurat",c:'fps'},{i:'963710',n:"Lost in Vivo",c:'fps'},
+
+    {i:'214190',n:"Minimum",c:'acao'},{i:'577690',n:"Spooky's Jump Scare Mansion: HD Renovation",c:'indie'},{i:'1668690',n:"Alina of the Arena",c:'indie'},
+
+    {i:'1039880',n:"Hellsplit: Arena",c:'coop'},{i:'29800',n:"Caster",c:'indie'},{i:'63710',n:"BIT.TRIP RUNNER",c:'indie'},
+
+    {i:'305050',n:"Outland",c:'coop'},{i:'1191840',n:"Legend Creatures(传奇生物)",c:'indie'},{i:'220860',n:"McPixel",c:'indie'},
+
+    {i:'438480',n:"Rock 'N' Roll Defense",c:'acao'},{i:'1058450',n:"MY HERO ONE'S JUSTICE 2",c:'acao'},{i:'1608640',n:"OTXO",c:'acao'},
+
+    {i:'338170',n:"Ratz Instagib",c:'fps'},{i:'312610',n:"METAL SLUG X",c:'coop'},{i:'2159210',n:"Just a To the Moon Series Beach Episode",c:'indie'},
+
+    {i:'1150530',n:"Wizard with a Gun",c:'acao'},{i:'1265860',n:"NASCAR Heat 5",c:'corrida'},{i:'401190',n:"Dinosaur Hunt",c:'acao'},
+
+    {i:'1650010',n:"RIDE 5",c:'corrida'},{i:'429720',n:"IMSCARED",c:'indie'},{i:'1265820',n:"Fights in Tight Spaces",c:'indie'},
+
+    {i:'249650',n:"Blackguards",c:'acao'},{i:'242880',n:"Sir, You Are Being Hunted",c:'indie'},{i:'1159290',n:"The Bloodline",c:'acao'},
+
+    {i:'359310',n:"Evoland 2",c:'indie'},{i:'226720',n:"LOST PLANET 3",c:'acao'},{i:'1874170',n:"Shredders",c:'esportes'},
+
+    {i:'853770',n:"Maximum Action",c:'fps'},{i:'2210',n:"Quake 4",c:'acao'},{i:'530320',n:"Wandersong",c:'indie'},
+
+    {i:'1664220',n:"TRAIL OUT",c:'corrida'},{i:'562500',n:"Warstone TD",c:'coop'},{i:'400170',n:"The Incredible Adventures of Van Helsing: Final Cut",c:'coop'},
+
+    {i:'354380',n:"Assassin’s Creed Chronicles: China",c:'acao'},{i:'979070',n:"Just Die Already",c:'coop'},{i:'2067050',n:"Squirrel with a Gun",c:'acao'},
+
+    {i:'19980',n:"Prince of Persia",c:'acao'},{i:'270450',n:"Robot Roller-Derby Disco Dodgeball",c:'corrida'},{i:'208750',n:"Apotheon",c:'indie'},
+
+    {i:'3935020',n:"Backyard Baseball",c:'esportes',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3935020/10ae84de59688050a1140103c1ecdbf987d8aeea/header.jpg'},{i:'582270',n:"Everything",c:'indie'},{i:'801630',n:"UNDER NIGHT IN-BIRTH Exe:Late[cl-r]",c:'acao'},
+
+    {i:'449800',n:"Attack on Titan / A.O.T. Wings of Freedom",c:'coop'},{i:'7830',n:"Men of War",c:'coop'},{i:'1307710',n:"GRID Legends",c:'corrida'},
+
+    {i:'251170',n:"Damned",c:'indie'},{i:'649950',n:"Ashen",c:'acao'},{i:'1546860',n:"Saiko no sutoka",c:'acao'},
+
+    {i:'1485590',n:"ENDLESS Dungeon - Definitive Edition",c:'acao'},{i:'286340',n:"FarSky",c:'coop'},{i:'699920',n:"Despotism 3k",c:'indie'},
+
+    {i:'1556100',n:"Killer Klowns From Outer Space: The Game",c:'acao'},{i:'1462810',n:"WRC 10 FIA World Rally Championship",c:'corrida'},{i:'1448030',n:"Press Any Button",c:'indie'},
+
+    {i:'227780',n:"Serious Sam Classics: Revolution",c:'coop'},{i:'1578860',n:"Billionaire Lovers",c:'indie'},{i:'335620',n:"Star Traders: Frontiers",c:'indie'},
+
+    {i:'1220140',n:"Cartel Tycoon",c:'acao'},{i:'2965660',n:"PILGRIM",c:'acao'},{i:'281640',n:"The Banner Saga 2",c:'indie'},
+
+    {i:'2926900',n:"MAVRIX by Matt Jones",c:'corrida',nw:1,y:'2026'},{i:'1049320',n:"River City Girls",c:'coop'},{i:'1051690',n:"Nightmare Reaper",c:'fps'},
+
+    {i:'1257290',n:"Atelier Ryza 2: Lost Legends & the Secret Fairy",c:'acao'},{i:'617160',n:"Home Sweet Home",c:'coop'},{i:'378720',n:"Thea: The Awakening",c:'coop'},
+
+    {i:'286040',n:"Dead Effect",c:'indie'},{i:'994220',n:"NEOVERSE",c:'indie'},{i:'3290710',n:"RATSHAKER",c:'acao'},
+
+    {i:'420740',n:"The Deed",c:'indie'},{i:'1038740',n:"Fluffy Store",c:'fps'},{i:'1047440',n:"DATE A LIVE: Rio Reincarnation",c:'fps'},
+
+    {i:'512250',n:"Oh...Sir!! The Insult Simulator",c:'indie'},{i:'600480',n:"Megaquarium",c:'indie'},{i:'2521380',n:"Legacy of Kain Soul Reaver 1&2 Remastered",c:'acao'},
+
+    {i:'2514960',n:"Refind Self: The Personality Test Game",c:'indie'},{i:'1209490',n:"Exit the Gungeon",c:'acao'},{i:'2236070',n:"Peaks of Yore",c:'indie'},
+
+    {i:'243120',n:"Betrayer",c:'indie'},{i:'298030',n:"Total Annihilation",c:'coop'},{i:'296710',n:"Monstrum",c:'indie'},
+
+    {i:'1236990',n:"Boris and the Dark Survival",c:'indie'},{i:'364420',n:"Roguelands",c:'coop'},{i:'1611430',n:"The Bridge Curse Road to Salvation",c:'acao'},
+
+    {i:'1099410',n:"A Total War Saga: TROY",c:'acao'},{i:'473770',n:"BallisticNG",c:'corrida'},{i:'421170',n:"Indivisible",c:'acao'},
+
+    {i:'205230',n:"Hell Yeah! Wrath of the Dead Rabbit",c:'indie'},{i:'244710',n:"Shelter",c:'indie'},{i:'817130',n:"WWE 2K19",c:'esportes'},
+
+    {i:'941460',n:"Death Trash",c:'coop'},{i:'290770',n:"The Fall",c:'indie'},{i:'225640',n:"Sacred 2 Gold",c:'acao'},
+
+    {i:'787810',n:"Rogue Heroes: Ruins of Tasos",c:'indie'},{i:'2726450',n:"Windowkill",c:'coop'},{i:'979640',n:"Cepheus Protocol",c:'acao'},
+
+    {i:'251110',n:"INFRA",c:'indie'},{i:'1126310',n:"风信楼",c:'simulador'},{i:'732370',n:"Juicy Realm",c:'coop'},
+
+    {i:'1639790',n:"Northern Journey",c:'acao'},{i:'434460',n:"Rock of Ages 2: Bigger & Boulder",c:'corrida'},{i:'365160',n:"Kona",c:'indie'},
+
+    {i:'314660',n:"Oddworld: New 'n' Tasty",c:'indie'},{i:'1566200',n:"Tape to Tape",c:'esportes'},{i:'321800',n:"Icewind Dale: Enhanced Edition",c:'coop'},
+
+    {i:'3259470',n:"Papa's Pizzeria Deluxe",c:'acao'},{i:'1676130',n:"Deadlink",c:'acao'},{i:'880950',n:"Maitetsu:Pure Station",c:'fps'},
+
+    {i:'893030',n:"Music Racer",c:'corrida'},{i:'247430',n:"Hitman: Contracts",c:'acao'},{i:'326410',n:"Windward",c:'coop'},
+
+    {i:'967250',n:"DOKA 2 KISHKI EDITION",c:'indie'},{i:'207350',n:"Ys Origin",c:'acao'},{i:'225160',n:"Shadow Warrior Classic Redux",c:'acao'},
+
+    {i:'2866670',n:"NBA THE RUN",c:'esportes',nw:1,y:'2026'},{i:'261530',n:"Lifeless Planet Premier Edition",c:'indie'},{i:'1211600',n:"ZED ZONE",c:'acao'},
+
+    {i:'102840',n:"Shank 2",c:'coop'},{i:'71230',n:"Crazy Taxi",c:'corrida'},{i:'720560',n:"Vigil: The Longest Night",c:'indie'},
+
+    {i:'314410',n:"Rampage Knights",c:'coop'},{i:'251470',n:"TowerFall Ascension",c:'coop'},{i:'664830',n:"Zombotron",c:'indie'},
+
+    {i:'2015240',n:"Dwarven Realms",c:'acao'},{i:'419480',n:"Starpoint Gemini Warlords",c:'acao'},{i:'33120',n:"Alien Shooter 2: Reloaded",c:'indie'},
+
+    {i:'2453360',n:"Cluckmech Oasis",c:'acao'},{i:'722960',n:"CASE 2: Animatronics Survival",c:'acao'},{i:'1605850',n:"ZeroSpace",c:'rpg',nw:1,y:'2026'},
+
+    {i:'2011470',n:"大侠请重来",c:'indie'},{i:'803600',n:"Disgaea 5 Complete",c:'acao'},{i:'217920',n:"Alien Rage - Unlimited",c:'acao'},
+
+    {i:'776490',n:"永远消失的幻想乡 ～ The Disappearing of Gensokyo",c:'indie'},{i:'1203710',n:"UnMetal",c:'indie'},{i:'958400',n:"Project CARS 3",c:'corrida'},
+
+    {i:'412880',n:"Drift Streets Japan",c:'corrida'},{i:'230270',n:"N++ (NPLUSPLUS)",c:'coop'},{i:'2230110',n:"Fae Farm",c:'acao'},
+
+    {i:'968250',n:"King of Retail",c:'indie'},{i:'504130',n:"Manual Samuel - Last Tuesday Edition",c:'indie'},{i:'890550',n:"RUMBLE",c:'esportes'},
+
+    {i:'855860',n:"Superfighters Deluxe",c:'coop'},{i:'20570',n:"Warhammer 40,000: Dawn of War II Chaos Rising",c:'coop'},{i:'505170',n:"Carmageddon: Max Damage",c:'corrida'},
+
+    {i:'1286710',n:"Hylics 2",c:'indie'},{i:'1450830',n:"At Dead Of Night",c:'indie'},{i:'353270',n:"Hyperdimension Neptunia Re;Birth3 V Generation",c:'acao'},
+
+    {i:'2555320',n:"Summon",c:'acao'},{i:'3873970',n:"NASCAR 25",c:'corrida',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3873970/5993fe7123701b2a7baa25b60d728dd7787de3bf/header.jpg'},{i:'1148510',n:"Pretty Angel",c:'indie'},
+
+    {i:'1231880',n:"Haiku, the Robot",c:'acao'},{i:'496890',n:"Replica",c:'indie'},{i:'269650',n:"Dex",c:'indie'},
+
+    {i:'870200',n:"Juno: New Origins",c:'indie'},{i:'785260',n:"Team Sonic Racing",c:'corrida'},{i:'1517340',n:"From The Darkness",c:'coop'},
+
+    {i:'34190',n:"Sonic & SEGA All-Stars Racing",c:'corrida'},{i:'218410',n:"Defender's Quest: Valley of the Forgotten (DX edition)",c:'indie'},{i:'720250',n:"Welcome to the Game II",c:'indie'},
+
+    {i:'1045720',n:"The Coma 2: Vicious Sisters",c:'indie'},{i:'2669410',n:"Metro Awakening",c:'vr'},{i:'910490',n:"Killsquad",c:'acao'},
+
+    {i:'576770',n:"Low Magic Age",c:'indie'},{i:'3620',n:"Zuma's Revenge!",c:'acao'},{i:'3570070',n:"Paddle Paddle Paddle",c:'corrida',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3570070/35be35d69c576eeb612eaf49aa62f24689cdc798/header.jpg'},
+
+    {i:'2638890',n:"Onimusha: Way of the Sword",c:'acao',soon:1,dt:'3 set 2026',o:20260903},{i:'15130',n:"Beyond Good and Evil",c:'acao'},{i:'761600',n:"Onimusha: Warlords",c:'acao'},
+
+    {i:'591370',n:"Production Line : Car factory simulation",c:'indie'},{i:'107310',n:"Cthulhu Saves the World",c:'indie'},{i:'583470',n:"The End Is Nigh",c:'indie'},
+
+    {i:'506500',n:"Party Panic",c:'acao'},{i:'596970',n:"Sunless Skies: Sovereign Edition",c:'indie'},{i:'2073470',n:"Kanjozoku Game レーサー Online Street Racing & Drift",c:'corrida'},
+
+    {i:'1731070',n:"Asterigos: Curse of the Stars",c:'acao'},{i:'1352930',n:"HAAK",c:'indie'},{i:'1194810',n:"Meet Your Maker",c:'acao'},
+
+    {i:'297020',n:"The Culling Of The Cows",c:'acao'},{i:'353640',n:"Train Valley",c:'indie'},{i:'41050',n:"Serious Sam Classic: The First Encounter",c:'coop'},
+
+    {i:'1402110',n:"Eternights",c:'acao'},{i:'846470',n:"Moss VR",c:'indie'},{i:'219910',n:"Edna & Harvey: Harvey's New Eyes",c:'indie'},
+
+    {i:'615610',n:"Orbt XL",c:'indie'},{i:'221540',n:"DG2: Defense Grid 2",c:'indie'},{i:'227000',n:"Primordia",c:'indie'},
+
+    {i:'230820',n:"The Night of the Rabbit",c:'indie'},{i:'263620',n:"Mitsurugi Kamui Hikae",c:'acao'},{i:'846030',n:"ΔV: Rings of Saturn",c:'indie'},
+
+    {i:'2095420',n:"Bus Bound",c:'corrida',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2095420/9803e0013dffba0e3e2577691ec09196046bce99/header.jpg'},{i:'333980',n:"AKIBA'S TRIP: Undead ＆ Undressed",c:'acao'},{i:'1574260',n:"My Friendly Neighborhood",c:'acao'},
+
+    {i:'616110',n:"SPACEPLAN",c:'indie'},{i:'674750',n:"Yet Another Zombie Defense HD",c:'acao'},{i:'1436700',n:"Trine 5: A Clockwork Conspiracy",c:'acao'},
+
+    {i:'743640',n:"Achievement Clicker",c:'acao'},{i:'1407420',n:"Milo and the Magpies",c:'indie'},{i:'833360',n:"Star Valor",c:'acao'},
+
+    {i:'322450',n:"FRAMED Collection",c:'indie'},{i:'1670870',n:"MADiSON",c:'acao'},{i:'2878600',n:"Harry Potter: Quidditch Champions",c:'esportes'},
+
+    {i:'58610',n:"Wargame: European Escalation",c:'acao'},{i:'610180',n:"The Jackbox Party Pack 4",c:'coop'},{i:'272230',n:"Sub Rosa",c:'acao'},
+
+    {i:'574720',n:"Little Big Workshop",c:'indie'},{i:'986800',n:"AVICII Invector",c:'indie'},{i:'943380',n:"Timberman VS",c:'indie'},
+
+    {i:'318430',n:"Squishy the Suicidal Pig",c:'indie'},{i:'418070',n:"Turbo Pug",c:'indie'},{i:'91600',n:"Sanctum",c:'coop'},
+
+    {i:'534550',n:"Guacamelee! 2",c:'coop'},{i:'1408230',n:"Walkabout Mini Golf VR",c:'esportes'},{i:'603960',n:"Star of Providence",c:'indie'},
+
+    {i:'1186400',n:"West Sweety",c:'indie'},{i:'351710',n:"Hyperdimension Neptunia Re;Birth2: Sisters Generation",c:'acao'},{i:'4286120',n:"Photomaly",c:'terror',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4286120/18b61f7a1390d9f0d80c5d9058a8f1ee78884fef/header.jpg'},
+
+    {i:'2533960',n:"SUMMERHOUSE",c:'indie'},{i:'204120',n:"LEGO Harry Potter: Years 5-7",c:'coop'},{i:'544330',n:"Snake Pass",c:'acao'},
+
+    {i:'595140',n:"Immortal Redneck",c:'indie'},{i:'1282210',n:"DEEMO -Reborn-",c:'acao'},{i:'1743850',n:"HYPER DEMON",c:'acao'},
+
+    {i:'564230',n:"Fire Pro Wrestling World",c:'esportes'},{i:'303610',n:"Suicide Guy",c:'acao'},{i:'265610',n:"Epic Battle Fantasy 4",c:'indie'},
+
+    {i:'40',n:"Deathmatch Classic",c:'acao'},{i:'291010',n:"The Hat Man: Shadow Ward",c:'corrida'},{i:'1665190',n:"Monster Prom 3: Monster Roadtrip",c:'indie'},
+
+    {i:'858260',n:"Until You Fall",c:'indie'},{i:'435790',n:"10 Second Ninja X",c:'acao'},{i:'572430',n:"Party Hard 2",c:'acao'},
+
+    {i:'1140440',n:"OMON Simulator",c:'corrida'},{i:'325120',n:"Notch - The Innocent LunA: Eclipsed SinnerS",c:'indie'},{i:'1008710',n:"Wet Girl",c:'fps'},
+
+    {i:'541200',n:"GTTOD",c:'indie'},{i:'434730',n:"Half Dead",c:'acao'},{i:'244870',n:"Electronic Super Joy",c:'indie'},
+
+    {i:'3453600',n:"Supercar Collection Simulator",c:'corrida',nw:1,y:'2025'},{i:'269670',n:"BADLAND: Game of the Year Edition",c:'acao'},{i:'488310',n:"Eleven Table Tennis",c:'esportes'},
+
+    {i:'1228520',n:"[Chilla's Art] The Convenience Store | 夜勤事件",c:'acao'},{i:'1048100',n:"Peekaboo",c:'acao'},{i:'4594150',n:"Sir, We Have an Orc Problem",c:'simulador',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4594150/d8a7b3d55e3a2b42350732db0155fc2a9346c10b/header.jpg'},
+
+    {i:'1038370',n:"Trials of Fire",c:'indie'},{i:'527100',n:"Star Trek: Bridge Crew",c:'acao'},{i:'849100',n:"Alaskan Road Truckers",c:'corrida'},
+
+    {i:'1037020',n:"ScourgeBringer",c:'acao'},{i:'705120',n:"Death Coming/死神来了",c:'indie'},{i:'460120',n:"Megadimension Neptunia VII",c:'acao'},
+
+    {i:'539720',n:"Razortron 2000",c:'corrida'},{i:'373390',n:"Contradiction: Spot The Liar",c:'indie'},{i:'286260',n:"fault - milestone one",c:'indie'},
+
+    {i:'758330',n:"Shenmue I & II",c:'acao'},{i:'991270',n:"The Legend of Heroes: Trails of Cold Steel III",c:'acao'},{i:'1101120',n:"Gunsmith Simulator",c:'acao'},
+
+    {i:'263300',n:"BlazBlue: Calamity Trigger",c:'acao'},{i:'1051200',n:"Trover Saves the Universe",c:'indie'},{i:'1018830',n:"Element TD 2 - Tower Defense",c:'indie'},
+
+    {i:'1592670',n:"Soda Crisis",c:'acao'},{i:'254460',n:"Obscure",c:'acao'},{i:'944020',n:"Dream Ending",c:'indie'},
+
+    {i:'1345820',n:"Ragnarock",c:'corrida'},{i:'1747760',n:"Momodora: Moonlit Farewell",c:'acao'},{i:'935880',n:"Glass Masquerade 2: Illusions",c:'indie'},
+
+    {i:'1935660',n:"Chop Goblins",c:'acao'},{i:'2545710',n:"Tony Hawk's Pro Skater 3 + 4",c:'esportes',nw:1,y:'2025'},{i:'22200',n:"Zeno Clash",c:'acao'},
+
+    {i:'283290',n:"Nosferatu: The Wrath of Malachi",c:'acao'},{i:'674520',n:"Fight'N Rage",c:'indie'},{i:'733070',n:"Sudoku Universe / 数独宇宙",c:'indie'},
+
+    {i:'15320',n:"IL-2 Sturmovik: 1946",c:'acao'},{i:'233840',n:"Worms Clan Wars",c:'acao'},{i:'1456820',n:"Marfusha:Sentinel Girls",c:'indie'},
+
+    {i:'2287220',n:"F1 Manager 2023",c:'corrida'},{i:'447290',n:"Redeemer: Enhanced Edition",c:'acao'},{i:'320140',n:"Absolute Drift",c:'corrida'},
+
+    {i:'348710',n:"Saint Seiya: Soldiers' Soul",c:'acao'},{i:'1881200',n:"TRYP FPV: Drone Racer Simulator",c:'corrida'},{i:'368620',n:"Timespinner",c:'acao'},
+
+    {i:'1843090',n:"[Chilla's Art] The Closing Shift | 閉店事件",c:'acao'},{i:'1040420',n:"Dreamscaper",c:'acao'},{i:'927250',n:"Bladed fury",c:'indie'},
+
+    {i:'1161490',n:"MotoGP20",c:'corrida'},{i:'237740',n:"Angry Video Game Nerd Adventures",c:'indie'},{i:'107200',n:"Space Pirates and Zombies",c:'indie'},
+
+    {i:'1786790',n:"Magical Girl Celesphonia",c:'indie'},{i:'215510',n:"Rocketbirds: Hardboiled Chicken",c:'acao'},{i:'233740',n:"Organ Trail: Director's Cut",c:'indie'},
+
+    {i:'260750',n:"Neighbours from Hell Compilation",c:'indie'},{i:'846110',n:"The friends of Ringo Ishikawa",c:'acao'},{i:'494430',n:"Praey for the Gods",c:'acao'},
+
+    {i:'9350',n:"Supreme Commander",c:'acao'},{i:'1484900',n:"Hoa",c:'acao'},{i:'1324530',n:"Warhammer 40,000: Shootas, Blood & Teef",c:'acao'},
+
+    {i:'641080',n:"Trials Rising",c:'corrida'},{i:'262830',n:"Crimsonland",c:'coop'},{i:'477770',n:"Ride 2",c:'corrida'},
+
+    {i:'1963040',n:"The Lost Village",c:'simulador'},{i:'591460',n:"Parkasaurus",c:'indie'},{i:'1620340',n:"Wrestling Empire",c:'esportes'},
+
+    {i:'1333200',n:"Song of Nunu: A League of Legends Story",c:'acao'},{i:'919370',n:"Overdungeon",c:'acao'},{i:'1217390',n:"Some Some Convenience Store",c:'indie'},
+
+    {i:'222420',n:"THE KING OF FIGHTERS '98 ULTIMATE MATCH FINAL EDITION",c:'acao'},{i:'591420',n:"Zup! 4",c:'corrida'},{i:'1005300',n:"The Jackbox Party Pack 6",c:'coop'},
+
+    {i:'32400',n:"STAR WARS Dark Forces (Classic, 1995)",c:'acao'},{i:'1566390',n:"Seed of the Dead: Sweet Home",c:'acao'},{i:'1220150',n:"Blue Fire",c:'acao'},
+
+    {i:'399670',n:"Game Corp DX",c:'indie'},{i:'461840',n:"Zenge",c:'indie'},{i:'345820',n:"Shantae and the Pirate's Curse",c:'acao'},
+
+    {i:'218060',n:"BIT.TRIP Presents... Runner2: Future Legend of Rhythm Alien",c:'indie'},{i:'711540',n:"Lonely Mountains: Downhill",c:'corrida'},{i:'457210',n:"SEUM: Speedrunners from Hell",c:'corrida'},
+
+    {i:'538100',n:"Feel The Snow",c:'acao'},{i:'651670',n:"Star Renegades",c:'acao'},{i:'727850',n:"ELDERBORN",c:'acao'},
+
+    {i:'1129310',n:"Receiver 2",c:'acao'},{i:'1212620',n:"Pretty Neko",c:'indie'},{i:'2124780',n:"Endoparasitic",c:'acao'},
+
+    {i:'329490',n:"Phantom Breaker: Battle Grounds Classic",c:'acao'},{i:'223810',n:"Ys I & II Chronicles+",c:'acao'},{i:'204530',n:"Infested Planet",c:'indie'},
+
+    {i:'342580',n:"12 Labours of Hercules",c:'indie'},{i:'386620',n:"Cook, Serve, Delicious! 2!!",c:'acao'},{i:'1968730',n:"Bounty of One",c:'acao'},
+
+    {i:'851800',n:"G2 Fighter / 基因特工",c:'acao'},{i:'387340',n:"Hyperdimension Neptunia U: Action Unleashed",c:'acao'},{i:'853550',n:"Equilinox",c:'indie'},
+
+    {i:'645090',n:"Zup! 5",c:'acao'},{i:'1055430',n:"Swords and Sandals Classic Collection",c:'acao'},{i:'252670',n:"Nihilumbra",c:'acao'},
+
+    {i:'1574270',n:"Sucker for Love: First Date",c:'indie'},{i:'913550',n:"I wanna be the Creator",c:'acao'},{i:'965680',n:"Boomerang Fu",c:'acao'},
+
+    {i:'1777760',n:"Soccer Manager 2022",c:'esportes'},{i:'550010',n:"Happy Room",c:'acao'},{i:'72200',n:"Universe Sandbox Legacy",c:'acao'},
+
+    {i:'20530',n:"Red Faction",c:'acao'},{i:'22120',n:"Penumbra: Black Plague Gold Edition",c:'acao'},{i:'1310990',n:"Bishojo Mangekyo Kotowari to Meikyu no Shojo",c:'indie'},
+
+    {i:'226580',n:"F1 2014",c:'corrida'},{i:'1451480',n:"The Greatest Penguin Heist of All Time",c:'acao'},{i:'416600',n:"Full Metal Furies",c:'acao'},
+
+    {i:'1160490',n:"Master Of Pottery",c:'indie'},{i:'234390',n:"Teleglitch: Die More Edition",c:'acao'},{i:'39540',n:"SpellForce - Platinum Edition",c:'acao'},
+
+    {i:'334310',n:"Plebby Quest: The Crusades",c:'acao'},{i:'725480',n:"Slap City",c:'indie'},{i:'331160',n:"Disney•Pixar Cars",c:'corrida'},
+
+    {i:'884260',n:"Akane",c:'acao'},{i:'1191210',n:"Seek Girl Ⅲ",c:'acao'},{i:'388750',n:"BlazBlue: Chronophantasma Extend",c:'acao'},
+
+    {i:'609490',n:"Minit",c:'acao'},{i:'2441700',n:"UNDERDOGS",c:'vr'},{i:'99300',n:"Renegade Ops",c:'corrida'},
+
+    {i:'254440',n:"Pool Nation",c:'esportes'},{i:'1016600',n:"Devil Slayer - Raksasi",c:'acao'},{i:'1106530',n:"GemCraft - Frostborn Wrath",c:'acao'},
+
+    {i:'2820',n:"X3: Terran Conflict",c:'acao'},{i:'24870',n:"Need for Speed: Shift",c:'corrida'},{i:'249630',n:"Delver",c:'acao'},
+
+    {i:'418650',n:"Space Pirate Trainer",c:'acao'},{i:'31270',n:"Puzzle Agent",c:'acao'},{i:'1115050',n:"Will You Snail?",c:'acao'},
+
+    {i:'1540150',n:"Crazy Flasher Series 2021",c:'acao'},{i:'789760',n:"DEAD OR SCHOOL",c:'acao'},{i:'452570',n:"Battle Chef Brigade Deluxe",c:'acao'},
+
+    {i:'537340',n:"Guts and Glory",c:'corrida'},{i:'1203420',n:"Miss Neko 2",c:'acao'},{i:'376300',n:"GUILTY GEAR Xrd -SIGN-",c:'acao'},
+
+    {i:'259530',n:"Savant - Ascent",c:'acao'},{i:'7200',n:"Trackmania United Forever",c:'corrida'},{i:'385730',n:"WWE 2K16",c:'esportes'},
+
+    {i:'39800',n:"Nation Red",c:'acao'},{i:'1347970',n:"Patch Quest",c:'acao'},{i:'449680',n:"SAMOLIOTIK",c:'acao'},
+
+    {i:'402180',n:"Sakura Swim Club",c:'acao'},{i:'399820',n:"Kopanito All-Stars Soccer",c:'esportes'},{i:'587430',n:"I Expect You To Die",c:'acao'},
+
+    {i:'758990',n:"Ancient Warfare 3",c:'acao'},{i:'8600',n:"RACE 07",c:'corrida'},{i:'1021770',n:"Wanba Warriors",c:'acao'},
+
+    {i:'3590290',n:"DIVE or DIE - Children of Rain",c:'terror',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3590290/e0279893a393cecd472e1475d16ddb648aad15a3/header.jpg'},{i:'285500',n:"Hard Truck Apocalypse / Ex Machina",c:'corrida'},{i:'2815070',n:"RIDE 6",c:'corrida',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2815070/4be2d85724afab7ccd40187b0d920dd03754991b/header.jpg'},
+
+    {i:'981890',n:"Olympic Games Tokyo 2020 – The Official Video Game",c:'esportes'},{i:'411960',n:"TY the Tasmanian Tiger",c:'acao'},{i:'2651330',n:"Intravenous 2: Mercenarism",c:'acao'},
+
+    {i:'1853200',n:"TYRONE vs COPS",c:'acao'},{i:'843390',n:"Vertigo 2",c:'acao'},{i:'298600',n:"Lovely Planet",c:'acao'},
+
+    {i:'389510',n:"Wild Animal Racing",c:'corrida'},{i:'1717770',n:"The Upturned",c:'acao'},{i:'3124340',n:"Demeo x Dungeons & Dragons: Battlemarked",c:'rpg',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3124340/2c2c8a669cef63e8c46505bedda8fda57d559d71/header.jpg'},
+
+    {i:'1540210',n:"Arizona Sunshine VR 2",c:'vr'},{i:'317250',n:"Airscape - The Fall of Gravity",c:'corrida'},{i:'1031480',n:"TouHou Makuka Sai ~ Fantastic Danmaku Festival Part II",c:'acao'},
+
+    {i:'2559270',n:"Gym Simulator 24",c:'esportes'},{i:'1097130',n:"Circuit Superstars",c:'corrida'},{i:'1677350',n:"EA SPORTS PGA TOUR",c:'esportes'},
+
+    {i:'1260810',n:"Touhou Blooming Chaos 2",c:'acao'},{i:'431600',n:"Automobilista",c:'corrida'},{i:'47920',n:"Shift 2 Unleashed",c:'corrida'},
+
+    {i:'297860',n:"Split/Second",c:'corrida'},{i:'431930',n:"Kabounce",c:'esportes'},{i:'1239260',n:"Barro F",c:'corrida'},
+
+    {i:'245490',n:"Trials Fusion",c:'corrida'},{i:'345660',n:"RIDE",c:'corrida'},{i:'11390',n:"Crash Time 2",c:'corrida'},
+
+    {i:'695290',n:"The Golf Club 2019 featuring PGA TOUR",c:'esportes'},{i:'2358260',n:"Cricket 24",c:'esportes'},{i:'520950',n:"DRIFT CE",c:'corrida'},
+
+    {i:'1268960',n:"pureya",c:'esportes'},{i:'281920',n:"Splatter - Zombiecalypse Now",c:'corrida'},{i:'220160',n:"Trials Evolution: Gold Edition",c:'corrida'},
+
+    {i:'204630',n:"Retro City Rampage DX",c:'corrida'},{i:'1004750',n:"WRC 8 FIA World Rally Championship",c:'corrida'},{i:'2300120',n:"Painkiller",c:'fps',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2300120/fa89a77d18796ccbc571f178b67f348b671b529d/header.jpg'},
+
+    {i:'609920',n:"Hotshot Racing",c:'corrida'},{i:'1296840',n:"The Spike",c:'esportes'},{i:'256330',n:"WRC 4 FIA World Rally Championship",c:'corrida'},
+
+    {i:'287340',n:"Colin McRae Rally",c:'corrida'},{i:'808910',n:"STAR WARS Episode I Racer",c:'corrida'},{i:'3376250',n:"Nine-Ball Roulette",c:'esportes'},
+
+    {i:'3558400',n:"Backseat Drivers",c:'corrida',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3558400/2dc867af11f5ed2794aa5566ff9f5a0cb8efd978/header.jpg'},{i:'402130',n:"FlatOut 4: Total Insanity",c:'corrida'},{i:'518060',n:"Chess Ultra",c:'esportes'},
+
+    {i:'431590',n:"Earn to Die 2",c:'corrida'},{i:'4324480',n:"Dirty Business",c:'simulador',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4324480/0bf41369aa9d8f70fd5b1dfcf9b71b0a5b1074f3/header.jpg'},{i:'1294420',n:"Rollerdrome",c:'esportes'},
+
+    {i:'1018010',n:"Castlevania Anniversary Collection",c:'acao'},{i:'1136380',n:"Ultimate Fishing Simulator 2",c:'esportes'},{i:'3170540',n:"Backyard Baseball '97",c:'esportes'},
+
+    {i:'804490',n:"Creed: Rise to Glory",c:'esportes'},{i:'2367820',n:"Despelote",c:'indie',nw:1,y:'2025'},{i:'1511630',n:"TrackDayR",c:'corrida'},
+
+    {i:'2824660',n:"Old School Rally",c:'corrida'},{i:'726590',n:"NBA 2K Playgrounds 2",c:'esportes'},{i:'2675290',n:"LASERS",c:'corrida'},
+
+    {i:'1445790',n:"Make Way",c:'corrida'},{i:'1292040',n:"STRIDE",c:'esportes'},{i:'433910',n:"Neon Drive",c:'corrida'},
+
+    {i:'1064730',n:"Fantasy Girl",c:'fps'},{i:'280180',n:"Hover",c:'corrida'},{i:'383840',n:"Nimbatus - The Space Drone Constructor",c:'esportes'},
+
+    {i:'2269950',n:"The Karters 2: Turbo Charged",c:'corrida',nw:1,y:'2025'},{i:'664430',n:"WWE 2K18",c:'esportes'},{i:'204180',n:"Waveform",c:'corrida'},
+
+    {i:'209170',n:"Call of Duty: Ghosts",c:'fps'},{i:'2354000',n:"Slackers - Carts of Glory",c:'corrida'},{i:'1168660',n:"Barro 2020",c:'corrida'},
+
+    {i:'1086640',n:"Dude Simulator 3",c:'corrida'},{i:'988910',n:"Super Mega Baseball 3",c:'esportes'},{i:'341310',n:"Greyfox RPG",c:'rpg'},
+
+    {i:'3869850',n:"Welcome to the Game III",c:'simulador',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3869850/65f78f968230421cf24eb64e927c6f6d7d453be8/header.jpg'},{i:'2206340',n:"Aokana - Four Rhythms Across the Blue - EXTRA2",c:'esportes'},{i:'351990',n:"Riff Racer - Race Your Music!",c:'corrida'},
+
+    {i:'1448530',n:"Soccer Manager 2021",c:'esportes'},{i:'1193090',n:"Bus World",c:'corrida'},{i:'936720',n:"Wrench",c:'corrida'},
+
+    {i:'434030',n:"Aerofly FS 2 Flight Simulator",c:'corrida'},{i:'825310',n:"Dude Simulator 2",c:'corrida'},{i:'446560',n:"Just Dance 2017",c:'esportes'},
+
+    {i:'253650',n:"Sparkle 2 Evo",c:'corrida'},{i:'806140',n:"Achievements printer",c:'esportes'},{i:'1447000',n:"MotoGP21",c:'corrida'},
+
+    {i:'2102520',n:"Apex Point",c:'corrida'},{i:'202310',n:"Ridge Racer Unbounded",c:'corrida'},{i:'1859470',n:"PAC-MAN WORLD Re-PAC",c:'acao'},
+
+    {i:'357480',n:"Frozen Free Fall: Snowball Fight",c:'esportes'},{i:'274560',n:"Revolution Ace",c:'corrida'},{i:'228760',n:"TrackMania² Canyon",c:'corrida'},
+
+    {i:'508980',n:"Crashday Redline Edition",c:'corrida'},{i:'287260',n:"Toybox Turbos",c:'corrida'},{i:'3194360',n:"Formula Legends",c:'corrida',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3194360/cf1c3c7978b5ac478071f06eb3d89a89adf543b6/header.jpg'},
+
+    {i:'1190170',n:"OlliOlli World",c:'esportes'},{i:'1451810',n:"LEGO 2K Drive",c:'esportes'},{i:'314520',n:"Euro Fishing",c:'esportes'},
+
+    {i:'1242700',n:"Ashland:Explore",c:'corrida'},{i:'1078760',n:"Motorcycle Mechanic Simulator 2021",c:'corrida'},{i:'216890',n:"Blood Bowl: Chaos Edition (Classic)",c:'esportes'},
+
+    {i:'92100',n:"DETOUR",c:'corrida'},{i:'1701380',n:"Cricket 22",c:'esportes'},{i:'1913210',n:"AEW: Fight Forever",c:'esportes'},
+
+    {i:'1127980',n:"NASCAR Heat 4",c:'corrida'},{i:'3950130',n:"Database Detective: Minor Crimes Division",c:'indie',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3950130/ed5315c85ccaeaa8deb05aa6a91fc08e245d1e05/header.jpg'},{i:'1101360',n:"Rock of Ages 3: Make & Break",c:'corrida'},
+
+    {i:'732810',n:"Slipstream",c:'corrida'},{i:'3125250',n:"STORROR Parkour Pro",c:'esportes'},{i:'3077390',n:"MotoGP25",c:'corrida',nw:1,y:'2025'},
+
+    {i:'302710',n:"BlazeRush",c:'corrida'},{i:'1082180',n:"TT Isle of Man: Ride on the Edge 2",c:'corrida'},{i:'984780',n:"MotoGP19",c:'corrida'},
+
+    {i:'1440670',n:"Zeepkist",c:'corrida'},{i:'1101140',n:"Fishing Adventure",c:'esportes'},{i:'458770',n:"WRC 6 FIA World Rally Championship",c:'corrida'},
+
+    {i:'243450',n:"Urban Trial Freestyle",c:'corrida'},{i:'520940',n:"MX vs ATV All Out",c:'corrida'},{i:'510510',n:"WWE 2K17",c:'esportes'},
+
+    {i:'1072500',n:"AO Tennis 2",c:'esportes'},{i:'1864950',n:"Beastieball",c:'esportes'},{i:'314450',n:"Star Saviors",c:'corrida'},
+
+    {i:'4045750',n:"Out of the Park Baseball 27",c:'esportes',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4045750/1ea81d6e40df7f9a4c47804c1f95a934d9843866/header.jpg'},{i:'2737300',n:"Parking Garage Rally Circuit",c:'corrida'},{i:'1087280',n:"Out of the Park Baseball 21",c:'esportes'},
+
+    {i:'1455660',n:"Out of the Park Baseball 22",c:'esportes'},{i:'1184480',n:"Inertial Drift",c:'corrida'},{i:'885000',n:"Synth Riders",c:'esportes'},
+
+    {i:'3590560',n:"NUTMEG! A Nostalgic Deckbuilding Football Manager",c:'esportes',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3590560/d46723e9180c2656869d3230a6333abe38240638/header.jpg'},{i:'2609610',n:"CONVRGENCE",c:'vr'},{i:'393430',n:"Ice Lakes",c:'esportes'},
+
+    {i:'256370',n:"MXGP - The Official Motocross Videogame",c:'corrida'},{i:'570460',n:"Laser League",c:'esportes'},{i:'641960',n:"BOXVR",c:'esportes'},
+
+    {i:'1066130',n:"Truck Life",c:'esportes'},{i:'1710580',n:"MotoGP22",c:'corrida'},{i:'417910',n:"Street Warriors Online",c:'esportes'},
+
+    {i:'248330',n:"Dino Run DX",c:'corrida'},{i:'2669380',n:"BRUTALISTICK VR",c:'vr'},{i:'375900',n:"Trackmania Turbo",c:'corrida'},
+
+    {i:'1272840',n:"Dordogne",c:'esportes'},{i:'1556870',n:"Golf Club Nostalgia",c:'esportes'},{i:'1062960',n:"Under the Sand REDUX - a road trip simulator",c:'corrida'},
+
+    {i:'1497460',n:"Wheel World",c:'aventura',nw:1,y:'2025'},{i:'797410',n:"Headsnatchers",c:'esportes'},{i:'2069310',n:"RealFlight Evolution",c:'simulador'},
+
+    {i:'1428100',n:"Instruments of Destruction",c:'corrida'},{i:'21780',n:"Driver Parallel Lines",c:'corrida'},{i:'415880',n:"Disc Jam",c:'esportes'},
+
+    {i:'656200',n:"电竞俱乐部/ESports Club",c:'esportes'},{i:'3158270',n:"Football Life Simulator",c:'esportes'},{i:'1078730',n:"Soccer Manager 2020",c:'esportes'},
+
+    {i:'525360',n:"Shio",c:'corrida'},{i:'1506510',n:"The Ramp",c:'esportes'},{i:'2313020',n:"Umamusume: Pretty Derby - Party Dash",c:'esportes'},
+
+    {i:'1097580',n:"CUSTOM ORDER MAID 3D2 It's a Night Magic",c:'simulador'},{i:'1839940',n:"Dakar Desert Rally",c:'esportes'},{i:'657240',n:"Tracks - The Train Set Game",c:'corrida'},
+
+    {i:'341500',n:"Camera Obscura",c:'corrida'},{i:'626610',n:"TT Isle of Man: Ride on the Edge",c:'corrida'},{i:'91900',n:"Post Apocalyptic Mayhem",c:'corrida'},
+
+    {i:'285110',n:"GearCity",c:'corrida'},{i:'429180',n:"Project CARS - Pagani Edition",c:'corrida'},{i:'287310',n:"Re-Volt",c:'corrida'},
+
+    {i:'2151290',n:"Football Coach: College Dynasty",c:'esportes'},{i:'558260',n:"Gravel",c:'corrida'},{i:'343440',n:"Crash Drive 2",c:'corrida'},
+
+    {i:'1336560',n:"Hashiriya Drifter-Online Drift Racing Multiplayer (DRIFT/DRAG/RACING)",c:'corrida'},{i:'396650',n:"ACE Academy",c:'esportes'},{i:'1799930',n:"Redout 2",c:'corrida'},
+
+    {i:'1494840',n:"Scoot",c:'esportes'},{i:'1487210',n:"Super Mega Baseball 4",c:'esportes'},{i:'1196470',n:"WE ARE FOOTBALL",c:'esportes'},
+
+    {i:'3282300',n:"Mistfall Hunter",c:'acao',nw:1,y:'2026'},{i:'1072480',n:"The Fisherman - Fishing Planet",c:'esportes'},{i:'345890',n:"NASCAR '15 Victory Edition",c:'corrida'},
+
+    {i:'296770',n:"Real Boxing",c:'esportes'},{i:'1759380',n:"Bandle Tale: A League of Legends Story",c:'rpg'},{i:'2581050',n:"KAMITSUBAKI CITY ENSEMBLE",c:'esportes'},
+
+    {i:'1151050',n:"Golf Gang",c:'corrida'},{i:'572220',n:"MageQuit",c:'esportes'},{i:'391260',n:"Labyronia RPG",c:'esportes'},
+
+    {i:'541670',n:"Disney Infinity 3.0: Gold Edition",c:'corrida'},{i:'1054430',n:"Fling to the Finish",c:'corrida'},{i:'987020',n:"DRONE The Game",c:'esportes'},
+
+    {i:'2262020',n:"Exo Rally Championship",c:'corrida',nw:1,y:'2026'},{i:'1432320',n:"Liftoff: Micro Drones",c:'esportes'},{i:'264080',n:"Vangers",c:'corrida'},
+
+    {i:'1995890',n:"Aerofly FS 4 Flight Simulator",c:'esportes'},{i:'301120',n:"Eastside Hockey Manager",c:'esportes'},{i:'611160',n:"Karnage Chronicles",c:'esportes'},
+
+    {i:'295690',n:"PARTICLE MACE",c:'corrida'},{i:'545270',n:"NBA Playgrounds",c:'esportes'},{i:'658700',n:"V-Rally 4",c:'esportes'},
+
+    {i:'366760',n:"Adorables",c:'esportes'},{i:'1089830',n:"Monster Energy Supercross - The Official Videogame 3",c:'corrida'},{i:'2453660',n:"Hoop Land",c:'esportes',nw:1,y:'2025'},
+
+    {i:'798290',n:"MXGP PRO",c:'corrida'},{i:'40380',n:"nail'd",c:'corrida'},{i:'2581700',n:"MotoGP24",c:'esportes'},
+
+    {i:'1307090',n:"Barro Racing",c:'esportes'},{i:'264120',n:"Victory: The Age of Racing",c:'esportes'},{i:'1491340',n:"Marble World",c:'corrida'},
+
+    {i:'2897700',n:"Arizona Sunshine VR Remake",c:'vr'},{i:'824720',n:"Pure Rock Crawling",c:'corrida'},{i:'450860',n:"Andarilho",c:'esportes'},
+
+    {i:'561600',n:"MXGP3 - The Official Motocross Videogame",c:'corrida'},{i:'671620',n:"Beast Battle Simulator",c:'esportes'},{i:'1018160',n:"MXGP 2019 - The Official Motocross Videogame",c:'corrida'},
+
+    {i:'2217580',n:"New Star GP",c:'esportes'},{i:'3745310',n:"DEADLINE DELIVERY",c:'corrida',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3745310/3ae14edf5d4cebbd1a5f9b563476201a24086bd2/header.jpg'},{i:'1346010',n:"RiMS Racing",c:'esportes'},
+
+    {i:'1610470',n:"MXGP 2021 - The Official Motocross Videogame",c:'esportes'},{i:'2223700',n:"Driftwood",c:'esportes'},{i:'514920',n:"Crash Wheels",c:'corrida'},
+
+    {i:'355150',n:"gravilon",c:'esportes'},{i:'399790',n:"Destiny Warriors RPG",c:'esportes'},{i:'755980',n:"DEPLOYMENT",c:'esportes'},
+
+    {i:'434420',n:"The Chosen RPG",c:'esportes'},{i:'1142100',n:"WWE 2K BATTLEGROUNDS",c:'esportes'},{i:'767390',n:"Dakar 18",c:'esportes'},
+
+    {i:'325260',n:"PANZER BALL",c:'corrida'},{i:'385270',n:"Jet Racing Extreme: The First Encounter",c:'corrida'},{i:'4836540',n:"Company of Heroes 3: Final Stand",c:'acao',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4836540/6947d6be8800b8ed737f04c110ad929ae3c86123/header.jpg'},
+
+    {i:'727020',n:"Arcade Moonlander",c:'corrida'},{i:'907270',n:"eSports Legend",c:'esportes'},{i:'63200',n:"Monday Night Combat",c:'esportes'},
+
+    {i:'1273440',n:"OverDrift Festival",c:'esportes'},{i:'3875050',n:"MotoGP26",c:'corrida',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3875050/b53a48a0eb23496725d62cd610096ce95a8491f1/header.jpg'},{i:'351490',n:"Intergalactic Bubbles",c:'esportes'},
+
+    {i:'91100',n:"SkyDrift",c:'corrida'},{i:'834280',n:"Fishing Sim World: Pro Tour",c:'esportes'},{i:'658570',n:"FURIDASHI: Drift Cyber Sport",c:'esportes'},
+
+    {i:'635940',n:"Little Busters! English Edition",c:'esportes'},{i:'1066260',n:"Devolver Bootleg",c:'esportes'},{i:'4421010',n:"Bills Must Be Paid",c:'acao',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4421010/fc7d507e465320493fbf224b54d769c043601390/header.jpg'},
+
+    {i:'907680',n:"Wwbit",c:'esportes'},{i:'417430',n:"Moto Racer  4",c:'esportes'},{i:'71240',n:"SEGA Bass Fishing",c:'esportes'},
+
+    {i:'923260',n:"Golf Peaks",c:'esportes'},{i:'520010',n:"Climbey",c:'corrida'},{i:'1682050',n:"PropHunter",c:'esportes'},
+
+    {i:'58520',n:"Blood Bowl - Legendary Edition",c:'esportes'},{i:'269730',n:"The Golf Club",c:'esportes'},{i:'370510',n:"Marble Mayhem: Fragile Ball",c:'esportes'},
+
+    {i:'532190',n:"Super Blood Hockey",c:'esportes'},{i:'964570',n:"DCL - The Game",c:'esportes'},{i:'272890',n:"Vertiginous Golf",c:'esportes'},
+
+    {i:'760640',n:"Tennis Elbow 4",c:'esportes'},{i:'263740',n:"FootLOL: Epic Soccer League",c:'esportes'},{i:'15560',n:"AaaaaAAaaaAAAaaAAAAaAAAAA!!! for the Awesome",c:'esportes'},
+
+    {i:'360380',n:"Tiny Bridge: Ratventure",c:'esportes'},{i:'240600',n:"MotoGP13",c:'esportes'},{i:'831980',n:"Out of the Park Baseball 20",c:'esportes'},
+
+    {i:'461640',n:"Sins Of The Demon RPG",c:'esportes'},{i:'488550',n:"Dream Car Builder",c:'corrida'},{i:'934930',n:"RDS - The Official Drift Videogame",c:'esportes'},
+
+    {i:'393410',n:"World of Soccer",c:'esportes'},{i:'209660',n:"Call of Duty: Advanced Warfare - Gold Edition",c:'fps'},{i:'1086410',n:"Golf Around!",c:'esportes'},
+
+    {i:'2051120',n:"HOT WHEELS UNLEASHED 2 - Turbocharged",c:'corrida'},{i:'371420',n:"Teddy Floppy Ear - The Race",c:'corrida'},{i:'415600',n:"Kart Racing Pro",c:'esportes'},
+
+    {i:'711750',n:"Monster Energy Supercross - The Official Videogame",c:'esportes'},{i:'1683340',n:"Kayak VR: Mirage",c:'esportes'},{i:'414870',n:"Super Mega Baseball 2",c:'esportes'},
+
+    {i:'1951410',n:"WE ARE FOOTBALL 2024",c:'esportes'},{i:'1324350',n:"Turbo Golf Racing",c:'esportes'},{i:'355130',n:"MotoGP15",c:'esportes'},
+
+    {i:'1100620',n:"Football Manager 2020 Touch",c:'esportes'},{i:'552920',n:"Sailaway - The Sailing Simulator",c:'esportes'},{i:'2384620',n:"Out of the Park Baseball 25",c:'esportes'},
+
+    {i:'2902540',n:"KUNKUN Defender",c:'esportes'},{i:'380020',n:"Three Heroes",c:'esportes'},{i:'1924170',n:"TT Isle Of Man: Ride on the Edge 3",c:'corrida'},
+
+    {i:'603260',n:"The Cat Games",c:'esportes'},{i:'1739010',n:"Out of the Park Baseball 23",c:'esportes'},{i:'2083210',n:"Super Woden GP 2",c:'esportes'},
+
+    {i:'3852060',n:"Football Academy Manager",c:'esportes',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3852060/f1725f076c26f4b27bea57ae882c4a2e59c195a4/header.jpg'},{i:'1620540',n:"Pixel Cup Soccer - Ultimate Edition",c:'esportes'},{i:'2100160',n:"MotoGP23",c:'esportes'},
+
+    {i:'1512590',n:"Punch A Bunch",c:'esportes'},{i:'248530',n:"Depth Hunter 2: Deep Dive",c:'esportes'},{i:'2360210',n:"Rune Coliseum",c:'esportes'},
+
+    {i:'2020860',n:"Rush Rally 3",c:'esportes'},{i:'314070',n:"Super Mega Baseball: Extra Innings",c:'esportes'},{i:'325420',n:"Homebrew - Patent Unknown",c:'esportes'},
+
+    {i:'335070',n:"VRC PRO",c:'esportes'},{i:'1259800',n:"MXGP 2020 - The Official Motocross Videogame",c:'esportes'},{i:'393200',n:"Bad Rats Show",c:'esportes'},
+
+    {i:'1178400',n:"Pro Cycling Manager 2020",c:'esportes'},{i:'1106340',n:"Legend Bowl",c:'esportes'},{i:'1415140',n:"Kandidatos Kart",c:'corrida'},
+
+    {i:'2627570',n:"Goofy Gorillas",c:'acao'},{i:'1488560',n:"Football Simulator",c:'esportes'},{i:'1213750',n:"Fight Crab",c:'esportes'},
+
+    {i:'703950',n:"Just Fishing",c:'esportes'},{i:'288140',n:"Perfect Golf",c:'esportes'},{i:'400020',n:"Atari Vault",c:'esportes'},
+
+    {i:'837880',n:"You Suck at Parking - Complete Edition",c:'esportes'},{i:'1937480',n:"Out of the Park Baseball 24",c:'esportes'},{i:'339790',n:"rFactor",c:'esportes'},
+
+    {i:'1133590',n:"Stilt Fella",c:'esportes'},{i:'638000',n:"When Ski Lifts Go Wrong",c:'esportes'},{i:'366690',n:"Cue Club 2: Pool & Snooker",c:'esportes'},
+
+    {i:'18820',n:"Zero Gear",c:'esportes'},{i:'486780',n:"Fruit Ninja VR",c:'esportes'},{i:'274250',n:"OlliOlli",c:'esportes'},
+
+    {i:'529520',n:"Mutant Football League",c:'esportes'},{i:'1145660',n:"Drift Of The Hill",c:'esportes'},{i:'286240',n:"Dog Sled Saga",c:'esportes'},
+
+    {i:'269170',n:"Sports Bar VR",c:'esportes'},{i:'588440',n:"False Front",c:'esportes'},{i:'336150',n:"Virtual Pool 4",c:'esportes'},
+
+    {i:'794860',n:"eSail Sailing Simulator",c:'esportes'},{i:'687850',n:"Head Goal: Soccer Online",c:'esportes'},{i:'498660',n:"Mind Spheres",c:'esportes'},
+
+    {i:'1745400',n:"League Manager 2022",c:'esportes'},{i:'216260',n:"Don Bradman Cricket 14",c:'esportes'},{i:'971030',n:"SkateBIRD",c:'esportes'},
+
+    {i:'3543890',n:"Boat Together",c:'corrida',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3543890/58ee57a7dfd6514fc548ecfb9511640f966e2069/header.jpg'},{i:'70620',n:"Worms Crazy Golf",c:'esportes'},{i:'1514840',n:"All-In-One Sports VR",c:'esportes'},
+
+    {i:'882020',n:"Monster Energy Supercross - The Official Videogame 2",c:'esportes'},{i:'1114290',n:"Windjammers 2",c:'esportes'},{i:'1945250',n:"Blacktop Hoops",c:'esportes'},
+
+    {i:'15520',n:"AaAaAA!!! - A Reckless Disregard for Gravity",c:'esportes'},{i:'738550',n:"Spike Volleyball",c:'esportes'},{i:'619290',n:"Out of the Park Baseball 19",c:'esportes'},
+
+    {i:'347670',n:"Karate Master 2 Knock Down Blow",c:'esportes'},{i:'346470',n:"Tennis Elbow 2013",c:'esportes'},{i:'348820',n:"FIM Speedway Grand Prix 15",c:'esportes'},
+
+    {i:'1263860',n:"Football Manager 2021 Touch",c:'esportes'},{i:'1767560',n:"Pro Cycling Manager 2022",c:'esportes'},{i:'263020',n:"STARWHAL",c:'esportes'},
+
+    {i:'457960',n:"Holopoint",c:'esportes'},{i:'1037190',n:"Shipped",c:'esportes'},{i:'465650',n:"Out of the Park Baseball 18",c:'esportes'},
+
+    {i:'402430',n:"Out of the Park Baseball 17",c:'esportes'},{i:'3504700',n:"4Wheel Challenge",c:'corrida',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3504700/560f5a87bbed8a3c0acf133ef51f6cb078d95708/header.jpg'},{i:'1396890',n:"Boss of this gym",c:'esportes'},
+
+    {i:'3936530',n:"Pro Cycling Manager 26",c:'corrida',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3936530/7b0a2788ebb3439bbe6f74c871bf9c58f27035f2/header.jpg'},{i:'2393770',n:"Bang Average Football – Play, Manage, Create",c:'esportes'},{i:'2443770',n:"Will You Wheel?",c:'corrida'},
+
+    {i:'3936520',n:"Tour de France 2026",c:'corrida',nw:1,y:'2026',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3936520/768fdd83ab20a7327dd6e21de5b0ce01d2ba4140/header.jpg'},{i:'2986370',n:"Food Delivery Simulator",c:'corrida'},{i:'3137350',n:"Motion Soccer PRO",c:'esportes',nw:1,y:'2025'},
+
+    {i:'3818010',n:"BEYBLADE X EVOBATTLE",c:'esportes',nw:1,y:'2025',u:'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3818010/b91c42bf7bae150c0c5c3f076ac8ad83b514bc65/header.jpg'},{i:'99830',n:"Crysis 2 - Maximum Edition",c:'sobrevivencia'},{i:'47830',n:"Medal of Honor",c:'fps'},
+
+    {i:'2130',n:"Dark Messiah of Might & Magic",c:'fps'},{i:'2482440',n:"Leap up no Justu: Double",c:'esportes'},{i:'418500',n:"Rising Storm 2: Vietnam",c:'fps'},
+
+    {i:'336390',n:"System Shock 2 (1999)",c:'fps'}
+  ];
