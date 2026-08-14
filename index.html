@@ -429,11 +429,12 @@ body.gm-open{overflow:hidden}
   box-shadow:0 30px 70px rgba(0,0,0,.6);
 }
 .gm-img{width:100%;aspect-ratio:460/215;object-fit:cover;display:block;background:var(--panel2)}
+.gm-left-txt{padding:15px 18px 0;display:flex;flex-direction:column;gap:10px;text-align:center}
 .gm-x{
   position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:50%;
   background:rgba(6,10,14,.72);border:1px solid var(--line2);color:#fff;font-size:19px;line-height:1;
 }
-.gm-body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:12px;text-align:center}
+.gm-body{padding:14px 18px 18px;display:flex;flex-direction:column;gap:12px;text-align:center}
 .gm-name{font-size:17px;font-weight:700;color:#fff;line-height:1.3}
 .gm-status{
   align-self:center;font-size:12.5px;font-weight:600;padding:4px 11px;border-radius:20px;
@@ -442,6 +443,44 @@ body.gm-open{overflow:hidden}
 .gm-status.soon{background:rgba(224,160,58,.14);color:var(--warn)}
 .gm-txt{font-size:14px;line-height:1.55;color:var(--txt2)}
 .gm-txt strong{color:#fff;font-weight:600}
+/* bloco da oferta dentro do popup do jogo */
+.gm-offer{
+  background:linear-gradient(180deg,rgba(87,181,51,.07),var(--panel) 62%);
+  border:1px solid rgba(87,181,51,.34);border-radius:var(--r2);
+  padding:14px 14px 15px;display:flex;flex-direction:column;gap:10px;
+}
+.gm-offer-hd{font-size:13px;font-weight:700;color:#fff;letter-spacing:-.01em}
+.gm-offer-price{display:flex;align-items:baseline;justify-content:center;gap:8px;flex-wrap:wrap}
+.gm-old{font-size:13px;color:var(--dim);text-decoration:line-through}
+.gm-new{font-size:26px;font-weight:700;color:#fff;letter-spacing:-.02em}
+.gm-offer-list{list-style:none;display:flex;flex-direction:column;gap:6px;text-align:left}
+.gm-offer-list li{position:relative;padding-left:20px;font-size:13px;line-height:1.45;color:var(--txt2)}
+.gm-offer-list li::before{content:'\2713';position:absolute;left:0;top:0;color:var(--buy2);font-weight:700}
+.gm-offer-list li strong{color:#fff;font-weight:600}
+.gm-offer-pay{font-size:12px;color:var(--txt2)}
+.gm-offer-trust{font-size:12px;color:var(--dim)}
+.gm-offer-trust strong{color:var(--txt2);font-weight:600}
+.gm-plans{font-size:13px;color:var(--blue)}
+.gm-plans:hover{text-decoration:underline;text-underline-offset:3px}
+/* ---- popup do jogo em duas colunas (so no PC) ----
+   No celular ele continua empilhado, capa em cima e oferta embaixo, que e o
+   formato que ja estava bom. Do tablet pra cima o mesmo conteudo vira
+   jogo | oferta: a caixa passa de 400x724 (tira estreita e comprida numa tela
+   larga) pra ~720x430, que e proporcao de janela e nao de celular. */
+@media(min-width:761px){
+  .gm-box{width:min(720px,94vw);display:grid;grid-template-columns:1fr 1fr}
+  .gm-left{display:flex;flex-direction:column;border-right:1px solid var(--line);background:var(--panel)}
+  /* texto encostado a esquerda: em coluna estreita o centralizado deixa as
+     linhas desalinhadas das duas pontas e e o que dava o ar de "improvisado".
+     flex:1 + center pra ele ocupar o que sobra abaixo da capa e ficar no meio
+     desse espaco; sem isso o texto grudava embaixo da capa e restavam uns
+     180px de vazio no pe da coluna. */
+  .gm-left-txt{text-align:left;padding:16px 18px 18px;gap:9px;flex:1;justify-content:center}
+  .gm-status{align-self:flex-start}
+  /* a oferta centraliza no meio da altura pra as duas colunas fecharem juntas */
+  .gm-body{justify-content:center;padding:18px}
+  .gm-x{background:rgba(6,10,14,.86)}
+}
 .gm-back{
   background:none;font-size:13.5px;color:var(--dim);text-decoration:underline;
   text-underline-offset:3px;padding:2px;
@@ -686,7 +725,7 @@ body.gm-open{overflow:hidden}
 @media(max-width:600px){.vfb-grid{justify-content:flex-start}}
 
 /* ---------- garantia ---------- */
-.gr{max-width:680px}
+.gr{max-width:680px;margin-inline:auto}
 .gr-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);padding:20px}
 .gr-badge{width:40px;height:40px;border-radius:9px;background:rgba(74,157,42,.15);border:1px solid rgba(74,157,42,.35);display:flex;align-items:center;justify-content:center;margin-bottom:12px}
 .gr-badge svg{width:21px;height:21px;stroke:var(--buy2);fill:none;stroke-width:2}
@@ -793,7 +832,10 @@ body.gm-open{overflow:hidden}
    A fonte do app e a Sora; aqui fica na Inter que a pagina ja carrega, com o
    mesmo peso 800 e o mesmo tracking negativo. Nao vale um webfont a mais numa
    pagina que roda trafego pago. */
-.lch-wrap{max-width:980px}
+/* Sem limite de largura: com 980px sobravam 200px de vazio na direita, e a
+   janela do launcher e justamente o elemento que ganha em ficar grande (a real
+   tem 1200px de largura, entao em 1140 ela sai quase em tamanho natural). */
+.lch-wrap{max-width:none}
 .lch{
   border:1px solid var(--line2);border-radius:var(--r2);overflow:hidden;
   background:#050507;box-shadow:0 18px 50px rgba(0,0,0,.5);
@@ -983,6 +1025,29 @@ body.gm-open{overflow:hidden}
 
 /* ---------- FAQ ---------- */
 .faq-list{max-width:820px;display:flex;flex-direction:column;gap:8px}
+/* ---- garantia encaixada ao lado do FAQ (so no PC) ----
+   No celular os tres blocos ficam empilhados na ordem do HTML: garantia,
+   titulo, perguntas. Do desktop pra cima viram duas colunas: a garantia ocupa a
+   coluna da esquerda inteira (as duas linhas) e o titulo + perguntas ficam na
+   direita. O card da garantia passa a preencher o vazio que existia embaixo do
+   titulo "Perguntas frequentes", em vez de morar numa faixa so dele.
+   align-items:start no .faq-list e obrigatorio: sem ele, abrir uma resposta
+   estica junto a pergunta vizinha da mesma linha. */
+@media(min-width:1000px){
+  .faq-wrap{
+    display:grid;grid-template-columns:380px 1fr;gap:14px 40px;align-items:start;
+  }
+  .faq-wrap .gr{grid-column:1;grid-row:1 / span 2;max-width:none;margin:0}
+  .faq-wrap .sec-head{grid-column:2;grid-row:1;margin-bottom:0}
+  /* as 9 perguntas em duas colunas dentro da coluna da direita: em coluna unica
+     a lista ficava com 487px de altura contra 185px do card ao lado, e o pe da
+     esquerda virava um vazio de quase 400px. Em duas, as duas colunas terminam
+     quase juntas. */
+  .faq-wrap .faq-list{
+    grid-column:2;grid-row:2;max-width:none;
+    display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;align-items:start;
+  }
+}
 .faq-item{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 .faq-q{
   width:100%;background:none;text-align:left;font-size:14.5px;font-weight:600;color:var(--txt);
@@ -1226,51 +1291,87 @@ var io = (function(){
 </script>
 
 <!-- ===================== SEMANA DE ANIVERSARIO =====================
-     PRA EDITAR: so as duas datas aqui embaixo. FIM e o ultimo dia, incluido.
-     Passou dele, a faixa e as linhas de prazo somem sozinhas e o site volta a
-     ser exatamente o que era. Os precos nao mudam em nenhum momento: o
-     aniversario e o motivo do desconto, nao um desconto novo.
+     O prazo anda sozinho: por padrao termina SEMPRE amanha, e o inicio e o
+     comeco da janela de 7 dias que fecha amanha. Quem abre o site hoje le
+     "Termina 15/08", quem abrir amanha le "Termina 16/08". Ninguem precisa
+     editar nada dia a dia e a promo nunca amanhece vencida.
 
-     O prazo aparece SEMPRE como data ("Termina 14/08"), nunca como "hoje" ou
+     PRA FIXAR UMA DATA REAL (Black Friday, natal, o que for): ponha a data em
+     ALMAZ_ANIV_FIM no formato ano-mes-dia. Ai ela para de rolar, vale ate
+     23:59:59 daquele dia e depois a faixa e as linhas de prazo somem sozinhas,
+     com o site voltando a ser exatamente o que era. Deixe '' pra voltar a rolar.
+
+     Os precos nao mudam em nenhum momento: o aniversario e o motivo do
+     desconto, nao um desconto novo.
+
+     O prazo aparece SEMPRE como data ("Termina 15/08"), nunca como "hoje" ou
      "amanha": data informa, palavra relativa soa como empurrao. As datas na
      tela saem daqui, entao trocar a config troca tudo de uma vez.
 
      O script roda antes do <body> pintar, entao nao tem pulo de layout. -->
 <script>
 (function(){
-  var ALMAZ_ANIV_INICIO = '2026-08-07';   // ano-mes-dia
-  var ALMAZ_ANIV_FIM    = '2026-08-14';   // ultimo dia, incluido
+  var ALMAZ_ANIV_FIM  = '';   // '' = rola sozinho. Ou 'ano-mes-dia' pra fixar.
+  var ALMAZ_ANIV_DIAS = 7;    // tamanho da semana, usado no modo que rola
 
-  function dia(s){ var p = s.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  function dia(s){ var p = String(s).split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
   function ddmm(d){ return ('0' + d.getDate()).slice(-2) + '/' + ('0' + (d.getMonth() + 1)).slice(-2); }
 
-  var ini = dia(ALMAZ_ANIV_INICIO), fim = dia(ALMAZ_ANIV_FIM);
-  if (isNaN(fim)) return;
+  /* Datas do dia de hoje. No modo que rola, fim = amanha e inicio = 7 dias
+     antes do fim, que e a mesma distancia da semana original (07/08 -> 14/08). */
+  function janela(){
+    var hoje = new Date(); hoje = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
+    if (ALMAZ_ANIV_FIM) {
+      var f = dia(ALMAZ_ANIV_FIM);
+      return isNaN(f) ? null : { ini: new Date(f.getFullYear(), f.getMonth(), f.getDate() - ALMAZ_ANIV_DIAS), fim: f };
+    }
+    var fim = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate() + 1);
+    return { ini: new Date(fim.getFullYear(), fim.getMonth(), fim.getDate() - ALMAZ_ANIV_DIAS), fim: fim };
+  }
 
-  /* vale ate 23:59:59 do ultimo dia */
-  if (Date.now() > fim.getTime() + 86399000) return;
+  var j = janela();
+  if (!j) return;
+
+  /* vale ate 23:59:59 do ultimo dia. So morde no modo de data fixa, porque no
+     modo que rola o fim esta sempre no futuro. */
+  if (Date.now() > j.fim.getTime() + 86399000) return;
 
   document.documentElement.classList.add('aniv-on');
 
-  var t = {
-    prazo:  'Termina ' + ddmm(fim),
-    curto:  'até ' + ddmm(fim),
-    inicio: ddmm(ini),
-    fim:    ddmm(fim)
-  };
-
-  document.addEventListener('DOMContentLoaded', function () {
+  /* Preenche todo mundo marcado com data-aniv-<chave>. Fica exposto no window
+     porque um <script> logo depois dos textos chama isso na hora, sem esperar o
+     DOMContentLoaded: assim ninguem chega a ver a data velha escrita no HTML. */
+  window.almazAnivPintar = function(){
+    var w = janela(); if (!w) return;
+    var t = {
+      prazo:  'Termina ' + ddmm(w.fim),
+      curto:  'até ' + ddmm(w.fim),
+      inicio: ddmm(w.ini),
+      fim:    ddmm(w.fim)
+    };
     Object.keys(t).forEach(function (k) {
       document.querySelectorAll('[data-aniv-' + k + ']').forEach(function (el) { el.textContent = t[k]; });
     });
-  });
+  };
+
+  document.addEventListener('DOMContentLoaded', window.almazAnivPintar);
+
+  /* Aba aberta atravessando a meia-noite: repinta sozinha quando o dia vira,
+     senao a pessoa acordaria com o prazo de ontem na tela. */
+  if (!ALMAZ_ANIV_FIM) {
+    var diaAtual = new Date().getDate();
+    setInterval(function(){
+      var d = new Date().getDate();
+      if (d !== diaAtual) { diaAtual = d; window.almazAnivPintar(); }
+    }, 60000);
+  }
 })();
 </script>
 
 <div class="aniv-bar" data-aniv>
   <b>Semana de aniversário da Almaz Store.</b>
   O aniversário é nosso, quem ganha é você.
-  <span class="aniv-when" data-aniv-prazo>Termina 14/08</span>
+  <span class="aniv-when" data-aniv-prazo>Termina 15/08</span>
 </div>
 
 <!-- ===================== BARRA SUPERIOR ===================== -->
@@ -1375,7 +1476,7 @@ var io = (function(){
           </div>
           <a href="#pricing" class="offer-btn">Ver a oferta completa</a>
           <div class="buybox-pay"><b>PIX</b> ou até <b>3x no cartão</b>, aprovação na hora</div>
-          <div class="buybox-aniv" data-aniv>Promoção de aniversário, <span data-aniv-curto>até 14/08</span></div>
+          <div class="buybox-aniv" data-aniv>Promoção de aniversário, <span data-aniv-curto>até 15/08</span></div>
 
           <div class="medos">
             <div class="medo">
@@ -1746,8 +1847,12 @@ var io = (function(){
     <div class="sec-head reveal">
       <h2>Escolha o tamanho da sua biblioteca</h2>
       <p>Taxa única em todos os planos. Sem mensalidade e sem renovação.</p>
-      <p class="aniv-note" data-aniv>A semana de aniversário começou dia <span data-aniv-inicio>07/08</span> e quem ganha é você. <span data-aniv-prazo>Termina 14/08</span>.</p>
+      <p class="aniv-note" data-aniv>A semana de aniversário começou dia <span data-aniv-inicio>08/08</span> e quem ganha é você. <span data-aniv-prazo>Termina 15/08</span>.</p>
     </div>
+    <!-- Ultimo texto de data da pagina. Pinta aqui, na hora, pra data certa
+         entrar antes da primeira tela aparecer. O DOMContentLoaded la de cima
+         continua valendo e pega qualquer data-aniv que nasca depois daqui. -->
+    <script>window.almazAnivPintar && window.almazAnivPintar();</script>
 
     <div class="eds reveal">
 
@@ -1852,9 +1957,16 @@ var io = (function(){
   </div>
 </section>
 
-<!-- ===================== GARANTIA + PROVA ===================== -->
-<section class="sec">
-  <div class="wrap">
+<!-- ===================== GARANTIA + FAQ ===================== -->
+<!-- Eram duas secoes empilhadas ate 13/08/2026. A garantia era um card de 680px
+     sozinho no meio de uma faixa, e o FAQ tinha o titulo com meia largura vazia
+     do lado. Juntando as duas, o card da garantia passa a ocupar justamente o
+     vazio a esquerda do FAQ e some uma faixa inteira da pagina.
+     A ordem no HTML e garantia -> titulo -> lista, que e a ordem certa de
+     leitura no celular. No desktop o CSS reposiciona em duas colunas. -->
+<section class="sec" id="faq">
+  <div class="wrap faq-wrap">
+
     <div class="gr">
       <div class="gr-card reveal">
         <div class="gr-badge">
@@ -1862,21 +1974,15 @@ var io = (function(){
         </div>
         <h3>7 dias pra testar sem risco</h3>
         <p>
-          Compra, instala e testa. Se não curtir a experiência por qualquer motivo,
-          você pede o reembolso dentro de 7 dias e devolvemos o valor, sem enrolação
-          e sem ficar inventando desculpa pra te segurar.
+          Compra, instala e testa. Se não curtir por qualquer motivo, você pede o
+          reembolso dentro de 7 dias e devolvemos o valor, sem enrolação.
         </p>
       </div>
-
     </div>
-  </div>
-</section>
 
-<!-- ===================== FAQ ===================== -->
-<section class="sec" id="faq">
-  <div class="wrap">
     <div class="sec-head reveal"><h2>Perguntas frequentes</h2></div>
     <div class="faq-list" id="fl"></div>
+
   </div>
 </section>
 </main>
@@ -1931,13 +2037,53 @@ var io = (function(){
 <div class="gm-ov" id="gm-ov" role="dialog" aria-modal="true" aria-labelledby="gm-name">
   <div class="gm-box">
     <button class="gm-x" id="gm-x" type="button" aria-label="Fechar">&times;</button>
-    <img class="gm-img" id="gm-img" src="" alt="">
+    <!-- Duas colunas no desktop (jogo | oferta) e empilhado no celular. O
+         wrapper .gm-left existe so pra isso: sem ele a capa, o nome e a oferta
+         eram tres filhos soltos e o popup so podia ser uma coluna, o que no PC
+         virava uma tira de 400px de largura por 724px de altura. -->
+    <div class="gm-left">
+      <img class="gm-img" id="gm-img" src="" alt="">
+      <div class="gm-left-txt">
+        <div class="gm-name" id="gm-name"></div>
+        <div class="gm-status" id="gm-status">Disponível agora</div>
+        <p class="gm-txt" id="gm-txt"></p>
+      </div>
+    </div>
+
     <div class="gm-body">
-      <div class="gm-name" id="gm-name"></div>
-      <div class="gm-status" id="gm-status">Disponível agora</div>
-      <p class="gm-txt" id="gm-txt"></p>
-      <a role="button" tabindex="0" href="javascript:void(0)" class="offer-btn" id="gm-go">Quero esse jogo</a>
+
+      <!-- Ate 13/08/2026 aqui tinha so um botao "Quero esse jogo" que fechava o
+           popup e rolava ate a secao de planos. A oferta passou a aparecer
+           dentro do proprio popup: quem clicou num jogo ja demonstrou interesse,
+           e mandar rolar a pagina de novo perdia gente no caminho.
+           O botao usa o MESMO par href+onclick dos cards de plano, sem spinner e
+           sem mexer no botao durante o clique, pra nao repetir o problema que
+           matou o InitiateCheckout. Quem cuida do tracking e do redirect e a
+           funcao checkout(). -->
+      <div class="gm-offer">
+        <div class="gm-offer-hd">Acesso Vitalício</div>
+        <div class="gm-offer-price">
+          <span class="deal num">-90%</span>
+          <span class="gm-old num">R$ 497,00</span>
+          <span class="gm-new num">R$ 49,97</span>
+        </div>
+        <ul class="gm-offer-list">
+          <li><strong><span data-almaz-games="vitalicio">40.000</span> jogos</strong> liberados</li>
+          <li>Paga uma vez, é seu pra sempre</li>
+          <li>Lançamentos futuros inclusos</li>
+          <li>Online funcionando</li>
+        </ul>
+        <a href="https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm"
+           onclick="checkout('https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm',49.97);return false"
+           class="offer-btn" id="gm-go">Quero garantir</a>
+        <div class="gm-offer-pay">PIX ou até 3x no cartão</div>
+        <div class="gm-offer-trust"><strong>Aprovação na hora</strong> e 7 dias de garantia</div>
+      </div>
+
       <button type="button" class="gm-back" id="gm-back">Continuar vendo os jogos</button>
+      <!-- saida pra quem quer um plano menor: sem isso o popup so oferece o de
+           R$ 49,97 e quem ia comprar o Basico nao tem pra onde ir -->
+      <a href="#pricing" class="gm-plans" id="gm-plans">Ver os 3 planos</a>
     </div>
   </div>
 </div>
@@ -2436,6 +2582,7 @@ var io = (function(){
         gtxt=document.getElementById('gm-txt'),
         ggo=document.getElementById('gm-go'),
         gback=document.getElementById('gm-back'),
+        gplans=document.getElementById('gm-plans'),
         gx=document.getElementById('gm-x');
 
     function close(){ ov.classList.remove('on'); document.body.classList.remove('gm-open'); }
@@ -2456,13 +2603,16 @@ var io = (function(){
       if(soon){
         gstat.className='gm-status soon';
         gstat.textContent = (!dt||dt==='a confirmar') ? 'Lançamento, data a confirmar' : 'Chega em '+dt;
-        gtxt.innerHTML='<strong>'+esc(nome)+'</strong> ainda não saiu. Assim que lançar, ele entra no seu acesso automaticamente, sem pagar de novo, junto com os outros <strong>'+qtd+' jogos</strong>.';
+        // Os textos encurtaram junto com a entrada do bloco de oferta logo
+        // abaixo: o preco e a lista ja explicam o que a pessoa leva, entao o
+        // paragrafo so precisa ligar o jogo clicado ao acesso.
+        gtxt.innerHTML='<strong>'+esc(nome)+'</strong> ainda não saiu. Quando lançar, entra no seu acesso sem pagar de novo.';
         ggo.textContent='Quero garantir esse lançamento';
       } else {
         gstat.className='gm-status';
         gstat.textContent='Disponível agora';
-        gtxt.innerHTML='<strong>'+esc(nome)+'</strong> está liberado no seu acesso, junto com mais <strong>'+qtd+' jogos</strong>. Baixa direto pela Steam e joga hoje mesmo.';
-        ggo.textContent='Quero esse jogo';
+        gtxt.innerHTML='<strong>'+esc(nome)+'</strong> está incluso, junto com mais <strong>'+qtd+' jogos</strong>.';
+        ggo.textContent='Quero garantir';
       }
       ov.classList.add('on');
       document.body.classList.add('gm-open');
@@ -2489,11 +2639,19 @@ var io = (function(){
     gback.addEventListener('click',close);
     ov.addEventListener('click',function(e){ if(e.target===ov)close(); });
 
-    ggo.addEventListener('click',function(){
-      close();
-      if(window.almazCatClose)window.almazCatClose();
-      gotoPricing();
-    });
+    // O #gm-go NAO tem listener: ele leva o par href+onclick="checkout(...)"
+    // no HTML, igual aos cards de plano. Qualquer coisa a mais aqui (fechar o
+    // popup, trocar texto, spinner) corre o risco de atrapalhar o disparo do
+    // InitiateCheckout, e o proprio checkout() ja redireciona a aba.
+    // Quem ainda quer comparar preco sai por aqui:
+    if(gplans){
+      gplans.addEventListener('click',function(e){
+        e.preventDefault();
+        close();
+        if(window.almazCatClose)window.almazCatClose();
+        gotoPricing();
+      });
+    }
   })();
 
 
