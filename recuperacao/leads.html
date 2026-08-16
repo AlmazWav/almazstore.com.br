@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#0b1219">
+<title>Leads do site | Almaz Store</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#0b1219; --bg2:#0f1a24; --panel:#16222f; --panel2:#1d2b3a;
+  --line:rgba(146,186,220,.13); --line2:rgba(146,186,220,.24);
+  --txt:#dbe6f1; --txt2:#aebfd0; --dim:#8399ae;
+  --blue:#59a6e0; --buy:#4a9d2a; --buy2:#57b533;
+  --warn:#e0a03a; --red:#d9534f; --roxo:#8f6fd4;
+  --f:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --r:10px;
+}
+body{font-family:var(--f);background:var(--bg);color:var(--txt);line-height:1.5;font-size:15px;
+  -webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom)}
+button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+button{border:none;background:none;cursor:pointer}
+a{color:var(--blue);text-decoration:none}
+
+/* ---------- tela de senha ---------- */
+#gate{position:fixed;inset:0;z-index:900;background:var(--bg);display:flex;
+  align-items:center;justify-content:center;padding:24px}
+.gate-box{width:100%;max-width:340px;text-align:center}
+.gate-box h1{font-size:19px;margin-bottom:6px}
+.gate-box p{color:var(--dim);font-size:13.5px;margin-bottom:20px}
+.gate-box input{width:100%;background:var(--panel);border:1px solid var(--line2);
+  border-radius:var(--r);padding:14px;margin-bottom:10px;text-align:center;font-size:16px}
+.gate-box button{width:100%;background:linear-gradient(180deg,var(--buy2),var(--buy));
+  color:#fff;font-weight:700;padding:14px;border-radius:var(--r);font-size:16px}
+#gate-erro{color:var(--red);font-size:13px;margin-top:10px;min-height:18px}
+.gate-cfg{margin-top:22px;font-size:12.5px;color:var(--dim);line-height:1.6;
+  background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px;text-align:left}
+
+/* ---------- topo ---------- */
+header{position:sticky;top:0;z-index:500;background:rgba(11,18,25,.97);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:10px 14px 0}
+.h-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.h-top h1{font-size:16px;font-weight:700;letter-spacing:-.01em}
+.h-acoes{display:flex;gap:6px}
+.h-acoes button,.h-acoes a{background:var(--panel);border:1px solid var(--line);border-radius:8px;
+  padding:7px 10px;font-size:12px;color:var(--txt2);font-weight:600;display:inline-block}
+#gerado{font-size:11px;color:var(--dim);margin-top:2px}
+#gerado.velha{color:var(--warn)}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:7px 4px;text-align:center}
+.stat b{display:block;font-size:16px;font-weight:700;line-height:1.2}
+.stat span{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.02em}
+.stat.v b{color:var(--buy2)}
+
+.busca{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:8px;
+  padding:10px 12px;margin-bottom:9px;font-size:15px}
+.filtros{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none}
+.filtros::-webkit-scrollbar{display:none}
+.filtro{flex:0 0 auto;background:var(--panel);border:1px solid var(--line);border-radius:50px;
+  padding:7px 13px;font-size:12.5px;color:var(--txt2);font-weight:600;white-space:nowrap}
+.filtro.on{background:rgba(89,166,224,.16);border-color:var(--blue);color:var(--blue)}
+
+/* ---------- ritmo / anti-ban ---------- */
+#ritmo{margin:0 14px 10px;background:var(--panel);border:1px solid var(--line);
+  border-radius:8px;padding:9px 12px;font-size:12.5px;color:var(--dim);display:flex;
+  align-items:center;justify-content:space-between;gap:10px}
+#ritmo.alerta{border-color:rgba(224,160,58,.45);background:rgba(224,160,58,.10);color:var(--warn)}
+#ritmo b{color:var(--txt2)}
+#ritmo.alerta b{color:var(--warn)}
+
+/* ---------- lista ---------- */
+main{padding:0 14px 30px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+  padding:13px;margin-bottom:9px}
+.card.feito{opacity:.5}
+.card.comprou{border-color:rgba(74,157,42,.45);background:rgba(74,157,42,.07);opacity:1}
+.c-l1{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:3px}
+.c-nome{font-weight:700;font-size:15px;line-height:1.25}
+.c-tel{font-weight:600;color:var(--txt2);white-space:nowrap;font-size:13.5px}
+.c-meta{font-size:12.5px;color:var(--dim);margin-bottom:9px}
+.c-jogo{color:var(--txt2);font-weight:600}
+.c-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.tag{font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:5px;letter-spacing:.02em}
+.tag.quente{background:rgba(217,83,79,.16);color:#e8827e}
+.tag.hoje{background:rgba(224,160,58,.16);color:var(--warn)}
+.tag.ok{background:rgba(74,157,42,.18);color:var(--buy2)}
+.tag.orig{background:rgba(89,166,224,.16);color:var(--blue)}
+
+.c-btns{display:flex;gap:6px}
+.b-zap{flex:1;background:linear-gradient(180deg,var(--buy2),var(--buy));color:#fff;
+  font-weight:700;padding:12px;border-radius:8px;display:flex;align-items:center;
+  justify-content:center;gap:7px;font-size:14.5px;min-height:46px}
+.b-zap:active{filter:brightness(.92)}
+.b-sec{background:var(--panel2);border:1px solid var(--line);border-radius:8px;
+  padding:12px 13px;font-size:13px;color:var(--txt2);font-weight:600;min-height:46px}
+
+.marcar{display:flex;gap:6px;margin-top:8px}
+.marcar button{flex:1;background:var(--bg2);border:1px solid var(--line);border-radius:7px;
+  padding:9px 4px;font-size:11.5px;color:var(--dim);font-weight:600;min-height:40px}
+.marcar button.on{border-color:var(--buy2);color:var(--buy2);background:rgba(74,157,42,.12)}
+.marcar button.no.on{border-color:var(--red);color:#e8827e;background:rgba(217,83,79,.12)}
+
+.vazio{text-align:center;color:var(--dim);padding:50px 20px;font-size:14px;line-height:1.7}
+
+/* ---------- modal ---------- */
+.modal{position:fixed;inset:0;z-index:800;background:rgba(0,0,0,.72);display:none;
+  align-items:flex-end;justify-content:center}
+.modal.on{display:flex}
+.modal-in{width:100%;max-width:520px;background:var(--bg2);border-top-left-radius:16px;
+  border-top-right-radius:16px;padding:18px 16px calc(20px + env(safe-area-inset-bottom));
+  max-height:88vh;overflow-y:auto}
+.modal-in h2{font-size:16px;margin-bottom:4px}
+.modal-in p.sub{font-size:13px;color:var(--dim);margin-bottom:14px}
+.modal-in textarea{width:100%;background:var(--panel);border:1px solid var(--line2);
+  border-radius:8px;padding:12px;min-height:150px;font-size:14.5px;line-height:1.5;resize:vertical}
+.tmpls{display:flex;gap:6px;overflow-x:auto;margin-bottom:10px;padding-bottom:4px;scrollbar-width:none}
+.tmpls::-webkit-scrollbar{display:none}
+.tmpl{flex:0 0 auto;background:var(--panel);border:1px solid var(--line);border-radius:50px;
+  padding:7px 13px;font-size:12.5px;color:var(--txt2);font-weight:600;white-space:nowrap}
+.tmpl.on{background:rgba(89,166,224,.16);border-color:var(--blue);color:var(--blue)}
+.m-btns{display:flex;gap:8px;margin-top:12px}
+.m-btns .pri{flex:1;background:linear-gradient(180deg,var(--buy2),var(--buy));color:#fff;
+  font-weight:700;padding:14px;border-radius:9px;font-size:15.5px;min-height:50px}
+.m-btns .sec{background:var(--panel);border:1px solid var(--line2);color:var(--txt2);
+  font-weight:600;padding:14px;border-radius:9px;font-size:14px;min-height:50px}
+.dica{font-size:12px;color:var(--dim);margin-top:12px;line-height:1.55;
+  background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+</style>
+</head>
+<body>
+
+<!-- ============ SENHA ============ -->
+<div id="gate">
+  <div class="gate-box">
+    <h1>Leads do site</h1>
+    <p>Quem pediu o desconto na página inicial. Digite a senha uma vez, este aparelho fica destravado.</p>
+    <input type="password" id="gate-senha" placeholder="senha" autocomplete="current-password" inputmode="text">
+    <button id="gate-btn">Abrir</button>
+    <div id="gate-erro"></div>
+    <div class="gate-cfg" id="gate-cfg" style="display:none">
+      <b>Falta ligar o recebedor.</b><br>
+      O endereço do script do Google ainda não foi colado neste arquivo
+      (<code>recuperacao/leads.html</code>, primeira linha do script) nem no site.
+      O passo a passo está em <code>.claude/leads-google/PASSO-A-PASSO.md</code>.
+    </div>
+    <p style="margin-top:18px;font-size:12.5px"><a href="index.html">Ir para carrinhos abandonados</a></p>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="app" style="display:none">
+  <header>
+    <div class="h-top">
+      <div>
+        <h1>Leads do site</h1>
+        <div id="gerado"></div>
+      </div>
+      <div class="h-acoes">
+        <button id="btn-atualizar" title="Baixar a lista de novo">↻</button>
+        <button id="btn-backup">Backup</button>
+        <a href="index.html">Carrinhos</a>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="s-fila">0</b><span>na fila</span></div>
+      <div class="stat"><b id="s-hoje">0</b><span>hoje</span></div>
+      <div class="stat"><b id="s-env">0</b><span>chamados</span></div>
+      <div class="stat v"><b id="s-comp">0</b><span>compraram</span></div>
+    </div>
+    <input class="busca" id="busca" placeholder="Buscar por nome ou telefone">
+    <div class="filtros" id="filtros"></div>
+  </header>
+
+  <div id="ritmo"></div>
+  <main id="lista"></main>
+</div>
+
+<!-- ============ MODAL MENSAGEM ============ -->
+<div class="modal" id="m-msg">
+  <div class="modal-in">
+    <h2 id="m-nome">Lead</h2>
+    <p class="sub" id="m-sub"></p>
+    <div class="tmpls" id="m-tmpls"></div>
+    <textarea id="m-texto"></textarea>
+    <div class="m-btns">
+      <button class="pri" id="m-abrir">Abrir no WhatsApp</button>
+      <button class="sec" id="m-copiar">Copiar</button>
+      <button class="sec" id="m-fechar">Fechar</button>
+    </div>
+    <div class="dica">
+      O WhatsApp abre com o texto pronto. <b>Você envia com o dedo.</b> Nada dispara
+      sozinho, que é o que costuma derrubar número novo.
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================================================================
+   Leads capturados no popup de desconto do site.
+
+   A lista vem do script do Google (mesma planilha onde o site grava). A senha
+   nao fica escrita aqui: ela e digitada uma vez e guardada no aparelho, e o
+   script so devolve a lista se a senha bater.
+   ========================================================================= */
+
+/* ======= COLE AQUI O MESMO ENDERECO /exec USADO NO SITE ======= */
+var ENDPOINT = 'https://script.google.com/macros/s/AKfycbym7PpM3-PFS1Mo43QqxRSoGFNit5DhDEBxqEly8UbCF0sgflyLCYBxdeka46yUBkAohQ/exec';
+/* ============================================================== */
+
+var CHAVE_ST    = 'almaz_leads_status_v1';
+var CHAVE_ENV   = 'almaz_leads_envios_v1';
+var CHAVE_SENHA = 'almaz_leads_senha_v1';
+
+var DADOS = null, ST = {}, ENVIOS = [];
+
+function carregarLocal(){
+  try{ ST = JSON.parse(localStorage.getItem(CHAVE_ST) || '{}'); }catch(e){ ST = {}; }
+  try{ ENVIOS = JSON.parse(localStorage.getItem(CHAVE_ENV) || '[]'); }catch(e){ ENVIOS = []; }
+}
+var salvarST  = function(){ localStorage.setItem(CHAVE_ST, JSON.stringify(ST)); };
+var salvarENV = function(){ localStorage.setItem(CHAVE_ENV, JSON.stringify(ENVIOS)); };
+
+/* =========================================================================
+   1) Baixar a lista. Tenta do jeito normal; se o navegador do celular
+      bloquear, cai no plano B (JSONP), que sempre passa.
+   ========================================================================= */
+function jsonp(url){
+  return new Promise(function(res, rej){
+    var cb = 'almazcb' + Date.now().toString(36) + Math.floor(Math.random()*999);
+    var s = document.createElement('script');
+    var t = setTimeout(function(){ limpar(); rej(new Error('tempo')); }, 20000);
+    function limpar(){ clearTimeout(t); try{ delete window[cb]; }catch(e){ window[cb] = undefined; }
+      if(s.parentNode) s.parentNode.removeChild(s); }
+    window[cb] = function(d){ limpar(); res(d); };
+    s.onerror = function(){ limpar(); rej(new Error('rede')); };
+    s.src = url + '&callback=' + cb;
+    document.head.appendChild(s);
+  });
+}
+
+function baixar(senha){
+  var base = ENDPOINT + '?senha=' + encodeURIComponent(senha) + '&t=' + Date.now();
+  return fetch(base, { cache:'no-store' })
+    .then(function(r){ if(!r.ok) throw new Error('http ' + r.status); return r.json(); })
+    ['catch'](function(){ return jsonp(base); });
+}
+
+/* =========================================================================
+   2) Utilidades
+   ========================================================================= */
+var capitalizar = function(s){
+  return (s||'').toLowerCase().split(/\s+/)
+    .map(function(p){ return p ? p[0].toUpperCase() + p.slice(1) : ''; }).join(' ').trim();
+};
+var primeiroNome = function(s){ return capitalizar(s).split(' ')[0] || 'tudo bem'; };
+
+function telBonito(t){
+  var d = (t||'').replace(/\D/g,'');
+  if(d.length === 11) return '(' + d.slice(0,2) + ') ' + d.slice(2,7) + '-' + d.slice(7);
+  if(d.length === 10) return '(' + d.slice(0,2) + ') ' + d.slice(2,6) + '-' + d.slice(6);
+  return d;
+}
+function haQuanto(iso){
+  if(!iso) return 'sem data';
+  var min = Math.floor((Date.now() - new Date(iso)) / 60000);
+  if(min < 2) return 'agora mesmo';
+  if(min < 60) return 'há ' + min + ' min';
+  var h = Math.floor(min / 60);
+  if(h < 24) return 'há ' + h + 'h';
+  var d = Math.floor(h / 24);
+  return d === 1 ? 'ontem' : 'há ' + d + ' dias';
+}
+var horasDe = function(iso){ return iso ? (Date.now() - new Date(iso)) / 3600000 : 9999; };
+
+/* =========================================================================
+   3) Modelos de mensagem.
+
+   Esta pessoa NAO abandonou carrinho: ela pediu o desconto e ainda esta
+   decidindo. Cobrar "finalize sua compra" nesse momento espanta. O texto puxa
+   duvida primeiro. Variar o modelo tambem evita o padrao repetido que o
+   WhatsApp le como spam.
+   ========================================================================= */
+var oJogo = function(c){ return (c.jogo || '').trim() || 'os jogos que você quer'; };
+
+var MODELOS = [
+  { nome:'O jogo dele', txt: function(c){ return (
+'Oi ' + primeiroNome(c.nome) + ', tudo bem? Aqui é a Almaz Store.\n\n' +
+'Vi aqui que você entrou no nosso site procurando ' + oJogo(c) + '. Boa escolha!\n\n' +
+'Ficou alguma dúvida de como funciona a liberação? Pode perguntar por aqui que eu te explico.'); } },
+
+  { nome:'Como funciona', txt: function(c){ return (
+'Oi ' + primeiroNome(c.nome) + '! Aqui é a Almaz Store.\n\n' +
+'Sobre ' + oJogo(c) + ': funciona na sua própria conta Steam, pelo nosso launcher, sem conta compartilhada, e o download vem direto dos servidores da Steam.\n\n' +
+'Junto vêm mais de 40.000 jogos. Quer que eu te mostre como fica na prática?'); } },
+
+  { nome:'Qual plano', txt: function(c){ return (
+'Oi ' + primeiroNome(c.nome) + ', tudo certo?\n\n' +
+'Pra jogar ' + oJogo(c) + ', a maioria pega o Vitalício: taxa única e continua recebendo os jogos novos pra sempre.\n\n' +
+'Quer que eu te explique a diferença dos planos em 1 minuto?'); } },
+
+  { nome:'Manda o link', txt: function(c){ return (
+'Oi ' + primeiroNome(c.nome) + '!\n\n' +
+'É só entrar aqui e escolher o acesso que eu libero na hora:\n\n' +
+'almazstore.com.br\n\n' +
+'No PIX cai na hora e você já começa a baixar ' + oJogo(c) + '.'); } },
+
+  { nome:'Sem resposta', txt: function(c){ return (
+'Oi ' + primeiroNome(c.nome) + ', passando aqui rapidinho.\n\n' +
+'Você chegou a decidir sobre ' + oJogo(c) + '? Se ficou com alguma dúvida, me pergunta sem compromisso que eu respondo.'); } },
+
+  { nome:'Ajuda no pagamento', txt: function(c){ return (
+'Oi ' + primeiroNome(c.nome) + '!\n\n' +
+'Se você tentou fechar e o pagamento não passou, me avisa. Isso acontece bastante e normalmente é besteira.\n\n' +
+'Eu gero um link novo pra você, no PIX cai na hora e já libero o acesso.'); } }
+];
+function modeloSugerido(c){
+  var h = horasDe(c.quando);
+  if(h < 3) return 0;
+  if(h < 48) return 3;
+  return 4;
+}
+
+/* =========================================================================
+   4) Estado / render
+   ========================================================================= */
+var filtroAtual = 'fila', busca = '';
+var FILTROS = [
+  { id:'fila',    label:'Na fila' },
+  { id:'quentes', label:'Últimas 3h' },
+  { id:'hoje',    label:'Hoje' },
+  { id:'enviado', label:'Chamados' },
+  { id:'respondeu', label:'Responderam' },
+  { id:'comprou', label:'Compraram' },
+  { id:'todos',   label:'Todos' }
+];
+var st = function(id){ return ST[id] || 'novo'; };
+
+function passaFiltro(c){
+  var s = st(c.id);
+  switch(filtroAtual){
+    case 'fila':      return s === 'novo';
+    case 'quentes':   return s === 'novo' && horasDe(c.quando) <= 3;
+    case 'hoje':      return horasDe(c.quando) <= 24;
+    case 'enviado':   return s === 'enviado';
+    case 'respondeu': return s === 'respondeu';
+    case 'comprou':   return s === 'comprou';
+    default:          return true;
+  }
+}
+function passaBusca(c){
+  if(!busca) return true;
+  var q = busca.toLowerCase();
+  return (c.nome||'').toLowerCase().indexOf(q) !== -1
+      || (c.jogo||'').toLowerCase().indexOf(q) !== -1
+      || (c.tel||'').indexOf(q.replace(/\D/g,'')) !== -1;
+}
+
+function render(){
+  var cs = DADOS.leads.filter(function(c){ return passaFiltro(c) && passaBusca(c); });
+  var lista = document.getElementById('lista');
+
+  if(!cs.length){
+    lista.innerHTML = '<div class="vazio">Nada aqui.<br>Troque o filtro acima.</div>';
+  } else {
+    lista.innerHTML = cs.map(function(c){
+      var s = st(c.id), h = horasDe(c.quando), tags = [];
+      if(s === 'novo' && h <= 3) tags.push('<span class="tag quente">QUENTE, ' + haQuanto(c.quando) + '</span>');
+      else if(s === 'novo' && h <= 24) tags.push('<span class="tag hoje">ENTROU HOJE</span>');
+      if(s === 'comprou') tags.push('<span class="tag ok">COMPROU</span>');
+      if(c.campanha) tags.push('<span class="tag orig">' + esc(c.campanha).slice(0,26) + '</span>');
+
+      return '<div class="card ' + (s==='comprou'?'comprou':(s!=='novo'?'feito':'')) + '">'
+        + '<div class="c-l1"><div class="c-nome">' + esc(capitalizar(c.nome)) + '</div>'
+        + '<div class="c-tel">' + telBonito(c.tel) + '</div></div>'
+        + '<div class="c-meta">'
+        +   (c.jogo ? 'Quer jogar <b class="c-jogo">' + esc(c.jogo) + '</b> · ' : '')
+        +   'entrou ' + haQuanto(c.quando) + '</div>'
+        + (tags.length ? '<div class="c-tags">' + tags.join('') + '</div>' : '')
+        + '<div class="c-btns">'
+        +   '<button class="b-zap" data-zap="' + c.id + '">'
+        +   '<svg width="17" height="17" viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.35 5.07L2 22l5.06-1.33A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>'
+        +   (s === 'novo' ? 'Chamar' : 'Chamar de novo') + '</button>'
+        +   '<button class="b-sec" data-info="' + c.id + '">Dados</button></div>'
+        + '<div class="marcar">'
+        +   '<button data-mk="enviado" data-id="' + c.id + '" class="' + (s==='enviado'?'on':'') + '">Chamei</button>'
+        +   '<button data-mk="respondeu" data-id="' + c.id + '" class="' + (s==='respondeu'?'on':'') + '">Respondeu</button>'
+        +   '<button data-mk="comprou" data-id="' + c.id + '" class="' + (s==='comprou'?'on':'') + '">Comprou</button>'
+        +   '<button data-mk="recusou" data-id="' + c.id + '" class="no ' + (s==='recusou'?'on':'') + '">Não quer</button>'
+        + '</div></div>';
+    }).join('');
+  }
+  atualizarStats();
+  atualizarRitmo();
+}
+function esc(s){ return String(s||'').replace(/[<>&"]/g, function(c){
+  return ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'})[c]; }); }
+
+function atualizarStats(){
+  var t = DADOS.leads;
+  var fila = t.filter(function(c){ return st(c.id) === 'novo'; }).length;
+  var hoje = t.filter(function(c){ return horasDe(c.quando) <= 24; }).length;
+  var env  = t.filter(function(c){ return ['enviado','respondeu'].indexOf(st(c.id)) !== -1; }).length;
+  var comp = t.filter(function(c){ return st(c.id) === 'comprou'; }).length;
+  document.getElementById('s-fila').textContent = fila;
+  document.getElementById('s-hoje').textContent = hoje;
+  document.getElementById('s-env').textContent = env;
+  document.getElementById('s-comp').textContent = comp;
+}
+
+/* Numero novo que dispara muito em pouco tempo cai. Aqui so aviso, nao bloqueio. */
+function atualizarRitmo(){
+  var agora = Date.now();
+  ENVIOS = ENVIOS.filter(function(t){ return agora - t < 3600000; });
+  salvarENV();
+  var n = ENVIOS.length, el = document.getElementById('ritmo'), LIMITE = 20;
+  el.className = n >= LIMITE ? 'alerta' : '';
+  el.innerHTML = n >= LIMITE
+    ? '<span><b>' + n + ' mensagens na última hora.</b> Dá uma parada de 30 a 60 min. '
+      + 'Volume alto em número novo é o que trava conta.</span>'
+    : '<span>Ritmo: <b>' + n + '/' + LIMITE + '</b> na última hora</span>'
+      + '<span style="font-size:11.5px">espace 1 a 2 min entre cada</span>';
+}
+
+/* =========================================================================
+   5) Modal de mensagem
+   ========================================================================= */
+var alvo = null, modeloSel = 0;
+
+function abrirMsg(c){
+  alvo = c; modeloSel = modeloSugerido(c);
+  document.getElementById('m-nome').textContent = capitalizar(c.nome);
+  document.getElementById('m-sub').textContent =
+    telBonito(c.tel) + (c.jogo ? ', quer jogar ' + c.jogo : '') + ', entrou ' + haQuanto(c.quando)
+    + (c.campanha ? ' (' + c.campanha + ')' : '');
+  document.getElementById('m-tmpls').innerHTML = MODELOS.map(function(m,i){
+    return '<button class="tmpl ' + (i===modeloSel?'on':'') + '" data-tm="' + i + '">' + m.nome + '</button>';
+  }).join('');
+  document.getElementById('m-texto').value = MODELOS[modeloSel].txt(c);
+  document.getElementById('m-msg').classList.add('on');
+}
+
+document.getElementById('m-tmpls').addEventListener('click', function(e){
+  var b = e.target.closest('[data-tm]'); if(!b) return;
+  modeloSel = +b.dataset.tm;
+  [].forEach.call(document.querySelectorAll('#m-tmpls .tmpl'), function(x,i){
+    x.classList.toggle('on', i === modeloSel); });
+  document.getElementById('m-texto').value = MODELOS[modeloSel].txt(alvo);
+});
+
+document.getElementById('m-abrir').addEventListener('click', function(){
+  var d = (alvo.tel||'').replace(/\D/g,'');
+  if(d.length < 10){ alert('Esse número está incompleto.'); return; }
+  var txt = document.getElementById('m-texto').value;
+  ENVIOS.push(Date.now()); salvarENV();
+  if(st(alvo.id) === 'novo'){ ST[alvo.id] = 'enviado'; salvarST(); }
+  window.open('https://wa.me/55' + d + '?text=' + encodeURIComponent(txt), '_blank');
+  document.getElementById('m-msg').classList.remove('on');
+  render();
+});
+
+document.getElementById('m-copiar').addEventListener('click', function(){
+  var el = document.getElementById('m-texto');
+  if(navigator.clipboard) navigator.clipboard.writeText(el.value)['catch'](function(){});
+  else { el.select(); document.execCommand('copy'); }
+  var b = document.getElementById('m-copiar');
+  b.textContent = 'Copiado'; setTimeout(function(){ b.textContent = 'Copiar'; }, 1400);
+});
+document.getElementById('m-fechar').addEventListener('click', function(){
+  document.getElementById('m-msg').classList.remove('on'); });
+
+/* =========================================================================
+   6) Backup
+   ========================================================================= */
+document.getElementById('btn-backup').addEventListener('click', function(){
+  var linhas = [['nome','telefone','jogo','quando','origem','campanha','status']];
+  DADOS.leads.forEach(function(c){
+    linhas.push([ capitalizar(c.nome), c.tel, c.jogo || '',
+      c.quando ? new Date(c.quando).toLocaleString('pt-BR') : '',
+      c.origem || '', c.campanha || '', st(c.id) ]);
+  });
+  var csv = '﻿' + linhas.map(function(l){
+    return l.map(function(v){ return '"' + String(v).replace(/"/g,'""') + '"'; }).join(';');
+  }).join('\n');
+  var url = URL.createObjectURL(new Blob([csv], { type:'text/csv;charset=utf-8' }));
+  var a = document.createElement('a');
+  a.href = url; a.download = 'leads-' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click(); URL.revokeObjectURL(url);
+});
+
+document.getElementById('btn-atualizar').addEventListener('click', function(){
+  var b = this; b.textContent = '...';
+  baixar(localStorage.getItem(CHAVE_SENHA) || '').then(function(d){
+    if(!d || !d.ok) throw new Error('senha');
+    iniciar(d); b.textContent = '✓';
+  })['catch'](function(){ b.textContent = '!'; })
+   .then(function(){ setTimeout(function(){ b.textContent = '↻'; }, 1500); });
+});
+
+/* =========================================================================
+   7) Eventos da lista
+   ========================================================================= */
+document.getElementById('lista').addEventListener('click', function(e){
+  var zap = e.target.closest('[data-zap]');
+  if(zap){
+    var c = DADOS.leads.filter(function(x){ return x.id == zap.dataset.zap; })[0];
+    if(c) abrirMsg(c);
+    return;
+  }
+  var info = e.target.closest('[data-info]');
+  if(info){
+    var l = DADOS.leads.filter(function(x){ return x.id == info.dataset.info; })[0];
+    if(l) alert(capitalizar(l.nome) + '\n\n'
+      + 'Telefone: ' + telBonito(l.tel) + '\n'
+      + 'Jogo que quer: ' + (l.jogo || 'não informado') + '\n'
+      + 'Entrou no site: ' + (l.quando ? new Date(l.quando).toLocaleString('pt-BR') : 'sem data') + '\n'
+      + 'Origem: ' + (l.origem || 'não informada') + '\n'
+      + 'Campanha: ' + (l.campanha || 'não informada'));
+    return;
+  }
+  var mk = e.target.closest('[data-mk]');
+  if(mk){
+    var id = mk.dataset.id, novo = mk.dataset.mk;
+    ST[id] = (st(id) === novo) ? 'novo' : novo;
+    salvarST(); render();
+  }
+});
+
+document.getElementById('busca').addEventListener('input', function(e){
+  busca = e.target.value.trim(); render(); });
+document.getElementById('filtros').addEventListener('click', function(e){
+  var b = e.target.closest('[data-f]'); if(!b) return;
+  filtroAtual = b.dataset.f;
+  [].forEach.call(document.querySelectorAll('#filtros .filtro'), function(x){
+    x.classList.toggle('on', x.dataset.f === filtroAtual); });
+  render();
+});
+
+/* =========================================================================
+   8) Abertura
+   ========================================================================= */
+function iniciar(d){
+  DADOS = { leads: d.leads || [] };
+
+  /* status de leads que sumiram da planilha so acumulam lixo */
+  var validos = {};
+  DADOS.leads.forEach(function(c){ validos[String(c.id)] = 1; });
+  Object.keys(ST).forEach(function(k){ if(!validos[k]) delete ST[k]; });
+  salvarST();
+
+  var g = document.getElementById('gerado');
+  g.textContent = DADOS.leads.length + ' leads, atualizado agora';
+  document.getElementById('filtros').innerHTML = FILTROS.map(function(f){
+    return '<button class="filtro ' + (f.id===filtroAtual?'on':'') + '" data-f="' + f.id + '">' + f.label + '</button>';
+  }).join('');
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  render();
+}
+
+function tentarAbrir(senha){
+  var erro = document.getElementById('gate-erro');
+  if(!ENDPOINT){
+    erro.textContent = '';
+    document.getElementById('gate-cfg').style.display = 'block';
+    return;
+  }
+  erro.textContent = 'Abrindo...';
+  baixar(senha).then(function(d){
+    if(!d || !d.ok){ throw new Error(d && d.erro === 'senha' ? 'senha' : 'resposta'); }
+    localStorage.setItem(CHAVE_SENHA, senha);
+    carregarLocal();
+    iniciar(d);
+  })['catch'](function(e){
+    if(String(e.message) === 'senha'){
+      erro.textContent = 'Senha errada.';
+      document.getElementById('gate-senha').value = '';
+    } else {
+      erro.textContent = 'Não consegui baixar a lista. Sem internet?';
+    }
+  });
+}
+
+document.getElementById('gate-btn').addEventListener('click', function(){
+  tentarAbrir(document.getElementById('gate-senha').value); });
+document.getElementById('gate-senha').addEventListener('keydown', function(e){
+  if(e.key === 'Enter') tentarAbrir(e.target.value); });
+
+(function(){
+  if(!ENDPOINT){ document.getElementById('gate-cfg').style.display = 'block'; return; }
+  var s = localStorage.getItem(CHAVE_SENHA);
+  if(s) tentarAbrir(s);
+  else document.getElementById('gate-senha').focus();
+})();
+</script>
+</body>
+</html>
