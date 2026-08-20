@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://cdn.cloudflare.steamstatic.com" crossorigin>
 
 <title>Almaz Store | Pague uma vez e nunca mais gaste com jogo na Steam</title>
-<meta name="description" content="Pague uma vez e nunca mais compre jogo. Sao +40.000 jogos originais na sua conta Steam e os lancamentos entram sem custo. Taxa unica, licenca vitalicia, PIX ou ate 3x no cartao.">
+<meta name="description" content="Pague uma vez e nunca mais compre jogo. Sao +40.000 jogos originais na sua conta Steam e os lancamentos entram sem custo. Taxa unica, licenca vitalicia, pagamento no PIX com liberacao na hora.">
 
 <!-- Microsoft Clarity -->
 <script type="text/javascript">
@@ -275,6 +275,9 @@ h2{font-size:clamp(21px,3.1vw,27px);margin-bottom:6px}
 .aniv-on [data-aniv]{display:block}
 .aniv-on span[data-aniv]{display:inline}
 
+/* ORFAS desde 20/08/2026: .aniv-bar e .aniv-note. O aniversario ficou com uma unica
+   aparicao, a .buybox-aniv da caixa de compra. Regras mantidas de proposito pra que
+   repor a faixa ou a linha dos planos seja so devolver o HTML. */
 .aniv-bar{
   background:var(--deal-bg);border-bottom:1px solid rgba(188,227,55,.22);
   text-align:center;padding:7px 20px;font-size:13px;line-height:1.35;color:#e6f3c4;
@@ -331,9 +334,16 @@ h2{font-size:clamp(21px,3.1vw,27px);margin-bottom:6px}
 
 .buybox{background:var(--panel2);border:1px solid var(--line2);border-radius:var(--r2);padding:14px}
 .buybox-top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+/* ORFAS desde 20/08/2026: .deal, .buybox-old, .ed-old e .gm-old saíram da tela junto
+   com o "de R$ 497,00". O R$ 497 era preço inventado por nós e competia com a unica
+   ancora verificavel da pagina, o carrinho real da Steam de R$ 1.573,78 na secao
+   #conta. Duas ancoras, uma falsa, e a falsa contamina a verdadeira. As regras ficam
+   aqui de proposito: se um dia voltar o riscado, e so repor os spans no HTML.
+   O upsell NAO entrou nessa poda: la o "de R$ 49,97 por R$ 24,98" e desconto real. */
 .deal{background:var(--deal-bg);color:var(--deal-tx);font-weight:700;font-size:17px;padding:6px 10px;border-radius:5px;letter-spacing:-.01em}
 .buybox-prices{display:flex;flex-direction:column;line-height:1.15}
 .buybox-old{font-size:12.5px;color:var(--dim);text-decoration:line-through}
+.buybox-once{font-size:12.5px;color:var(--dim);margin-top:4px}
 .buybox-new{font-size:23px;font-weight:700;color:#fff;letter-spacing:-.02em}
 .buybox-pay{font-size:12.5px;color:var(--txt2);margin-top:9px;text-align:center}
 .buybox-pay b{color:var(--txt);font-weight:600}
@@ -455,6 +465,7 @@ body.gm-open{overflow:hidden}
 .gm-offer-price{display:flex;align-items:baseline;justify-content:center;gap:8px;flex-wrap:wrap}
 .gm-old{font-size:13px;color:var(--dim);text-decoration:line-through}
 .gm-new{font-size:26px;font-weight:700;color:#fff;letter-spacing:-.02em}
+.gm-once{font-size:13px;color:var(--dim)}
 .gm-offer-list{list-style:none;display:flex;flex-direction:column;gap:6px;text-align:left}
 .gm-offer-list li{position:relative;padding-left:20px;font-size:13px;line-height:1.45;color:var(--txt2)}
 .gm-offer-list li::before{content:'\2713';position:absolute;left:0;top:0;color:var(--buy2);font-weight:700}
@@ -1271,6 +1282,10 @@ body.gm-open{overflow:hidden}
   /* caixa de compra: preco maior, tudo centralizado */
   .buybox{padding:16px}
   .buybox-top{justify-content:center;gap:12px;margin-bottom:14px}
+  /* o bloco de preco e centralizado como um todo, mas as duas linhas dentro dele
+     tem larguras bem diferentes ("R$ 49,97" x "pagamento unico, sem renovacao"),
+     entao sem isto o preco fica encostado na esquerda da linha de baixo. */
+  .buybox-prices{text-align:center}
   .buybox-new{font-size:27px}
   .deal{font-size:18px}
   .offer-btn{padding:15px 24px;font-size:16px}
@@ -1439,11 +1454,15 @@ var io = (function(){
 })();
 </script>
 
-<div class="aniv-bar" data-aniv>
-  <b>Semana de aniversário da Almaz Store.</b>
-  O aniversário é nosso, quem ganha é você.
-  <span class="aniv-when" data-aniv-prazo>Termina 15/08</span>
-</div>
+<!-- A faixa .aniv-bar que ficava aqui saiu em 20/08/2026, junto com a .aniv-note da
+     secao de planos. O aniversario aparecia 3 vezes (faixa, caixa de compra e planos),
+     sempre com prazo terminando amanha, e as 3 diziam a mesma coisa. Com o preco falso
+     fora, esse virou o unico gatilho de urgencia da pagina, e repetir 3x um gatilho so
+     le como golpe, ainda mais pro publico mais velho. Sobrou UMA aparicao, a da caixa
+     de compra: e a mais curta, fica colada no preco e esta na primeira tela, que e a
+     unica que 59% dos visitantes veem. Como bonus, a faixa devolveu ~30px acima da
+     dobra. O motor de datas continua inteiro: pra ter a faixa de volta e so repor esta
+     div com data-aniv e data-aniv-prazo. -->
 
 <!-- ===================== BARRA SUPERIOR ===================== -->
 <header class="topbar">
@@ -1485,12 +1504,18 @@ var io = (function(){
       <div class="art reveal">
         <div class="art-stage" id="art-stage">
           <div class="art-slide on"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3768760/library_hero.jpg" alt="007 First Light" fetchpriority="high" decoding="async"></div>
-          <!-- Lancamentos recentes, entraram em 13/08/2026. Os dois primeiros NAO tem
-               library_hero na Steam (da 404, inclusive na URL com hash), entao usam o
-               screenshot oficial 1920x1080, mesmo recurso ja usado no MECCHA CHAMELEON
-               logo abaixo. Datas: Black Flag Resynced 09/07/2026, LOTR 11/08/2026. -->
-          <div class="art-slide"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3751950/5de8c44752bdbc724b905b76bc5023bbff57547f/ss_5de8c44752bdbc724b905b76bc5023bbff57547f.1920x1080.jpg" alt="Assassin's Creed Black Flag Resynced" loading="lazy" decoding="async"></div>
-          <div class="art-slide"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2523770/26298461a9449e71eac1a000f2e4a0163c517c8f/ss_26298461a9449e71eac1a000f2e4a0163c517c8f.1920x1080.jpg" alt="The Lord of the Rings: War in the North" loading="lazy" decoding="async"></div>
+          <!-- Lancamentos recentes, entraram em 13/08/2026 (Black Flag Resynced 09/07/2026,
+               LOTR 11/08/2026). Ate 20/08/2026 estes dois usavam SCREENSHOT de gameplay,
+               porque se acreditava que nao tinham library_hero. Tinham: o erro foi tentar
+               o library_hero com o hash do HEADER. Cada asset da Steam tem hash proprio.
+               COMO DESCOBRIR O HASH CERTO (use isto, nao chute):
+                 api.steampowered.com/IStoreBrowseService/GetItems/v1/ com
+                 input_json={"ids":[{"appid":<id>}],"context":{"language":"portuguese",
+                 "country_code":"BR"},"data_request":{"include_assets":true}}
+               A resposta traz o campo "library_hero" com "<hash>/library_hero.jpg", que
+               entra depois de /store_item_assets/steam/apps/<id>/. -->
+          <div class="art-slide"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3751950/09d7b766ce8a26bce32887ec7eaf00fc36552025/library_hero.jpg" alt="Assassin's Creed Black Flag Resynced" loading="lazy" decoding="async"></div>
+          <div class="art-slide"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2523770/8323cc91de5f9da103ee259bc5cfc2cff70324f2/library_hero.jpg" alt="The Lord of the Rings: War in the North" loading="lazy" decoding="async"></div>
           <div class="art-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1623730/library_hero.jpg" alt="Palworld" loading="lazy" decoding="async"></div>
 
           <!-- MECCHA CHAMELEON saiu do banner em 13/08/2026: indie desconhecido no meio de
@@ -1511,11 +1536,11 @@ var io = (function(){
           <!-- data-i tem que bater com a ORDEM dos .art-slide acima. Entrou lancamento no
                meio em 13/08/2026, entao a numeracao daqui pra baixo foi toda corrida.
                As miniaturas reusam a MESMA URL do slide de proposito: o navegador serve
-               do cache e a miniatura sai de graca. Black Flag e LOTR sao a excecao, usam
-               o screenshot 600x338 porque o slide deles e o 1920x1080 (nao tem hero). -->
+               do cache e a miniatura sai de graca. Desde 20/08/2026 isso vale pras nove,
+               sem excecao: Black Flag e LOTR trocaram o screenshot pelo library_hero. -->
           <div class="art-thumb on" data-i="0"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3768760/library_hero.jpg" alt="007 First Light" loading="lazy"></div>
-          <div class="art-thumb" data-i="1"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3751950/5de8c44752bdbc724b905b76bc5023bbff57547f/ss_5de8c44752bdbc724b905b76bc5023bbff57547f.600x338.jpg" alt="Assassin's Creed Black Flag Resynced" loading="lazy"></div>
-          <div class="art-thumb" data-i="2"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2523770/26298461a9449e71eac1a000f2e4a0163c517c8f/ss_26298461a9449e71eac1a000f2e4a0163c517c8f.600x338.jpg" alt="The Lord of the Rings: War in the North" loading="lazy"></div>
+          <div class="art-thumb" data-i="1"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3751950/09d7b766ce8a26bce32887ec7eaf00fc36552025/library_hero.jpg" alt="Assassin's Creed Black Flag Resynced" loading="lazy"></div>
+          <div class="art-thumb" data-i="2"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2523770/8323cc91de5f9da103ee259bc5cfc2cff70324f2/library_hero.jpg" alt="The Lord of the Rings: War in the North" loading="lazy"></div>
           <div class="art-thumb" data-i="3"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1623730/library_hero.jpg" alt="Palworld" loading="lazy"></div>
           <div class="art-thumb" data-i="4"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3321460/library_hero.jpg" alt="Crimson Desert" loading="lazy"></div>
           <div class="art-thumb" data-i="5"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3764200/library_hero.jpg" alt="Resident Evil Requiem" loading="lazy"></div>
@@ -1548,15 +1573,20 @@ var io = (function(){
 
         <div class="buybox">
           <div class="buybox-top">
-            <span class="deal num">-90%</span>
             <span class="buybox-prices">
-              <span class="buybox-old num">R$ 497,00</span>
               <span class="buybox-new num">R$ 49,97</span>
+              <span class="buybox-once">pagamento único, sem renovação</span>
             </span>
           </div>
           <a href="#pricing" class="offer-btn">Ver a oferta completa</a>
-          <div class="buybox-pay"><b>PIX</b> ou até <b>3x no cartão</b>, aprovação na hora</div>
+          <div class="buybox-pay">Pagamento no <b>PIX</b>, aprovação na hora</div>
           <div class="buybox-aniv" data-aniv>Promoção de aniversário, <span data-aniv-curto>até 15/08</span></div>
+          <!-- Unico texto de data que sobrou na pagina, e ele esta na primeira tela.
+               Este <script> pinta a data certa AQUI, na hora, antes do primeiro paint,
+               senao a pessoa chega a ler o "15/08" chumbado no HTML acima. Ele morava
+               na secao de planos ate 20/08/2026, o que era tarde demais pra esta linha.
+               O DOMContentLoaded la de cima continua valendo como rede de seguranca. -->
+          <script>window.almazAnivPintar && window.almazAnivPintar();</script>
 
           <div class="medos">
             <div class="medo">
@@ -1635,7 +1665,7 @@ var io = (function(){
       <div class="step">
         <div class="step-n num">1</div>
         <h3>Escolhe o plano e paga</h3>
-        <p>PIX ou até 3x no cartão. A aprovação sai na hora que o pagamento confirma.</p>
+        <p>Pagamento no PIX. A aprovação sai na hora que o pagamento confirma.</p>
       </div>
       <div class="step">
         <div class="step-n num">2</div>
@@ -1916,7 +1946,7 @@ var io = (function(){
              cada lado. Se um dia voltar a ter <span data-almaz-games> aqui no meio, o
              texto sairia "Quero os  40.000  jogos" com buraco em volta do numero.
           --><span>Quero parar de gastar com jogo</span></a>
-        <div class="offer-methods">PIX ou até 3x no cartão</div>
+        <div class="offer-methods">Pagamento no PIX</div>
         <div class="offer-trust"><strong>Aprovação na hora</strong> e 7 dias de garantia</div>
       </div>
 
@@ -2010,12 +2040,7 @@ var io = (function(){
     <div class="sec-head reveal">
       <h2>Escolha o tamanho da sua biblioteca</h2>
       <p>Taxa única em todos os planos. Sem mensalidade e sem renovação. Só o Vitalício recebe os lançamentos que ainda vão sair.</p>
-      <p class="aniv-note" data-aniv>A semana de aniversário começou dia <span data-aniv-inicio>08/08</span> e quem ganha é você. <span data-aniv-prazo>Termina 15/08</span>.</p>
     </div>
-    <!-- Ultimo texto de data da pagina. Pinta aqui, na hora, pra data certa
-         entrar antes da primeira tela aparecer. O DOMContentLoaded la de cima
-         continua valendo e pega qualquer data-aniv que nasca depois daqui. -->
-    <script>window.almazAnivPintar && window.almazAnivPintar();</script>
 
     <div class="eds reveal">
 
@@ -2036,14 +2061,12 @@ var io = (function(){
         </div>
         <div class="ed-buy">
           <div class="ed-price-row">
-            <span class="deal num">-90%</span>
             <span class="ed-price">
-              <span class="ed-old num">R$ 97,00</span>
               <span class="ed-new num">R$ 9,97</span>
             </span>
           </div>
           <a role="button" tabindex="0" href="#pricing" onclick="almazUpsell('basico');return false" class="offer-btn">Quero garantir</a>
-          <div class="offer-methods">PIX ou até 3x no cartão</div>
+          <div class="offer-methods">Pagamento no PIX</div>
           <div class="offer-trust"><strong>Aprovação na hora</strong> e 7 dias de garantia</div>
         </div>
       </div>
@@ -2065,14 +2088,12 @@ var io = (function(){
         </div>
         <div class="ed-buy">
           <div class="ed-price-row">
-            <span class="deal num">-89%</span>
             <span class="ed-price">
-              <span class="ed-old num">R$ 197,00</span>
               <span class="ed-new num">R$ 19,97</span>
             </span>
           </div>
           <a role="button" tabindex="0" href="#pricing" onclick="almazUpsell('avancado');return false" class="offer-btn">Quero garantir</a>
-          <div class="offer-methods">PIX ou até 3x no cartão</div>
+          <div class="offer-methods">Pagamento no PIX</div>
           <div class="offer-trust"><strong>Aprovação na hora</strong> e 7 dias de garantia</div>
         </div>
       </div>
@@ -2102,16 +2123,14 @@ var io = (function(){
             São <b>R$ 40,00</b> a mais que o Básico, e é a diferença entre <b>comprar jogo de novo</b> ou nunca mais.
           </div>
           <div class="ed-price-row">
-            <span class="deal num">-90%</span>
             <span class="ed-price">
-              <span class="ed-old num">R$ 497,00</span>
               <span class="ed-new num">R$ 49,97</span>
             </span>
           </div>
           <a href="https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm"
              onclick="checkout('https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm',49.97);return false"
              class="offer-btn">Quero garantir</a>
-          <div class="offer-methods">PIX ou até 3x no cartão</div>
+          <div class="offer-methods">Pagamento no PIX</div>
           <div class="offer-trust"><strong>Aprovação na hora</strong> e 7 dias de garantia</div>
         </div>
       </div>
@@ -2157,7 +2176,7 @@ var io = (function(){
   <div class="wrap foot-in">
     <div>
       <div class="foot-brand"><img src="assets/logo-128.png" alt="Almaz Store"> Almaz Store</div>
-      <p style="margin-top:8px">Suporte pelo WhatsApp e Discord. Pagamento por PIX ou até 3x no cartão.</p>
+      <p style="margin-top:8px">Suporte pelo WhatsApp e Discord. Pagamento por PIX.</p>
     </div>
     <p style="max-width:420px">
       Não somos afiliados nem representantes da Valve Corporation. Steam é marca registrada
@@ -2228,9 +2247,8 @@ var io = (function(){
       <div class="gm-offer">
         <div class="gm-offer-hd">Acesso Vitalício</div>
         <div class="gm-offer-price">
-          <span class="deal num">-90%</span>
-          <span class="gm-old num">R$ 497,00</span>
           <span class="gm-new num">R$ 49,97</span>
+          <span class="gm-once">pagamento único</span>
         </div>
         <ul class="gm-offer-list">
           <li><strong><span data-almaz-games="vitalicio">40.000</span> jogos</strong> liberados</li>
@@ -2241,7 +2259,7 @@ var io = (function(){
         <a href="https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm"
            onclick="checkout('https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm',49.97);return false"
            class="offer-btn" id="gm-go">Quero garantir</a>
-        <div class="gm-offer-pay">PIX ou até 3x no cartão</div>
+        <div class="gm-offer-pay">Pagamento no PIX</div>
         <div class="gm-offer-trust"><strong>Aprovação na hora</strong> e 7 dias de garantia</div>
       </div>
 
@@ -3856,7 +3874,7 @@ document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
 
 
 
-(function(){var F=[{q:'Vou tomar ban na minha conta Steam?',a:'O desbloqueio é feito pelo nosso launcher, na sua própria conta Steam, sem conta compartilhada, sem login de terceiros. E você tem 7 dias de garantia pra testar sem risco.'},{q:'Vou ter que pagar de novo algum dia?',a:'Não. É pagamento único e o acesso é vitalício: você não paga renovação, não paga mensalidade e não paga por lançamento nenhum.'},{q:'E os jogos que saírem em 2027, 2028?',a:'Entram na sua biblioteca sem custo nenhum. A gente adiciona os lançamentos toda semana, e quem tem o plano Vitalício recebe todos sem pagar de novo.'},{q:'Como recebo depois de pagar?',a:'Pagou no PIX ou no cartão, o acesso chega no seu e-mail em poucos minutos, com o passo a passo da ativação. Aí é abrir a Steam, baixar e jogar.'},{q:'É seguro?',a:'Sim. Acesso seguro, sem arquivos suspeitos ou alterações no seu PC, e você ainda tem 7 dias de garantia: se não curtir, devolvemos o seu dinheiro.'},{q:'Como funciona?',a:'Após a compra, você recebe o acesso por e-mail, faz a ativação rápida e baixa os jogos direto na sua biblioteca Steam.'},{q:'Os jogos são originais?',a:'Sim. Downloads e atualizações oficiais realizados diretamente pelos servidores da Steam.'},{q:'Funciona online?',a:'Sim. Jogos com suporte a multiplayer funcionam online normalmente.'},{q:'Quais as formas de pagamento?',a:'Aceitamos PIX e cartão de crédito em até 3x, com liberação instantânea após a confirmação do pagamento.'},{q:'Como funciona o suporte?',a:'Oferecemos suporte humanizado via WhatsApp para auxiliar em todo o processo de ativação.'}];var fl=document.getElementById('fl');fl.innerHTML=F.map(function(f){return'<div class="faq-item reveal"><button class="faq-q" onclick="tFaq(this)">'+f.q+'<span class="faq-chev">▼</span></button><div class="faq-a">'+f.a+'</div></div>'}).join('');fl.querySelectorAll('.reveal').forEach(function(el){io.observe(el)})})();
+(function(){var F=[{q:'Vou tomar ban na minha conta Steam?',a:'O desbloqueio é feito pelo nosso launcher, na sua própria conta Steam, sem conta compartilhada, sem login de terceiros. E você tem 7 dias de garantia pra testar sem risco.'},{q:'Vou ter que pagar de novo algum dia?',a:'Não. É pagamento único e o acesso é vitalício: você não paga renovação, não paga mensalidade e não paga por lançamento nenhum.'},{q:'E os jogos que saírem em 2027, 2028?',a:'Entram na sua biblioteca sem custo nenhum. A gente adiciona os lançamentos toda semana, e quem tem o plano Vitalício recebe todos sem pagar de novo.'},{q:'Como recebo depois de pagar?',a:'Confirmou o PIX, o acesso chega no seu e-mail em poucos minutos, com o passo a passo da ativação. Aí é abrir a Steam, baixar e jogar.'},{q:'É seguro?',a:'Sim. Acesso seguro, sem arquivos suspeitos ou alterações no seu PC, e você ainda tem 7 dias de garantia: se não curtir, devolvemos o seu dinheiro.'},{q:'Como funciona?',a:'Após a compra, você recebe o acesso por e-mail, faz a ativação rápida e baixa os jogos direto na sua biblioteca Steam.'},{q:'Os jogos são originais?',a:'Sim. Downloads e atualizações oficiais realizados diretamente pelos servidores da Steam.'},{q:'Funciona online?',a:'Sim. Jogos com suporte a multiplayer funcionam online normalmente.'},{q:'Quais as formas de pagamento?',a:'No momento trabalhamos só com PIX, com liberação instantânea após a confirmação do pagamento.'},{q:'Como funciona o suporte?',a:'Oferecemos suporte humanizado via WhatsApp para auxiliar em todo o processo de ativação.'}];var fl=document.getElementById('fl');fl.innerHTML=F.map(function(f){return'<div class="faq-item reveal"><button class="faq-q" onclick="tFaq(this)">'+f.q+'<span class="faq-chev">▼</span></button><div class="faq-a">'+f.a+'</div></div>'}).join('');fl.querySelectorAll('.reveal').forEach(function(el){io.observe(el)})})();
 
 function tFaq(b){var a=b.nextElementSibling,o=b.classList.contains('open');document.querySelectorAll('.faq-q.open').forEach(function(q){q.classList.remove('open');q.nextElementSibling.classList.remove('open')});if(!o){b.classList.add('open');a.classList.add('open')}}
 
@@ -4408,7 +4426,7 @@ else{el.scrollIntoView({behavior:'smooth'});}
 
         "É seguro e você tem 7 dias de garantia. Se comprar e não curtir, é só pedir o reembolso dentro desse prazo, sem a gente ficar inventando desculpa pra te segurar.",
 
-        "O pagamento é por PIX ou cartão em até 3x, e a liberação é na hora que confirma. Se travar em qualquer parte, a gente te ajuda no WhatsApp."
+        "O pagamento é no PIX, e a liberação é na hora que confirma. Se travar em qualquer parte, a gente te ajuda no WhatsApp."
 
       ]
 
