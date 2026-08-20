@@ -647,6 +647,49 @@ body.gm-open{overflow:hidden}
    proposital em vez de parecer preco fora de ordem */
 .eds-alt{display:none;text-align:center;font-size:12.5px;color:var(--dim);padding:4px 0 0}
 
+/* ---------- selo de pagamento seguro ----------
+   Entrou em 20/08/2026, embaixo dos 3 cards. Fica SO aqui de proposito: e o unico
+   ponto da pagina onde a pessoa compra, entao e onde a duvida "eu ponho meu dinheiro
+   nessa loja?" realmente aparece. Espalhar selo pela pagina inteira nao acrescenta
+   confianca, so ruido.
+   O gateway do PIX no GGCheckout e o Mercado Pago (confirmado pelo user em
+   20/08/2026). SE TROCAR DE GATEWAY, TROQUE ESTE SELO JUNTO: exibir marca que nao
+   processa e problema com o cliente e com a dona da marca.
+   SOBRE O ARQUIVO DO LOGO (20/08/2026): usa assets/mercado-pago-branco.svg, que e a
+   versao NEGATIVA, gerada a partir do assets/mercado-pago.svg original trocando so a
+   classe .cls-1 de #0a0080 (azul-marinho) para #ffffff. O .cls-1 pinta o texto E o
+   contorno do icone; o .cls-3 (#00bcff, o icone azul) e o .cls-2 (#fff, o aperto de
+   mao) ficam como estao, e por isso o icone continua identico ao oficial.
+   A primeira versao usava o arquivo original dentro de uma plaquinha branca, porque
+   navy em fundo escuro some. Funcionava, mas era um retangulo branco colado num site
+   escuro, com cara de remendo. A negativa dispensa a plaquinha e o logo passa a fazer
+   parte do card. Os DOIS arquivos ficam no repo: se algum dia o site tiver fundo
+   claro, o original volta a ser o certo. */
+/* Tudo centralizado, em duas fileiras. A primeira versao punha o logo a esquerda e o
+   texto a direita: no celular isso virava coluna, o logo ficava sozinho num canto com
+   um vazio enorme do lado, o titulo quebrava deixando a palavra "Pago" orfa na segunda
+   linha, e o conjunto ficava desalinhado bem em cima do card da garantia, que e
+   centralizado. Centralizado tambem NAO precisa de media query: as duas fileiras se
+   viram sozinhas com flex-wrap.
+   O logo entra DENTRO da frase ("Pagamento seguro por [logo]"), o que resolve de
+   quebra a repeticao: antes o logo escrevia "mercado pago" e o titulo repetia
+   "Mercado Pago" na linha de baixo. */
+.selo{
+  margin-top:24px;
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);
+  padding:18px 22px;
+  display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;
+}
+.selo-hd{
+  display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;
+  font-size:14.5px;font-weight:600;color:var(--txt);
+}
+.selo-hd svg{width:15px;height:15px;flex-shrink:0;fill:none;stroke:var(--buy2);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.selo-hd img{display:block;height:34px;width:auto}
+.selo-list{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:8px 20px}
+.selo-list li{font-size:12.5px;color:var(--txt2);line-height:1.5;display:flex;gap:7px;align-items:center}
+.selo-list li::before{content:'\2713';color:var(--buy2);font-weight:700;flex-shrink:0}
+
 @media(max-width:860px){
   .eds{grid-template-columns:1fr;max-width:430px;margin:0 auto;gap:18px;align-items:stretch}
   .offer-card.featured{order:-1}
@@ -655,9 +698,14 @@ body.gm-open{overflow:hidden}
   .offer-card[data-plan-id="avancado"]{order:2}
 }
 .offer-features{list-style:none;display:flex;flex-direction:column;gap:8px}
-.offer-features li{font-size:13.5px;color:var(--txt2);display:flex;gap:8px;align-items:flex-start;line-height:1.5}
+/* gap:0 + margin no ::before, em vez de gap:8px no li. Com gap, CADA pedaco de texto
+   solto vira item de flex e ganha 8px: "40.000 jogos</strong> liberados" saia com
+   buraco, e o item "...incluso</strong>, sem pagar de novo" saia com buraco ANTES DA
+   VIRGULA. E a mesma armadilha ja documentada nos botoes. Corrigido em 20/08/2026:
+   agora so o icone tem espacamento proprio e o texto flui normal. */
+.offer-features li{font-size:13.5px;color:var(--txt2);display:flex;gap:0;align-items:flex-start;line-height:1.5}
 .offer-features li::before{
-  content:'';flex-shrink:0;width:15px;height:15px;margin-top:2px;border-radius:3px;
+  content:'';flex-shrink:0;width:15px;height:15px;margin-top:2px;margin-right:8px;border-radius:3px;
   background:rgba(74,157,42,.2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%2357b533' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/11px no-repeat;
 }
 .offer-features li strong{color:var(--txt);font-weight:600}
@@ -676,6 +724,44 @@ body.gm-open{overflow:hidden}
 .offer-methods{font-size:12px;color:var(--dim);text-align:center;margin-top:9px}
 .offer-trust{font-size:12px;color:var(--dim);text-align:center;margin-top:5px}
 .offer-trust strong{color:var(--txt2);font-weight:600}
+
+/* ---------- funil: cada secao empurra pra proxima ----------
+   Entrou em 20/08/2026. Antes disso o corpo da pagina tinha 2 botoes pulando DIRETO
+   pro checkout (secoes #conta e #cresce) e 5 secoes sem CTA nenhum. Ou seja: ou a
+   pessoa comprava no meio da leitura sem ter visto a oferta, ou nao tinha pra onde ir.
+   Com o "a partir de R$ 9,97" na primeira tela, comprar cedo virou comprar o plano
+   ERRADO, porque o Basico e biblioteca fechada e nao recebe jogo novo.
+   Agora cada secao termina empurrando pra proxima, ate #pricing.
+
+   Os degraus usam .btn-ghost DE PROPOSITO: verde e a cor de COMPRAR, e comprar so
+   acontece em #pricing. Se um degrau virar verde, ele volta a competir com a oferta.
+   Unica excecao: o botao verde da caixa do topo, que e o primeiro degrau. Ele fica
+   verde porque e a acao principal da primeira tela e nao tem oferta nenhuma na tela
+   pra competir com ele.
+
+   O catalogo, o popup do jogo e o chatbot NAO entram nessa regra: quem clicou num
+   jogo especifico ou foi perguntar preco no chat ja se qualificou, e continua podendo
+   comprar dali. Decisao do user em 20/08/2026.
+
+   HISTORICO, leia antes de mexer: essa corrente ja existiu como .flow-next e foi
+   REMOVIDA em 30/06/2026 porque o user achou que tinha botao demais (os visiveis
+   caiam de 35 pra 29). Voltou por pedido dele em 20/08/2026, com motivo novo. Se ele
+   reclamar de excesso de botao outra vez, e daqui que se corta, nao dos de compra. */
+.flow{margin-top:28px;display:flex;justify-content:center}
+/* Os 3 lugares onde mora um degrau: a maioria em .flow, mais os dois que herdaram o
+   lugar de um botao de compra antigo (a caixa da calculadora e o fecho do #cresce).
+   Ficam na MESMA regra de proposito, senao um degrau sai com altura diferente do
+   outro e a corrente deixa de parecer uma corrente. */
+.flow .btn-ghost,
+.conta-vs .btn-ghost,
+.cresce-cta .btn-ghost{min-width:300px;padding:13px 26px;font-size:14.5px}
+.flow .btn-ghost::after,
+.conta-vs .btn-ghost::after,
+.cresce-cta .btn-ghost::after{content:'\2193';font-size:15px;opacity:.55}
+@media(max-width:600px){
+  .flow{margin-top:22px}
+  .flow .btn-ghost{width:100%;min-width:0}
+}
 
 /* ---------- feedbacks: prints do grupo (faixa rolando) ---------- */
 .fbs{
@@ -1046,8 +1132,11 @@ body.gm-open{overflow:hidden}
 .conta-vs-price span{font-size:13px;color:var(--dim)}
 .conta-vs-sub{margin-top:12px;font-size:13.5px;line-height:1.6;color:var(--txt2)}
 .conta-vs-sub strong{color:#fff;font-weight:600}
+/* .offer-btn e .offer-methods/.offer-trust saíram desta caixa em 20/08/2026, quando o
+   botao dela virou degrau do funil. As regras ficam pra caso o botao de compra volte. */
 .conta-vs .offer-btn{margin-top:16px}
 .conta-vs .offer-methods,.conta-vs .offer-trust{margin-top:8px;text-align:center}
+.conta-vs .btn-ghost{margin-top:16px;width:100%;min-width:0}
 @media(max-width:860px){
   .conta{grid-template-columns:1fr}
   /* sticky num grid de 1 coluna gruda a caixa no fim da tela e cobre o carrinho */
@@ -1100,12 +1189,14 @@ body.gm-open{overflow:hidden}
    Aqui ele divide a linha com o texto, entao precisa voltar a ter largura propria,
    senao empurra o paragrafo pra linha de cima e vira uma barra verde de 1100px. */
 .cresce-cta .offer-btn{flex:0 0 auto;width:auto;min-width:280px}
+.cresce-cta .btn-ghost{flex:0 0 auto}
 @media(max-width:860px){
   .cresce{grid-template-columns:repeat(2,1fr);gap:10px}
   .cresce-txt{padding:10px 11px 12px}
   .cresce-nome{font-size:12.5px}
   .cresce-cta{flex-direction:column;align-items:stretch;text-align:center;padding:16px 14px}
   .cresce-cta .offer-btn{min-width:0;width:100%;flex:0 0 auto}
+  .cresce-cta .btn-ghost{min-width:0;width:100%;flex:0 0 auto}
 }
 
 /* ---------- FAQ ---------- */
@@ -1598,7 +1689,12 @@ var io = (function(){
               <span class="buybox-once">pagamento único</span>
             </span>
           </div>
-          <a href="#pricing" class="offer-btn">Ver a oferta completa</a>
+          <!-- Degrau 1 do funil. Ia direto pra #pricing ate 20/08/2026, o que fazia a
+               pessoa pular a pagina inteira e cair na oferta sem ter lido nada. Agora
+               abre a leitura pela biblioteca. Quem ja esta decidido tem duas saidas
+               rapidas pros planos: o "Compare os 3 planos" logo abaixo e o botao fixo
+               do rodape no celular. -->
+          <a href="#biblioteca" class="offer-btn">Ver os jogos inclusos</a>
           <div class="buybox-pay">Pagamento no <b>PIX</b>, aprovação na hora</div>
           <div class="buybox-aniv" data-aniv>Promoção de aniversário, <span data-aniv-curto>até 15/08</span></div>
           <!-- Unico texto de data que sobrou na pagina, e ele esta na primeira tela.
@@ -1673,12 +1769,15 @@ var io = (function(){
         <button class="btn-ghost" id="av-catalog-open" type="button">Abrir catálogo completo</button>
         <span class="av-catalog-note">Busque por nome ou filtre por categoria</span>
       </div>
+
+      <div class="flow reveal"><a href="#passos" class="btn-ghost">Como funciona</a></div>
     </div>
   </div>
 </section>
 
 <!-- ===================== COMO FUNCIONA (3 PASSOS) ===================== -->
-<section class="sec">
+<!-- Ganhou id="passos" em 20/08/2026 so pra ser alvo do degrau anterior do funil. -->
+<section class="sec" id="passos">
   <div class="wrap">
     <div class="sec-head reveal"><h2>Do pagamento ao jogo rodando</h2></div>
     <div class="steps reveal">
@@ -1698,6 +1797,8 @@ var io = (function(){
         <p>Os jogos aparecem na sua biblioteca e o download vem dos servidores da Steam.</p>
       </div>
     </div>
+
+    <div class="flow reveal"><a href="#launcher" class="btn-ghost">Conhecer o programa</a></div>
   </div>
 </section>
 
@@ -1772,6 +1873,8 @@ var io = (function(){
            WhatsApp/Discord por dentro. Saiu em 13/08/2026: as duas informacoes
            ja aparecem na lista da secao de baixo, e a janela do launcher vende
            sozinha. Menos texto, a pessoa desce mais rapido. -->
+
+      <div class="flow reveal"><a href="#pirata" class="btn-ghost">Isso é pirataria?</a></div>
     </div>
   </div>
 </section>
@@ -1818,6 +1921,8 @@ var io = (function(){
     <!-- O fecho "voce abre a sua Steam, o jogo esta la..." saiu em 13/08/2026.
          As duas colunas ja dizem isso item por item; o paragrafo por baixo so
          repetia em prosa e alongava a secao no celular. -->
+
+    <div class="flow reveal"><a href="#caixinhas" class="btn-ghost">Dúvidas que mais chegam</a></div>
   </div>
 </section>
 
@@ -1878,6 +1983,8 @@ var io = (function(){
       </button>
 
       </div>
+
+      <div class="flow reveal"><a href="#conta" class="btn-ghost">Quanto custa na Steam</a></div>
     </div>
   </div>
 </section>
@@ -1958,16 +2065,13 @@ var io = (function(){
           e tudo que for lançado depois. Não tem 2027, não tem 2028: você paga hoje e nunca mais
           gasta com jogo.
         </p>
-        <a href="https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm"
-           onclick="checkout('https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm',49.97);return false"
-           class="offer-btn"><!--
-             O span externo fica mesmo sem numero por dentro: o .offer-btn e inline-flex
-             com gap:8px, entao qualquer filho direto vira item de flex e ganha 8px de
-             cada lado. Se um dia voltar a ter <span data-almaz-games> aqui no meio, o
-             texto sairia "Quero os  40.000  jogos" com buraco em volta do numero.
-          --><span>Quero parar de gastar com jogo</span></a>
-        <div class="offer-methods">Pagamento no PIX</div>
-        <div class="offer-trust"><strong>Aprovação na hora</strong> e 7 dias de garantia</div>
+        <!-- Este botao ia DIRETO pro checkout ate 20/08/2026. Virou degrau do funil:
+             a caixa continua fazendo a comparacao de preco, que e o trabalho dela, mas
+             quem quer comprar segue descendo ate #pricing. Sairam junto as linhas
+             "Pagamento no PIX" e "Aprovacao na hora e 7 dias de garantia": elas so
+             fazem sentido embaixo de um botao que cobra, e embaixo de um botao que
+             rola viravam promessa solta. As duas continuam na secao de planos. -->
+        <a href="#cresce" class="btn-ghost">O que ainda vai sair</a>
       </div>
 
     </div>
@@ -2045,11 +2149,9 @@ var io = (function(){
         A biblioteca não fica parada. Toda semana entram jogos novos, e <strong>todo lançamento
         que chegar já está pago</strong>. É por isso que a sua última compra de jogo é hoje.
       </p>
-      <!-- Mesmo par href+onclick dos cards de plano. Sem spinner e sem mexer no botao
-           durante o clique: e a funcao checkout() que cuida do tracking e do redirect. -->
-      <a href="https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm"
-         onclick="checkout('https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm',49.97);return false"
-         class="offer-btn"><span>Quero o acesso vitalício</span></a>
+      <!-- Ultimo degrau do funil: daqui a pessoa cai na oferta. Ia DIRETO pro checkout
+           ate 20/08/2026, o que deixava ela comprar sem nunca ter visto os 3 planos. -->
+      <a href="#pricing" class="btn-ghost">Ver os planos</a>
     </div>
   </div>
 </section>
@@ -2158,6 +2260,27 @@ var io = (function(){
       <div class="eds-alt">Ou comece com um plano menor</div>
 
     </div>
+
+    <div class="selo reveal">
+      <!-- O logo faz parte da frase, nao e um bloco separado: le-se "Pagamento seguro
+           por [mercado pago]". Por isso o alt do <img> e so a marca. -->
+      <div class="selo-hd">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        <span>Pagamento seguro por</span>
+        <img src="assets/mercado-pago-branco.svg" alt="Mercado Pago" width="84" height="34" loading="lazy" decoding="async">
+      </div>
+      <!-- Linhas CURTAS de proposito. A primeira versao explicava cada item ("os seus
+           dados nao passam pela gente", "devolvemos o dinheiro se voce nao curtir") e
+           cada uma quebrava em 2 linhas no celular: o selo ia a 276px de altura. Selo
+           e pra ser escaneado de relance, nao lido. Quem quiser o detalhe da garantia
+           tem o card dela e o FAQ logo abaixo. -->
+      <ul class="selo-list">
+        <li>Ambiente criptografado</li>
+        <li>PIX com liberação na hora</li>
+        <li>7 dias de garantia</li>
+      </ul>
+    </div>
+
   </div>
 </section>
 
@@ -2831,13 +2954,17 @@ var io = (function(){
 
 
 
-  // "Desbloquear" -> rola para a próxima seção do funil (#app), sem pular direto pros planos.
+  // "Desbloquear" -> rola pra próxima seção do funil.
+  // BUG corrigido em 20/08/2026: apontava pra 'app', id que NÃO existe na página.
+  // Como gotoNext() faz `if(!p)return`, o botão ficava mudo: a pessoa buscava um jogo,
+  // não achava, clicava em "Desbloquear acesso" e não acontecia nada. Agora vai pros
+  // 3 passos, que é o degrau seguinte à biblioteca na corrente do funil.
 
   document.addEventListener('click',function(e){
 
     var b=e.target.closest('.av-unlock'); if(!b)return;
 
-    gotoNext('app');
+    gotoNext('passos');
 
   });
 
@@ -3265,9 +3392,15 @@ var io = (function(){
      fixo sumia ainda na lista do carrinho, uns 550px antes de o botao da secao
      aparecer, e sobrava um trecho sem CTA nenhum. Com 1 no botao, um entra
      exatamente quando o outro sai. */
+  /* A zona do #conta saiu em 20/08/2026. O motivo dela era "dois botoes verdes na
+     mesma tela": o botao daquela caixa era verde e de compra. Virou degrau do funil
+     em .btn-ghost, entao nao ha mais conflito de cor nem de intencao, e o CTA fixo
+     agora e a unica saida rapida pros planos naquele trecho. Sem ele ali, quem ja
+     decidiu teria que descer o funil inteiro.
+     Ficava assim, se um dia o botao verde voltar pra caixa:
+       {el:document.querySelector('#conta .offer-btn'), fator:1} */
   var zonas=[
-    {el:document.getElementById('pricing'), fator:.85},
-    {el:document.querySelector('#conta .offer-btn'), fator:1}
+    {el:document.getElementById('pricing'), fator:.85}
   ].filter(function(z){ return z.el; });
   function emZonaComBotao(){
     return zonas.some(function(z){
