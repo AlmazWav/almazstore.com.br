@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdn.cloudflare.steamstatic.com" crossorigin>
 
-<title>Almaz Store | Pague uma vez e nunca mais gaste com jogo na Steam</title>
-<meta name="description" content="Pague uma vez e nunca mais compre jogo. Sao +40.000 jogos originais na sua conta Steam e os lancamentos entram sem custo. Taxa unica, licenca vitalicia, pagamento no PIX com liberacao na hora.">
+<title>Almaz Store | Voce paga uma vez e nunca mais gasta com jogo na Steam</title>
+<meta name="description" content="Voce paga uma vez e nunca mais compra jogo. Sao +40.000 jogos originais na sua conta Steam e os lancamentos entram sem custo. Taxa unica, licenca vitalicia, pagamento no PIX com liberacao na hora.">
 
 <!-- Microsoft Clarity -->
 <script type="text/javascript">
@@ -343,6 +343,7 @@ h2{font-size:clamp(21px,3.1vw,27px);margin-bottom:6px}
 .deal{background:var(--deal-bg);color:var(--deal-tx);font-weight:700;font-size:17px;padding:6px 10px;border-radius:5px;letter-spacing:-.01em}
 .buybox-prices{display:flex;flex-direction:column;line-height:1.15}
 .buybox-old{font-size:12.5px;color:var(--dim);text-decoration:line-through}
+.buybox-from{font-size:12.5px;color:var(--dim);margin-bottom:1px}
 .buybox-once{font-size:12.5px;color:var(--dim);margin-top:4px}
 .buybox-new{font-size:23px;font-weight:700;color:#fff;letter-spacing:-.02em}
 .buybox-pay{font-size:12.5px;color:var(--txt2);margin-top:9px;text-align:center}
@@ -1490,7 +1491,13 @@ var io = (function(){
          na ficha tecnica logo abaixo, na mesma primeira tela), mas a manchete passou a
          vender a CONSEQUENCIA: a pessoa para de comprar jogo. Quantidade so impressiona
          quem ja queria comprar; "nunca mais gastar" fala com quem ainda esta decidindo. -->
-    <h1>Pague uma vez e nunca mais gaste com jogo na Steam</h1>
+    <!-- Ajuste de tom em 20/08/2026, no mesmo dia: era "Pague uma vez e nunca mais
+         gaste", no imperativo. "Pague" e ordem sobre dinheiro nas duas primeiras
+         palavras da pagina, e soava agressivo. No indicativo o vocabulario e o ritmo
+         sao os mesmos, mas a frase descreve o que acontece com a pessoa em vez de
+         mandar ela pagar. Se for mexer aqui de novo, mexa no MODO do verbo, nao na
+         promessa: o "nunca mais gasta" e o eixo da pagina inteira. -->
+    <h1>Você paga uma vez e nunca mais gasta com jogo na Steam</h1>
     <!-- Aqui existia o subtitulo "Taxa unica, licenca vitalicia. O download vem dos
          servidores oficiais da Steam, na sua propria conta." Removido em 13/08/2026:
          ocupava 80px logo acima do banner, e as duas informacoes dele passaram a estar
@@ -1573,9 +1580,22 @@ var io = (function(){
 
         <div class="buybox">
           <div class="buybox-top">
+            <!-- Passou a abrir pelo MENOR preco em 20/08/2026. O R$ 49,97 sozinho era uma
+                 porta cara pra primeira tela; "a partir de R$ 9,97" da o gancho pra pessoa
+                 descer ate os planos, que e o que o botao logo abaixo faz.
+                 DECISAO DO USER, mesma data: o R$ 49,97 fica FORA desta caixa de proposito,
+                 pra ninguem levar susto de preco na primeira tela. Ele aparece na secao de
+                 planos, depois que a pessoa ja leu a oferta inteira. Nao "conserte" isso
+                 achando que faltou o preco cheio: e escolha, nao esquecimento.
+                 O que fica de olho: a ficha tecnica logo acima anuncia "+40.000 jogos" e
+                 "jogos novos toda semana", que sao specs do Vitalicio, e agora o unico
+                 numero perto delas e o R$ 9,97 do Basico (1.000 jogos, biblioteca fechada).
+                 Se aparecer reembolso de gente que comprou o Basico achando que levava os
+                 40.000, e daqui que vem, e o conserto e na ficha, nao neste preco. -->
             <span class="buybox-prices">
-              <span class="buybox-new num">R$ 49,97</span>
-              <span class="buybox-once">pagamento único, sem renovação</span>
+              <span class="buybox-from">a partir de</span>
+              <span class="buybox-new num">R$ 9,97</span>
+              <span class="buybox-once">pagamento único</span>
             </span>
           </div>
           <a href="#pricing" class="offer-btn">Ver a oferta completa</a>
