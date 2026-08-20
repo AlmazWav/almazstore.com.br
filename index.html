@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdn.cloudflare.steamstatic.com" crossorigin>
 
-<title>Almaz Store | Biblioteca com +40.000 jogos na sua Steam</title>
-<meta name="description" content="Acesse +40.000 jogos originais na sua conta Steam. Taxa unica, licenca vitalicia, PIX ou ate 3x no cartao.">
+<title>Almaz Store | Pague uma vez e nunca mais gaste com jogo na Steam</title>
+<meta name="description" content="Pague uma vez e nunca mais compre jogo. Sao +40.000 jogos originais na sua conta Steam e os lancamentos entram sem custo. Taxa unica, licenca vitalicia, PIX ou ate 3x no cartao.">
 
 <!-- Microsoft Clarity -->
 <script type="text/javascript">
@@ -340,8 +340,10 @@ h2{font-size:clamp(21px,3.1vw,27px);margin-bottom:6px}
 .side-note{font-size:12.5px;color:var(--dim);text-align:center;line-height:1.5}
 
 /* ---------- as 3 duvidas que mais travam a compra, respondidas na dobra ----------
-   Saiu do mapa de toques de 7 dias: "vou tomar ban", "a licenca expira" e "funciona
-   online" sao as 3 perguntas mais tocadas do site inteiro (o FAQ leva 20,5% de todos
+   Saiu do mapa de toques de 7 dias: "vou tomar ban", "a licenca expira" (reescrita em
+   20/08/2026 como "vou ter que pagar de novo algum dia?", que responde a validade E a
+   promessa de nunca mais gastar) e "funciona online" sao as 3 perguntas mais tocadas
+   do site inteiro (o FAQ leva 20,5% de todos
    os toques). So que o FAQ mora em 89% da pagina, onde so 13% dos visitantes chegam.
    Aqui elas ficam logo abaixo do botao de compra e JA ABERTAS: o publico e mais
    velho, sanfona aqui viraria dois toques pra ler o que destrava a venda.
@@ -647,6 +649,13 @@ body.gm-open{overflow:hidden}
   background:rgba(74,157,42,.2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%2357b533' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/11px no-repeat;
 }
 .offer-features li strong{color:var(--txt);font-weight:600}
+/* item que o plano NAO tem. Entrou em 20/08/2026: os lancamentos futuros passaram
+   a ser exclusividade do Vitalicio, e sem marcar o que falta nos planos menores a
+   pessoa nao ve a diferenca (as tres listas ficavam so verde). */
+.offer-features li.no{color:var(--dim)}
+.offer-features li.no::before{
+  background:rgba(255,255,255,.06) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%237b8794' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'/%3E%3Cline x1='6' y1='6' x2='18' y2='18'/%3E%3C/svg%3E") center/11px no-repeat;
+}
 .ed-buy{padding:14px 16px;border-top:1px solid var(--line);background:var(--panel2)}
 .ed-price-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 .ed-price{display:flex;flex-direction:column;line-height:1.15}
@@ -999,6 +1008,19 @@ body.gm-open{overflow:hidden}
 .conta-total span:first-child{font-size:13.5px;font-weight:600;color:var(--txt2)}
 .conta-total b{font-size:clamp(20px,3.4vw,25px);font-weight:700;color:#fff;letter-spacing:-.02em}
 .conta-obs{padding:12px 16px 14px;font-size:12.5px;line-height:1.6;color:var(--dim);border-top:1px solid var(--line)}
+/* linha do tempo da conta que se repete. Entrou em 20/08/2026: o carrinho sozinho
+   provava que "e caro", mas o argumento da pagina agora e que e caro TODO ANO. O
+   texto que estava solto no .conta-obs ("ano que vem sai Fifa novo...") virou a
+   segunda linha daqui, que e onde ele tem forca. */
+.conta-anos{border-top:1px solid var(--line);padding:13px 16px 15px;display:flex;flex-direction:column;gap:10px}
+.conta-ano{display:flex;align-items:baseline;gap:11px;font-size:13px;line-height:1.5;color:var(--txt2)}
+.conta-ano>span{
+  flex-shrink:0;width:40px;font-weight:700;font-size:12.5px;color:var(--dim);
+  font-variant-numeric:tabular-nums;
+}
+.conta-ano.now>span{color:var(--txt)}
+.conta-ano b{font-weight:700;color:var(--txt);white-space:nowrap}
+.conta-ano.next{color:var(--warn)}
 /* lado direito: a mesma caixa de compra da primeira tela, so que agora com o
    R$ 1.573,78 fresco na cabeca da pessoa. */
 .conta-vs{
@@ -1021,6 +1043,57 @@ body.gm-open{overflow:hidden}
   .conta-row img{width:74px}
   .conta-row{gap:10px;padding:9px 13px}
   .conta-nome{font-size:13px}
+}
+
+/* ---------- os lancamentos que ainda nem sairam ----------
+   Entrou em 20/08/2026, junto com a virada de intencao da pagina (de "vendemos
+   40.000 jogos" pra "voce nunca mais gasta com jogo"). Sem esta secao a promessa
+   e so texto: aqui ela vira prova, com jogo real que ainda nao existe na Steam.
+   Vem logo depois do carrinho, que termina dizendo "ano que vem sai Fifa novo,
+   Call of Duty novo" -> e a primeira coisa que a pessoa ve aqui e justamente o
+   FC 27 e o Call of Duty novo, ja com o selo de incluso. A ordem das duas secoes
+   e proposital, nao troque.
+   MANUTENCAO: os 6 jogos abaixo sao fixos e ENVELHECEM (quando o jogo sai, ele
+   deixa de ser "ainda vai sair"). Pra trocar, pegue jogos com soon:1 no
+   assets/catalogo.js, que ja tem nome, data (dt) e a capa com hash (campo u).
+   Capa sempre com a URL comprida do appdetails: a curta /steam/apps/<id>/header.jpg
+   da 404 em lancamento novo e o card sumiria calado. */
+/* grid-auto-rows:1fr obriga as duas fileiras a terem a mesma altura. Sem isso, a
+   fileira com nome de duas linhas (Call of Duty, Tomb Raider) fica 17px mais alta
+   que a outra e o selo verde do "ja incluso" desalinha entre elas. */
+.cresce{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;gap:12px}
+.cresce-card{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);
+  overflow:hidden;display:flex;flex-direction:column;
+}
+.cresce-card img{width:100%;aspect-ratio:460/215;object-fit:cover;display:block;background:var(--panel2)}
+.cresce-txt{padding:11px 13px 13px;display:flex;flex-direction:column;gap:5px;flex:1}
+.cresce-nome{font-size:13.5px;font-weight:600;color:var(--txt);line-height:1.35}
+.cresce-dt{font-size:12.5px;color:var(--dim)}
+.cresce-ok{
+  margin-top:auto;padding-top:8px;font-size:12.5px;font-weight:600;color:var(--buy2);
+  display:flex;align-items:center;gap:6px;
+}
+.cresce-ok svg{width:14px;height:14px;flex-shrink:0;fill:none;stroke:var(--buy2);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+/* fecho da secao: a regra da casa e que todo bloco termina num CTA, senao a
+   pessoa le a prova, concorda, e nao tem pra onde ir. */
+.cresce-cta{
+  margin-top:16px;background:linear-gradient(180deg,rgba(87,181,51,.06),var(--panel) 60%);
+  border:1px solid rgba(87,181,51,.34);border-radius:var(--r2);
+  padding:18px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+}
+.cresce-cta p{font-size:14.5px;line-height:1.55;color:var(--txt);max-width:560px}
+.cresce-cta p strong{color:#fff;font-weight:600}
+/* o .offer-btn nasce com width:100% (em todo resto do site ele e botao de bloco).
+   Aqui ele divide a linha com o texto, entao precisa voltar a ter largura propria,
+   senao empurra o paragrafo pra linha de cima e vira uma barra verde de 1100px. */
+.cresce-cta .offer-btn{flex:0 0 auto;width:auto;min-width:280px}
+@media(max-width:860px){
+  .cresce{grid-template-columns:repeat(2,1fr);gap:10px}
+  .cresce-txt{padding:10px 11px 12px}
+  .cresce-nome{font-size:12.5px}
+  .cresce-cta{flex-direction:column;align-items:stretch;text-align:center;padding:16px 14px}
+  .cresce-cta .offer-btn{min-width:0;width:100%;flex:0 0 auto}
 }
 
 /* ---------- FAQ ---------- */
@@ -1393,7 +1466,12 @@ var io = (function(){
 
     <div class="ph-crumb">Almaz Store &nbsp;›&nbsp; <b>Biblioteca Steam completa</b></div>
 
-    <h1>Mais de <span data-almaz-games="vitalicio">40.000</span> jogos originais rodando na sua conta Steam</h1>
+    <!-- H1 mudou em 20/08/2026. Antes era "Mais de 40.000 jogos originais rodando na sua
+         conta Steam", ou seja, vendia QUANTIDADE. O numero continua na pagina inteira (e
+         na ficha tecnica logo abaixo, na mesma primeira tela), mas a manchete passou a
+         vender a CONSEQUENCIA: a pessoa para de comprar jogo. Quantidade so impressiona
+         quem ja queria comprar; "nunca mais gastar" fala com quem ainda esta decidindo. -->
+    <h1>Pague uma vez e nunca mais gaste com jogo na Steam</h1>
     <!-- Aqui existia o subtitulo "Taxa unica, licenca vitalicia. O download vem dos
          servidores oficiais da Steam, na sua propria conta." Removido em 13/08/2026:
          ocupava 80px logo acima do banner, e as duas informacoes dele passaram a estar
@@ -1452,11 +1530,15 @@ var io = (function(){
 
         <div class="side-card">
           <p class="side-desc">
-            Você instala o nosso launcher, entra com o e-mail da compra e a biblioteca aparece
-            na sua Steam pronta pra baixar. Sem conta compartilhada e sem login de terceiros.
+            Você instala o nosso launcher, entra com o e-mail da compra e mais de 40.000 jogos
+            originais aparecem na sua Steam prontos pra baixar. Sem conta compartilhada e sem
+            login de terceiros.
           </p>
           <dl class="spec">
             <div class="spec-row"><dt>Jogos liberados</dt><dd class="num">+<span data-almaz-games="vitalicio">40.000</span></dd></div>
+            <!-- Linha nova em 20/08/2026: e ela que sustenta o H1. Sem isso, "nunca mais
+                 gaste" fica sendo so promessa de manchete. -->
+            <div class="spec-row"><dt>Jogos novos</dt><dd class="ok">Toda semana, sem custo</dd></div>
             <div class="spec-row"><dt>Ativação</dt><dd class="ok">Na hora do pagamento</dd></div>
             <div class="spec-row"><dt>Licença</dt><dd>Vitalícia, taxa única</dd></div>
             <div class="spec-row"><dt>Multiplayer</dt><dd class="ok">Funcionando</dd></div>
@@ -1487,8 +1569,8 @@ var io = (function(){
             <div class="medo">
               <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9"/></svg>
               <span class="medo-txt">
-                <span class="medo-q">A licença expira?</span>
-                <span class="medo-a">Não. Pagamento único e acesso vitalício, com as atualizações futuras inclusas.</span>
+                <span class="medo-q">Vou ter que pagar de novo algum dia?</span>
+                <span class="medo-a">Não. Você paga uma vez só. Os lançamentos que saírem depois entram na sua biblioteca sem custo nenhum.</span>
               </span>
             </div>
             <div class="medo">
@@ -1525,7 +1607,7 @@ var io = (function(){
   <div class="wrap">
     <div class="sec-head reveal">
       <h2>Um pedaço da biblioteca</h2>
-      <p>A biblioteca completa tem mais de <span data-almaz-games="vitalicio">40.000</span> jogos. Abaixo estão os mais procurados pelos nossos clientes. Toque em qualquer jogo pra ver se ele está incluso.</p>
+      <p>A biblioteca completa tem mais de <span data-almaz-games="vitalicio">40.000</span> jogos e cresce toda semana. Abaixo estão os mais procurados pelos nossos clientes. Toque em qualquer jogo pra ver se ele está incluso.</p>
     </div>
 
     <div id="disponibilidade">
@@ -1754,8 +1836,8 @@ var io = (function(){
 <section class="sec" id="conta">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>Quanto custa comprar isso na Steam</h2>
-      <p>Preços da Steam brasileira, consultados em 13/08/2026.</p>
+      <h2>A conta que volta todo ano</h2>
+      <p>Seis jogos, com o preço que a Steam brasileira cobrava em 13/08/2026.</p>
     </div>
 
     <div class="conta reveal">
@@ -1808,33 +1890,116 @@ var io = (function(){
           <b class="num">R$ 1.573,78</b>
         </div>
 
-        <div class="conta-obs">
-          Ano que vem sai Fifa novo, Call of Duty novo, e a conta começa do zero.
+        <div class="conta-anos">
+          <div class="conta-ano now"><span>2026</span><b class="num">R$ 1.573,78</b></div>
+          <div class="conta-ano next"><span>2027</span>Fifa novo, Call of Duty novo, e a conta começa do zero</div>
+          <div class="conta-ano next"><span>2028</span>de novo, e assim todo ano que você continuar jogando</div>
         </div>
       </div>
 
       <div class="conta-vs">
-        <div class="conta-vs-lbl">Os mesmos seis jogos na Almaz Store</div>
+        <div class="conta-vs-lbl">Na Almaz Store, uma vez só</div>
         <div class="conta-vs-price">
           <b class="num">R$ 49,97</b>
-          <span>pagamento único</span>
+          <span>e acabou</span>
         </div>
         <p class="conta-vs-sub">
-          Esses seis e mais de <strong><span data-almaz-games="vitalicio">40.000</span> jogos</strong>.
-          Paga uma vez e nunca mais paga por jogo nenhum.
+          Esses seis, mais de <strong><span data-almaz-games="vitalicio">40.000</span> jogos</strong>
+          e tudo que for lançado depois. Não tem 2027, não tem 2028: você paga hoje e nunca mais
+          gasta com jogo.
         </p>
         <a href="https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm"
            onclick="checkout('https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm',49.97);return false"
            class="offer-btn"><!--
-             O .offer-btn e inline-flex com gap:8px, entao cada filho direto vira
-             item de flex e ganha 8px de cada lado. Sem este span externo o texto
-             sai "Quero os  40.000  jogos" com buraco em volta do numero. Com ele,
-             o botao tem um filho so e o numero volta a ser texto normal por dentro.
-          --><span>Quero os <span data-almaz-games="vitalicio">40.000</span> jogos</span></a>
+             O span externo fica mesmo sem numero por dentro: o .offer-btn e inline-flex
+             com gap:8px, entao qualquer filho direto vira item de flex e ganha 8px de
+             cada lado. Se um dia voltar a ter <span data-almaz-games> aqui no meio, o
+             texto sairia "Quero os  40.000  jogos" com buraco em volta do numero.
+          --><span>Quero parar de gastar com jogo</span></a>
         <div class="offer-methods">PIX ou até 3x no cartão</div>
         <div class="offer-trust"><strong>Aprovação na hora</strong> e 7 dias de garantia</div>
       </div>
 
+    </div>
+  </div>
+</section>
+
+<!-- ===================== OS LANCAMENTOS QUE AINDA VAO SAIR ===================== -->
+<section class="sec" id="cresce">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Os jogos que ainda nem saíram já são seus</h2>
+      <p>Nenhum destes existe na Steam ainda. Quando chegarem, eles aparecem na sua biblioteca e você não paga nada por isso.</p>
+    </div>
+
+    <div class="cresce reveal">
+
+      <div class="cresce-card">
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4080220/05d419a45653a1299ce46d13dbff4533fa076c1c/header.jpg" alt="EA Sports FC 27" loading="lazy" decoding="async">
+        <div class="cresce-txt">
+          <span class="cresce-nome">EA Sports FC 27</span>
+          <span class="cresce-dt">Chega em 24 set 2026</span>
+          <span class="cresce-ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Já incluso no seu acesso</span>
+        </div>
+      </div>
+
+      <div class="cresce-card">
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4435490/0c492be3204835d71e8b454b6eb1817f8ff68c0d/header.jpg" alt="Call of Duty: Modern Warfare 4" loading="lazy" decoding="async">
+        <div class="cresce-txt">
+          <span class="cresce-nome">Call of Duty: Modern Warfare 4</span>
+          <span class="cresce-dt">Chega em 22 out 2026</span>
+          <span class="cresce-ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Já incluso no seu acesso</span>
+        </div>
+      </div>
+
+      <div class="cresce-card">
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4356430/9152438fde7de9f4c20b4fd9072ba69f844dacab/header.jpg" alt="NBA 2K27" loading="lazy" decoding="async">
+        <div class="cresce-txt">
+          <span class="cresce-nome">NBA 2K27</span>
+          <span class="cresce-dt">Chega em 3 set 2026</span>
+          <span class="cresce-ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Já incluso no seu acesso</span>
+        </div>
+      </div>
+
+      <div class="cresce-card">
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1636440/0ed1cb4bc30631f95b92f7f13bb06c15d49b4afa/header.jpg" alt="Silent Hill: Townfall" loading="lazy" decoding="async">
+        <div class="cresce-txt">
+          <span class="cresce-nome">Silent Hill: Townfall</span>
+          <span class="cresce-dt">Chega em 23 set 2026</span>
+          <span class="cresce-ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Já incluso no seu acesso</span>
+        </div>
+      </div>
+
+      <div class="cresce-card">
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3558670/d0d4229807e9bd939c2374cb94a1264aa1386398/header.jpg" alt="Tomb Raider: Legacy of Atlantis" loading="lazy" decoding="async">
+        <div class="cresce-txt">
+          <span class="cresce-nome">Tomb Raider: Legacy of Atlantis</span>
+          <span class="cresce-dt">Chega em 12 fev 2027</span>
+          <span class="cresce-ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Já incluso no seu acesso</span>
+        </div>
+      </div>
+
+      <div class="cresce-card">
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4824610/28045d733a3ada082858b5b1a5149e33ee40f378/header.jpg" alt="Resident Evil Veronica" loading="lazy" decoding="async">
+        <div class="cresce-txt">
+          <span class="cresce-nome">Resident Evil Veronica</span>
+          <span class="cresce-dt">Chega em 2027</span>
+          <span class="cresce-ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Já incluso no seu acesso</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="cresce-cta reveal">
+      <p>
+        A biblioteca não fica parada. Toda semana entram jogos novos, e <strong>todo lançamento
+        que chegar já está pago</strong>. É por isso que a sua última compra de jogo é hoje.
+      </p>
+      <!-- Mesmo par href+onclick dos cards de plano. Sem spinner e sem mexer no botao
+           durante o clique: e a funcao checkout() que cuida do tracking e do redirect. -->
+      <a href="https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm"
+         onclick="checkout('https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm',49.97);return false"
+         class="offer-btn"><span>Quero o acesso vitalício</span></a>
     </div>
   </div>
 </section>
@@ -1844,7 +2009,7 @@ var io = (function(){
   <div class="wrap">
     <div class="sec-head reveal">
       <h2>Escolha o tamanho da sua biblioteca</h2>
-      <p>Taxa única em todos os planos. Sem mensalidade e sem renovação.</p>
+      <p>Taxa única em todos os planos. Sem mensalidade e sem renovação. Só o Vitalício recebe os lançamentos que ainda vão sair.</p>
       <p class="aniv-note" data-aniv>A semana de aniversário começou dia <span data-aniv-inicio>08/08</span> e quem ganha é você. <span data-aniv-prazo>Termina 15/08</span>.</p>
     </div>
     <!-- Ultimo texto de data da pagina. Pinta aqui, na hora, pra data certa
@@ -1865,6 +2030,8 @@ var io = (function(){
             <li>Download pela Steam</li>
             <li>Modo história liberado</li>
             <li>Entrega automática</li>
+            <li class="no">Biblioteca fechada, sem jogos novos</li>
+            <li class="no">Lançamentos futuros não entram</li>
           </ul>
         </div>
         <div class="ed-buy">
@@ -1889,11 +2056,11 @@ var io = (function(){
         <div class="ed-body">
           <ul class="offer-features">
             <li><strong><span data-almaz-games="avancado">20.000</span> jogos</strong> inclusos</li>
-            <li>Acesso vitalício</li>
-            <li>Lançamentos 2026</li>
+            <li>Licença vitalícia, não expira</li>
             <li>Online funcionando</li>
             <li>Entrega automática</li>
             <li>Suporte prioritário no WhatsApp e Discord</li>
+            <li class="no">Lançamentos futuros não entram</li>
           </ul>
         </div>
         <div class="ed-buy">
@@ -1919,9 +2086,9 @@ var io = (function(){
         <div class="ed-body">
           <ul class="offer-features">
             <li><strong><span data-almaz-games="vitalicio">40.000</span> jogos</strong> liberados</li>
+            <li><strong>Todo lançamento futuro incluso</strong>, sem pagar de novo</li>
+            <li>Jogos novos entrando toda semana</li>
             <li>Acesso vitalício</li>
-            <li>Lançamentos 2026</li>
-            <li>Todos os lançamentos futuros inclusos</li>
             <li>Jogos com Denuvo funcionando</li>
             <li>Online funcionando</li>
             <li>Pede qualquer jogo que a gente adiciona</li>
@@ -1932,7 +2099,7 @@ var io = (function(){
         </div>
         <div class="ed-buy">
           <div class="ed-gain">
-            São <b>R$ 40,00</b> a mais que o Essencial e você leva <b>39.000 jogos</b> a mais.
+            São <b>R$ 40,00</b> a mais que o Básico, e é a diferença entre <b>comprar jogo de novo</b> ou nunca mais.
           </div>
           <div class="ed-price-row">
             <span class="deal num">-90%</span>
@@ -2067,8 +2234,8 @@ var io = (function(){
         </div>
         <ul class="gm-offer-list">
           <li><strong><span data-almaz-games="vitalicio">40.000</span> jogos</strong> liberados</li>
-          <li>Paga uma vez, é seu pra sempre</li>
-          <li>Lançamentos futuros inclusos</li>
+          <li>Paga uma vez e nunca mais gasta com jogo</li>
+          <li>Todo lançamento futuro incluso</li>
           <li>Online funcionando</li>
         </ul>
         <a href="https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm"
@@ -2117,7 +2284,7 @@ var io = (function(){
   <div class="qbx-ov-box">
     <img id="qbx-ov-img" src="" alt="Print da caixinha de perguntas do Instagram">
     <div class="qbx-ov-cta">
-      <p id="qbx-ov-txt">Tirou a dúvida? Então é só escolher o seu acesso e <strong>liberar os 40.000 jogos</strong>.</p>
+      <p id="qbx-ov-txt">Tirou a dúvida? Então é só escolher o seu acesso e <strong>nunca mais gastar com jogo</strong>.</p>
       <a role="button" tabindex="0" href="javascript:void(0)" class="offer-btn" id="qbx-ov-go">Ver os planos e preços</a>
     </div>
   </div>
@@ -2127,8 +2294,8 @@ var io = (function(){
   <div class="ups-box">
     <button class="ups-x" id="upsell-x" type="button" aria-label="Fechar">×</button>
     <div class="ups-badge">🔥 Só agora, 50% OFF</div>
-    <h3 class="ups-title">Leve os <span>40.000 jogos</span> por metade do preço</h3>
-    <p class="ups-sub">Em vez do plano menor, garanta o <strong style="color:#fff">Vitalício</strong>: todos os 40.000 jogos e os lançamentos, pra sempre.</p>
+    <h3 class="ups-title"><span>Nunca mais gaste com jogo</span> por metade do preço</h3>
+    <p class="ups-sub">O plano menor é uma biblioteca fechada. Com o <strong style="color:#fff">Vitalício</strong> você leva os 40.000 jogos e todo lançamento que sair depois, sem pagar de novo.</p>
     <div class="ups-price">
       <span class="ups-old">de R$ 49,97</span>
       <span class="ups-new">R$ <b>24</b>,98</span>
@@ -2679,7 +2846,7 @@ var io = (function(){
       } else {
         gstat.className='gm-status';
         gstat.textContent='Disponível agora';
-        gtxt.innerHTML='<strong>'+esc(nome)+'</strong> está incluso, junto com mais <strong>'+qtd+' jogos</strong>.';
+        gtxt.innerHTML='<strong>'+esc(nome)+'</strong> está incluso, junto com mais <strong>'+qtd+' jogos</strong> e tudo que ainda vai sair.';
         ggo.textContent='Quero garantir';
       }
       ov.classList.add('on');
@@ -2961,9 +3128,8 @@ var io = (function(){
      abriam nada quando a pessoa clicava. */
   window.almazOpenPrint=function(src,texto){
     img.src=src;
-    var qtd=(window.ALMAZ_GAMES&&window.ALMAZ_GAMES.vitalicio)||'40.000';
     var t=document.getElementById('qbx-ov-txt');
-    if(t) t.innerHTML = texto || 'Tirou a dúvida? Então é só escolher o seu acesso e <strong>liberar os '+qtd+' jogos</strong>.';
+    if(t) t.innerHTML = texto || 'Tirou a dúvida? Então é só escolher o seu acesso e <strong>nunca mais gastar com jogo</strong>.';
     ov.classList.add('on');
     document.body.style.overflow='hidden';
   };
@@ -3690,7 +3856,7 @@ document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
 
 
 
-(function(){var F=[{q:'Vou tomar ban na minha conta Steam?',a:'O desbloqueio é feito pelo nosso launcher, na sua própria conta Steam, sem conta compartilhada, sem login de terceiros. E você tem 7 dias de garantia pra testar sem risco.'},{q:'Como recebo depois de pagar?',a:'Pagou no PIX ou no cartão, o acesso chega no seu e-mail em poucos minutos, com o passo a passo da ativação. Aí é abrir a Steam, baixar e jogar.'},{q:'É seguro?',a:'Sim. Acesso seguro, sem arquivos suspeitos ou alterações no seu PC, e você ainda tem 7 dias de garantia: se não curtir, devolvemos o seu dinheiro.'},{q:'Como funciona?',a:'Após a compra, você recebe o acesso por e-mail, faz a ativação rápida e baixa os jogos direto na sua biblioteca Steam.'},{q:'Os jogos são originais?',a:'Sim. Downloads e atualizações oficiais realizados diretamente pelos servidores da Steam.'},{q:'Funciona online?',a:'Sim. Jogos com suporte a multiplayer funcionam online normalmente.'},{q:'A licença expira?',a:'Não. Pagamento único e acesso vitalício, com todas as atualizações futuras inclusas.'},{q:'Quais as formas de pagamento?',a:'Aceitamos PIX e cartão de crédito em até 3x, com liberação instantânea após a confirmação do pagamento.'},{q:'Como funciona o suporte?',a:'Oferecemos suporte humanizado via WhatsApp para auxiliar em todo o processo de ativação.'}];var fl=document.getElementById('fl');fl.innerHTML=F.map(function(f){return'<div class="faq-item reveal"><button class="faq-q" onclick="tFaq(this)">'+f.q+'<span class="faq-chev">▼</span></button><div class="faq-a">'+f.a+'</div></div>'}).join('');fl.querySelectorAll('.reveal').forEach(function(el){io.observe(el)})})();
+(function(){var F=[{q:'Vou tomar ban na minha conta Steam?',a:'O desbloqueio é feito pelo nosso launcher, na sua própria conta Steam, sem conta compartilhada, sem login de terceiros. E você tem 7 dias de garantia pra testar sem risco.'},{q:'Vou ter que pagar de novo algum dia?',a:'Não. É pagamento único e o acesso é vitalício: você não paga renovação, não paga mensalidade e não paga por lançamento nenhum.'},{q:'E os jogos que saírem em 2027, 2028?',a:'Entram na sua biblioteca sem custo nenhum. A gente adiciona os lançamentos toda semana, e quem tem o plano Vitalício recebe todos sem pagar de novo.'},{q:'Como recebo depois de pagar?',a:'Pagou no PIX ou no cartão, o acesso chega no seu e-mail em poucos minutos, com o passo a passo da ativação. Aí é abrir a Steam, baixar e jogar.'},{q:'É seguro?',a:'Sim. Acesso seguro, sem arquivos suspeitos ou alterações no seu PC, e você ainda tem 7 dias de garantia: se não curtir, devolvemos o seu dinheiro.'},{q:'Como funciona?',a:'Após a compra, você recebe o acesso por e-mail, faz a ativação rápida e baixa os jogos direto na sua biblioteca Steam.'},{q:'Os jogos são originais?',a:'Sim. Downloads e atualizações oficiais realizados diretamente pelos servidores da Steam.'},{q:'Funciona online?',a:'Sim. Jogos com suporte a multiplayer funcionam online normalmente.'},{q:'Quais as formas de pagamento?',a:'Aceitamos PIX e cartão de crédito em até 3x, com liberação instantânea após a confirmação do pagamento.'},{q:'Como funciona o suporte?',a:'Oferecemos suporte humanizado via WhatsApp para auxiliar em todo o processo de ativação.'}];var fl=document.getElementById('fl');fl.innerHTML=F.map(function(f){return'<div class="faq-item reveal"><button class="faq-q" onclick="tFaq(this)">'+f.q+'<span class="faq-chev">▼</span></button><div class="faq-a">'+f.a+'</div></div>'}).join('');fl.querySelectorAll('.reveal').forEach(function(el){io.observe(el)})})();
 
 function tFaq(b){var a=b.nextElementSibling,o=b.classList.contains('open');document.querySelectorAll('.faq-q.open').forEach(function(q){q.classList.remove('open');q.nextElementSibling.classList.remove('open')});if(!o){b.classList.add('open');a.classList.add('open')}}
 
@@ -4282,7 +4448,7 @@ else{el.scrollIntoView({behavior:'smooth'});}
 
       a: [
 
-        "São 3 planos, todos pagamento único (nada de mensalidade): Básico R$9 com 1.000 jogos, Avançado R$19 com 20.000, e o Vitalício R$49, que é o mais escolhido, com 40.000 jogos e os lançamentos que forem chegando.",
+        "São 3 planos, todos pagamento único (nada de mensalidade): Básico R$9 com 1.000 jogos, Avançado R$19 com 20.000, e o Vitalício R$49, que é o mais escolhido: 40.000 jogos e todo lançamento que sair depois, sem pagar de novo. Com ele você não gasta mais com jogo.",
 
         "Dá uma olhada na seção de Planos e escolhe o que faz sentido pra você."
 
@@ -4384,7 +4550,7 @@ else{el.scrollIntoView({behavior:'smooth'});}
 
     offer.className = 'chat-btn chat-btn-v';
 
-    offer.innerHTML = '🎮 Ver a oferta de +40.000 jogos';
+    offer.innerHTML = '🎮 Ver a oferta do acesso vitalício';
 
     offer.onclick = function() {
 
