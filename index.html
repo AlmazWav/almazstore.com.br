@@ -1774,220 +1774,8 @@ var io = (function(){
         <span class="av-catalog-note">Busque por nome ou filtre por categoria</span>
       </div>
 
-      <div class="flow reveal"><a href="#passos" class="btn-ghost">Como funciona</a></div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== COMO FUNCIONA (3 PASSOS) ===================== -->
-<!-- Ganhou id="passos" em 20/08/2026 so pra ser alvo do degrau anterior do funil. -->
-<section class="sec" id="passos">
-  <div class="wrap">
-    <div class="sec-head reveal"><h2>Do pagamento ao jogo rodando</h2></div>
-    <div class="steps reveal">
-      <div class="step">
-        <div class="step-n num">1</div>
-        <h3>Escolhe o plano e paga</h3>
-        <p>Pagamento no PIX. A aprovação sai na hora que o pagamento confirma.</p>
-      </div>
-      <div class="step">
-        <div class="step-n num">2</div>
-        <h3>Recebe o acesso no e-mail</h3>
-        <p>Chega em poucos minutos, com o launcher e o passo a passo da ativação.</p>
-      </div>
-      <div class="step">
-        <div class="step-n num">3</div>
-        <h3>Baixa direto na sua Steam</h3>
-        <p>Os jogos aparecem na sua biblioteca e o download vem dos servidores da Steam.</p>
-      </div>
-    </div>
-
-    <div class="flow reveal"><a href="#launcher" class="btn-ghost">Conhecer o programa</a></div>
-  </div>
-</section>
-
-<!-- ===================== O PROGRAMA ===================== -->
-<section class="sec" id="launcher">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <h2>É este o programa que você recebe</h2>
-      <p>Chega no seu e-mail depois do pagamento.</p>
-    </div>
-
-    <div class="lch-wrap reveal">
-      <div class="lch">
-        <div class="lch-tt">
-          <span class="lch-dot"></span><span class="lch-dot"></span><span class="lch-dot"></span>
-          <span class="lch-tt-name">ALMAZ Store</span>
-        </div>
-
-        <div class="lch-app">
-          <div class="lch-bar">
-            <div class="lch-brand">
-              <img src="assets/logo-128.png" alt="" aria-hidden="true">
-              <span class="lch-brand-txt">
-                <span class="lch-name">ALMA<i>Z</i> STORE</span>
-                <span class="lch-plan">VITALÍCIO</span>
-              </span>
-            </div>
-            <div class="lch-nav">
-              <span class="on">Início</span>
-              <span>Adicionar Jogo</span>
-              <span>Novos Jogos</span>
-              <span>Em Alta</span>
-            </div>
-            <div class="lch-right">
-              <span class="lch-pill"><span class="d"></span>Steam detectada</span>
-              <span class="lch-chip"><span data-almaz-games="vitalicio">40.000</span> jogos</span>
-            </div>
-          </div>
-
-          <div class="lch-body">
-            <div class="lch-h1">Meu <i>ALMAZ</i></div>
-
-            <!-- Barra de busca: e o elemento que mais faz o bloco ler como
-                 programa. Dashboard com contador qualquer site tem; campo de
-                 busca dentro de uma janela, nao. Fica em cima do contador. -->
-            <div class="lch-search">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <span>Buscar jogo por nome ou AppID</span>
-            </div>
-
-            <div class="lch-hero">
-              <div class="lch-hero-l">
-                <h4>Sua biblioteca <i>completa</i> está pronta.</h4>
-                <span class="lch-fake-btn">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                  <!-- span unico por dentro: o .lch-fake-btn e inline-flex com
-                       gap, entao numero solto viraria item de flex e abriria
-                       buraco em volta (mesmo caso do botao da calculadora) -->
-                  <span>Adicionar os <span data-almaz-games="vitalicio">40.000</span> jogos</span>
-                </span>
-              </div>
-              <div class="lch-stat">
-                <b class="num" data-almaz-games="vitalicio">40.000</b>
-                <span>JOGOS NO SEU PLANO</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Aqui existia um paragrafo sobre o programa ser leve e ter suporte no
-           WhatsApp/Discord por dentro. Saiu em 13/08/2026: as duas informacoes
-           ja aparecem na lista da secao de baixo, e a janela do launcher vende
-           sozinha. Menos texto, a pessoa desce mais rapido. -->
-
-      <div class="flow reveal"><a href="#pirata" class="btn-ghost">Isso é pirataria?</a></div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== NAO E JOGO PIRATA ===================== -->
-<section class="sec" id="pirata">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <h2>Isso não é jogo pirata</h2>
-      <p>A diferença está em de onde vem o arquivo.</p>
-    </div>
-
-    <div class="vs reveal">
-      <div class="vs-col bad">
-        <div class="vs-hd">
-          <svg viewBox="0 0 24 24"><path d="M12 3l9 16H3l9-16z"/><path d="M12 10v4M12 17.5v.01"/></svg>
-          Baixando de site pirata
-        </div>
-        <ul class="vs-list">
-          <li>Arquivo de origem desconhecida, com risco de vírus</li>
-          <li>Pede pra desligar o antivírus</li>
-          <li>Não atualiza sozinho</li>
-          <li>Multiplayer não funciona</li>
-          <li>Sem suporte se der problema</li>
-        </ul>
-      </div>
-
-      <div class="vs-col good">
-        <div class="vs-hd">
-          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
-          Com a Almaz Store
-        </div>
-        <ul class="vs-list">
-          <li>Jogo original, baixado pela própria Steam</li>
-          <li>Sem arquivo suspeito no seu PC</li>
-          <li>Atualização oficial pela Steam</li>
-          <li>Multiplayer funcionando</li>
-          <li>Roda na sua conta, sem compartilhar</li>
-          <li>Suporte e 7 dias de garantia</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- O fecho "voce abre a sua Steam, o jogo esta la..." saiu em 13/08/2026.
-         As duas colunas ja dizem isso item por item; o paragrafo por baixo so
-         repetia em prosa e alongava a secao no celular. -->
-
-    <div class="flow reveal"><a href="#caixinhas" class="btn-ghost">Dúvidas que mais chegam</a></div>
-  </div>
-</section>
-
-<!-- ===================== CAIXINHAS DO INSTAGRAM ===================== -->
-<section class="sec" id="caixinhas">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <h2>As dúvidas que mais chegam pra gente</h2>
-      <p>Prints das caixinhas de pergunta do nosso Instagram, respondidas na hora. Toque em qualquer uma pra ver o print inteiro.</p>
-    </div>
-    <div class="qbx-rail reveal">
-      <button class="qbx-arrow prev off" id="qbx-prev" type="button" aria-label="Anterior">&#8249;</button>
-      <button class="qbx-arrow next off" id="qbx-next" type="button" aria-label="Próximo">&#8250;</button>
-      <div class="qbx-track" id="qbx-track">
-
-      <button class="qbx-card" type="button" data-qbx="https://i.imgur.com/ewk6txM.jpeg">
-        <span class="qbx-shot">
-          <img src="https://i.imgur.com/ewk6txM.jpeg" alt="Print da caixinha: da pra jogar jogos com Denuvo?" loading="lazy" decoding="async">
-          <span class="qbx-zoom"><svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
-        </span>
-        <span class="qbx-txt">
-          <span class="qbx-q">Dá pra jogar jogos com Denuvo?</span>
-          <span class="qbx-a">Dá. Os jogos com Denuvo estão inclusos nos pacotes de <span data-almaz-games="avancado">20.000</span> e <span data-almaz-games="vitalicio">40.000</span> jogos.</span>
-        </span>
-      </button>
-
-      <button class="qbx-card" type="button" data-qbx="https://i.imgur.com/Ip8UDar.jpeg">
-        <span class="qbx-shot">
-          <img src="https://i.imgur.com/Ip8UDar.jpeg" alt="Print da caixinha: jogo online também funciona?" loading="lazy" decoding="async">
-          <span class="qbx-zoom"><svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
-        </span>
-        <span class="qbx-txt">
-          <span class="qbx-q">Jogo online também funciona?</span>
-          <span class="qbx-a">Funciona normalmente, e com qualquer pessoa que tenha o jogo. Não fica limitado a quem desbloqueou pelo launcher.</span>
-        </span>
-      </button>
-
-      <button class="qbx-card" type="button" data-qbx="https://i.imgur.com/xMJJVnd.jpeg">
-        <span class="qbx-shot">
-          <img src="https://i.imgur.com/xMJJVnd.jpeg" alt="Print da caixinha: e os lançamentos que ainda vão sair?" loading="lazy" decoding="async">
-          <span class="qbx-zoom"><svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
-        </span>
-        <span class="qbx-txt">
-          <span class="qbx-q">Vou ter que pagar de novo pelos lançamentos?</span>
-          <span class="qbx-a">Não. O acesso é vitalício e as atualizações entram sem nenhum valor adicional.</span>
-        </span>
-      </button>
-
-      <button class="qbx-card" type="button" data-qbx="https://i.imgur.com/TKdP0JC.jpeg">
-        <span class="qbx-shot">
-          <img src="https://i.imgur.com/TKdP0JC.jpeg" alt="Print da caixinha: tem suporte caso precise?" loading="lazy" decoding="async">
-          <span class="qbx-zoom"><svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
-        </span>
-        <span class="qbx-txt">
-          <span class="qbx-q">Tem suporte caso eu precise?</span>
-          <span class="qbx-a">Tem. Suporte no WhatsApp e o Discord da comunidade, que abre direto pelo launcher.</span>
-        </span>
-      </button>
-
-      </div>
-
+      <!-- 21/08/2026: apontava pra #passos. Com os passos movidos pra depois da oferta,
+           o degrau seguinte a biblioteca virou a ancora de preco (#conta). -->
       <div class="flow reveal"><a href="#conta" class="btn-ghost">Quanto custa na Steam</a></div>
     </div>
   </div>
@@ -2285,6 +2073,230 @@ var io = (function(){
       </ul>
     </div>
 
+  </div>
+</section>
+
+<!-- 21/08/2026: este bloco (passos, launcher, pirata, caixinhas) ficava ENTRE a
+     biblioteca e o preco. Media 2.903px, mais de 3 telas e meia de celular, e empurrava
+     o #pricing pra 69,6% da pagina (9a tela) enquanto a rolagem media do Clarity era 38%.
+     Ou seja: o visitante medio parava antes de ver qualquer preco. Desceu pra depois da
+     oferta, onde vira tratamento de objecao. A ordem agora e
+     topo -> biblioteca -> conta (ancora) -> cresce -> #pricing -> passos -> launcher ->
+     pirata -> caixinhas -> faq. Pra desfazer: git revert do commit desta mudanca. -->
+<!-- ===================== COMO FUNCIONA (3 PASSOS) ===================== -->
+<!-- Ganhou id="passos" em 20/08/2026 so pra ser alvo do degrau anterior do funil. -->
+<section class="sec" id="passos">
+  <div class="wrap">
+    <div class="sec-head reveal"><h2>Do pagamento ao jogo rodando</h2></div>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-n num">1</div>
+        <h3>Escolhe o plano e paga</h3>
+        <p>Pagamento no PIX. A aprovação sai na hora que o pagamento confirma.</p>
+      </div>
+      <div class="step">
+        <div class="step-n num">2</div>
+        <h3>Recebe o acesso no e-mail</h3>
+        <p>Chega em poucos minutos, com o launcher e o passo a passo da ativação.</p>
+      </div>
+      <div class="step">
+        <div class="step-n num">3</div>
+        <h3>Baixa direto na sua Steam</h3>
+        <p>Os jogos aparecem na sua biblioteca e o download vem dos servidores da Steam.</p>
+      </div>
+    </div>
+
+    <div class="flow reveal"><a href="#launcher" class="btn-ghost">Conhecer o programa</a></div>
+  </div>
+</section>
+
+<!-- ===================== O PROGRAMA ===================== -->
+<section class="sec" id="launcher">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>É este o programa que você recebe</h2>
+      <p>Chega no seu e-mail depois do pagamento.</p>
+    </div>
+
+    <div class="lch-wrap reveal">
+      <div class="lch">
+        <div class="lch-tt">
+          <span class="lch-dot"></span><span class="lch-dot"></span><span class="lch-dot"></span>
+          <span class="lch-tt-name">ALMAZ Store</span>
+        </div>
+
+        <div class="lch-app">
+          <div class="lch-bar">
+            <div class="lch-brand">
+              <img src="assets/logo-128.png" alt="" aria-hidden="true">
+              <span class="lch-brand-txt">
+                <span class="lch-name">ALMA<i>Z</i> STORE</span>
+                <span class="lch-plan">VITALÍCIO</span>
+              </span>
+            </div>
+            <div class="lch-nav">
+              <span class="on">Início</span>
+              <span>Adicionar Jogo</span>
+              <span>Novos Jogos</span>
+              <span>Em Alta</span>
+            </div>
+            <div class="lch-right">
+              <span class="lch-pill"><span class="d"></span>Steam detectada</span>
+              <span class="lch-chip"><span data-almaz-games="vitalicio">40.000</span> jogos</span>
+            </div>
+          </div>
+
+          <div class="lch-body">
+            <div class="lch-h1">Meu <i>ALMAZ</i></div>
+
+            <!-- Barra de busca: e o elemento que mais faz o bloco ler como
+                 programa. Dashboard com contador qualquer site tem; campo de
+                 busca dentro de uma janela, nao. Fica em cima do contador. -->
+            <div class="lch-search">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <span>Buscar jogo por nome ou AppID</span>
+            </div>
+
+            <div class="lch-hero">
+              <div class="lch-hero-l">
+                <h4>Sua biblioteca <i>completa</i> está pronta.</h4>
+                <span class="lch-fake-btn">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  <!-- span unico por dentro: o .lch-fake-btn e inline-flex com
+                       gap, entao numero solto viraria item de flex e abriria
+                       buraco em volta (mesmo caso do botao da calculadora) -->
+                  <span>Adicionar os <span data-almaz-games="vitalicio">40.000</span> jogos</span>
+                </span>
+              </div>
+              <div class="lch-stat">
+                <b class="num" data-almaz-games="vitalicio">40.000</b>
+                <span>JOGOS NO SEU PLANO</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aqui existia um paragrafo sobre o programa ser leve e ter suporte no
+           WhatsApp/Discord por dentro. Saiu em 13/08/2026: as duas informacoes
+           ja aparecem na lista da secao de baixo, e a janela do launcher vende
+           sozinha. Menos texto, a pessoa desce mais rapido. -->
+
+      <div class="flow reveal"><a href="#pirata" class="btn-ghost">Isso é pirataria?</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== NAO E JOGO PIRATA ===================== -->
+<section class="sec" id="pirata">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Isso não é jogo pirata</h2>
+      <p>A diferença está em de onde vem o arquivo.</p>
+    </div>
+
+    <div class="vs reveal">
+      <div class="vs-col bad">
+        <div class="vs-hd">
+          <svg viewBox="0 0 24 24"><path d="M12 3l9 16H3l9-16z"/><path d="M12 10v4M12 17.5v.01"/></svg>
+          Baixando de site pirata
+        </div>
+        <ul class="vs-list">
+          <li>Arquivo de origem desconhecida, com risco de vírus</li>
+          <li>Pede pra desligar o antivírus</li>
+          <li>Não atualiza sozinho</li>
+          <li>Multiplayer não funciona</li>
+          <li>Sem suporte se der problema</li>
+        </ul>
+      </div>
+
+      <div class="vs-col good">
+        <div class="vs-hd">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          Com a Almaz Store
+        </div>
+        <ul class="vs-list">
+          <li>Jogo original, baixado pela própria Steam</li>
+          <li>Sem arquivo suspeito no seu PC</li>
+          <li>Atualização oficial pela Steam</li>
+          <li>Multiplayer funcionando</li>
+          <li>Roda na sua conta, sem compartilhar</li>
+          <li>Suporte e 7 dias de garantia</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- O fecho "voce abre a sua Steam, o jogo esta la..." saiu em 13/08/2026.
+         As duas colunas ja dizem isso item por item; o paragrafo por baixo so
+         repetia em prosa e alongava a secao no celular. -->
+
+    <div class="flow reveal"><a href="#caixinhas" class="btn-ghost">Dúvidas que mais chegam</a></div>
+  </div>
+</section>
+
+<!-- ===================== CAIXINHAS DO INSTAGRAM ===================== -->
+<section class="sec" id="caixinhas">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>As dúvidas que mais chegam pra gente</h2>
+      <p>Prints das caixinhas de pergunta do nosso Instagram, respondidas na hora. Toque em qualquer uma pra ver o print inteiro.</p>
+    </div>
+    <div class="qbx-rail reveal">
+      <button class="qbx-arrow prev off" id="qbx-prev" type="button" aria-label="Anterior">&#8249;</button>
+      <button class="qbx-arrow next off" id="qbx-next" type="button" aria-label="Próximo">&#8250;</button>
+      <div class="qbx-track" id="qbx-track">
+
+      <button class="qbx-card" type="button" data-qbx="https://i.imgur.com/ewk6txM.jpeg">
+        <span class="qbx-shot">
+          <img src="https://i.imgur.com/ewk6txM.jpeg" alt="Print da caixinha: da pra jogar jogos com Denuvo?" loading="lazy" decoding="async">
+          <span class="qbx-zoom"><svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
+        </span>
+        <span class="qbx-txt">
+          <span class="qbx-q">Dá pra jogar jogos com Denuvo?</span>
+          <span class="qbx-a">Dá. Os jogos com Denuvo estão inclusos nos pacotes de <span data-almaz-games="avancado">20.000</span> e <span data-almaz-games="vitalicio">40.000</span> jogos.</span>
+        </span>
+      </button>
+
+      <button class="qbx-card" type="button" data-qbx="https://i.imgur.com/Ip8UDar.jpeg">
+        <span class="qbx-shot">
+          <img src="https://i.imgur.com/Ip8UDar.jpeg" alt="Print da caixinha: jogo online também funciona?" loading="lazy" decoding="async">
+          <span class="qbx-zoom"><svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
+        </span>
+        <span class="qbx-txt">
+          <span class="qbx-q">Jogo online também funciona?</span>
+          <span class="qbx-a">Funciona normalmente, e com qualquer pessoa que tenha o jogo. Não fica limitado a quem desbloqueou pelo launcher.</span>
+        </span>
+      </button>
+
+      <button class="qbx-card" type="button" data-qbx="https://i.imgur.com/xMJJVnd.jpeg">
+        <span class="qbx-shot">
+          <img src="https://i.imgur.com/xMJJVnd.jpeg" alt="Print da caixinha: e os lançamentos que ainda vão sair?" loading="lazy" decoding="async">
+          <span class="qbx-zoom"><svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
+        </span>
+        <span class="qbx-txt">
+          <span class="qbx-q">Vou ter que pagar de novo pelos lançamentos?</span>
+          <span class="qbx-a">Não. O acesso é vitalício e as atualizações entram sem nenhum valor adicional.</span>
+        </span>
+      </button>
+
+      <button class="qbx-card" type="button" data-qbx="https://i.imgur.com/TKdP0JC.jpeg">
+        <span class="qbx-shot">
+          <img src="https://i.imgur.com/TKdP0JC.jpeg" alt="Print da caixinha: tem suporte caso precise?" loading="lazy" decoding="async">
+          <span class="qbx-zoom"><svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
+        </span>
+        <span class="qbx-txt">
+          <span class="qbx-q">Tem suporte caso eu precise?</span>
+          <span class="qbx-a">Tem. Suporte no WhatsApp e o Discord da comunidade, que abre direto pelo launcher.</span>
+        </span>
+      </button>
+
+      </div>
+
+      <!-- 21/08/2026: as caixinhas viraram a ULTIMA secao antes do FAQ. O degrau deixou
+           de apontar pra #conta (que agora vem ANTES da oferta) e fecha a corrente de
+           volta no preco, senao quem desce ate aqui fica sem saida. -->
+      <div class="flow reveal"><a href="#pricing" class="btn-ghost">Ver os planos</a></div>
+    </div>
   </div>
 </section>
 
@@ -2992,12 +3004,14 @@ var io = (function(){
   // Como gotoNext() faz `if(!p)return`, o botão ficava mudo: a pessoa buscava um jogo,
   // não achava, clicava em "Desbloquear acesso" e não acontecia nada. Agora vai pros
   // 3 passos, que é o degrau seguinte à biblioteca na corrente do funil.
+  // 21/08/2026: os 3 passos desceram pra depois da oferta, então o degrau seguinte à
+  // biblioteca virou #conta. Manter este destino igual ao <a> do .flow da biblioteca.
 
   document.addEventListener('click',function(e){
 
     var b=e.target.closest('.av-unlock'); if(!b)return;
 
-    gotoNext('passos');
+    gotoNext('conta');
 
   });
 
