@@ -505,6 +505,16 @@ body.gm-open{overflow:hidden}
 }
 .gm-back:hover{color:var(--txt2)}
 .av-card-img{width:100%;aspect-ratio:460/215;object-fit:cover;background:var(--panel2)}
+/* Jogo sem arte na Steam. Ate 21/08/2026 o card era escondido, o que fazia o
+   catalogo mostrar menos jogos do que o contador anunciava. Agora ele fica, com
+   o nome numa placa neutra: o numero bate e ninguem some da lista. */
+.av-card.noart .av-card-img{display:none}
+.av-card.noart .av-card-art{
+  width:100%;aspect-ratio:460/215;background:var(--panel2);
+  display:flex;align-items:center;justify-content:center;padding:10px 14px;
+  border-bottom:1px solid var(--line);text-align:center;
+  font-size:13px;line-height:1.3;font-weight:600;color:var(--txt2)
+}
 .av-card-body{padding:9px 10px 10px}
 .av-card-name{
   font-size:13.5px;font-weight:600;color:var(--txt);line-height:1.3;
@@ -2365,7 +2375,11 @@ var io = (function(){
       <div class="cat-chips" id="cat-chips"></div>
     </div>
     <div class="cat-grid-wrap" id="cat-grid-wrap">
-      <div class="cat-note">A nossa biblioteca tem <strong>+40.000 jogos</strong>. Este catálogo mostra só os mais procurados pelos clientes. Toque em qualquer jogo pra confirmar que ele está incluso. Não achou o seu? Provavelmente ele está disponível mesmo assim.</div>
+      <!-- 21/08/2026: esta nota dizia "este catalogo mostra so os mais procurados".
+           Era a frase que desmentia a headline: a pessoa clicava pra conferir os
+           +40.000 e o proprio site avisava que ali tinha bem menos. Com o catalogo
+           completo no ar, a lista e a promessa passaram a bater. -->
+      <div class="cat-note">Estes são os <strong>+40.000 jogos</strong> que entram na sua biblioteca. Estão em ordem dos mais procurados. Toque em qualquer um pra confirmar que ele está incluso.</div>
       <div class="cat-grid" id="cat-grid"></div>
       <div class="cat-more-wrap" id="cat-more-wrap" style="display:none">
         <button class="cat-more" id="cat-more" type="button">Carregar mais jogos</button>
@@ -2395,37 +2409,28 @@ var io = (function(){
 
     <div class="gm-body">
 
-      <!-- Ate 13/08/2026 aqui tinha so um botao "Quero esse jogo" que fechava o
-           popup e rolava ate a secao de planos. A oferta passou a aparecer
-           dentro do proprio popup: quem clicou num jogo ja demonstrou interesse,
-           e mandar rolar a pagina de novo perdia gente no caminho.
-           O botao usa o MESMO par href+onclick dos cards de plano, sem spinner e
-           sem mexer no botao durante o clique, pra nao repetir o problema que
-           matou o InitiateCheckout. Quem cuida do tracking e do redirect e a
-           funcao checkout(). -->
+      <!-- 21/08/2026: o popup voltou a ser uma ponte pra secao de planos.
+           Entre 13/08 e hoje ele trazia a propria oferta aqui dentro (titulo
+           "Acesso Vitalicio", R$ 49,97, lista de beneficios e link direto de
+           checkout). Dois problemas com aquilo: virava um SEGUNDO texto de
+           oferta na pagina, que envelhecia sozinho toda vez que #pricing mudava
+           de preco ou de lista, e a pessoa comprava sem nunca ver os 3 planos.
+           Agora existe um lugar so que anuncia preco. O botao abaixo NAO chama
+           checkout() e portanto nao dispara InitiateCheckout: quem dispara sao
+           os cards de plano, no fim da rolagem. -->
       <div class="gm-offer">
-        <div class="gm-offer-hd">Acesso Vitalício</div>
-        <div class="gm-offer-price">
-          <span class="gm-new num">R$ 49,97</span>
-          <span class="gm-once">pagamento único</span>
-        </div>
+        <div class="gm-offer-hd">O que você leva</div>
         <ul class="gm-offer-list">
-          <li><strong><span data-almaz-games="vitalicio">40.000</span> jogos</strong> liberados</li>
-          <li>Paga uma vez e nunca mais gasta com jogo</li>
-          <li>Todo lançamento futuro incluso</li>
+          <li>Paga <strong>uma vez</strong> e nunca mais gasta com jogo</li>
+          <li>Todo lançamento futuro incluso no Vitalício</li>
           <li>Online funcionando</li>
         </ul>
-        <a href="https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm"
-           onclick="checkout('https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm',49.97);return false"
-           class="offer-btn" id="gm-go">Quero garantir</a>
+        <a href="#pricing" class="offer-btn" id="gm-go">Quero garantir</a>
         <div class="gm-offer-pay">Pagamento no PIX</div>
         <div class="gm-offer-trust"><strong>Aprovação na hora</strong> e 7 dias de garantia</div>
       </div>
 
       <button type="button" class="gm-back" id="gm-back">Continuar vendo os jogos</button>
-      <!-- saida pra quem quer um plano menor: sem isso o popup so oferece o de
-           R$ 49,97 e quem ia comprar o Basico nao tem pra onde ir -->
-      <a href="#pricing" class="gm-plans" id="gm-plans">Ver os 3 planos</a>
     </div>
   </div>
 </div>
@@ -2614,7 +2619,7 @@ var io = (function(){
      letra, esquece numero. Entao vai afrouxando em 3 niveis, do exato pro
      chutado, e para no primeiro que achar. Como GAMES ja vem ordenado por mais
      procurado, o primeiro resultado costuma ser o jogo certo. */
-  function fmtJogo(g){ return { nome:g.n, capa:g.u||img(g.i), soon:!!g.soon, dt:g.dt||'' }; }
+  function fmtJogo(g){ return { nome:g.n, capa:capa(g), soon:!!g.soon, dt:g.dt||'' }; }
 
   /* Distancia de edicao com teto: quantas letras precisam mudar pra uma palavra
      virar a outra. Para de contar assim que passa do limite, pra nao varrer os
@@ -2685,6 +2690,23 @@ var io = (function(){
 
   function img(id){return 'https://cdn.cloudflare.steamstatic.com/steam/apps/'+id+'/header.jpg';}
 
+  /* Capa do jogo.
+     A Steam serve a arte de duas formas e as duas estao vivas ao mesmo tempo:
+       store_item_assets/steam/apps/<id>/header.jpg          (caminho simples)
+       store_item_assets/steam/apps/<id>/<hash>/header.jpg   (arte migrada)
+     Quem foi migrado NAO responde no caminho simples, e ai o card ficava sem capa.
+     Isso pegava bem os jogos que mais vendem a ideia, porque migrado costuma ser
+     lancamento ou reedicao: Assassin's Creed Black Flag, Modern Warfare 4,
+     EA SPORTS FC 27, Flight Simulator 2024.
+     ATENCAO: cada arte tem o seu proprio hash. O hash da capsule nao abre a
+     header.jpg. O campo h aqui e o hash DA HEADER, tirado do
+     IStoreBrowseService/GetItems (ver capas.js), um por um, pros 40.000. */
+  function capa(g){
+    if(g.u)return g.u;
+    var base='https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/'+g.i+'/';
+    return g.h ? base+g.h+'/header.jpg' : base+'header.jpg';
+  }
+
   function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
   // Fallback de imagem: se uma arte falhar, tenta as outras variantes da Steam
@@ -2693,9 +2715,22 @@ var io = (function(){
 
   // Muitos lançamentos novos ainda não têm header.jpg, mas têm library_hero.jpg.
 
+  // Ultimo recurso: em vez de esconder o card (o contador dizia 40.000 e a grade
+  // mostrava menos), o card fica e a arte vira uma placa com o nome do jogo.
+  function semArte(im){
+    var c=im.closest('.av-card'); if(!c)return;
+    c.classList.add('noart');
+    if(!c.querySelector('.av-card-art')){
+      var d=document.createElement('div');
+      d.className='av-card-art';
+      d.textContent=c.getAttribute('data-gn')||'';
+      c.insertBefore(d,c.firstChild);
+    }
+  }
+
   window.almazImgFallback=function(im){
 
-    if(im.getAttribute('data-u')){ var cu=im.closest('.av-card'); if(cu)cu.style.display='none'; return; }
+    if(im.getAttribute('data-u')){ semArte(im); return; }
 
     var i=im.getAttribute('data-i');
 
@@ -2717,7 +2752,7 @@ var io = (function(){
 
     if(next){ tried.push(next); im.setAttribute('data-tried',tried.join(',')); im.src='https://cdn.cloudflare.steamstatic.com/steam/apps/'+i+'/'+next; }
 
-    else { var c=im.closest('.av-card'); if(c)c.style.display='none'; }
+    else { semArte(im); }
 
   };
 
@@ -2732,7 +2767,7 @@ var io = (function(){
     return '<div class="av-card" role="button" tabindex="0" data-gn="'+nm+'"'+
       (g.soon?' data-gsoon="1" data-gdt="'+esc(g.dt||'')+'"':'')+'>'+
 
-      '<img class="av-card-img" data-i="'+g.i+'"'+(g.u?' data-u="1"':'')+' src="'+(g.u||'https://cdn.cloudflare.steamstatic.com/steam/apps/'+g.i+'/'+(g.img||'header.jpg'))+'" alt="'+nm+'" loading="lazy" decoding="async" onerror="almazImgFallback(this)">'+
+      '<img class="av-card-img" data-i="'+g.i+'"'+(g.u?' data-u="1"':'')+' src="'+capa(g)+'" alt="'+nm+'" loading="lazy" decoding="async" onerror="almazImgFallback(this)">'+
 
       '<div class="av-card-body">'+
 
@@ -2836,7 +2871,10 @@ var io = (function(){
 
       if(!qs) return true;
 
-      var n=norm(g.n);
+      /* norm() faz normalize('NFD') + replace + toLowerCase. Com 3.949 jogos dava
+         pra rodar isso a cada tecla; com 40.000 nao da, trava o celular no meio da
+         digitacao. Entao normaliza uma vez por jogo e guarda no proprio objeto. */
+      var n=g._n||(g._n=norm(g.n));
 
       for(var k=0;k<qs.length;k++){ if(n.indexOf(qs[k])!==-1) return true; }
 
@@ -2891,15 +2929,16 @@ var io = (function(){
 
     if(!list.length){
 
-      track.innerHTML='<div class="av-empty">Não achamos <strong>“'+esc(query)+'”</strong> nesta amostra, mas nossa biblioteca tem <strong>+40.000 jogos</strong> e cresce toda semana. Desbloqueie o acesso e procure direto na sua Steam.<br><button class="av-unlock" type="button">Desbloquear acesso</button></div>';
+      track.innerHTML='<div class="av-empty">Não achamos <strong>“'+esc(query)+'”</strong> com esse nome. Tente como aparece na Steam: muita franquia mudou de nome.<br><button class="av-unlock" type="button">Desbloquear acesso</button></div>';
 
     } else {
 
-      // Amostra máxima: ao filtrar por categoria/lançamentos mostra TODOS os jogos do
+      /* Teto do carrossel. "Em breve" sai inteiro porque sao poucos; o resto para
+         em 300, inclusive as categorias. Ate 21/08/2026 filtrar por categoria
+         mandava a lista toda pro carrossel, o que dava 371 cards no pior caso e
+         agora daria milhares. */
 
-      // filtro; em "Todos"/busca limita a 300 p/ não pesar o carrossel (imagens são lazy).
-
-      var max=(activeCat!=='todos' && !query)?list.length:300;
+      var max=(activeCat==='embreve' && !query)?list.length:300;
 
       track.innerHTML=list.slice(0,max).map(cardHTML).join('');
 
@@ -3029,7 +3068,6 @@ var io = (function(){
         gtxt=document.getElementById('gm-txt'),
         ggo=document.getElementById('gm-go'),
         gback=document.getElementById('gm-back'),
-        gplans=document.getElementById('gm-plans'),
         gx=document.getElementById('gm-x');
 
     function close(){ ov.classList.remove('on'); document.body.classList.remove('gm-open'); }
@@ -3103,19 +3141,16 @@ var io = (function(){
     gback.addEventListener('click',close);
     ov.addEventListener('click',function(e){ if(e.target===ov)close(); });
 
-    // O #gm-go NAO tem listener: ele leva o par href+onclick="checkout(...)"
-    // no HTML, igual aos cards de plano. Qualquer coisa a mais aqui (fechar o
-    // popup, trocar texto, spinner) corre o risco de atrapalhar o disparo do
-    // InitiateCheckout, e o proprio checkout() ja redireciona a aba.
-    // Quem ainda quer comparar preco sai por aqui:
-    if(gplans){
-      gplans.addEventListener('click',function(e){
-        e.preventDefault();
-        close();
-        if(window.almazCatClose)window.almazCatClose();
-        gotoPricing();
-      });
-    }
+    // O #gm-go leva pra secao de planos, nao pro checkout. Ele fecha o popup e o
+    // catalogo antes de rolar porque os dois travam o scroll do body: sem isso a
+    // pagina nao sai do lugar e o clique morre. Nao chame checkout() aqui, o
+    // InitiateCheckout e dos cards de plano.
+    ggo.addEventListener('click',function(e){
+      e.preventDefault();
+      close();
+      if(window.almazCatClose)window.almazCatClose();
+      gotoPricing();
+    });
   })();
 
 
@@ -3154,17 +3189,23 @@ var io = (function(){
 
     function chips(){ cchips.innerHTML=CATS.map(function(c){return '<button class="av-chip'+(c[0]===cCat?' active':'')+'" type="button" data-cat="'+c[0]+'">'+c[1]+'</button>';}).join(''); }
 
-    function setCount(){ ccount.textContent = cList.length+' jogo'+(cList.length===1?'':'s')+(shown<cList.length?', mostrando '+shown:''); }
+    /* 40000 vira "40.000": e o numero que prova a promessa da headline, entao
+       tem que ser legivel de relance. */
+    function mil(n){ return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,'.'); }
+
+    function setCount(){ ccount.textContent = mil(cList.length)+' jogo'+(cList.length===1?'':'s')+(shown<cList.length?', mostrando '+mil(shown):''); }
 
     function append(){
 
-      // Ao selecionar uma categoria/lançamentos (sem busca), mostra TODOS os jogos
-
-      // do filtro de uma vez. Em "Todos"/busca, pagina de PAGE em PAGE (imagens são lazy).
-
-      var filterActive = cCat!=='todos' && !cQ;
-
-      var step = filterActive ? (cList.length-shown) : PAGE;
+      /* Antes, escolher uma categoria despejava TODOS os jogos daquele filtro de
+         uma vez. Isso valia quando "RPG" eram 371 cards; com o catalogo de 40.000
+         viraram milhares, e montar milhares de cards de uma vez trava o celular.
+         Agora tambem pagina, so que com um passo maior, porque quem filtrou por
+         categoria esta ali pra folhear. "Em breve" continua inteiro: sao poucos e
+         a graca e ver a lista toda do que ainda vai sair. */
+      var step = (cCat==='embreve' && !cQ) ? (cList.length-shown)
+               : (cCat!=='todos' && !cQ) ? PAGE*2
+               : PAGE;
 
       var slice=cList.slice(shown,shown+step);
 
@@ -3191,7 +3232,7 @@ var io = (function(){
 
       if(!cList.length){
 
-        grid.innerHTML='<div class="cat-empty" style="grid-column:1/-1">Nenhum jogo encontrado para <strong>“'+esc(cQ)+'”</strong> nesta amostra.<br>A biblioteca completa tem <strong>+40.000 jogos</strong>. Desbloqueie e procure direto na sua Steam.</div>';
+        grid.innerHTML='<div class="cat-empty" style="grid-column:1/-1">Nenhum jogo encontrado para <strong>“'+esc(cQ)+'”</strong>.<br>Tente o nome como aparece na Steam. Se o jogo existe lá, quase sempre a nossa ferramenta libera.</div>';
 
         moreWrap.style.display='none'; ccount.textContent='0 jogos'; return;
 
