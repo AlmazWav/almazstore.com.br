@@ -390,6 +390,10 @@ h2{font-size:clamp(21px,3.1vw,27px);margin-bottom:6px}
 
 /* ---------- catalogo ---------- */
 .av-chips{display:flex;gap:7px;flex-wrap:wrap}
+/* 21/08/2026: com texto na busca as chips saem da frente. Ver o comentario grande
+   no listener de input do #av-input: elas custavam 188px entre a caixa de busca e
+   a resposta, e no celular com teclado isso jogava o resultado pra fora da tela. */
+.av-chips.av-chips-off{display:none}
 .av-cats-head{display:none}
 .av-chip{
   background:var(--panel);border:1px solid var(--line);color:var(--txt2);
@@ -2907,9 +2911,38 @@ var io = (function(){
 
   chipsEl.addEventListener('click',function(e){var b=e.target.closest('.av-chip');if(!b)return;activeCat=b.getAttribute('data-cat');renderChips();renderTrack();});
 
-  input.addEventListener('input',function(){query=this.value;clear.style.display=query?'block':'none';renderTrack();});
+  /* CORRIGIDO EM 21/08/2026 — a busca respondia fora da tela.
+     Medido a 375x470 (que e a area que sobra num celular de 812px com o teclado
+     aberto): a caixa de busca ficava em y=140, as 15 chips de categoria ocupavam
+     386..574 e a faixa de resultados so comecava em y=590, ou seja 120px ABAIXO
+     da borda de baixo. A pessoa digitava "gta", o site achava, e ela nao via nada.
+     Duas correcoes, nesta ordem:
+     1) com texto na busca, as chips somem. Elas sao um filtro concorrente (filtrar
+        por categoria enquanto se busca por nome nao faz sentido) e sozinhas custavam
+        188px do buraco.
+     2) na primeira letra de cada foco, traz a faixa pra tela. So na primeira, senao
+        a pagina brigaria com a rolagem da pessoa a cada tecla. */
+  var jaTrouxe=false;
+  input.addEventListener('focus',function(){ jaTrouxe=false; });
+  function sincronizaChips(){ chipsEl.classList.toggle('av-chips-off', !!query); }
+  function trazResultados(){
+    if(jaTrouxe||!query) return;
+    jaTrouxe=true;
+    /* alvo: topo da faixa logo abaixo da caixa de busca, com a caixa ainda visivel
+       (a pessoa precisa continuar vendo o que digitou). */
+    var alvo=track.getBoundingClientRect().top+window.pageYOffset
+             -input.getBoundingClientRect().height-90;
+    window.scrollTo({top:Math.max(0,alvo),behavior:'smooth'});
+  }
+  input.addEventListener('input',function(){
+    query=this.value;
+    clear.style.display=query?'block':'none';
+    sincronizaChips();
+    renderTrack();
+    trazResultados();
+  });
 
-  clear.addEventListener('click',function(){query='';input.value='';clear.style.display='none';renderTrack();input.focus();});
+  clear.addEventListener('click',function(){query='';input.value='';clear.style.display='none';sincronizaChips();renderTrack();input.focus();});
 
   if(prev)prev.addEventListener('click',function(){track.scrollBy({left:-560,behavior:'smooth'});});
 
@@ -3017,6 +3050,23 @@ var io = (function(){
       ov.classList.add('on');
       document.body.classList.add('gm-open');
     }
+
+    /* open() lê tudo do elemento do card (data-gn, data-gsoon, data-gdt e a .av-card-img).
+       Quem não é card — a arte grande do topo, por exemplo — entrega os mesmos dados por
+       aqui, num objeto que responde às duas chamadas que open() faz. É de propósito não
+       mexer em open(): ele continua sendo a única função que monta a confirmação. */
+    window.almazAbrirJogo=function(nome,src,soon,dt){
+      if(!nome)return;
+      open({
+        getAttribute:function(k){
+          if(k==='data-gn')return nome;
+          if(k==='data-gsoon')return soon?'1':'';
+          if(k==='data-gdt')return dt||'';
+          return null;
+        },
+        querySelector:function(){ return src?{src:src}:null; }
+      });
+    };
 
     document.addEventListener('click',function(e){
       // O botão "Desbloquear acesso" do estado vazio tem o próprio destino.
@@ -3236,6 +3286,31 @@ var io = (function(){
   thumbs.forEach(function(t){
     t.addEventListener('click',function(){ show(parseInt(t.getAttribute('data-i'),10)||0); play(); });
   });
+
+  /* CLIQUE MORTO CORRIGIDO EM 21/08/2026. A arte grande é o maior elemento da 1a tela,
+     troca sozinha a cada 5s, tem miniaturas clicáveis embaixo e uma legenda dizendo
+     "Incluso no plano" — tudo pedindo toque — e não tinha handler nenhum. Os cliques
+     mortos do Clarity pularam de 0,67% (27/07, design antigo) pra 10,19% em 7 dias,
+     e o design com esta arte entrou em 29/07. Agora ela abre a MESMA confirmação que
+     um card de jogo abre, com o jogo que está aparecendo no momento.
+     Nenhum dos 9 jogos do banner tem soon:1 no assets/catalogo.js, então a confirmação
+     diz "Disponível agora" pros nove, igualzinho ao que o catálogo já diz quando a
+     pessoa toca neles lá embaixo. Se entrar um lançamento aqui, passe soon/dt. */
+  var stage=document.getElementById('art-stage');
+  if(stage && window.almazAbrirJogo){
+    stage.setAttribute('role','button');
+    stage.setAttribute('tabindex','0');
+    stage.style.cursor='pointer';
+    var abrir=function(){
+      var img=slides[i].querySelector('img');
+      if(!img)return;
+      window.almazAbrirJogo(img.getAttribute('alt')||'', img.currentSrc||img.src, false, '');
+    };
+    stage.addEventListener('click',abrir);
+    stage.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); abrir(); }
+    });
+  }
   document.addEventListener('visibilitychange',function(){ document.hidden?stop():play(); });
   play();
 })();
