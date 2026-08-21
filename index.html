@@ -369,30 +369,13 @@ h2{font-size:clamp(21px,3.1vw,27px);margin-bottom:6px}
 .medo-q{display:block;font-size:13px;font-weight:600;color:var(--txt);line-height:1.3}
 .medo-a{display:block;font-size:12.5px;color:var(--txt2);line-height:1.45;margin-top:2px}
 
-/* ---------- busca (usada no topo e no catalogo) ---------- */
-.find{margin-top:24px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);padding:16px}
-.find-lbl{font-size:14.5px;font-weight:600;margin-bottom:3px}
-.find-hint{font-size:13px;color:var(--dim);margin-bottom:12px}
-.av-search{position:relative;display:flex;align-items:center}
-.av-search svg{position:absolute;left:13px;width:17px;height:17px;stroke:var(--dim);fill:none;pointer-events:none}
-.av-search input{
-  width:100%;background:var(--bg);border:1px solid var(--line2);border-radius:var(--r);
-  color:var(--txt);font-size:14.5px;padding:12px 40px 12px 40px;transition:border-color .15s;
-}
-.av-search input::placeholder{color:#5f7488}
-.av-search input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-dim)}
-.av-search-clear{
-  position:absolute;right:8px;width:26px;height:26px;border-radius:50%;background:var(--panel2);
-  color:var(--dim);font-size:17px;line-height:1;display:none;align-items:center;justify-content:center;
-}
-.av-search-clear.on{display:flex}
-.av-search-clear:hover{color:var(--txt);background:var(--panel3)}
 
 /* ---------- catalogo ---------- */
 .av-chips{display:flex;gap:7px;flex-wrap:wrap}
-/* 21/08/2026: com texto na busca as chips saem da frente. Ver o comentario grande
-   no listener de input do #av-input: elas custavam 188px entre a caixa de busca e
-   a resposta, e no celular com teclado isso jogava o resultado pra fora da tela. */
+/* Com texto na busca as chips saem da frente: elas custavam 188px entre a busca e
+   a resposta, e no celular com teclado isso jogava o resultado pra fora da tela.
+   Hoje isso so acontece dentro do modal do catalogo, que e onde sobrou uma busca:
+   a caixa da primeira tela foi removida em 21/08/2026. */
 .av-chips.av-chips-off{display:none}
 .av-cats-head{display:none}
 .av-chip{
@@ -1396,9 +1379,6 @@ body.gm-open{overflow:hidden}
   .deal{font-size:18px}
   .offer-btn{padding:15px 24px;font-size:16px}
 
-  .find{padding:16px 14px}
-  .find-lbl,.find-hint{text-align:center}
-  .find-hint{max-width:300px;margin-left:auto;margin-right:auto}
 
   .av-chips{justify-content:center}
   .av-catalog{justify-content:center;text-align:center}
@@ -1749,15 +1729,12 @@ var io = (function(){
     </div>
 
     <!-- busca de jogos ja na primeira tela -->
-    <div class="find reveal">
-      <div class="find-lbl">O jogo que você quer está incluso?</div>
-      <div class="find-hint">Pesquise antes de comprar. Se o jogo existe na Steam, é quase certo que a nossa ferramenta libera.</div>
-      <div class="av-search">
-        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input id="av-input" type="text" placeholder="Digite o nome do jogo (ex: Elden Ring, GTA, Resident Evil)" autocomplete="off" spellcheck="false">
-        <button class="av-search-clear" id="av-clear" type="button" aria-label="Limpar busca">&times;</button>
-      </div>
-    </div>
+    <!-- 21/08/2026: saiu daqui a caixa "O jogo que voce quer esta incluso?" com a
+         busca. Ela existia porque o catalogo era uma amostra de 3.949 jogos e
+         procurar era o unico jeito de saber se o jogo da pessoa entrava. Com os
+         40.000 no ar a pergunta se responde sozinha, a busca continua dentro do
+         catalogo, e a secao da biblioteca logo abaixo ja tem o botao que abre.
+         Eram dois convites pra mesma coisa na mesma rolagem. -->
 
   </div>
 </section>
@@ -2973,8 +2950,11 @@ var io = (function(){
         188px do buraco.
      2) na primeira letra de cada foco, traz a faixa pra tela. So na primeira, senao
         a pagina brigaria com a rolagem da pessoa a cada tecla. */
+  /* Daqui pra baixo o input pode nao existir: a busca da primeira tela virou
+     botao em 21/08/2026. Os listeners ficam guardados porque este IIFE tambem
+     monta o carrossel e os chips, e um erro aqui levaria os dois junto. */
   var jaTrouxe=false;
-  input.addEventListener('focus',function(){ jaTrouxe=false; });
+  if(input) input.addEventListener('focus',function(){ jaTrouxe=false; });
   function sincronizaChips(){ chipsEl.classList.toggle('av-chips-off', !!query); }
   function trazResultados(){
     if(jaTrouxe||!query) return;
@@ -2985,15 +2965,15 @@ var io = (function(){
              -input.getBoundingClientRect().height-90;
     window.scrollTo({top:Math.max(0,alvo),behavior:'smooth'});
   }
-  input.addEventListener('input',function(){
+  if(input) input.addEventListener('input',function(){
     query=this.value;
-    clear.style.display=query?'block':'none';
+    if(clear)clear.style.display=query?'block':'none';
     sincronizaChips();
     renderTrack();
     trazResultados();
   });
 
-  clear.addEventListener('click',function(){query='';input.value='';clear.style.display='none';sincronizaChips();renderTrack();input.focus();});
+  if(clear) clear.addEventListener('click',function(){query='';input.value='';clear.style.display='none';sincronizaChips();renderTrack();input.focus();});
 
   if(prev)prev.addEventListener('click',function(){track.scrollBy({left:-560,behavior:'smooth'});});
 
@@ -3029,9 +3009,18 @@ var io = (function(){
     } else {
       catCarregar(renderTrack);   /* navegador velho: comportamento antigo */
     }
-    ['focus','pointerdown'].forEach(function(ev){
-      input.addEventListener(ev,function(){ catCarregar(renderTrack); },{once:true});
-    });
+    /* Gatilho de "tocou pra procurar". A caixa de busca da primeira tela saiu em
+       21/08/2026, entao hoje este input e sempre nulo aqui: o unico campo de
+       busca que sobrou vive dentro do modal do catalogo, que so existe depois
+       que o catalogo ja carregou. A guarda fica porque este IIFE tambem monta o
+       carrossel e os chips, e um erro aqui levaria os dois junto.
+       Sobraram dois gatilhos de carregamento, que dao conta: rolar ate perto da
+       secao da biblioteca, e o botao "Abrir catalogo completo". */
+    if(input){
+      ['focus','pointerdown'].forEach(function(ev){
+        input.addEventListener(ev,function(){ catCarregar(renderTrack); },{once:true});
+      });
+    }
   })();
 
   placeholderTrack();
@@ -3492,17 +3481,6 @@ var io = (function(){
      o aspect-ratio ja reserva a altura, mas o load garante a medida certa. */
   window.addEventListener('load',sync);
   tr.querySelectorAll('img').forEach(function(i){ i.addEventListener('load',sync); });
-  sync();
-})();
-
-/* Limpar busca: mostra o X so quando tem texto (o motor do catalogo cuida do
-   filtro em si; aqui e apenas o estado visual do botao). */
-(function(){
-  var inp=document.getElementById('av-input'), clr=document.getElementById('av-clear');
-  if(!inp||!clr) return;
-  function sync(){ clr.classList.toggle('on', inp.value.length>0); }
-  inp.addEventListener('input',sync);
-  clr.addEventListener('click',sync);
   sync();
 })();
 
