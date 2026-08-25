@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Gestão de Clientes</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; }
+        .container { background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 1000px; margin: 0 auto; }
+        h1 { color: #333; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #007bff; color: white; }
+        .btn-refund { padding: 6px 12px; background-color: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .btn-refund:hover { background-color: #c82333; }
+        .btn-refund:disabled { background-color: #ccc; cursor: not-allowed; }
+        .status-approved { color: green; font-weight: bold; }
+        .status-pending { color: orange; font-weight: bold; }
+        .status-refunded { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Painel Admin - Clientes</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>E-mail</th>
+                <th>Método</th>
+                <th>Data</th>
+                <th>Status</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody id="customersTable">
+            <tr><td colspan="8" style="text-align: center;">Carregando...</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    async function loadCustomers() {
+        try {
+            const response = await fetch('http://localhost:3000/api/admin/customers');
+            const data = await response.json();
+            
+            const tbody = document.getElementById('customersTable');
+            tbody.innerHTML = '';
+            
+            if(data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">Nenhum cliente encontrado.</td></tr>';
+                return;
+            }
+
+            data.forEach(customer => {
+                const tr = document.createElement('tr');
+                
+                let statusClass = '';
+                if(customer.payment_status === 'approved') statusClass = 'status-approved';
+                else if(customer.payment_status === 'pending') statusClass = 'status-pending';
+                else if(customer.payment_status === 'refunded') statusClass = 'status-refunded';
+
+                tr.innerHTML = `
+                    <td>${customer.id}</td>
+                    <td>${customer.name}</td>
+                    <td>${customer.cpf}</td>
+                    <td>${customer.email}</td>
+                    <td>${customer.payment_method}</td>
+                    <td>${new Date(customer.created_at).toLocaleString('pt-BR')}</td>
+                    <td class="${statusClass}">${customer.payment_status.toUpperCase()}</td>
+                    <td>
+                        <button class="btn-refund" onclick="refundCustomer(${customer.id})" 
+                            ${customer.payment_status === 'refunded' || customer.payment_status === 'pending' ? 'disabled' : ''}>
+                            Reembolsar
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        } catch (error) {
+            console.error('Error loading customers:', error);
+            document.getElementById('customersTable').innerHTML = '<tr><td colspan="8" style="text-align: center; color: red;">Erro ao carregar dados.</td></tr>';
+        }
+    }
+
+    async function refundCustomer(id) {
+        if(!confirm('Tem certeza que deseja reembolsar este cliente? Esta ação não pode ser desfeita.')) return;
+
+        try {
+            const response = await fetch('http://localhost:3000/api/admin/refund', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id })
+            });
+            const result = await response.json();
+            
+            if(result.success) {
+                alert('Reembolso processado com sucesso!');
+                loadCustomers(); // Reload table
+            } else {
+                alert('Erro: ' + result.error);
+            }
+        } catch (error) {
+            console.error('Error refunding:', error);
+            alert('Erro de conexão ao processar reembolso.');
+        }
+    }
+
+    // Load initial data
+    loadCustomers();
+</script>
+</body>
+</html>

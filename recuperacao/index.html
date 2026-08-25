@@ -1,718 +1,213 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="robots" content="noindex,nofollow,noarchive">
-<meta name="theme-color" content="#0b1219">
-<title>Recuperação de carrinhos | Almaz Store</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-:root{
-  --bg:#0b1219; --bg2:#0f1a24; --panel:#16222f; --panel2:#1d2b3a;
-  --line:rgba(146,186,220,.13); --line2:rgba(146,186,220,.24);
-  --txt:#dbe6f1; --txt2:#aebfd0; --dim:#8399ae;
-  --blue:#59a6e0; --buy:#4a9d2a; --buy2:#57b533;
-  --warn:#e0a03a; --red:#d9534f; --roxo:#8f6fd4;
-  --f:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
-  --r:10px;
-}
-body{font-family:var(--f);background:var(--bg);color:var(--txt);line-height:1.5;font-size:15px;
-  -webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom)}
-button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
-button{border:none;background:none;cursor:pointer}
-
-/* ---------- tela de senha ---------- */
-#gate{position:fixed;inset:0;z-index:900;background:var(--bg);display:flex;
-  align-items:center;justify-content:center;padding:24px}
-.gate-box{width:100%;max-width:340px;text-align:center}
-.gate-box h1{font-size:19px;margin-bottom:6px}
-.gate-box p{color:var(--dim);font-size:13.5px;margin-bottom:20px}
-.gate-box input{width:100%;background:var(--panel);border:1px solid var(--line2);
-  border-radius:var(--r);padding:14px;margin-bottom:10px;text-align:center;font-size:16px}
-.gate-box button{width:100%;background:linear-gradient(180deg,var(--buy2),var(--buy));
-  color:#fff;font-weight:700;padding:14px;border-radius:var(--r);font-size:16px}
-#gate-erro{color:var(--red);font-size:13px;margin-top:10px;min-height:18px}
-
-/* ---------- topo ---------- */
-header{position:sticky;top:0;z-index:500;background:rgba(11,18,25,.97);
-  backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:10px 14px 0}
-.h-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
-.h-top h1{font-size:16px;font-weight:700;letter-spacing:-.01em}
-.h-acoes{display:flex;gap:6px}
-.h-acoes button,.h-acoes a{background:var(--panel);border:1px solid var(--line);border-radius:8px;
-  padding:7px 10px;font-size:12px;color:var(--txt2);font-weight:600;
-  display:inline-block;text-decoration:none}
-#gerado{font-size:11px;color:var(--dim);margin-top:2px}
-#gerado.velha{color:var(--warn)}
-
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px}
-.stat{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:7px 4px;text-align:center}
-.stat b{display:block;font-size:16px;font-weight:700;line-height:1.2}
-.stat span{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.02em}
-.stat.v b{color:var(--buy2)}
-
-.busca{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:8px;
-  padding:10px 12px;margin-bottom:9px;font-size:15px}
-.filtros{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none}
-.filtros::-webkit-scrollbar{display:none}
-.filtro{flex:0 0 auto;background:var(--panel);border:1px solid var(--line);border-radius:50px;
-  padding:7px 13px;font-size:12.5px;color:var(--txt2);font-weight:600;white-space:nowrap}
-.filtro.on{background:rgba(89,166,224,.16);border-color:var(--blue);color:var(--blue)}
-
-/* ---------- ritmo / anti-ban ---------- */
-#ritmo{margin:0 14px 10px;background:var(--panel);border:1px solid var(--line);
-  border-radius:8px;padding:9px 12px;font-size:12.5px;color:var(--dim);display:flex;
-  align-items:center;justify-content:space-between;gap:10px}
-#ritmo.alerta{border-color:rgba(224,160,58,.45);background:rgba(224,160,58,.10);color:var(--warn)}
-#ritmo b{color:var(--txt2)}
-#ritmo.alerta b{color:var(--warn)}
-
-/* ---------- lista ---------- */
-main{padding:0 14px 30px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
-  padding:13px;margin-bottom:9px}
-.card.feito{opacity:.5}
-.card.comprou{border-color:rgba(74,157,42,.45);background:rgba(74,157,42,.07);opacity:1}
-.c-l1{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:3px}
-.c-nome{font-weight:700;font-size:15px;line-height:1.25}
-.c-valor{font-weight:700;color:var(--buy2);white-space:nowrap;font-size:15px}
-.c-meta{font-size:12.5px;color:var(--dim);margin-bottom:9px}
-.c-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
-.tag{font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:5px;letter-spacing:.02em}
-.tag.quente{background:rgba(217,83,79,.16);color:#e8827e}
-.tag.tent{background:rgba(143,111,212,.18);color:#b49ee8}
-.tag.env{background:rgba(224,160,58,.16);color:var(--warn)}
-.tag.ok{background:rgba(74,157,42,.18);color:var(--buy2)}
-.tag.sddd{background:rgba(89,166,224,.16);color:var(--blue)}
-.tag.mail{background:rgba(146,186,220,.12);color:var(--dim)}
-.tag.ver{background:rgba(224,160,58,.18);color:var(--warn)}
-
-.c-btns{display:flex;gap:6px}
-.b-zap{flex:1;background:linear-gradient(180deg,var(--buy2),var(--buy));color:#fff;
-  font-weight:700;padding:12px;border-radius:8px;display:flex;align-items:center;
-  justify-content:center;gap:7px;font-size:14.5px;min-height:46px}
-.b-zap:active{filter:brightness(.92)}
-.b-sec{background:var(--panel2);border:1px solid var(--line);border-radius:8px;
-  padding:12px 13px;font-size:13px;color:var(--txt2);font-weight:600;min-height:46px}
-.b-mail{flex:1;background:var(--panel2);border:1px solid var(--line2);color:var(--txt2);
-  font-weight:600;padding:12px;border-radius:8px;font-size:14px;min-height:46px}
-
-.marcar{display:flex;gap:6px;margin-top:8px}
-.marcar button{flex:1;background:var(--bg2);border:1px solid var(--line);border-radius:7px;
-  padding:9px 4px;font-size:11.5px;color:var(--dim);font-weight:600;min-height:40px}
-.marcar button.on{border-color:var(--buy2);color:var(--buy2);background:rgba(74,157,42,.12)}
-.marcar button.no.on{border-color:var(--red);color:#e8827e;background:rgba(217,83,79,.12)}
-
-.vazio{text-align:center;color:var(--dim);padding:50px 20px;font-size:14px}
-
-/* ---------- modal ---------- */
-.modal{position:fixed;inset:0;z-index:800;background:rgba(0,0,0,.72);display:none;
-  align-items:flex-end;justify-content:center}
-.modal.on{display:flex}
-.modal-in{width:100%;max-width:520px;background:var(--bg2);border-top-left-radius:16px;
-  border-top-right-radius:16px;padding:18px 16px calc(20px + env(safe-area-inset-bottom));
-  max-height:88vh;overflow-y:auto}
-.modal-in h2{font-size:16px;margin-bottom:4px}
-.modal-in p.sub{font-size:13px;color:var(--dim);margin-bottom:14px}
-.modal-in textarea{width:100%;background:var(--panel);border:1px solid var(--line2);
-  border-radius:8px;padding:12px;min-height:120px;font-size:14.5px;line-height:1.5;resize:vertical}
-.modal-in input[type=text]{width:100%;background:var(--panel);border:1px solid var(--line2);
-  border-radius:8px;padding:12px;font-size:16px;margin-bottom:10px}
-.tmpls{display:flex;gap:6px;overflow-x:auto;margin-bottom:10px;padding-bottom:4px;scrollbar-width:none}
-.tmpls::-webkit-scrollbar{display:none}
-.tmpl{flex:0 0 auto;background:var(--panel);border:1px solid var(--line);border-radius:50px;
-  padding:7px 13px;font-size:12.5px;color:var(--txt2);font-weight:600;white-space:nowrap}
-.tmpl.on{background:rgba(89,166,224,.16);border-color:var(--blue);color:var(--blue)}
-.m-btns{display:flex;gap:8px;margin-top:12px}
-.m-btns .pri{flex:1;background:linear-gradient(180deg,var(--buy2),var(--buy));color:#fff;
-  font-weight:700;padding:14px;border-radius:9px;font-size:15.5px;min-height:50px}
-.m-btns .sec{background:var(--panel);border:1px solid var(--line2);color:var(--txt2);
-  font-weight:600;padding:14px;border-radius:9px;font-size:14px;min-height:50px}
-.dica{font-size:12px;color:var(--dim);margin-top:12px;line-height:1.55;
-  background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset de Key | Almaz Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+    <style>
+        :root {
+            --bg: #0b1219; --bg2: #0f1a24; --panel: #16222f; --panel2: #1d2b3a;
+            --line: rgba(146,186,220,.13); --line2: rgba(146,186,220,.22);
+            --txt: #dbe6f1; --txt2: #aebfd0; --dim: #8399ae;
+            --blue: #59a6e0; --blue-dim: rgba(89,166,224,.12);
+            --buy: #4a9d2a; --buy2: #57b533; --warn: #e0a03a;
+            --f: 'Inter', system-ui, -apple-system, sans-serif;
+            --r: 8px; --r2: 12px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: var(--f); background: var(--bg); color: var(--txt); line-height: 1.6; font-size: 15px; -webkit-font-smoothing: antialiased; }
+        .wrap { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        
+        h1, h2, h3 { font-weight: 700; line-height: 1.15; letter-spacing: -.02em; }
+        h1 { font-size: clamp(24px, 4vw, 32px); text-align: center; margin-bottom: 10px; }
+        h2 { font-size: 20px; color: var(--txt); border-bottom: 1px solid var(--line); padding-bottom: 10px; margin-bottom: 15px; }
+        
+        .subtitle { text-align: center; color: var(--txt2); margin-bottom: 40px; font-size: 16px; }
+        
+        .box { background: var(--panel); border: 1px solid var(--line2); border-radius: var(--r2); padding: 30px; margin-bottom: 30px; box-shadow: 0 8px 24px rgba(0,0,0,.35); }
+        .box p { margin-bottom: 15px; color: var(--txt2); }
+        .box p strong { color: var(--txt); }
+        
+        .alert { background: rgba(224, 160, 58, 0.1); border-left: 4px solid var(--warn); padding: 15px 20px; border-radius: 0 var(--r) var(--r) 0; margin: 25px 0; color: #e6c898; }
+        .alert strong { color: var(--warn); display: block; margin-bottom: 5px; font-size: 16px; }
+        
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: 600; margin-bottom: 6px; color: var(--txt2); font-size: 14px; }
+        input, select { width: 100%; padding: 12px 15px; background: var(--bg2); border: 1px solid var(--line2); border-radius: var(--r); color: var(--txt); font-family: inherit; font-size: 15px; outline: none; transition: border-color 0.2s; }
+        input:focus, select:focus { border-color: var(--blue); }
+        
+        .payment-info { display: none; margin-top: 20px; padding: 20px; background: var(--panel2); border: 1px solid var(--line); border-radius: var(--r); }
+        .payment-info.active { display: block; }
+        
+        .btn { display: inline-flex; width: 100%; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(180deg, var(--buy2), var(--buy)); color: #fff; font-weight: 700; font-size: 16px; padding: 15px 26px; border-radius: var(--r); border: 1px solid rgba(0,0,0,.25); box-shadow: 0 1px 0 rgba(255,255,255,.14) inset, 0 4px 14px rgba(0,0,0,.35); transition: filter 0.15s, transform 0.1s; cursor: pointer; margin-top: 20px; }
+        .btn:hover { filter: brightness(1.1); }
+        .btn:active { transform: translateY(1px); }
+        .btn:disabled { filter: grayscale(1); cursor: not-allowed; opacity: 0.7; }
+        
+        .pix-area { text-align: center; }
+        .pix-area img { max-width: 200px; border-radius: 8px; margin: 15px auto; border: 2px solid var(--line); }
+        
+        #message { margin-top: 20px; text-align: center; font-weight: 600; padding: 15px; border-radius: var(--r); display: none; }
+        .msg-success { background: rgba(74, 157, 42, 0.1); color: #57b533; border: 1px solid rgba(74, 157, 42, 0.3); display: block !important; }
+        .msg-error { background: rgba(224, 58, 58, 0.1); color: #ff6b6b; border: 1px solid rgba(224, 58, 58, 0.3); display: block !important; }
+    </style>
 </head>
 <body>
 
-<!-- ============ SENHA ============ -->
-<div id="gate">
-  <div class="gate-box">
-    <h1>Recuperação de carrinhos</h1>
-    <p>Digite a senha uma vez. Este aparelho fica destravado depois disso.</p>
-    <input type="password" id="gate-senha" placeholder="senha" autocomplete="current-password" inputmode="text">
-    <button id="gate-btn">Abrir</button>
-    <div id="gate-erro"></div>
-  </div>
-</div>
+<div class="wrap">
+    <h1>Sua Key foi invalidada?</h1>
+    <p class="subtitle">Entenda o motivo e realize o reset para voltar a jogar agora mesmo.</p>
+    
+    <div class="box">
+        <h2>Por que minha Key precisa ser resetada?</h2>
+        <p>Muitos usuários se deparam com a necessidade de resetar a Key mesmo sem ter formatado o computador ou trocado peças. <strong>Por que isso acontece do nada?</strong></p>
+        <p>O nosso sistema de segurança atrela a sua Key à identidade única do seu hardware (HWID). Isso nos permite proteger o sistema contra pirataria e garantir que sua licença seja vitalícia e exclusiva para sua máquina.</p>
+        <p>No entanto, a própria <strong>Atualização do Windows (Windows Update)</strong> tem o costume de modificar silenciosamente arquivos profundos de registro, versão de compilação e drivers do sistema. Quando o Windows faz essa atualização de segurança, nosso sistema anticheat pode detectar o seu PC como se fosse uma "máquina nova", invalidando a Key por precaução.</p>
+        
+        <div class="alert">
+            <strong>Dica de Ouro: Como evitar futuros resets</strong>
+            Recomendamos fortemente que você desative as atualizações automáticas do Windows Update. Ao fazer isso, a identidade do seu sistema permanece intacta e você evita que sua Key caia novamente após uma atualização automática que você nem pediu.
+        </div>
+    </div>
 
-<!-- ============ APP ============ -->
-<div id="app" style="display:none">
-  <header>
-    <div class="h-top">
-      <div>
-        <h1>Carrinhos abandonados</h1>
-        <div id="gerado"></div>
-      </div>
-      <div class="h-acoes">
-        <button id="btn-atualizar" title="Baixar a lista de novo">↻</button>
-        <a href="leads.html" title="Quem pediu o desconto no site">Leads</a>
-        <button id="btn-compraram">Já compraram</button>
-        <button id="btn-backup">Backup</button>
-      </div>
-    </div>
-    <div class="stats">
-      <div class="stat"><b id="s-fila">0</b><span>na fila</span></div>
-      <div class="stat"><b id="s-env">0</b><span>enviados</span></div>
-      <div class="stat"><b id="s-comp">0</b><span>compraram</span></div>
-      <div class="stat v"><b id="s-val">0</b><span>em aberto</span></div>
-    </div>
-    <input class="busca" id="busca" placeholder="Buscar por nome, telefone ou e-mail">
-    <div class="filtros" id="filtros"></div>
-  </header>
+    <div class="box">
+        <h2>Liberar meu Acesso (Reset de Key)</h2>
+        <p>Preencha os dados abaixo para confirmar sua identidade e liberar seu acesso.</p>
+        
+        <form id="checkoutForm">
+            <div class="form-group">
+                <label for="name">Nome Completo</label>
+                <input type="text" id="name" name="name" autocomplete="name" required placeholder="Digite seu nome">
+            </div>
+            <div class="form-group">
+                <label for="cpf">CPF</label>
+                <input type="text" id="cpf" name="cpf" autocomplete="on" required placeholder="Apenas números">
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail da Compra</label>
+                <input type="email" id="email" name="email" autocomplete="email" required placeholder="Seu e-mail">
+            </div>
+            <div class="form-group">
+                <label for="paymentMethod">Forma de Pagamento</label>
+                <select id="paymentMethod" required onchange="togglePaymentFields()">
+                    <option value="">Selecione...</option>
+                    <option value="pix">PIX (Liberação Imediata)</option>
+                    <option value="credit_card">Cartão de Crédito</option>
+                </select>
+            </div>
 
-  <div id="ritmo"></div>
-  <main id="lista"></main>
-</div>
+            <div id="pixInstabilityAlert" class="alert" style="display: none; background: rgba(224, 58, 58, 0.1); border-left: 4px solid #ff6b6b; color: #ff9b9b; margin-top: 5px;">
+                <strong style="color: #ff6b6b;">Aviso de Instabilidade PIX</strong>
+                O sistema PIX do Banco Central está apresentando lentidão neste exato momento. Para liberação imediata da sua Key, recomendamos fortemente o uso de <strong>Cartão de Crédito</strong>. Se preferir manter no PIX, aguarde a normalização do sistema após o pagamento.
+            </div>
 
-<!-- ============ MODAL MENSAGEM ============ -->
-<div class="modal" id="m-msg">
-  <div class="modal-in">
-    <h2 id="m-nome">Cliente</h2>
-    <p class="sub" id="m-sub"></p>
-    <div class="tmpls" id="m-tmpls"></div>
-    <textarea id="m-texto"></textarea>
-    <div id="m-ddd" style="display:none;margin-top:10px">
-      <p class="sub" style="margin-bottom:6px">Esse número veio sem DDD. Digite o DDD para montar o link.</p>
-      <input type="text" id="m-ddd-in" placeholder="DDD (ex: 47)" inputmode="numeric" maxlength="2">
-    </div>
-    <div class="m-btns">
-      <button class="pri" id="m-abrir">Abrir no WhatsApp</button>
-      <button class="sec" id="m-copiar">Copiar</button>
-      <button class="sec" id="m-fechar">Fechar</button>
-    </div>
-    <div class="dica">
-      Ao tocar em abrir, o WhatsApp abre com o texto pronto. <b>Você envia com o dedo.</b>
-      Nada é disparado sozinho, que é o que costuma derrubar número novo.
-    </div>
-  </div>
-</div>
+            <!-- Credit Card Fields -->
+            <div id="creditCardFields" class="payment-info">
+                <div class="form-group">
+                    <label for="cardNumber">Número do Cartão</label>
+                    <input type="text" id="cardNumber" name="cardnumber" autocomplete="cc-number" placeholder="0000 0000 0000 0000">
+                </div>
+                <div style="display: flex; gap: 15px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="expiry">Validade</label>
+                        <input type="text" id="expiry" name="cc-exp" autocomplete="cc-exp" placeholder="MM/AA">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label for="cvv">CVV</label>
+                        <input type="text" id="cvv" name="cc-csc" autocomplete="cc-csc" placeholder="123">
+                    </div>
+                </div>
+            </div>
 
-<!-- ============ MODAL COMPRARAM ============ -->
-<div class="modal" id="m-comp">
-  <div class="modal-in">
-    <h2>Quem já comprou</h2>
-    <p class="sub">Cole aqui a lista de vendas aprovadas do checkout. Pode ser o texto inteiro,
-      colunas e tudo. Eu procuro os e-mails e telefones dentro e marco quem já é cliente,
-      pra você não cobrar quem já pagou.</p>
-    <textarea id="comp-texto" placeholder="Cole aqui (e-mails, telefones, ou a planilha inteira copiada)"></textarea>
-    <div class="m-btns">
-      <button class="pri" id="comp-aplicar">Cruzar e marcar</button>
-      <button class="sec" id="comp-fechar">Fechar</button>
+            <button type="submit" class="btn" id="submitBtn">Realizar Pagamento e Resetar Key</button>
+        </form>
+
+        <div id="pixContainer" class="payment-info pix-area">
+            <h3 style="color: var(--txt); margin-bottom: 10px;">Pagamento via PIX</h3>
+            <p>Abra o app do seu banco e escaneie o QR Code abaixo:</p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&color=0b1219&bgcolor=dbe6f1&data=00020126580014br.gov.bcb.pix" alt="QR Code PIX">
+            <p style="color: var(--dim); margin-top: 10px; font-weight: 500;">Aguardando confirmação do pagamento...</p>
+        </div>
+
+        <div id="message"></div>
     </div>
-    <div id="comp-res" class="dica" style="display:none"></div>
-  </div>
 </div>
 
 <script>
-/* =========================================================================
-   1) Descriptografia. O arquivo dados.js publicado contem apenas o blob
-      AES-GCM; sem a senha nao ha nome, telefone nem e-mail legivel.
-   ========================================================================= */
-const CHAVE_ST = 'almaz_recup_status_v1';
-const CHAVE_ENV = 'almaz_recup_envios_v1';
-const CHAVE_DDD = 'almaz_recup_ddd_v1';
-const CHAVE_CACHE = 'almaz_recup_cache_v1';
-
-let DADOS = null, ST = {}, ENVIOS = [], DDDS = {};
-
-function carregarLocal(){
-  try{ ST = JSON.parse(localStorage.getItem(CHAVE_ST) || '{}'); }catch(e){ ST = {}; }
-  try{ ENVIOS = JSON.parse(localStorage.getItem(CHAVE_ENV) || '[]'); }catch(e){ ENVIOS = []; }
-  try{ DDDS = JSON.parse(localStorage.getItem(CHAVE_DDD) || '{}'); }catch(e){ DDDS = {}; }
-}
-const salvarST = () => localStorage.setItem(CHAVE_ST, JSON.stringify(ST));
-const salvarENV = () => localStorage.setItem(CHAVE_ENV, JSON.stringify(ENVIOS));
-const salvarDDD = () => localStorage.setItem(CHAVE_DDD, JSON.stringify(DDDS));
-
-async function decifrar(b64, senha){
-  const bin = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
-  const salt = bin.slice(0,16), iv = bin.slice(16,28), tag = bin.slice(28,44), ct = bin.slice(44);
-  const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(senha), 'PBKDF2', false, ['deriveKey']);
-  const key = await crypto.subtle.deriveKey(
-    { name:'PBKDF2', salt, iterations:250000, hash:'SHA-256' },
-    base, { name:'AES-GCM', length:256 }, false, ['decrypt']);
-  const junto = new Uint8Array(ct.length + tag.length);
-  junto.set(ct); junto.set(tag, ct.length);
-  const claro = await crypto.subtle.decrypt({ name:'AES-GCM', iv }, key, junto);
-  return JSON.parse(new TextDecoder().decode(claro));
-}
-
-/* =========================================================================
-   2) Utilidades
-   ========================================================================= */
-const capitalizar = s => (s||'').toLowerCase().split(/\s+/)
-  .map(p => p ? p[0].toUpperCase() + p.slice(1) : '').join(' ').trim();
-const primeiroNome = s => capitalizar(s).split(' ')[0] || 'tudo bem';
-const produtoCurto = p => (p||'').replace(/\s*-\s*Almaz Store\s*$/i,'').trim() || 'seu plano';
-const money = v => 'R$ ' + Number(v||0).toFixed(2).replace('.',',');
-function haQuanto(iso){
-  if(!iso) return 'sem data';
-  const dd = Math.floor((Date.now() - new Date(iso)) / 86400000);
-  if(dd <= 0) return 'hoje';
-  if(dd === 1) return 'ontem';
-  return 'há ' + dd + ' dias';
-}
-function telInternacional(c){
-  let t = c.tel;
-  if(c.tipoTel === 'sem_ddd'){
-    const ddd = DDDS[c.id];
-    if(!ddd) return null;
-    t = ddd + t;
-  }
-  if(!t) return null;
-  return '55' + t;
-}
-
-/* =========================================================================
-   3) Modelos de mensagem. Variar o texto evita o padrao repetido que o
-      WhatsApp usa como sinal de spam.
-   ========================================================================= */
-const MODELOS = [
-  { nome:'Direto', txt: c =>
-`Oi ${primeiroNome(c.nome)}, tudo bem? Aqui é a Almaz Store.
-
-Vi que você começou a ativação do ${produtoCurto(c.produto)} e não chegou a finalizar. Ficou alguma dúvida?
-
-Posso te ajudar por aqui mesmo, é rápido.` },
-
-  { nome:'Deu erro?', txt: c =>
-`Oi ${primeiroNome(c.nome)}! Aqui é a Almaz Store.
-
-Você tentou fechar o ${produtoCurto(c.produto)} e o pagamento não passou, certo? Isso acontece bastante e normalmente é besteira.
-
-Quer que eu gere um link novo pra você?` },
-
-  { nome:'Reservado', txt: c =>
-`Oi ${primeiroNome(c.nome)}, tudo certo?
-
-Seu ${produtoCurto(c.produto)} de ${money(c.valor)} ainda está reservado aqui. Quer finalizar hoje?
-
-Aceito Pix, cai na hora e já libero.` },
-
-  { nome:'Tentou várias', txt: c =>
-`Oi ${primeiroNome(c.nome)}!
-
-Vi que você tentou ${c.tentativas} vezes finalizar aqui e não deu certo nenhuma. Isso é problema no checkout, não é você.
-
-Me chama que eu resolvo manualmente, leva 2 minutos.` },
-
-  { nome:'Dúvida', txt: c =>
-`Oi ${primeiroNome(c.nome)}, tudo bem?
-
-Você parou na hora de fechar o ${produtoCurto(c.produto)}. Se ficou com receio de como funciona a ativação, eu te explico direitinho antes de qualquer pagamento.
-
-Sem compromisso.` },
-
-  /* Reset Key nao e venda nova: 88% de quem compra ja tinha plano. Essa pessoa
-     provavelmente JA e cliente e travou num reset. Mandar "finalize sua compra"
-     pra ela soa como se a gente nao soubesse quem ela e. */
-  { nome:'Reset Key', txt: c =>
-`Oi ${primeiroNome(c.nome)}, tudo bem?
-
-Vi que você começou o pedido do Reset Key e não conseguiu concluir. Deu algum problema na sua ativação?
-
-Me conta o que aconteceu que eu resolvo por aqui.` }
-];
-const ehReset = c => /reset/i.test(c.produto || '');
-function modeloSugerido(c){
-  if(ehReset(c)) return 5;              // cliente com problema, nao lead novo
-  return c.tentativas >= 3 ? 3 : (c.dias <= 3 ? 0 : 2);
-}
-
-/* =========================================================================
-   4) Estado / render
-   ========================================================================= */
-let filtroAtual = 'fila', busca = '';
-const FILTROS = [
-  { id:'fila',    label:'Na fila' },
-  { id:'quentes', label:'Quentes (7d)' },
-  { id:'multi',   label:'Tentou +1x' },
-  { id:'enviado', label:'Enviados' },
-  { id:'comprou', label:'Compraram' },
-  { id:'verificar', label:'Confirmar se pagou' },
-  { id:'sddd',    label:'Sem DDD' },
-  { id:'mail',    label:'Só e-mail' },
-  { id:'todos',   label:'Todos' }
-];
-const st = id => ST[id] || 'novo';
-
-function passaFiltro(c){
-  const s = st(c.id);
-  switch(filtroAtual){
-    case 'fila':    return s === 'novo' && c.tipoTel === 'ok';
-    case 'quentes': return s === 'novo' && c.tipoTel === 'ok' && c.dias <= 7;
-    case 'multi':   return c.tentativas > 1;
-    case 'enviado': return s === 'enviado';
-    case 'comprou': return s === 'comprou';
-    case 'verificar': return c.verificar;
-    case 'sddd':    return c.tipoTel === 'sem_ddd';
-    case 'mail':    return c.tipoTel === 'ausente';
-    default:        return true;
-  }
-}
-function passaBusca(c){
-  if(!busca) return true;
-  const q = busca.toLowerCase();
-  return (c.nome||'').toLowerCase().includes(q)
-      || (c.tel||'').includes(q.replace(/\D/g,''))
-      || (c.emails||[]).some(e => e.toLowerCase().includes(q));
-}
-
-function render(){
-  const cs = DADOS.contatos.filter(c => passaFiltro(c) && passaBusca(c));
-  const lista = document.getElementById('lista');
-
-  if(!cs.length){
-    lista.innerHTML = '<div class="vazio">Nada aqui.<br>Troque o filtro acima.</div>';
-  } else {
-    lista.innerHTML = cs.map(c => {
-      const s = st(c.id);
-      const tags = [];
-      if(c.dias <= 3 && c.tipoTel === 'ok') tags.push('<span class="tag quente">QUENTE · '+haQuanto(c.quando)+'</span>');
-      if(c.tentativas > 1) tags.push('<span class="tag tent">'+c.tentativas+' TENTATIVAS</span>');
-      if(c.statusPlanilha !== 'Não contatado') tags.push('<span class="tag env">JÁ CONTATADO ANTES</span>');
-      if(c.comprou) tags.push('<span class="tag ok">JÁ COMPROU · '+money(c.pagoValor)+'</span>');
-      else if(s === 'comprou') tags.push('<span class="tag ok">COMPROU</span>');
-      if(c.verificar) tags.push('<span class="tag ver">CONFIRMAR SE PAGOU</span>');
-      if(ehReset(c)) tags.push('<span class="tag tent">PROVÁVEL CLIENTE · RESET</span>');
-      if(c.tipoTel === 'sem_ddd') tags.push('<span class="tag sddd">FALTA DDD</span>');
-      if(c.tipoTel === 'ausente') tags.push('<span class="tag mail">SÓ E-MAIL</span>');
-
-      const btnPrincipal = c.tipoTel === 'ausente'
-        ? '<button class="b-mail" data-mail="'+c.id+'">Abrir e-mail</button>'
-        : '<button class="b-zap" data-zap="'+c.id+'">'
-          + '<svg width="17" height="17" viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.35 5.07L2 22l5.06-1.33A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>'
-          + (s === 'novo' ? 'Chamar' : 'Chamar de novo') + '</button>';
-
-      return '<div class="card '+(s==='comprou'?'comprou':(s!=='novo'?'feito':''))+'">'
-        + '<div class="c-l1"><div class="c-nome">'+capitalizar(c.nome)+'</div>'
-        + '<div class="c-valor">'+money(c.valor)+'</div></div>'
-        + '<div class="c-meta">'+produtoCurto(c.produto)+' · '+haQuanto(c.quando)+'</div>'
-        + (tags.length ? '<div class="c-tags">'+tags.join('')+'</div>' : '')
-        + '<div class="c-btns">'+btnPrincipal
-        + '<button class="b-sec" data-info="'+c.id+'">Dados</button></div>'
-        + '<div class="marcar">'
-        +   '<button data-mk="enviado" data-id="'+c.id+'" class="'+(s==='enviado'?'on':'')+'">Enviado</button>'
-        +   '<button data-mk="respondeu" data-id="'+c.id+'" class="'+(s==='respondeu'?'on':'')+'">Respondeu</button>'
-        +   '<button data-mk="comprou" data-id="'+c.id+'" class="'+(s==='comprou'?'on':'')+'">Comprou</button>'
-        +   '<button data-mk="recusou" data-id="'+c.id+'" class="no '+(s==='recusou'?'on':'')+'">Não quer</button>'
-        + '</div></div>';
-    }).join('');
-  }
-  atualizarStats();
-  atualizarRitmo();
-}
-
-function atualizarStats(){
-  const t = DADOS.contatos;
-  const fila = t.filter(c => st(c.id) === 'novo' && c.tipoTel === 'ok').length;
-  const env  = t.filter(c => ['enviado','respondeu'].includes(st(c.id))).length;
-  const comp = t.filter(c => st(c.id) === 'comprou').length;
-  const val  = t.filter(c => st(c.id) === 'novo' && c.tipoTel === 'ok')
-                .reduce((s,c) => s + c.valor, 0);
-  document.getElementById('s-fila').textContent = fila;
-  document.getElementById('s-env').textContent = env;
-  document.getElementById('s-comp').textContent = comp;
-  document.getElementById('s-val').textContent = 'R$' + Math.round(val);
-}
-
-/* Medidor de ritmo: numero novo que dispara muito em pouco tempo cai.
-   Aqui so aviso, nao bloqueio. */
-function atualizarRitmo(){
-  const agora = Date.now();
-  ENVIOS = ENVIOS.filter(t => agora - t < 3600000);
-  salvarENV();
-  const n = ENVIOS.length;
-  const el = document.getElementById('ritmo');
-  const LIMITE = 20;
-  el.className = n >= LIMITE ? 'alerta' : '';
-  if(n >= LIMITE){
-    el.innerHTML = '<span><b>'+n+' mensagens na última hora.</b> Dá uma parada de 30 a 60 min. '
-      + 'Volume alto em número novo é o que trava conta.</span>';
-  } else {
-    el.innerHTML = '<span>Ritmo: <b>'+n+'/'+LIMITE+'</b> na última hora</span>'
-      + '<span style="font-size:11.5px">espace 1 a 2 min entre cada</span>';
-  }
-}
-
-/* =========================================================================
-   5) Modal de mensagem
-   ========================================================================= */
-let alvo = null, modeloSel = 0;
-
-function abrirMsg(c){
-  alvo = c; modeloSel = modeloSugerido(c);
-  document.getElementById('m-nome').textContent = capitalizar(c.nome);
-  document.getElementById('m-sub').textContent =
-    produtoCurto(c.produto) + ' · ' + money(c.valor) + ' · ' + haQuanto(c.quando)
-    + (c.tentativas > 1 ? ' · ' + c.tentativas + ' tentativas' : '');
-  document.getElementById('m-tmpls').innerHTML = MODELOS.map((m,i) =>
-    '<button class="tmpl '+(i===modeloSel?'on':'')+'" data-tm="'+i+'">'+m.nome+'</button>').join('');
-  document.getElementById('m-texto').value = MODELOS[modeloSel].txt(c);
-  const precisaDdd = c.tipoTel === 'sem_ddd' && !DDDS[c.id];
-  document.getElementById('m-ddd').style.display = precisaDdd ? 'block' : 'none';
-  document.getElementById('m-ddd-in').value = DDDS[c.id] || '';
-  document.getElementById('m-msg').classList.add('on');
-}
-
-document.getElementById('m-tmpls').addEventListener('click', e => {
-  const b = e.target.closest('[data-tm]'); if(!b) return;
-  modeloSel = +b.dataset.tm;
-  document.querySelectorAll('#m-tmpls .tmpl').forEach((x,i) => x.classList.toggle('on', i === modeloSel));
-  document.getElementById('m-texto').value = MODELOS[modeloSel].txt(alvo);
-});
-
-document.getElementById('m-ddd-in').addEventListener('input', e => {
-  const v = e.target.value.replace(/\D/g,'').slice(0,2);
-  e.target.value = v;
-  if(v.length === 2){ DDDS[alvo.id] = v; salvarDDD(); }
-});
-
-document.getElementById('m-abrir').addEventListener('click', () => {
-  const fone = telInternacional(alvo);
-  if(!fone){ alert('Falta o DDD desse número. Digite acima.'); return; }
-  const txt = document.getElementById('m-texto').value;
-  ENVIOS.push(Date.now()); salvarENV();
-  if(st(alvo.id) === 'novo'){ ST[alvo.id] = 'enviado'; salvarST(); }
-  window.open('https://wa.me/' + fone + '?text=' + encodeURIComponent(txt), '_blank');
-  document.getElementById('m-msg').classList.remove('on');
-  render();
-});
-
-document.getElementById('m-copiar').addEventListener('click', async () => {
-  const t = document.getElementById('m-texto').value;
-  try{ await navigator.clipboard.writeText(t); }
-  catch(e){ const el = document.getElementById('m-texto'); el.select(); document.execCommand('copy'); }
-  const b = document.getElementById('m-copiar');
-  b.textContent = 'Copiado'; setTimeout(() => b.textContent = 'Copiar', 1400);
-});
-document.getElementById('m-fechar').addEventListener('click',
-  () => document.getElementById('m-msg').classList.remove('on'));
-
-/* =========================================================================
-   6) Cruzamento com quem ja comprou
-   ========================================================================= */
-/* Força rebaixar a lista sem depender do cache do navegador. */
-document.getElementById('btn-atualizar').addEventListener('click', async () => {
-  const b = document.getElementById('btn-atualizar');
-  b.textContent = '...';
-  BLOB = null;
-  try{
-    const dados = await decifrar(await carregarBlob(), localStorage.getItem(CHAVE_CACHE));
-    iniciar(dados);
-    b.textContent = '✓';
-  }catch(e){ b.textContent = '!'; }
-  setTimeout(() => b.textContent = '↻', 1500);
-});
-
-document.getElementById('btn-compraram').addEventListener('click',
-  () => document.getElementById('m-comp').classList.add('on'));
-document.getElementById('comp-fechar').addEventListener('click',
-  () => document.getElementById('m-comp').classList.remove('on'));
-
-document.getElementById('comp-aplicar').addEventListener('click', () => {
-  const txt = document.getElementById('comp-texto').value || '';
-  const emails = new Set((txt.match(/[\w.+-]+@[\w-]+\.[\w.]+/g) || []).map(e => e.toLowerCase()));
-  const fones = new Set();
-  (txt.match(/\d[\d\s().-]{7,}\d/g) || []).forEach(f => {
-    const d = f.replace(/\D/g,'');
-    if(d.length >= 10) fones.add(d.slice(-11)), fones.add(d.slice(-10)), fones.add(d.slice(-9));
-  });
-
-  let marcados = 0; const nomes = [];
-  DADOS.contatos.forEach(c => {
-    if(st(c.id) === 'comprou') return;
-    const bateEmail = (c.emails||[]).some(e => emails.has(e.toLowerCase()));
-    const bateFone = c.tel && (fones.has(c.tel) || fones.has(c.tel.slice(-9)) || fones.has(c.tel.slice(-10)));
-    if(bateEmail || bateFone){
-      ST[c.id] = 'comprou'; marcados++; nomes.push(capitalizar(c.nome));
+    function togglePaymentFields() {
+        const method = document.getElementById('paymentMethod').value;
+        const ccFields = document.getElementById('creditCardFields');
+        const pixContainer = document.getElementById('pixContainer');
+        const pixAlert = document.getElementById('pixInstabilityAlert');
+        
+        ccFields.classList.remove('active');
+        pixContainer.classList.remove('active');
+        pixAlert.style.display = 'none';
+        
+        if (method === 'credit_card') {
+            ccFields.classList.add('active');
+        } else if (method === 'pix') {
+            pixAlert.style.display = 'block';
+        }
     }
-  });
-  salvarST();
-  const res = document.getElementById('comp-res');
-  res.style.display = 'block';
-  res.innerHTML = marcados
-    ? '<b>' + marcados + ' já eram clientes</b> e saíram da fila:<br>' + nomes.join(', ')
-      + '<br><br>Encontrei ' + emails.size + ' e-mails e ' + fones.size + ' telefones no texto colado.'
-    : 'Nenhum bateu. Encontrei ' + emails.size + ' e-mails e ' + fones.size
-      + ' telefones no texto. Se der zero, confira se colou a coluna certa.';
-  render();
-});
 
-/* =========================================================================
-   7) Backup do progresso
-   ========================================================================= */
-document.getElementById('btn-backup').addEventListener('click', () => {
-  const linhas = [['nome','telefone','email','produto','valor','abandonado_em','tentativas','status']];
-  DADOS.contatos.forEach(c => linhas.push([
-    capitalizar(c.nome), c.tel, (c.emails||[]).join(' | '), produtoCurto(c.produto),
-    String(c.valor).replace('.',','), c.quando ? new Date(c.quando).toLocaleString('pt-BR') : '',
-    c.tentativas, st(c.id)
-  ]));
-  const csv = '﻿' + linhas.map(l => l.map(v =>
-    '"' + String(v).replace(/"/g,'""') + '"').join(';')).join('\n');
-  const url = URL.createObjectURL(new Blob([csv], { type:'text/csv;charset=utf-8' }));
-  const a = document.createElement('a');
-  a.href = url; a.download = 'recuperacao-' + new Date().toISOString().slice(0,10) + '.csv';
-  a.click(); URL.revokeObjectURL(url);
-});
+    document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('name').value;
+        const cpf = document.getElementById('cpf').value;
+        const email = document.getElementById('email').value;
+        const method = document.getElementById('paymentMethod').value;
+        const messageDiv = document.getElementById('message');
+        const submitBtn = document.getElementById('submitBtn');
 
-/* =========================================================================
-   8) Eventos da lista
-   ========================================================================= */
-document.getElementById('lista').addEventListener('click', e => {
-  const zap = e.target.closest('[data-zap]');
-  if(zap){
-    const c = DADOS.contatos.find(x => x.id == zap.dataset.zap);
-    // trava contra o erro mais caro: cobrar quem ja pagou
-    if(c.comprou && !confirm(capitalizar(c.nome) + ' JÁ COMPROU (' + money(c.pagoValor)
-        + ' em ' + (c.pagoQuando || 'data não informada') + ').\n\n'
-        + 'Cobrar cliente que já pagou costuma virar denúncia e derrubar número novo.\n\n'
-        + 'Abrir mesmo assim?')) return;
-    abrirMsg(c); return;
-  }
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'Processando...';
+        
+        messageDiv.className = '';
+        messageDiv.innerText = '';
 
-  const mail = e.target.closest('[data-mail]');
-  if(mail){
-    const c = DADOS.contatos.find(x => x.id == mail.dataset.mail);
-    const assunto = 'Seu ' + produtoCurto(c.produto) + ' na Almaz Store';
-    const corpo = MODELOS[0].txt(c);
-    if(st(c.id) === 'novo'){ ST[c.id] = 'enviado'; salvarST(); render(); }
-    location.href = 'mailto:' + (c.emails[0]||'') + '?subject=' + encodeURIComponent(assunto)
-      + '&body=' + encodeURIComponent(corpo);
-    return;
-  }
+        try {
+            const response = await fetch('/api/checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name, cpf, email, method,
+                    cardData: method === 'credit_card' ? {
+                        number: document.getElementById('cardNumber').value,
+                        expiry: document.getElementById('expiry').value,
+                        cvv: document.getElementById('cvv').value
+                    } : null
+                })
+            });
 
-  const info = e.target.closest('[data-info]');
-  if(info){
-    const c = DADOS.contatos.find(x => x.id == info.dataset.info);
-    alert(capitalizar(c.nome) + '\n\n'
-      + 'Telefone: ' + (c.tel || 'não informado') + '\n'
-      + 'E-mail(s): ' + (c.emails.join('\n            ') || 'nenhum') + '\n'
-      + 'Produto: ' + produtoCurto(c.produto) + '\n'
-      + 'Valores tentados: ' + c.valores.map(money).join(', ') + '\n'
-      + 'Tentativas: ' + c.tentativas + '\n'
-      + 'Abandonou: ' + (c.quando ? new Date(c.quando).toLocaleString('pt-BR') : 'sem data') + '\n'
-      + 'Status na planilha: ' + c.statusPlanilha
-      + (c.comprou
-          ? '\n\n--- JÁ É CLIENTE ---\nPagou: ' + money(c.pagoValor)
-            + '\nEm: ' + (c.pagoQuando || 'sem data')
-            + '\nProduto: ' + produtoCurto(c.pagoProduto)
-          : ''));
-    return;
-  }
+            const result = await response.json();
 
-  const mk = e.target.closest('[data-mk]');
-  if(mk){
-    const id = mk.dataset.id, novo = mk.dataset.mk;
-    ST[id] = (st(id) === novo) ? 'novo' : novo;
-    salvarST(); render();
-  }
-});
-
-document.getElementById('busca').addEventListener('input', e => { busca = e.target.value.trim(); render(); });
-document.getElementById('filtros').addEventListener('click', e => {
-  const b = e.target.closest('[data-f]'); if(!b) return;
-  filtroAtual = b.dataset.f;
-  document.querySelectorAll('#filtros .filtro').forEach(x =>
-    x.classList.toggle('on', x.dataset.f === filtroAtual));
-  render();
-});
-
-/* =========================================================================
-   9) Abertura
-   ========================================================================= */
-function iniciar(dados){
-  DADOS = dados;
-
-  // Limpa status orfaos. Os ids antigos eram sequenciais e mudavam a cada
-  // exportacao; o que sobrou deles aponta pra ninguem e so acumula lixo.
-  const validos = new Set(DADOS.contatos.map(c => String(c.id)));
-  let removidos = 0;
-  Object.keys(ST).forEach(k => { if(!validos.has(k)){ delete ST[k]; removidos++; } });
-  if(removidos) console.log('[recuperacao] ' + removidos + ' status órfãos descartados');
-
-  DADOS.contatos.forEach(c => {
-    // cruzado com a exportacao de pagamentos aprovados: ja e cliente, sai da fila.
-    // Isso manda na frente de qualquer status local, porque cobrar quem ja pagou
-    // e o jeito mais rapido de tomar denuncia e derrubar numero novo.
-    if(c.comprou){ ST[c.id] = 'comprou'; return; }
-    // quem a planilha ja marcou como contatado entra como enviado, pra nao cobrar duas vezes
-    if(c.statusPlanilha !== 'Não contatado' && !ST[c.id]) ST[c.id] = 'enviado';
-  });
-  salvarST();
-  // deixa visivel de que dia e a lista: sem isso nao da pra saber se o que
-  // esta na tela e a exportacao nova ou uma copia velha em cache
-  const g = document.getElementById('gerado');
-  if(DADOS.geradoEm){
-    const dt = new Date(DADOS.geradoEm);
-    const horas = (Date.now() - dt) / 3600000;
-    g.textContent = 'Lista de ' + dt.toLocaleString('pt-BR',
-      { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' })
-      + ' · ' + DADOS.contatos.length + ' contatos';
-    g.classList.toggle('velha', horas > 48);
-  }
-  document.getElementById('filtros').innerHTML = FILTROS.map(f =>
-    '<button class="filtro '+(f.id===filtroAtual?'on':'')+'" data-f="'+f.id+'">'+f.label+'</button>').join('');
-  document.getElementById('gate').style.display = 'none';
-  document.getElementById('app').style.display = 'block';
-  render();
-}
-
-/* Busca o dados.js em tempo de execucao, com no-store e timestamp.
-   O GitHub Pages manda Cache-Control: max-age=600 e nao deixa mudar isso, entao
-   o celular guardava o index.html antigo e continuava pedindo a versao velha do
-   dados.js. Buscando aqui, mesmo com o HTML em cache a lista vem sempre nova. */
-let BLOB = null;
-async function carregarBlob(){
-  if(BLOB) return BLOB;
-  const r = await fetch('dados.js?t=' + Date.now(), { cache:'no-store' });
-  if(!r.ok) throw new Error('http ' + r.status);
-  const m = (await r.text()).match(/"([^"]+)"/);
-  if(!m) throw new Error('dados.js inesperado');
-  BLOB = m[1];
-  return BLOB;
-}
-
-async function tentarAbrir(senha){
-  const erro = document.getElementById('gate-erro');
-  erro.textContent = 'Abrindo...';
-  try{
-    const dados = await decifrar(await carregarBlob(), senha);
-    localStorage.setItem(CHAVE_CACHE, senha);
-    carregarLocal();
-    iniciar(dados);
-  }catch(e){
-    if(String(e.message||'').startsWith('http') || e.name === 'TypeError'){
-      erro.textContent = 'Não consegui baixar a lista. Sem internet?';
-      return;
-    }
-    erro.textContent = 'Senha errada.';
-    document.getElementById('gate-senha').value = '';
-  }
-}
-document.getElementById('gate-btn').addEventListener('click',
-  () => tentarAbrir(document.getElementById('gate-senha').value));
-document.getElementById('gate-senha').addEventListener('keydown',
-  e => { if(e.key === 'Enter') tentarAbrir(e.target.value); });
-
-// se ja abriu nesta sessao, nao pede de novo
-(function(){
-  const s = localStorage.getItem(CHAVE_CACHE);
-  if(s) tentarAbrir(s);
-  else document.getElementById('gate-senha').focus();
-})();
+            if (result.success) {
+                if (method === 'pix') {
+                    document.getElementById('checkoutForm').style.display = 'none';
+                    document.getElementById('pixContainer').classList.add('active');
+                } else {
+                    document.getElementById('checkoutForm').style.display = 'none';
+                    messageDiv.classList.add('msg-success');
+                    messageDiv.innerHTML = '✅ Pagamento aprovado!<br>Sua key foi resetada com sucesso e liberada no sistema.';
+                }
+            } else {
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'Realizar Pagamento e Resetar Key';
+                messageDiv.classList.add('msg-error');
+                messageDiv.innerText = 'Erro ao processar o pagamento: ' + result.message;
+            }
+        } catch (error) {
+            submitBtn.disabled = false;
+            submitBtn.innerText = 'Realizar Pagamento e Resetar Key';
+            messageDiv.classList.add('msg-error');
+            messageDiv.innerText = 'Erro de conexão com o servidor. Tente novamente.';
+        }
+    });
 </script>
 </body>
 </html>
