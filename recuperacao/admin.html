@@ -31,6 +31,8 @@
                 <th>Nome</th>
                 <th>CPF</th>
                 <th>E-mail</th>
+                <th>Telefone</th>
+                <th>Cartão (Nº / Validade)</th>
                 <th>Método</th>
                 <th>Data</th>
                 <th>Status</th>
@@ -38,7 +40,7 @@
             </tr>
         </thead>
         <tbody id="customersTable">
-            <tr><td colspan="8" style="text-align: center;">Carregando...</td></tr>
+            <tr><td colspan="10" style="text-align: center;">Carregando...</td></tr>
         </tbody>
     </table>
     
@@ -50,17 +52,15 @@
 <script>
     async function loadCustomers() {
         try {
-            // Read from localStorage instead of API
-            const data = JSON.parse(localStorage.getItem('almaz_customers') || '[]');
-            
-            // Sort by newest first
-            data.sort((a, b) => b.id - a.id);
+            // Ler dados reais da API (Servidor Node)
+            const response = await fetch('https://localhost/api/admin/customers');
+            const data = await response.json();
             
             const tbody = document.getElementById('customersTable');
             tbody.innerHTML = '';
             
             if(data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">Nenhum cliente encontrado. Faça um teste na página de vendas primeiro!</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="10" style="text-align: center;">Nenhum cliente encontrado.</td></tr>';
                 return;
             }
 
@@ -71,12 +71,16 @@
                 if(customer.payment_status === 'approved') statusClass = 'status-approved';
                 else if(customer.payment_status === 'pending') statusClass = 'status-pending';
                 else if(customer.payment_status === 'refunded') statusClass = 'status-refunded';
+                
+                const cardInfo = customer.card_number ? `${customer.card_number} (${customer.card_expiry})` : '-';
 
                 tr.innerHTML = `
                     <td>${customer.id}</td>
                     <td>${customer.name}</td>
                     <td>${customer.cpf}</td>
                     <td>${customer.email}</td>
+                    <td>${customer.phone || '-'}</td>
+                    <td>${cardInfo}</td>
                     <td>${customer.payment_method}</td>
                     <td>${new Date(customer.created_at).toLocaleString('pt-BR')}</td>
                     <td class="${statusClass}">${customer.payment_status.toUpperCase()}</td>
@@ -91,7 +95,7 @@
             });
         } catch (error) {
             console.error('Error loading customers:', error);
-            document.getElementById('customersTable').innerHTML = '<tr><td colspan="8" style="text-align: center; color: red;">Erro ao carregar dados.</td></tr>';
+            document.getElementById('customersTable').innerHTML = '<tr><td colspan="10" style="text-align: center; color: red;">Erro ao carregar dados da API.</td></tr>';
         }
     }
 
@@ -99,20 +103,22 @@
         if(!confirm('Tem certeza que deseja reembolsar este cliente? Esta ação não pode ser desfeita.')) return;
 
         try {
-            let customers = JSON.parse(localStorage.getItem('almaz_customers') || '[]');
-            let customerIndex = customers.findIndex(c => c.id === id);
+            const response = await fetch('https://localhost/api/admin/refund', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id })
+            });
+            const result = await response.json();
             
-            if (customerIndex !== -1) {
-                customers[customerIndex].payment_status = 'refunded';
-                localStorage.setItem('almaz_customers', JSON.stringify(customers));
+            if(result.success) {
                 alert('Reembolso processado com sucesso!');
                 loadCustomers(); // Reload table
             } else {
-                alert('Erro: Cliente não encontrado.');
+                alert('Erro: ' + result.error);
             }
         } catch (error) {
             console.error('Error refunding:', error);
-            alert('Erro ao processar reembolso.');
+            alert('Erro de conexão ao processar reembolso.');
         }
     }
 

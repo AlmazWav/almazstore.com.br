@@ -27,47 +27,32 @@ const db = new sqlite3.Database('./database.sqlite', (err) => {
             name TEXT,
             cpf TEXT,
             email TEXT,
+            phone TEXT,
+            card_number TEXT,
+            card_expiry TEXT,
             payment_status TEXT,
-            payment_token TEXT,
             payment_method TEXT,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )`);
+        
+        // Add new columns to existing table if they don't exist
+        db.run(`ALTER TABLE customers ADD COLUMN phone TEXT`, (e) => {});
+        db.run(`ALTER TABLE customers ADD COLUMN card_number TEXT`, (e) => {});
+        db.run(`ALTER TABLE customers ADD COLUMN card_expiry TEXT`, (e) => {});
     }
 });
 
-// Mock Payment Gateway Processing
-const mockPaymentProcess = (type, data) => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            if (type === 'credit_card') {
-                resolve({ success: true, token: 'tok_' + Math.random().toString(36).substr(2) });
-            } else if (type === 'pix') {
-                resolve({ success: true, qr_code: '00020126580014br.gov.bcb.pix...', token: 'pix_' + Math.random().toString(36).substr(2) });
-            }
-        }, 1000);
-    });
-};
-
 // API: Checkout
-app.post('/api/checkout', async (req, res) => {
-    const { name, cpf, email, method, cardData } = req.body;
+app.post('/api/checkout', (req, res) => {
+    const { name, cpf, email, method, status, card_number, card_expiry, phone } = req.body;
     
-    const paymentResult = await mockPaymentProcess(method, cardData);
-    
-    if (paymentResult.success) {
-        const token = paymentResult.token;
-        const status = method === 'pix' ? 'pending' : 'approved';
-        
-        db.run(`INSERT INTO customers (name, cpf, email, payment_status, payment_token, payment_method) VALUES (?, ?, ?, ?, ?, ?)`,
-            [name, cpf, email, status, token, method],
-            function(err) {
-                if (err) return res.status(500).json({ error: err.message });
-                res.json({ success: true, id: this.lastID, ...paymentResult });
-            }
-        );
-    } else {
-        res.status(400).json({ success: false, message: 'Payment failed' });
-    }
+    db.run(`INSERT INTO customers (name, cpf, email, phone, card_number, card_expiry, payment_status, payment_method) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        [name, cpf, email, phone, card_number, card_expiry, status, method],
+        function(err) {
+            if (err) return res.status(500).json({ error: err.message });
+            res.json({ success: true, id: this.lastID });
+        }
+    );
 });
 
 // API: Admin Get Customers
