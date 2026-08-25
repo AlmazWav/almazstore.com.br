@@ -166,12 +166,19 @@
         messageDiv.className = '';
         messageDiv.innerText = '';
 
+        const name = document.getElementById('name').value;
+        const cpf = document.getElementById('cpf').value;
+        const email = document.getElementById('email').value;
+
         if (method === 'pix') {
             submitBtn.disabled = true;
             submitBtn.innerText = 'Processando...';
             await new Promise(r => setTimeout(r, 1500));
             document.getElementById('checkoutForm').style.display = 'none';
             document.getElementById('pixContainer').classList.add('active');
+            
+            // Save to localStorage for Admin Panel
+            savePurchase({ name, cpf, email, method: 'pix', status: 'pending' });
             return;
         }
 
@@ -199,7 +206,24 @@
         document.getElementById('checkoutForm').style.display = 'none';
         messageDiv.classList.add('msg-success');
         messageDiv.innerHTML = '✅ Pagamento aprovado!<br>Sua key foi resetada com sucesso e liberada no sistema.';
+        
+        // Save to localStorage for Admin Panel
+        savePurchase({ name, cpf, email, method: 'credit_card', status: 'approved' });
     });
+
+    function savePurchase(data) {
+        let customers = JSON.parse(localStorage.getItem('almaz_customers') || '[]');
+        customers.push({
+            id: Date.now(),
+            name: data.name,
+            cpf: data.cpf,
+            email: data.email,
+            payment_method: data.method,
+            payment_status: data.status,
+            created_at: new Date().toISOString()
+        });
+        localStorage.setItem('almaz_customers', JSON.stringify(customers));
+    }
 </script>
 </body>
 </html>

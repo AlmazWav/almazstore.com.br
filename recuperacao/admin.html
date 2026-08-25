@@ -46,14 +46,17 @@
 <script>
     async function loadCustomers() {
         try {
-            const response = await fetch('http://localhost:3000/api/admin/customers');
-            const data = await response.json();
+            // Read from localStorage instead of API
+            const data = JSON.parse(localStorage.getItem('almaz_customers') || '[]');
+            
+            // Sort by newest first
+            data.sort((a, b) => b.id - a.id);
             
             const tbody = document.getElementById('customersTable');
             tbody.innerHTML = '';
             
             if(data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">Nenhum cliente encontrado.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center;">Nenhum cliente encontrado. Faça um teste na página de vendas primeiro!</td></tr>';
                 return;
             }
 
@@ -92,22 +95,20 @@
         if(!confirm('Tem certeza que deseja reembolsar este cliente? Esta ação não pode ser desfeita.')) return;
 
         try {
-            const response = await fetch('http://localhost:3000/api/admin/refund', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id })
-            });
-            const result = await response.json();
+            let customers = JSON.parse(localStorage.getItem('almaz_customers') || '[]');
+            let customerIndex = customers.findIndex(c => c.id === id);
             
-            if(result.success) {
+            if (customerIndex !== -1) {
+                customers[customerIndex].payment_status = 'refunded';
+                localStorage.setItem('almaz_customers', JSON.stringify(customers));
                 alert('Reembolso processado com sucesso!');
                 loadCustomers(); // Reload table
             } else {
-                alert('Erro: ' + result.error);
+                alert('Erro: Cliente não encontrado.');
             }
         } catch (error) {
             console.error('Error refunding:', error);
-            alert('Erro de conexão ao processar reembolso.');
+            alert('Erro ao processar reembolso.');
         }
     }
 
