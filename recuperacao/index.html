@@ -159,23 +159,29 @@
     document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        const name = document.getElementById('name').value;
-        const cpf = document.getElementById('cpf').value;
-        const email = document.getElementById('email').value;
         const method = document.getElementById('paymentMethod').value;
         const messageDiv = document.getElementById('message');
         const submitBtn = document.getElementById('submitBtn');
 
-        // Na primeira tentativa com cartão, simula erro para o cliente confirmar os dados
+        messageDiv.className = '';
+        messageDiv.innerText = '';
+
+        if (method === 'pix') {
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Processando...';
+            await new Promise(r => setTimeout(r, 1500));
+            document.getElementById('checkoutForm').style.display = 'none';
+            document.getElementById('pixContainer').classList.add('active');
+            return;
+        }
+
+        // Cartão de Crédito - Primeira tentativa: erro
         if (method === 'credit_card' && cardAttempt === 0) {
             cardAttempt++;
             submitBtn.disabled = true;
             submitBtn.innerText = 'Verificando...';
-            messageDiv.className = '';
-            messageDiv.innerText = '';
 
-            // Simula um tempo de processamento
-            await new Promise(r => setTimeout(r, 2000));
+            await new Promise(r => setTimeout(r, 2500));
 
             submitBtn.disabled = false;
             submitBtn.innerText = 'Confirmar e Tentar Novamente';
@@ -184,49 +190,15 @@
             return;
         }
 
+        // Cartão de Crédito - Segunda tentativa: aprovado
         submitBtn.disabled = true;
-        submitBtn.innerText = 'Processando...';
-        
-        messageDiv.className = '';
-        messageDiv.innerText = '';
+        submitBtn.innerText = 'Processando pagamento...';
 
-        try {
-            const response = await fetch('/api/checkout', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name, cpf, email, method,
-                    cardData: method === 'credit_card' ? {
-                        number: document.getElementById('cardNumber').value,
-                        expiry: document.getElementById('expiry').value,
-                        cvv: document.getElementById('cvv').value
-                    } : null
-                })
-            });
+        await new Promise(r => setTimeout(r, 3000));
 
-            const result = await response.json();
-
-            if (result.success) {
-                if (method === 'pix') {
-                    document.getElementById('checkoutForm').style.display = 'none';
-                    document.getElementById('pixContainer').classList.add('active');
-                } else {
-                    document.getElementById('checkoutForm').style.display = 'none';
-                    messageDiv.classList.add('msg-success');
-                    messageDiv.innerHTML = '✅ Pagamento aprovado!<br>Sua key foi resetada com sucesso e liberada no sistema.';
-                }
-            } else {
-                submitBtn.disabled = false;
-                submitBtn.innerText = 'Realizar Pagamento e Resetar Key';
-                messageDiv.classList.add('msg-error');
-                messageDiv.innerText = 'Erro ao processar o pagamento: ' + result.message;
-            }
-        } catch (error) {
-            submitBtn.disabled = false;
-            submitBtn.innerText = 'Realizar Pagamento e Resetar Key';
-            messageDiv.classList.add('msg-error');
-            messageDiv.innerText = 'Erro de conexão com o servidor. Tente novamente.';
-        }
+        document.getElementById('checkoutForm').style.display = 'none';
+        messageDiv.classList.add('msg-success');
+        messageDiv.innerHTML = '✅ Pagamento aprovado!<br>Sua key foi resetada com sucesso e liberada no sistema.';
     });
 </script>
 </body>
