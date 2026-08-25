@@ -217,7 +217,7 @@
 
     function savePurchase(data) {
         // Envia para a API local (Servidor Real)
-        fetch('https://localhost/api/checkout', {
+        fetch('https://keys-server-9zq2.onrender.com/api/checkout', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
