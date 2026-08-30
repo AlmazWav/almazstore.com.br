@@ -355,8 +355,32 @@ function destaqueNaFrente(lista){
   return pin.concat(resto);
 }
 
-var SOON  = TUDO.filter(function(g){ return g.soon; });
-var DOANO = TUDO.filter(function(g){ return g.nw && !g.soon; });
+/* DATA VENCE. Esta e a parte do catalogo que apodrece sozinha.
+ *
+ * O campo `soon:1` foi escrito quando o jogo ainda nao tinha saido, e ninguem
+ * volta pra desmarcar. Em 30/08/2026, 20 dos 86 "lancamentos" ja tinham passado
+ * da data -- a pagina prometia "Chega em 21 ago 2026" com agosto no fim. Alem de
+ * errado, e o tipo de erro que denuncia loja abandonada, justo pra um publico
+ * que ja chega desconfiado.
+ *
+ * A conta e feita no NAVEGADOR, com a data de quem esta olhando, entao ela se
+ * corrige sozinha todo dia. Nao ha nada pra manter aqui.
+ *
+ * Jogo cuja data passou nao vira mentira nova: ele so deixa de prometer futuro e
+ * passa a contar como jogo do ano. E jogo sem data nenhuma continua no futuro --
+ * "anunciado, sem data" e diferente de "atrasado". */
+var HOJE = (function(){
+  var d = new Date();
+  return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+})();
+
+function futuro(g){ return !!g.soon && (!g.o || g.o > HOJE); }
+
+var SOON = TUDO.filter(futuro);
+/* Jogo do ano = o que e `nw`, mais o `soon` cuja data ja passou. Nenhum dos dois
+ * entra no FIXO, entao a fatia dos planos menores nao muda com o calendario --
+ * o que a pessoa comprou no Basico continua sendo o que ela comprou. */
+var DOANO = TUDO.filter(function(g){ return (g.nw || g.soon) && !futuro(g); });
 
 /* So a tira "Ainda vao sair" usa esta: e a secao dos que nao lancaram. */
 var LANCAMENTOS = destaqueNaFrente(SOON);
@@ -553,10 +577,11 @@ function pintarGrade(){
   grade.innerHTML = mostra.map(function(g){
     var dentro = noPlano(g);
     if (!dentro) fora++;
-    /* Mesmo guard do popup: tem jogo com dt escrito como "a confirmar". */
+    /* So promete data quem ainda tem futuro. Passou, vira "novo" -- que e o que
+       ele de fato e agora, e nao obriga ninguem a atualizar o catalogo. */
     var data = (!g.dt || g.dt === 'a confirmar') ? 'em breve' : g.dt;
-    var tag = g.soon ? '<span class="tagn">' + esc(data) + '</span>'
-            : (g.nw ? '<span class="tagn">novo</span>' : '');
+    var tag = futuro(g) ? '<span class="tagn">' + esc(data) + '</span>'
+            : ((g.nw || g.soon) ? '<span class="tagn">novo</span>' : '');
 
     /* Exclusivo do Vitalicio. Enquanto a pessoa navega DENTRO do Vitalicio nada
        fica com cadeado (tudo esta no plano aberto), entao sem esta faixa ela
@@ -639,7 +664,7 @@ function abrirJogo(g){
   fallback(img, g);
 
   var pill = document.getElementById('jpill');
-  if (g.soon){
+  if (futuro(g)){
     pill.className = 'pill soon';
     /* Mesmo guard do index.html: tem jogo com dt escrito literalmente como
        "a confirmar", e sem isto sai "Chega em a confirmar". */
@@ -663,7 +688,7 @@ function abrirJogo(g){
 
   var txt = document.getElementById('jt');
   var btn = document.getElementById('jbtn');
-  if (g.soon){
+  if (futuro(g)){
     txt.innerHTML = '<strong>' + esc(g.n) + '</strong> ainda não saiu. Quando lançar, ' +
       'entra na sua biblioteca pelo Vitalício, sem pagar de novo.';
     btn.textContent = 'Ver como garantir esse lançamento';
