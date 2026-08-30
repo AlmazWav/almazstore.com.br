@@ -1,0 +1,715 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Catálogo de jogos | Almaz Store</title>
+<meta name="description" content="Veja os jogos que entram em cada plano da Almaz Store. Busque pelo nome e confirme se o seu jogo está incluso.">
+<link rel="icon" href="../assets/logo-128.png">
+
+<!--
+  CATALOGO SEPARADO, pra postar todo dia.
+  =======================================
+  Pagina independente do index.html: aqui NAO tem oferta, NAO tem preco em
+  destaque e NAO tem checkout. Ela existe pra uma pergunta so: "o meu jogo
+  esta incluso?". Quem responde essa pergunta ganha o direito de mandar a
+  pessoa pra home, e o CTA daqui vai pra home -- nao pro #pricing.
+
+  O DADO E O MESMO DO SITE. Este arquivo le ../assets/catalogo.js, os mesmos
+  40.000 jogos que o modal da home usa. Jogo novo se cadastra LA, uma vez so,
+  e aparece nos dois lugares. Nao copie a lista pra ca.
+
+  COMO OS TRES PLANOS SAO CORTADOS
+  A lista ja vem ordenada por numero real de avaliacoes na Steam, entao os mais
+  procurados estao em cima. O corte e por posicao:
+
+    Basico     1.000    os 1.000 mais procurados do acervo fixo
+    Avancado  20.000    os 20.000 mais procurados do acervo fixo
+    Vitalicio 40.000    tudo, MAIS os lancamentos e os jogos do ano
+
+  A regra que faz o Vitalicio valer: jogo marcado `soon` (ainda vai sair) ou
+  `nw` (lancou esse ano) NAO entra no acervo fixo, entao nao cai nem no Basico
+  nem no Avancado, por mais popular que seja. Sao 86 lancamentos e 4.896 jogos
+  do ano que so existem no Vitalicio.
+
+  Isso tambem resolve o pedido de "deixar jogos legais nos planos menores":
+  como o corte e por popularidade, o Basico nasce com Elden Ring, Baldur's
+  Gate 3, Terraria, Rust e companhia. Ele nao parece plano ruim, ele parece
+  plano parado no tempo -- que e exatamente a verdade dele.
+
+  ONDE A VENDA ACONTECE
+  Nao e num banner. E na BUSCA: se a pessoa esta no Basico e procura um jogo
+  que so existe no Vitalicio, o card aparece assim mesmo, com cadeado e o
+  aviso de onde ele mora. A propria pergunta dela vira o argumento. Por isso a
+  busca sempre varre os 40.000, nunca so a faixa do plano aberto.
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* Mesmas variaveis do index.html. Se o site mudar de cor, mude aqui junto. */
+:root{
+  --bg:#0b1219; --bg2:#0f1a24; --panel:#16222f; --panel2:#1d2b3a; --panel3:#243546;
+  --line:rgba(146,186,220,.13); --line2:rgba(146,186,220,.22);
+  --txt:#dbe6f1; --txt2:#aebfd0; --dim:#8399ae;
+  --blue:#59a6e0; --blue-dim:rgba(89,166,224,.12);
+  --buy:#4a9d2a; --buy2:#57b533; --buy-dark:#2f6b18;
+  --deal-bg:#2f5d10; --deal-tx:#bce337;
+  --warn:#e0a03a;
+  --f:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --r:8px; --r2:12px;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--txt);font-family:var(--f);line-height:1.5;
+  -webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+
+/* ---------- topo ---------- */
+.top{position:sticky;top:0;z-index:40;background:rgba(11,18,25,.94);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top-in{display:flex;align-items:center;gap:12px;height:58px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:800;letter-spacing:-.3px}
+.brand img{width:26px;height:26px;border-radius:6px}
+.top-cta{margin-left:auto;font-size:13px;font-weight:700;color:var(--blue)}
+
+.head{padding:26px 0 6px}
+.head h1{font-size:clamp(24px,5vw,34px);font-weight:800;letter-spacing:-1px}
+.head p{color:var(--txt2);font-size:15px;margin-top:6px;max-width:620px}
+
+/* ---------- abas de plano ---------- */
+.planos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0 0}
+.plano{position:relative;background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--r2);padding:13px 12px;text-align:left;transition:.16s;overflow:hidden}
+.plano:hover{background:var(--panel2)}
+.plano .pn{font-size:13px;font-weight:700;color:var(--txt2)}
+.plano .pq{font-size:clamp(17px,3.4vw,23px);font-weight:800;letter-spacing:-.6px;margin-top:1px}
+.plano .pd{font-size:11.5px;color:var(--dim);margin-top:3px;line-height:1.35}
+.plano.on{border-color:var(--blue);background:var(--blue-dim)}
+.plano.on .pq{color:#fff}
+/* O Vitalicio e o alvo: fica verde mesmo fechado, pra puxar o olho. */
+.plano.alvo{border-color:rgba(74,157,42,.5)}
+.plano.alvo.on{border-color:var(--buy2);background:rgba(74,157,42,.14)}
+.plano.alvo .pq{color:var(--deal-tx)}
+.selo{position:absolute;top:0;right:0;background:var(--deal-bg);color:var(--deal-tx);
+  font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 8px;border-radius:0 var(--r2) 0 var(--r)}
+
+/* ---------- faixa de resumo do plano ---------- */
+.resumo{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);
+  padding:12px 14px;margin-top:10px;font-size:13.5px;color:var(--txt2)}
+.resumo b{color:var(--txt)}
+.resumo.puxa{border-color:rgba(74,157,42,.4);background:rgba(74,157,42,.08)}
+.resumo .up{margin-left:auto;background:var(--buy);color:#fff;font-weight:700;
+  font-size:12.5px;padding:7px 13px;border-radius:var(--r);white-space:nowrap}
+.resumo .up:hover{background:var(--buy2)}
+
+/* ---------- busca ---------- */
+.tools{margin-top:14px;display:flex;flex-direction:column;gap:10px}
+.busca{position:relative}
+.busca svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);
+  width:17px;height:17px;fill:none;stroke:var(--dim);stroke-width:2}
+.busca input{width:100%;background:var(--panel);border:1px solid var(--line2);
+  border-radius:var(--r2);padding:13px 14px 13px 40px;color:var(--txt);font-size:15px;outline:0}
+.busca input:focus{border-color:var(--blue)}
+.busca input::placeholder{color:var(--dim)}
+.chips{display:flex;gap:7px;overflow-x:auto;padding-bottom:3px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;background:var(--panel);border:1px solid var(--line);
+  border-radius:99px;padding:6px 13px;font-size:12.5px;font-weight:600;color:var(--txt2)}
+.chip.on{background:var(--blue-dim);border-color:var(--blue);color:#fff}
+
+/* ---------- lançamentos ---------- */
+.lanc{margin-top:20px;border:1px solid rgba(74,157,42,.4);border-radius:var(--r2);
+  background:linear-gradient(180deg,rgba(74,157,42,.12),rgba(74,157,42,.03));padding:14px}
+.lanc-h{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:11px}
+.lanc-h b{font-size:15px;font-weight:800;letter-spacing:-.3px}
+.lanc-h span{font-size:12.5px;color:var(--txt2)}
+.lanc-h .so{background:var(--deal-bg);color:var(--deal-tx);font-size:10px;font-weight:800;
+  letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:99px}
+.tira{display:flex;gap:9px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.tira::-webkit-scrollbar{display:none}
+.tira .lc{flex:0 0 172px}
+.tira .lc img{width:172px;aspect-ratio:460/215;object-fit:cover;border-radius:var(--r);
+  border:1px solid var(--line)}
+.tira .lc .ln{font-size:12px;font-weight:600;margin-top:5px;line-height:1.3;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tira .lc .ld{font-size:11px;color:var(--deal-tx);font-weight:700;margin-top:1px}
+
+/* ---------- grade ---------- */
+.contador{margin:20px 0 10px;font-size:13px;color:var(--dim)}
+.contador b{color:var(--txt)}
+.grade{display:grid;gap:10px;
+  grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.card{position:relative;background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--r);overflow:hidden;cursor:pointer;transition:border-color .14s}
+.card:hover{border-color:var(--line2)}
+.tira .lc{cursor:pointer}
+.card img{width:100%;aspect-ratio:460/215;object-fit:cover;background:var(--panel3)}
+.card .nome{font-size:12.5px;font-weight:600;padding:7px 9px 9px;line-height:1.32;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:44px}
+.tagn{position:absolute;top:6px;left:6px;background:rgba(11,18,25,.9);color:var(--deal-tx);
+  font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+  padding:3px 7px;border-radius:99px;border:1px solid rgba(188,227,55,.35)}
+
+/* Card de jogo que NAO esta no plano aberto. E a peca que vende: aparece
+   quando a pessoa busca algo fora da faixa dela. */
+.card.fora img{filter:grayscale(.85) brightness(.42)}
+.card.fora{border-color:rgba(74,157,42,.35)}
+
+/* Exclusivo do Vitalicio, visto de dentro do Vitalicio: sem cadeado (esta
+   liberado), mas com faixa, senao a exclusividade nao aparece navegando. */
+.card.vit{border-color:rgba(74,157,42,.45)}
+.card .fx{background:var(--deal-bg);color:var(--deal-tx);font-size:10px;font-weight:800;
+  letter-spacing:.05em;text-transform:uppercase;text-align:center;padding:4px 6px}
+.card .nome{padding-bottom:7px}
+.cad{position:absolute;inset:0;bottom:44px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:5px;text-align:center;padding:8px}
+.cad svg{width:19px;height:19px;fill:none;stroke:var(--deal-tx);stroke-width:2}
+.cad span{font-size:10.5px;font-weight:800;color:var(--deal-tx);letter-spacing:.04em;
+  text-transform:uppercase;line-height:1.25}
+
+.vazio{text-align:center;padding:44px 16px;color:var(--dim);font-size:14px}
+.vazio b{display:block;color:var(--txt);font-size:16px;margin-bottom:5px}
+.mais{display:block;margin:20px auto 0;background:var(--panel2);border:1px solid var(--line2);
+  border-radius:var(--r);padding:12px 26px;font-size:14px;font-weight:600}
+.mais:hover{background:var(--panel3)}
+
+/* ---------- fechamento ---------- */
+.fim{margin:40px 0 0;background:var(--panel);border:1px solid var(--line);
+  border-top:2px solid var(--buy);border-radius:var(--r2);padding:24px 20px;text-align:center}
+.fim h2{font-size:clamp(19px,4vw,25px);font-weight:800;letter-spacing:-.6px}
+.fim p{color:var(--txt2);font-size:14.5px;margin-top:8px;max-width:480px;
+  margin-left:auto;margin-right:auto}
+.fim .btn{display:inline-block;margin-top:16px;background:var(--buy);color:#fff;
+  font-weight:700;font-size:15px;padding:13px 30px;border-radius:var(--r)}
+.fim .btn:hover{background:var(--buy2)}
+.fim .sub{display:block;margin-top:9px;font-size:12px;color:var(--dim)}
+
+.rod{margin-top:34px;padding:20px 0 34px;border-top:1px solid var(--line);
+  font-size:12px;color:var(--dim);line-height:1.6}
+
+/* ---------- popup do jogo ----------
+   Mesma ideia do #gm-ov do index.html: ponte, nao segunda oferta. Nao tem
+   preco aqui de proposito -- so a home anuncia preco, senao vira um texto de
+   oferta que envelhece sozinho toda vez que o #pricing muda.
+   O que ESTE popup adiciona, e o outro nao tem, e a linha de planos: ela
+   responde "qual plano eu preciso pra ter esse jogo", que e a pergunta que
+   trouxe a pessoa pro catalogo, e ja empurra pro Vitalicio sem precisar pedir. */
+.ov{position:fixed;inset:0;z-index:9600;background:rgba(6,10,14,.9);
+  display:none;align-items:center;justify-content:center;padding:20px 16px}
+.ov.on{display:flex}
+body.travado{overflow:hidden}
+.box{position:relative;width:min(400px,94vw);max-height:92vh;overflow-y:auto;
+  background:var(--bg2);border:1px solid var(--line2);border-radius:var(--r2);
+  box-shadow:0 30px 70px rgba(0,0,0,.6)}
+.box .capa{width:100%;aspect-ratio:460/215;object-fit:cover;background:var(--panel2)}
+.x{position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:50%;
+  background:rgba(6,10,14,.72);border:1px solid var(--line2);color:#fff;font-size:19px;line-height:1}
+.corpo{padding:15px 18px 18px;display:flex;flex-direction:column;gap:12px;text-align:center}
+.corpo .jn{font-size:17px;font-weight:700;color:#fff;line-height:1.3}
+.pill{align-self:center;font-size:12.5px;font-weight:600;padding:4px 11px;border-radius:20px;
+  background:rgba(47,93,16,.55);color:var(--deal-tx)}
+.pill.soon{background:rgba(224,160,58,.14);color:var(--warn)}
+.jt{font-size:14px;line-height:1.55;color:var(--txt2)}
+.jt strong{color:#fff;font-weight:600}
+
+/* linha dos tres planos, com check ou cadeado */
+.emq{display:flex;flex-direction:column;gap:5px;background:var(--panel);
+  border:1px solid var(--line);border-radius:var(--r2);padding:11px 13px}
+.emq-h{font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--dim);text-align:left;margin-bottom:2px}
+.lin{display:flex;align-items:center;gap:8px;font-size:13.5px;text-align:left}
+.lin .ic{width:16px;flex:0 0 16px;font-weight:800;font-size:13px;text-align:center}
+.lin.sim .ic{color:var(--buy2)}
+.lin.nao .ic{color:var(--dim)}
+.lin.nao{color:var(--dim)}
+.lin .qn{margin-left:auto;font-size:11.5px;color:var(--dim)}
+.lin.alvo{color:var(--deal-tx);font-weight:700}
+.lin.alvo .ic{color:var(--deal-tx)}
+
+.jbtn{display:block;background:var(--buy);color:#fff;font-weight:700;font-size:15px;
+  padding:13px 20px;border-radius:var(--r);text-align:center}
+.jbtn:hover{background:var(--buy2)}
+.jvolta{font-size:13px;color:var(--dim);padding:2px}
+.jvolta:hover{color:var(--txt2)}
+
+@media(max-width:560px){
+  .planos{gap:6px}
+  .plano{padding:10px 9px;border-radius:var(--r)}
+  .resumo .up{margin-left:0;width:100%;text-align:center}
+  .grade{grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="https://almazstore.com.br/?utm_source=catalogo&utm_medium=logo">
+      <img src="../assets/logo-128.png" alt=""> Almaz Store
+    </a>
+    <a class="top-cta" href="https://almazstore.com.br/?utm_source=catalogo&utm_medium=topo">Como funciona &rsaquo;</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="head">
+    <h1>Catálogo de jogos</h1>
+    <p>Busque pelo nome e confirme se o seu jogo está incluso. Escolha o plano para ver o que entra em cada um.</p>
+  </div>
+
+  <div class="planos" id="planos"></div>
+  <div class="resumo" id="resumo"></div>
+
+  <div class="tools">
+    <div class="busca">
+      <svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="q" type="text" placeholder="Buscar jogo pelo nome..." autocomplete="off" spellcheck="false">
+    </div>
+    <div class="chips" id="chips"></div>
+  </div>
+
+  <section class="lanc" id="lanc" hidden>
+    <div class="lanc-h">
+      <b>Ainda vão sair</b>
+      <span class="so">só no Vitalício</span>
+      <span id="lanc-n"></span>
+    </div>
+    <div class="tira" id="tira"></div>
+  </section>
+
+  <div class="contador" id="contador"></div>
+  <div class="grade" id="grade"></div>
+  <button class="mais" id="mais" hidden>Carregar mais jogos</button>
+
+  <section class="fim">
+    <h2>Achou o seu jogo?</h2>
+    <p>Ele entra na sua própria conta Steam, com download pelos servidores oficiais. Veja como a ativação funciona.</p>
+    <a class="btn" href="https://almazstore.com.br/?utm_source=catalogo&utm_medium=rodape">Ver como funciona</a>
+    <span class="sub">7 dias de garantia. Pagamento único.</span>
+  </section>
+
+  <div class="rod">
+    Não somos afiliados nem representantes da Valve Corporation. Steam é marca registrada da Valve.
+    Os downloads são feitos pelos servidores oficiais da Steam.
+  </div>
+</main>
+
+<div class="ov" id="ov" role="dialog" aria-modal="true" aria-labelledby="jn">
+  <div class="box">
+    <button class="x" id="x" type="button" aria-label="Fechar">&times;</button>
+    <img class="capa" id="jcapa" src="" alt="">
+    <div class="corpo">
+      <div class="jn" id="jn"></div>
+      <div class="pill" id="jpill"></div>
+      <div class="emq">
+        <div class="emq-h">Entra em quais planos</div>
+        <div id="jplanos"></div>
+      </div>
+      <div class="jt" id="jt"></div>
+      <a class="jbtn" id="jbtn" href="https://almazstore.com.br/?utm_source=catalogo&utm_medium=jogo">Ver como funciona</a>
+      <button class="jvolta" id="jvolta" type="button">Continuar vendo os jogos</button>
+    </div>
+  </div>
+</div>
+
+<script src="../assets/destaques.js"></script>
+<script src="../assets/catalogo.js"></script>
+<script>
+(function(){
+'use strict';
+
+var TUDO = window.ALMAZ_CATALOGO || [];
+
+/* ---------- os tres planos ----------
+   Acervo fixo = o que NAO e lancamento nem jogo do ano. E dele que saem os
+   cortes de 1.000 e 20.000. Lancamento e jogo do ano ficam de fora, o que faz
+   os 40.000 serem o unico plano que anda pra frente. */
+var FIXO = TUDO.filter(function(g){ return !g.soon && !g.nw; });
+
+/* DESTAQUE FURA A FILA -- exatamente o mesmo mecanismo da home.
+ *
+ * A ordem do catalogo.js e por numero de avaliacoes na Steam, e isso e cego
+ * justamente aqui: jogo que ainda NAO SAIU nao tem avaliacao nenhuma, entao o
+ * "Moo Who?" acaba sentado ao lado do Call of Duty. Nao existe sinal no dado
+ * que separe os dois -- por isso quem manda e a lista escrita a mao.
+ *
+ * A lista e a MESMA da home (assets/destaques.js). Ja tentei resolver por data
+ * aqui, das duas formas, e as duas pioraram: por `o||0` os 36 sem data sobem
+ * todos pra frente, e por data crescente o topo vira 21 de agosto, que sao
+ * indies desconhecidos. Data proxima nao e o mesmo que jogo esperado. */
+var DEST = {};
+(window.ALMAZ_DESTAQUES || []).forEach(function(id, k){ DEST[id] = k; });
+
+function destaqueNaFrente(lista){
+  var pin = [], resto = [];
+  lista.forEach(function(g){ (DEST[g.i] !== undefined ? pin : resto).push(g); });
+  pin.sort(function(a, b){ return DEST[a.i] - DEST[b.i]; });
+  return pin.concat(resto);
+}
+
+var SOON  = TUDO.filter(function(g){ return g.soon; });
+var DOANO = TUDO.filter(function(g){ return g.nw && !g.soon; });
+
+/* So a tira "Ainda vao sair" usa esta: e a secao dos que nao lancaram. */
+var LANCAMENTOS = destaqueNaFrente(SOON);
+
+/* ORDEM DO VITALICIO
+ *
+ * Primeiro: a NOVIDADE -- jogo de 2026 e jogo que ainda vai sair, juntos, com
+ * os destaques furando a fila. Depois o acervo fixo.
+ *
+ * Duas coisas que essa ordem resolve, nesta ordem de importancia:
+ *
+ * 1) Jogo de 2026 vem ANTES do que ainda nao saiu. Ja errei aqui: separei os
+ *    dois grupos e pus os 86 nao-lancados na frente, entao os hits do ano
+ *    (LEGO Batman, Crimson Desert, Battlefield 6, Death Stranding 2) so
+ *    comecavam no card 87 e ninguem chegava la. O que a pessoa mais quer jogar
+ *    e o sucesso deste ano, nao a promessa de 2027. Juntando os dois grupos e
+ *    deixando o destaque mandar, o topo vira o que ela reconhece.
+ *
+ * 2) Nada aqui existe nos planos menores. A lista do Basico e do Avancado sai
+ *    do FIXO, que exclui `nw` e `soon`. Antes o Vitalicio abria pelos mais
+ *    populares -- que estao nos TRES planos -- e a pessoa rolava vendo ✓✓✓ em
+ *    card atras de card, concluindo com razao que o Basico ja resolvia. */
+var NOVIDADE = destaqueNaFrente(DOANO.concat(SOON));
+var VITALICIO = NOVIDADE.concat(FIXO);
+
+var PLANOS = [
+  { id:'basico',    nome:'Básico',    qtd:1000,  lista:FIXO.slice(0, 1000),
+    desc:'Os 1.000 mais procurados' },
+  { id:'avancado',  nome:'Avançado',  qtd:20000, lista:FIXO.slice(0, 20000),
+    desc:'Os 20.000 mais procurados' },
+  { id:'vitalicio', nome:'Vitalício', qtd:40000, lista:VITALICIO, alvo:true,
+    desc:'Tudo, mais os lançamentos' }
+];
+
+/* Pra saber rapido em que plano um jogo esta, sem varrer a lista toda a cada
+   card. Guarda o indice do MENOR plano que contem o jogo. */
+var ONDE = {};
+PLANOS.forEach(function(p, pi){
+  p.lista.forEach(function(g){ if (ONDE[g.i] === undefined) ONDE[g.i] = pi; });
+});
+
+/* Jogo por appid. Sem isto o fallback de imagem varria os 40.000 pra CADA card
+   da tela: 60 imagens x 40.000 = 2,4 milhoes de comparacoes por desenho, o que
+   travava celular fraco a cada tecla digitada na busca. */
+var PORID = {};
+TUDO.forEach(function(g){ PORID[g.i] = g; });
+
+var CATS = [
+  ['', 'Todos'], ['acao','Ação'], ['aventura','Aventura'], ['rpg','RPG'], ['fps','FPS'],
+  ['terror','Terror'], ['esportes','Esportes'], ['corrida','Corrida'], ['coop','Co-op'],
+  ['sobrevivencia','Sobrevivência'], ['mundoaberto','Mundo aberto'], ['simulador','Simulador'],
+  ['indie','Indie'], ['vr','VR']
+];
+
+var PASSO = 60;
+var estado = { plano:2, cat:'', busca:'', mostrando:PASSO };
+
+/* ---------- utilidades ---------- */
+function nf(n){ return n.toLocaleString('pt-BR'); }
+
+/* Mesma regra do index.html: capa escrita a mao, senao monta pelo appid. */
+function capa(g){
+  if (g.u) return g.u;
+  var base = 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/' + g.i + '/';
+  return g.h ? base + g.h + '/header.jpg' : base + 'header.jpg';
+}
+
+/* Muito lancamento ainda nao tem header.jpg, mas tem library_hero. Tenta as
+   variantes antes de desistir; desistindo, deixa o fundo do card, porque
+   esconder o card faria o contador mentir. */
+function fallback(img, g){
+  var base = 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/' + g.i + '/';
+  var tenta = [base + 'library_hero.jpg', base + 'capsule_616x353.jpg', base + 'header.jpg'];
+  var n = 0;
+  img.onerror = function(){
+    if (n < tenta.length) { img.src = tenta[n++]; }
+    else { img.onerror = null; img.removeAttribute('src'); }
+  };
+}
+
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+                  .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* Busca sem acento e sem caixa, pra "acao" achar "Ação". A faixa ̀-ͯ
+   sao os acentos que o NFD separa da letra. */
+function chave(s){
+  return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+}
+
+/* ---------- o que a grade mostra agora ----------
+   Sem busca: so os jogos do plano aberto.
+   Com busca: varre os 40.000 SEMPRE. Jogo fora do plano aberto vem junto, com
+   cadeado. E a busca que vende o Vitalicio -- a pessoa pergunta e o proprio
+   resultado responde onde o jogo mora. */
+function filtrar(){
+  var p = PLANOS[estado.plano];
+  var base = estado.busca ? TUDO : p.lista;
+  var q = chave(estado.busca);
+
+  var r = [];
+  for (var i = 0; i < base.length; i++){
+    var g = base[i];
+    if (estado.cat && g.c !== estado.cat) continue;
+    /* O nome normalizado fica guardado no proprio jogo (_k). Sem esse cache o
+       normalize('NFD') rodava nos 40.000 nomes A CADA TECLA -- media de 690ms
+       por busca, que no celular vira a sensacao de campo travado. Com cache, so
+       a primeira busca paga. */
+    if (q){
+      var k = g._k || (g._k = chave(g.n));
+      if (k.indexOf(q) === -1) continue;
+    }
+    r.push(g);
+    /* teto de seguranca: sem busca e sem filtro, 40.000 nos resultados nao
+       ajuda ninguem e trava celular fraco */
+    if (!q && r.length > 4000) break;
+  }
+  return r;
+}
+
+function noPlano(g){
+  return ONDE[g.i] !== undefined && ONDE[g.i] <= estado.plano;
+}
+
+/* ---------- desenho ---------- */
+function pintarPlanos(){
+  document.getElementById('planos').innerHTML = PLANOS.map(function(p, i){
+    return '<button class="plano' + (i === estado.plano ? ' on' : '') +
+           (p.alvo ? ' alvo' : '') + '" data-p="' + i + '">' +
+           (p.alvo ? '<span class="selo">recomendado</span>' : '') +
+           '<span class="pn">' + p.nome + '</span>' +
+           '<div class="pq">' + nf(p.qtd) + '</div>' +
+           '<div class="pd">' + p.desc + '</div></button>';
+  }).join('');
+}
+
+function pintarResumo(){
+  var p = PLANOS[estado.plano];
+  var el = document.getElementById('resumo');
+  if (p.alvo){
+    el.className = 'resumo';
+    el.innerHTML = '<span>Começando pelos <b>' + nf(DOANO.length) + ' jogos de 2026</b> e ' +
+      'pelos <b>' + SOON.length + ' que ainda vão sair</b>, que não existem nos planos menores.</span>';
+  } else {
+    var faltam = 40000 - p.qtd;
+    el.className = 'resumo puxa';
+    el.innerHTML = '<span>Faltam <b>' + nf(faltam) + ' jogos</b> neste plano, e ' +
+      '<b>nenhum lançamento</b> futuro entra nele.</span>' +
+      '<button class="up" data-p="2">Ver os 40.000</button>';
+  }
+}
+
+function pintarLancamentos(){
+  var sec = document.getElementById('lanc');
+  sec.hidden = !PLANOS[estado.plano].alvo || !!estado.busca;
+  if (sec.hidden) return;
+  document.getElementById('lanc-n').textContent = LANCAMENTOS.length + ' a caminho';
+  document.getElementById('tira').innerHTML = LANCAMENTOS.slice(0, 24).map(function(g){
+    return '<div class="lc" data-jogo="' + esc(g.i) + '"><img loading="lazy" data-i="' + esc(g.i) + '" src="' + capa(g) +
+           '" alt=""><div class="ln">' + esc(g.n) + '</div>' +
+           '<div class="ld">' + esc(g.dt || 'em breve') + '</div></div>';
+  }).join('');
+  ligarFallback(document.getElementById('tira'));
+}
+
+function ligarFallback(raiz){
+  raiz.querySelectorAll('img[data-i]').forEach(function(img){
+    var g = PORID[img.getAttribute('data-i')];
+    if (g) fallback(img, g);
+  });
+}
+
+var CADEADO = '<div class="cad"><svg viewBox="0 0 24 24" stroke-linecap="round">' +
+  '<rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>' +
+  '<span>só no<br>Vitalício</span></div>';
+
+function pintarGrade(){
+  var lista = filtrar();
+  var mostra = lista.slice(0, estado.mostrando);
+  var grade = document.getElementById('grade');
+  var cont = document.getElementById('contador');
+  var mais = document.getElementById('mais');
+
+  if (!lista.length){
+    cont.textContent = '';
+    mais.hidden = true;
+    grade.innerHTML = '<div class="vazio" style="grid-column:1/-1">' +
+      '<b>Não achamos esse jogo</b>Confira a escrita, ou busque só uma parte do nome.</div>';
+    return;
+  }
+
+  var fora = 0;
+  grade.innerHTML = mostra.map(function(g){
+    var dentro = noPlano(g);
+    if (!dentro) fora++;
+    /* Mesmo guard do popup: tem jogo com dt escrito como "a confirmar". */
+    var data = (!g.dt || g.dt === 'a confirmar') ? 'em breve' : g.dt;
+    var tag = g.soon ? '<span class="tagn">' + esc(data) + '</span>'
+            : (g.nw ? '<span class="tagn">novo</span>' : '');
+
+    /* Exclusivo do Vitalicio. Enquanto a pessoa navega DENTRO do Vitalicio nada
+       fica com cadeado (tudo esta no plano aberto), entao sem esta faixa ela
+       rola a lista inteira sem perceber que aquilo nao existe nos planos
+       menores. A faixa e o que faz a exclusividade ler sem precisar clicar. */
+    var soVit = ONDE[g.i] === 2;
+    var faixa = (dentro && soVit && PLANOS[estado.plano].alvo)
+      ? '<div class="fx">só no Vitalício</div>' : '';
+
+    return '<div class="card' + (dentro ? '' : ' fora') +
+           (faixa ? ' vit' : '') + '" data-jogo="' + esc(g.i) + '">' +
+           '<img loading="lazy" data-i="' + esc(g.i) + '" src="' + capa(g) + '" alt="">' +
+           (dentro ? tag : CADEADO) +
+           '<div class="nome">' + esc(g.n) + '</div>' + faixa + '</div>';
+  }).join('');
+  ligarFallback(grade);
+
+  var p = PLANOS[estado.plano];
+  if (estado.busca){
+    cont.innerHTML = '<b>' + nf(lista.length) + '</b> resultado' +
+      (lista.length > 1 ? 's' : '') + ' para "' + esc(estado.busca) + '"' +
+      (fora ? ' &middot; <b style="color:var(--deal-tx)">' + fora + '</b> só no Vitalício' : '');
+  } else {
+    cont.innerHTML = 'Mostrando <b>' + nf(mostra.length) + '</b> de <b>' +
+      nf(p.qtd) + '</b> jogos do plano ' + p.nome;
+  }
+
+  mais.hidden = lista.length <= estado.mostrando;
+}
+
+function pintar(){ pintarPlanos(); pintarResumo(); pintarLancamentos(); pintarGrade(); }
+
+/* ---------- eventos ---------- */
+document.getElementById('chips').innerHTML = CATS.map(function(c){
+  return '<button class="chip' + (c[0] === estado.cat ? ' on' : '') +
+         '" data-c="' + c[0] + '">' + c[1] + '</button>';
+}).join('');
+
+document.addEventListener('click', function(e){
+  var p = e.target.closest('[data-p]');
+  if (p){
+    estado.plano = +p.getAttribute('data-p');
+    estado.mostrando = PASSO;
+    pintar();
+    window.scrollTo({ top:0, behavior:'smooth' });
+    return;
+  }
+  var j = e.target.closest('[data-jogo]');
+  if (j){
+    var g = PORID[j.getAttribute('data-jogo')];
+    if (g) abrirJogo(g);
+    return;
+  }
+  var c = e.target.closest('.chip');
+  if (c){
+    estado.cat = c.getAttribute('data-c');
+    estado.mostrando = PASSO;
+    document.querySelectorAll('.chip').forEach(function(x){
+      x.classList.toggle('on', x === c);
+    });
+    pintarGrade();
+  }
+});
+
+/* ---------- popup do jogo ----------
+   Clicar num card antes nao fazia nada, o que e o pior desfecho possivel: a
+   pessoa achou o jogo dela, teve a duvida respondida, e a pagina nao ofereceu
+   proximo passo nenhum. O popup e esse proximo passo.
+
+   Ele NAO carrega preco (a home e o unico lugar que anuncia preco) e o botao
+   vai pra home, nao pro #pricing: quem chegou pelo catalogo ainda esta na
+   pergunta "existe?", nao na pergunta "quanto custa?". */
+var ov = document.getElementById('ov');
+
+function abrirJogo(g){
+  document.getElementById('jn').textContent = g.n;
+
+  var img = document.getElementById('jcapa');
+  img.src = capa(g); img.alt = g.n;
+  fallback(img, g);
+
+  var pill = document.getElementById('jpill');
+  if (g.soon){
+    pill.className = 'pill soon';
+    /* Mesmo guard do index.html: tem jogo com dt escrito literalmente como
+       "a confirmar", e sem isto sai "Chega em a confirmar". */
+    pill.textContent = (!g.dt || g.dt === 'a confirmar')
+      ? 'Lançamento, data a confirmar' : 'Chega em ' + g.dt;
+  } else {
+    pill.className = 'pill';
+    pill.textContent = 'Disponível agora';
+  }
+
+  /* A linha de planos. Vale mais que qualquer frase de venda: mostra em qual
+     plano o jogo que a PESSOA procurou esta, e o cadeado faz o resto. */
+  var min = ONDE[g.i];
+  document.getElementById('jplanos').innerHTML = PLANOS.map(function(p, i){
+    var tem = min !== undefined && min <= i;
+    return '<div class="lin ' + (tem ? 'sim' : 'nao') +
+           (tem && p.alvo ? ' alvo' : '') + '">' +
+           '<span class="ic">' + (tem ? '&#10003;' : '&#128274;') + '</span>' +
+           p.nome + '<span class="qn">' + nf(p.qtd) + ' jogos</span></div>';
+  }).join('');
+
+  var txt = document.getElementById('jt');
+  var btn = document.getElementById('jbtn');
+  if (g.soon){
+    txt.innerHTML = '<strong>' + esc(g.n) + '</strong> ainda não saiu. Quando lançar, ' +
+      'entra na sua biblioteca pelo Vitalício, sem pagar de novo.';
+    btn.textContent = 'Ver como garantir esse lançamento';
+  } else if (min === 2){
+    txt.innerHTML = '<strong>' + esc(g.n) + '</strong> só entra no Vitalício, ' +
+      'junto com os outros ' + nf(40000) + ' e tudo que ainda vai sair.';
+    btn.textContent = 'Ver como funciona';
+  } else {
+    txt.innerHTML = '<strong>' + esc(g.n) + '</strong> está incluso. ' +
+      'O download é pelos servidores oficiais da Steam, na sua própria conta.';
+    btn.textContent = 'Ver como funciona';
+  }
+
+  ov.classList.add('on');
+  document.body.classList.add('travado');
+}
+
+function fecharJogo(){
+  ov.classList.remove('on');
+  document.body.classList.remove('travado');
+}
+
+document.getElementById('x').addEventListener('click', fecharJogo);
+document.getElementById('jvolta').addEventListener('click', fecharJogo);
+ov.addEventListener('click', function(e){ if (e.target === ov) fecharJogo(); });
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape') fecharJogo(); });
+
+var timer;
+document.getElementById('q').addEventListener('input', function(e){
+  clearTimeout(timer);
+  var v = e.target.value.trim();
+  timer = setTimeout(function(){
+    estado.busca = v;
+    estado.mostrando = PASSO;
+    pintarLancamentos();
+    pintarGrade();
+  }, 140);
+});
+
+document.getElementById('mais').addEventListener('click', function(){
+  estado.mostrando += PASSO;
+  pintarGrade();
+});
+
+pintar();
+})();
+</script>
+</body>
+</html>
