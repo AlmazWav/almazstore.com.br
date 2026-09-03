@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ALMAZ Parceiros | Ganhe 50% por indicação</title>
+<meta name="description" content="Indique a ALMAZ e receba metade do valor de cada venda feita pelo seu link, direto no seu Pix.">
+<meta name="theme-color" content="#ee2740">
+<link rel="canonical" href="https://almazstore.com.br/parceiros/">
+
+<!-- Compartilhamento. Esta página vive de link no Instagram: sem estas tags o
+     WhatsApp e o próprio Instagram mostram um retângulo cinza sem título, e o
+     clique cai pela metade. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ALMAZ">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://almazstore.com.br/parceiros/">
+<meta property="og:title" content="Ganhe 50% de cada venda">
+<meta property="og:description" content="Pegue seu link, mande pra quem joga no PC e receba metade do valor de cada compra. No seu Pix. Não precisa ter comprado nada.">
+<meta property="og:image" content="https://almazstore.com.br/parceiros/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ganhe 50% de cada venda">
+<meta name="twitter:description" content="Indique a ALMAZ e receba metade do valor de cada venda feita pelo seu link.">
+<meta name="twitter:image" content="https://almazstore.com.br/parceiros/logo.png">
+
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="logo.png">
+<link rel="apple-touch-icon" href="logo.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ALMAZ">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#060607; --bg-2:#0b0b0e; --card:#111114; --card-2:#16161b;
+    --border:#232329; --border-2:#34343d;
+    --text:#e7e7ea; --muted:#8a8a94; --muted-2:#5c5c66;
+    --neon:#ee2740; --neon-2:#ff5470; --ok:#3fd968; --gold:#fbbf24; --blue:#66c0f4;
+    --font:'Inter',system-ui,sans-serif; --head:'Sora','Inter',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg);color:var(--text);font-family:var(--font);
+    -webkit-font-smoothing:antialiased;min-height:100vh;
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  a{color:inherit}
+  ::selection{background:rgba(238,39,64,.3)}
+
+  .wrap{max-width:920px;margin:0 auto;padding:0 18px}
+
+  /* ---------- topo ---------- */
+  .topo{
+    position:sticky;top:0;z-index:50;
+    background:rgba(6,6,7,.86);backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border);
+    padding-top:env(safe-area-inset-top);
+  }
+  .topo-in{display:flex;align-items:center;gap:12px;height:62px}
+  .marca{display:flex;align-items:center;gap:10px;font-family:var(--head);font-weight:800;font-size:1.05rem;letter-spacing:-.3px}
+  .marca img{width:30px;height:30px;border-radius:8px;object-fit:cover}
+  .marca span{color:var(--neon)}
+  .marca small{display:block;font-family:var(--font);font-size:.6rem;font-weight:700;letter-spacing:2px;color:var(--muted-2);text-transform:uppercase}
+  .topo-dir{margin-left:auto;display:flex;align-items:center;gap:8px}
+
+  .btn{
+    border:none;cursor:pointer;font-family:inherit;font-weight:800;
+    border-radius:11px;padding:13px 20px;font-size:.86rem;
+    background:linear-gradient(90deg,var(--neon),var(--neon-2));color:#fff;
+    transition:transform .12s,filter .15s;
+  }
+  .btn:hover:not(:disabled){filter:brightness(1.08);transform:translateY(-1px)}
+  .btn:active:not(:disabled){transform:translateY(0)}
+  .btn:disabled{background:var(--card-2);color:var(--muted-2);cursor:not-allowed;border:1px solid var(--border)}
+  .btn.ghost{background:transparent;border:1px solid var(--border-2);color:var(--muted)}
+  .btn.ghost:hover{border-color:var(--neon);color:var(--neon)}
+  .btn.mini{padding:9px 14px;font-size:.76rem;border-radius:9px}
+  .btn.ok{background:var(--ok);color:#06240f}
+  .btn.zap{background:#25d366;color:#04240f}
+
+  /* ---------- entrada ---------- */
+  .hero{padding:44px 0 30px;text-align:center}
+  .selo{
+    display:inline-flex;align-items:center;gap:7px;
+    background:rgba(238,39,64,.12);border:1px solid rgba(238,39,64,.4);
+    color:var(--neon);font-size:.63rem;font-weight:800;letter-spacing:1.6px;
+    text-transform:uppercase;padding:6px 13px;border-radius:20px;margin-bottom:16px;
+  }
+  h1{font-family:var(--head);font-size:clamp(1.9rem,6vw,2.9rem);font-weight:800;line-height:1.08;letter-spacing:-1.2px;margin-bottom:14px}
+  h1 em{font-style:normal;color:var(--neon)}
+  .lead{color:var(--muted);font-size:1rem;line-height:1.65;max-width:540px;margin:0 auto}
+  .lead b{color:#fff}
+
+  .provas{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:30px 0 8px}
+  @media(max-width:560px){.provas{grid-template-columns:1fr}}
+  .prova{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px}
+  .prova .n{font-family:var(--head);font-size:1.5rem;font-weight:800;color:var(--neon);line-height:1}
+  .prova .t{font-size:.78rem;color:var(--muted);margin-top:6px;line-height:1.45}
+
+  /* ---------- cartao / formulario ---------- */
+  .card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:26px}
+  .card + .card{margin-top:16px}
+  .card h2{font-family:var(--head);font-size:1.12rem;font-weight:800;letter-spacing:-.3px;margin-bottom:5px}
+  .card .sub{color:var(--muted);font-size:.85rem;line-height:1.6;margin-bottom:18px}
+
+  .abas{display:flex;gap:6px;background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:5px;margin-bottom:20px}
+  .abas button{
+    flex:1;border:none;cursor:pointer;font-family:inherit;font-weight:700;font-size:.84rem;
+    padding:11px;border-radius:8px;background:transparent;color:var(--muted);transition:.15s;
+  }
+  .abas button.on{background:var(--neon);color:#fff}
+
+  .campo{margin-bottom:12px}
+  .campo label{display:block;font-size:.68rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted-2);margin-bottom:7px}
+  .campo input,.campo select{
+    width:100%;padding:14px 15px;border-radius:11px;
+    background:var(--bg-2);border:1px solid var(--border-2);color:#fff;
+    font-family:inherit;font-size:.92rem;outline:none;transition:border-color .15s;
+  }
+  .campo input:focus,.campo select:focus{border-color:var(--neon)}
+  .campo input::placeholder{color:var(--muted-2)}
+
+  .aviso{padding:12px 15px;border-radius:11px;font-size:.83rem;line-height:1.55;margin-bottom:14px}
+  .aviso.erro{background:rgba(238,39,64,.1);border:1px solid rgba(238,39,64,.3);color:#ff8095}
+  .aviso.bom{background:rgba(63,217,104,.1);border:1px solid rgba(63,217,104,.3);color:#7ee89b}
+
+  /* ---------- painel ---------- */
+  .linha-link{display:flex;gap:9px;flex-wrap:wrap}
+  .linha-link input{
+    flex:1;min-width:200px;padding:14px 15px;border-radius:11px;
+    background:var(--bg-2);border:1px solid var(--border-2);color:#fff;
+    font-family:ui-monospace,Consolas,monospace;font-size:.85rem;outline:none;
+  }
+
+  .nums{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+  @media(max-width:620px){.nums{grid-template-columns:1fr}}
+  .num{background:var(--bg-2);border:1px solid var(--border);border-radius:13px;padding:17px}
+  .num .v{font-family:var(--head);font-size:1.55rem;font-weight:800;line-height:1.1;letter-spacing:-.6px}
+  .num.destaque .v{color:var(--ok)}
+  .num .r{font-size:.68rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-top:6px}
+  .num .o{font-size:.72rem;color:var(--muted-2);margin-top:5px}
+
+  .barra-fora{height:9px;border-radius:20px;background:var(--bg-2);border:1px solid var(--border);overflow:hidden}
+  .barra{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--neon),var(--neon-2));transition:width .7s cubic-bezier(.4,0,.2,1)}
+  .barra.dourada{background:linear-gradient(90deg,var(--gold),#f59e0b)}
+
+  .metas{display:grid;gap:9px;margin-top:16px}
+  .meta{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:11px;background:var(--bg-2);border:1px solid var(--border)}
+  .meta.feita{border-color:rgba(63,217,104,.35);background:rgba(63,217,104,.06)}
+  .meta .ic{
+    flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;
+    background:var(--card-2);border:1px solid var(--border-2);color:var(--muted-2);
+    font-size:.78rem;font-weight:800;
+  }
+  .meta.feita .ic{background:rgba(63,217,104,.15);border-color:rgba(63,217,104,.4);color:var(--ok)}
+  .meta .txt{flex:1;min-width:0}
+  .meta .txt b{display:block;font-size:.88rem;color:#fff}
+  .meta .txt span{font-size:.76rem;color:var(--muted)}
+  .meta .qtd{font-size:.74rem;color:var(--muted-2);font-weight:700;white-space:nowrap}
+
+  .sorteio{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+  .sorteio img{width:150px;flex:none;filter:drop-shadow(0 14px 26px rgba(0,0,0,.55))}
+  .sorteio .lado{flex:1;min-width:230px}
+  .cotas{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+  .cota{padding:5px 11px;border-radius:7px;font-size:.77rem;font-weight:700;font-family:ui-monospace,Consolas,monospace;
+    background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:var(--gold)}
+
+  table{width:100%;border-collapse:collapse;font-size:.83rem}
+  th{text-align:left;font-size:.64rem;text-transform:uppercase;letter-spacing:1px;color:var(--muted-2);font-weight:800;padding:0 10px 10px 0}
+  td{padding:11px 10px 11px 0;border-top:1px solid var(--border);color:var(--muted)}
+  td.val{color:#fff;font-weight:700;font-family:ui-monospace,Consolas,monospace}
+  .tag{font-size:.66rem;font-weight:800;padding:3px 9px;border-radius:20px;text-transform:uppercase;white-space:nowrap}
+  .tag.pendente{background:rgba(251,191,36,.12);color:var(--gold)}
+  .tag.disponivel{background:rgba(63,217,104,.12);color:var(--ok)}
+  .tag.pago{background:rgba(102,192,244,.12);color:var(--blue)}
+  .tag.estornado{background:rgba(238,39,64,.12);color:var(--neon)}
+
+  .vazio{padding:26px;border-radius:13px;text-align:center;background:var(--bg-2);
+    border:1px dashed var(--border-2);color:var(--muted);font-size:.86rem;line-height:1.7}
+  .vazio b{color:#fff}
+
+  .copias{display:grid;gap:8px}
+  .copia{display:flex;gap:10px;align-items:flex-start;padding:13px 15px;border-radius:11px;
+    background:var(--bg-2);border:1px solid var(--border)}
+  .copia p{flex:1;font-size:.83rem;color:var(--muted);line-height:1.55}
+
+  .passos{display:grid;gap:10px;margin-top:6px}
+  .passo{display:flex;gap:12px;align-items:flex-start;font-size:.86rem;color:var(--muted);line-height:1.55}
+  .passo b{color:#fff}
+  .passo .i{flex:none;width:22px;height:22px;border-radius:50%;background:rgba(238,39,64,.12);
+    border:1px solid rgba(238,39,64,.35);color:var(--neon);font-size:.7rem;font-weight:800;
+    display:grid;place-items:center;margin-top:1px}
+
+  .rodape{text-align:center;padding:36px 0 30px;color:var(--muted-2);font-size:.78rem;line-height:1.7}
+
+  .skel{height:15px;border-radius:6px;background:var(--card-2);animation:pulsa 1.2s ease-in-out infinite}
+  @keyframes pulsa{0%,100%{opacity:.45}50%{opacity:.9}}
+
+  .oculto{display:none !important}
+
+  /* faixa de instalar o app */
+  .instalar{
+    display:none;align-items:center;gap:13px;margin-top:16px;
+    padding:15px 17px;border-radius:14px;
+    background:linear-gradient(100deg,rgba(238,39,64,.12),rgba(238,39,64,.03));
+    border:1px solid rgba(238,39,64,.3);
+  }
+  .instalar.on{display:flex}
+  .instalar .txt{flex:1;min-width:0}
+  .instalar .txt b{display:block;font-size:.9rem;color:#fff;margin-bottom:2px}
+  .instalar .txt span{font-size:.79rem;color:var(--muted);line-height:1.5}
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="wrap topo-in">
+    <div class="marca">
+      <img src="logo.png" alt="" onerror="this.style.display='none'">
+      <div>ALMA<span>Z</span><small>Parceiros</small></div>
+    </div>
+    <div class="topo-dir">
+      <button class="btn ghost mini oculto" id="btSair">Sair</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" id="tela"></main>
+
+<div class="wrap"><div class="rodape">
+  ALMAZ Parceiros &middot; Pagamentos via Pix após aprovação<br>
+  Dúvidas? Fale com a gente no WhatsApp.
+</div></div>
+
+<script>
+/* ============================================================
+   PAINEL DE PARCEIRO — página pública
+   ------------------------------------------------------------
+   Diferente do bloco que fica na área de membros: aqui QUALQUER pessoa cria
+   conta, mesmo sem nunca ter comprado. Por isso tem senha desde o começo — não
+   existe sessão anterior pra aproveitar, e é ela que amarra a pessoa ao código.
+
+   O link é o mesmo dos dois programas: paga comissão E dá cota no sorteio.
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var API = 'https://keys-server-9zq2.onrender.com';
+  var CHAVE = 'almaz_af_token';
+  var tela = document.getElementById('tela');
+  var btSair = document.getElementById('btSair');
+
+  // ---- utilidades ----
+  var dinheiro = function (n) { return 'R$ ' + (Number(n) || 0).toFixed(2).replace('.', ','); };
+  var esc = function (s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  };
+  function dataCurta(iso) {
+    try { return new Date(iso).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }); }
+    catch (e) { return '--'; }
+  }
+  function diasAte(iso) {
+    var d = Math.ceil((new Date(iso) - Date.now()) / 86400000);
+    return d > 0 ? d : 0;
+  }
+  var pegarToken = function () { try { return localStorage.getItem(CHAVE) || ''; } catch (e) { return ''; } };
+  var salvarToken = function (t) { try { localStorage.setItem(CHAVE, t); } catch (e) {} };
+  var limparToken = function () { try { localStorage.removeItem(CHAVE); } catch (e) {} };
+
+  async function api(caminho, opcoes) {
+    opcoes = opcoes || {};
+    var cab = { 'Content-Type': 'application/json' };
+    if (opcoes.comToken) cab.Authorization = 'Bearer ' + pegarToken();
+    var r = await fetch(API + caminho, {
+      method: opcoes.corpo ? 'POST' : (opcoes.metodo || 'GET'),
+      headers: cab,
+      body: opcoes.corpo ? JSON.stringify(opcoes.corpo) : undefined,
+    });
+    var d = {};
+    try { d = await r.json(); } catch (e) {}
+    return { status: r.status, dados: d };
+  }
+
+  function copiar(texto, botao, rotulo) {
+    var feito = function () {
+      botao.textContent = 'Copiado';
+      botao.classList.add('ok');
+      setTimeout(function () { botao.textContent = rotulo; botao.classList.remove('ok'); }, 1800);
+    };
+    if (navigator.clipboard) navigator.clipboard.writeText(texto).then(feito).catch(feito);
+    else feito();
+  }
+
+  /* ---------- instalar o app ----------
+     O navegador só deixa instalar quando ELE decide (HTTPS, manifest, service
+     worker, e algum engajamento). Então guardamos o evento e só mostramos o
+     botão quando ele chega — botão que não instala nada é pior que botão
+     nenhum. No iPhone não existe esse evento, então lá explicamos o caminho
+     manual em vez de mostrar um botão que não faz nada. */
+  var promptInstalar = null;
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    promptInstalar = e;
+    var faixa = document.getElementById('instalar');
+    if (faixa) faixa.classList.add('on');
+  });
+
+  function ehIOS() {
+    return /iphone|ipad|ipod/i.test(navigator.userAgent);
+  }
+  function jaInstalado() {
+    return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  }
+
+  function blocoInstalar() {
+    if (jaInstalado()) return '';
+    if (ehIOS()) {
+      return '<div class="instalar on">'
+        + '<div class="txt"><b>Coloque na sua tela de início</b>'
+        + '<span>Toque em Compartilhar e depois em "Adicionar à Tela de Início".</span></div></div>';
+    }
+    return '<div class="instalar" id="instalar">'
+      + '<div class="txt"><b>Instale o app</b>'
+      + '<span>Fica um ícone na sua área de trabalho e abre direto, sem navegador.</span></div>'
+      + '<button class="btn mini" id="btInstalar">Instalar</button></div>';
+  }
+
+  function ligarInstalar() {
+    var b = document.getElementById('btInstalar');
+    if (!b) return;
+    if (promptInstalar) {
+      var faixa = document.getElementById('instalar');
+      if (faixa) faixa.classList.add('on');
+    }
+    b.addEventListener('click', async function () {
+      if (!promptInstalar) return;
+      promptInstalar.prompt();
+      try { await promptInstalar.userChoice; } catch (e) {}
+      promptInstalar = null;
+      var faixa = document.getElementById('instalar');
+      if (faixa) faixa.classList.remove('on');
+    });
+  }
+
+  // ---- TELA 1: entrada ----
+  function telaEntrada(aba) {
+    aba = aba || 'criar';
+    btSair.classList.add('oculto');
+    var criar = aba === 'criar';
+
+    tela.innerHTML = ''
+      + '<section class="hero">'
+      +   '<div class="selo">Programa de parceiros</div>'
+      +   '<h1>Ganhe <em>50%</em><br>de cada venda</h1>'
+      +   '<p class="lead">Pegue seu link, mande pra quem joga no PC e receba '
+      +     '<b>metade do valor</b> de cada compra feita por ele. No seu Pix. '
+      +     'Você não precisa ter comprado nada pra participar.</p>'
+      + '</section>'
+
+      + '<div class="provas">'
+      +   '<div class="prova"><div class="n">50%</div><div class="t">de cada venda, sem limite de indicações</div></div>'
+      +   '<div class="prova"><div class="n">R$ 25</div><div class="t">por indicação do plano vitalício</div></div>'
+      +   '<div class="prova"><div class="n">Pix</div><div class="t">direto na sua chave, quando você pedir</div></div>'
+      + '</div>'
+
+      + '<div class="card" style="margin-top:16px">'
+      +   '<div class="abas">'
+      +     '<button class="' + (criar ? 'on' : '') + '" data-aba="criar">Criar conta</button>'
+      +     '<button class="' + (criar ? '' : 'on') + '" data-aba="entrar">Já tenho conta</button>'
+      +   '</div>'
+      +   '<div id="msg"></div>'
+      +   (criar ? '<div class="campo"><label>Seu nome</label><input id="fNome" placeholder="Como podemos te chamar" autocomplete="name"></div>' : '')
+      +   '<div class="campo"><label>E-mail</label><input id="fEmail" type="email" placeholder="voce@email.com" autocomplete="email"></div>'
+      +   '<div class="campo"><label>Senha</label><input id="fSenha" type="password" placeholder="' + (criar ? 'Crie uma senha (mínimo 6 caracteres)' : 'Sua senha') + '" autocomplete="' + (criar ? 'new-password' : 'current-password') + '"></div>'
+      +   '<button class="btn" id="btEnviar" style="width:100%;margin-top:6px">' + (criar ? 'Criar minha conta' : 'Entrar') + '</button>'
+      + '</div>'
+
+      + '<div class="card">'
+      +   '<h2>Como funciona</h2>'
+      +   '<div class="passos">'
+      +     '<div class="passo"><span class="i">1</span><span>Crie sua conta e receba <b>seu link</b>.</span></div>'
+      +     '<div class="passo"><span class="i">2</span><span>Mande pra quem pode gostar. WhatsApp, grupo, story, onde você quiser.</span></div>'
+      +     '<div class="passo"><span class="i">3</span><span>Alguém compra pelo seu link e <b>metade do valor</b> entra no seu saldo.</span></div>'
+      +     '<div class="passo"><span class="i">4</span><span>Passou de R$ 30, você pede o saque e recebe no Pix.</span></div>'
+      +   '</div>'
+      + '</div>';
+
+    var botoesAba = tela.querySelectorAll('[data-aba]');
+    for (var i = 0; i < botoesAba.length; i++) {
+      (function (b) { b.addEventListener('click', function () { telaEntrada(b.dataset.aba); }); })(botoesAba[i]);
+    }
+
+    var msg = document.getElementById('msg');
+    var bt = document.getElementById('btEnviar');
+    var campoSenha = document.getElementById('fSenha');
+
+    async function enviar() {
+      var nome = criar ? (document.getElementById('fNome').value || '').trim() : '';
+      var email = (document.getElementById('fEmail').value || '').trim();
+      var senha = campoSenha.value;
+      msg.innerHTML = '';
+
+      if (criar && !nome) { msg.innerHTML = '<div class="aviso erro">Digite seu nome.</div>'; return; }
+      if (!email || email.indexOf('@') < 1) { msg.innerHTML = '<div class="aviso erro">Digite um e-mail válido.</div>'; return; }
+      if (!senha || senha.length < 6) { msg.innerHTML = '<div class="aviso erro">A senha precisa de pelo menos 6 caracteres.</div>'; return; }
+
+      bt.disabled = true; bt.textContent = 'Aguarde...';
+      var r = await api(criar ? '/api/af/registrar' : '/api/af/login',
+        { corpo: criar ? { nome: nome, email: email, senha: senha } : { email: email, senha: senha } });
+      bt.disabled = false; bt.textContent = criar ? 'Criar minha conta' : 'Entrar';
+
+      if (!r.dados.success || !r.dados.token) {
+        msg.innerHTML = '<div class="aviso erro">' + esc(r.dados.message || 'Não consegui continuar.') + '</div>';
+        return;
+      }
+      salvarToken(r.dados.token);
+      abrirPainel();
+    }
+
+    bt.addEventListener('click', enviar);
+    campoSenha.addEventListener('keydown', function (e) { if (e.key === 'Enter') enviar(); });
+  }
+
+  // ---- TELA 2: painel ----
+  function telaCarregando() {
+    tela.innerHTML = '<div class="card" style="margin-top:20px">'
+      + '<div class="skel" style="width:55%;height:22px;margin-bottom:14px"></div>'
+      + '<div class="skel" style="width:100%;height:46px;margin-bottom:16px"></div>'
+      + '<div class="nums"><div class="num"><div class="skel" style="width:70%;height:24px"></div></div>'
+      + '<div class="num"><div class="skel" style="width:70%;height:24px"></div></div>'
+      + '<div class="num"><div class="skel" style="width:70%;height:24px"></div></div></div></div>';
+  }
+
+  function telaPainel(d, rifa) {
+    btSair.classList.remove('oculto');
+
+    var metas = d.metas || { lista: [], proxima: null, faltam: 0, percentual: 0, atual: null };
+    var podeSacar = d.sacavel >= d.saqueMinimo && d.temPix;
+    var motivo = '';
+    if (!d.temPix) motivo = 'Cadastre sua chave Pix abaixo para poder sacar.';
+    else if (d.sacavel < d.saqueMinimo) motivo = 'Faltam ' + dinheiro(d.saqueMinimo - d.sacavel) + ' para o mínimo de ' + dinheiro(d.saqueMinimo) + '.';
+
+    var rotulo = function (c) {
+      if (c.status === 'pendente') return 'libera em ' + diasAte(c.liberaEm) + 'd';
+      if (c.status === 'disponivel') return 'Disponível';
+      if (c.status === 'pago') return 'Recebido';
+      if (c.status === 'estornado') return 'Cancelada';
+      return c.status;
+    };
+
+    var linhas = (d.ultimas || []).map(function (c) {
+      return '<tr><td>' + dataCurta(c.data) + '</td><td>' + esc(c.comprador) + '</td>'
+        + '<td>' + esc(String(c.plano || '').toUpperCase()) + '</td>'
+        + '<td class="val">' + dinheiro(c.valor) + '</td>'
+        + '<td><span class="tag ' + esc(c.status) + '">' + esc(rotulo(c)) + '</span></td></tr>';
+    }).join('');
+
+    var textos = [
+      'Cara, se você joga no PC dá uma olhada nisso: acesso a milhares de jogos na Steam por um preço que não faz sentido. ' + d.link,
+      'Achei isso e tô usando direto. Vale muito a pena: ' + d.link,
+      'Você que tava querendo jogar aquele jogo, olha isso aqui: ' + d.link,
+    ];
+
+    var blocoRifa = '';
+    if (rifa && rifa.premio) {
+      var cotas = (rifa.numeros || []).slice(0, 12);
+      blocoRifa = '<div class="card">'
+        + '<div class="sorteio">'
+        +   '<img src="rifa/rtx3060.png" alt="RTX 3060" onerror="this.style.display=\'none\'">'
+        +   '<div class="lado">'
+        +     '<div class="selo" style="background:rgba(251,191,36,.12);border-color:rgba(251,191,36,.4);color:var(--gold)">Sorteio entre parceiros</div>'
+        +     '<h2>E ainda concorre a uma RTX 3060</h2>'
+        +     '<div class="sub" style="margin-bottom:12px">' + esc(rifa.premio) + '.<br>'
+        +       'Pelo <b>mesmo link</b>: cada indicação do plano vitalício te dá <b>'
+        +       (rifa.numerosPorVenda || 5) + ' cotas</b> no sorteio, além do dinheiro.</div>'
+        +     '<div style="font-size:.66rem;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;color:var(--gold);margin-bottom:7px">Progresso até o sorteio</div>'
+        +     '<div class="barra-fora"><div class="barra dourada" style="width:' + (rifa.progresso || 0) + '%"></div></div>'
+        +     (cotas.length
+                ? '<div style="font-size:.66rem;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;color:var(--gold);margin:14px 0 7px">Suas cotas</div>'
+                  + '<div class="cotas">' + cotas.map(function (n) { return '<span class="cota">' + String(n).padStart(4, '0') + '</span>'; }).join('')
+                  + ((rifa.numeros || []).length > 12 ? '<span class="cota">+' + ((rifa.numeros).length - 12) + '</span>' : '') + '</div>'
+                : '<div style="font-size:.8rem;color:var(--muted-2);margin-top:12px">Suas cotas aparecem aqui na primeira indicação do plano vitalício.</div>')
+        +   '</div>'
+        + '</div></div>';
+    }
+
+    tela.innerHTML = ''
+      + '<section style="padding:26px 0 4px">'
+      +   '<h1 style="font-size:clamp(1.4rem,4.5vw,1.9rem)">Olá' + (d.nome ? ', <em>' + esc(String(d.nome).split(' ')[0]) + '</em>' : '') + '</h1>'
+      +   '<p class="lead" style="margin:8px 0 0;text-align:left">Este é o seu painel. Compartilhe seu link e acompanhe tudo por aqui.</p>'
+      + '</section>'
+
+      + '<div class="card" style="margin-top:18px">'
+      +   '<h2>Seu link de indicação</h2>'
+      +   '<div class="sub">Tudo que entrar por ele conta pra você: dinheiro e cotas do sorteio.</div>'
+      +   '<div class="linha-link">'
+      +     '<input type="text" id="url" value="' + esc(d.link) + '" readonly onclick="this.select()">'
+      +     '<button class="btn" id="btCopiar">Copiar</button>'
+      +     '<button class="btn zap" id="btZap">WhatsApp</button>'
+      +   '</div>'
+      +   blocoInstalar()
+      +   '<div class="nums">'
+      +     '<div class="num destaque"><div class="v">' + dinheiro(d.sacavel) + '</div><div class="r">Disponível</div><div class="o">pronto para saque</div></div>'
+      +     '<div class="num"><div class="v">' + dinheiro(d.saldoPendente) + '</div><div class="r">Em liberação</div><div class="o">libera ' + d.holdDias + ' dias após a compra</div></div>'
+      +     '<div class="num"><div class="v">' + dinheiro(d.totalPago) + '</div><div class="r">Já recebido</div><div class="o">' + d.indicacoes + (d.indicacoes === 1 ? ' indicação' : ' indicações') + '</div></div>'
+      +   '</div>'
+      +   '<div id="msg"></div>'
+      +   '<button class="btn" id="btSacar" style="width:100%"' + (podeSacar ? '' : ' disabled') + '>Sacar via Pix</button>'
+      +   (motivo ? '<div style="font-size:.79rem;color:var(--muted);margin-top:9px;line-height:1.5">' + esc(motivo) + '</div>' : '')
+      +   (d.divida > 0 ? '<div style="font-size:.79rem;color:var(--muted);margin-top:9px">Há ' + dinheiro(d.divida) + ' descontados por uma compra cancelada depois.</div>' : '')
+      + '</div>'
+
+      + '<div class="card">'
+      +   '<h2>Suas metas</h2>'
+      +   '<div class="sub">'
+      +     (metas.proxima
+              ? 'Faltam <b>' + metas.faltam + (metas.faltam === 1 ? ' indicação' : ' indicações') + '</b> para ' + esc(metas.proxima.titulo) + '.'
+              : 'Você alcançou todas as metas. Obrigado por levar a ALMAZ tão longe.')
+      +   '</div>'
+      +   '<div class="barra-fora"><div class="barra" style="width:' + Math.max(2, metas.percentual) + '%"></div></div>'
+      +   '<div class="metas">'
+      +     (metas.lista || []).map(function (m) {
+              return '<div class="meta' + (m.conquistada ? ' feita' : '') + '">'
+                + '<span class="ic">' + (m.conquistada ? '&#10003;' : m.indicacoes) + '</span>'
+                + '<span class="txt"><b>' + esc(m.titulo) + '</b><span>' + esc(m.premio) + '</span></span>'
+                + '<span class="qtd">' + m.indicacoes + (m.indicacoes === 1 ? ' venda' : ' vendas') + '</span></div>';
+            }).join('')
+      +   '</div>'
+      + '</div>'
+
+      + blocoRifa
+
+      + '<div class="card">'
+      +   '<h2>Sua chave Pix</h2>'
+      +   '<div class="sub">É para onde o dinheiro vai. Por segurança, o saque libera 24 horas depois de trocar a chave.</div>'
+      +   '<div class="campo"><label>Tipo</label><select id="pixTipo">'
+      +     '<option value="cpf">CPF</option><option value="email">E-mail</option>'
+      +     '<option value="telefone">Telefone</option><option value="aleatoria">Aleatória</option></select></div>'
+      +   '<div class="campo"><label>Chave</label><input id="pixChave" placeholder="Sua chave Pix" autocomplete="off"></div>'
+      +   '<div class="campo"><label>Nome do titular</label><input id="pixNome" placeholder="Nome de quem recebe" autocomplete="off"></div>'
+      +   '<button class="btn ghost" id="btPix" style="width:100%">' + (d.temPix ? 'Atualizar chave' : 'Salvar chave') + '</button>'
+      + '</div>'
+
+      + '<div class="card">'
+      +   '<h2>Suas indicações</h2>'
+      +   (linhas
+          ? '<div style="overflow-x:auto"><table><thead><tr><th>Data</th><th>Quem comprou</th><th>Plano</th><th>Você ganhou</th><th>Situação</th></tr></thead><tbody>' + linhas + '</tbody></table></div>'
+          : '<div class="vazio"><b>Nenhuma indicação ainda.</b><br>Copie seu link acima e mande para alguém. Assim que a pessoa comprar, metade do valor aparece aqui.</div>')
+      + '</div>'
+
+      + '<div class="card">'
+      +   '<h2>Textos prontos</h2>'
+      +   '<div class="sub">Copie, cole e mande. Já vêm com o seu link.</div>'
+      +   '<div class="copias">'
+      +     textos.map(function (t, i) {
+              return '<div class="copia"><p>' + esc(t) + '</p><button class="btn ghost mini" data-txt="' + i + '">Copiar</button></div>';
+            }).join('')
+      +   '</div>'
+      + '</div>';
+
+    ligarPainel(d, textos);
+  }
+
+  function ligarPainel(d, textos) {
+    var msg = document.getElementById('msg');
+
+    var btCopiar = document.getElementById('btCopiar');
+    btCopiar.addEventListener('click', function () { copiar(d.link, btCopiar, 'Copiar'); });
+
+    document.getElementById('btZap').addEventListener('click', function () {
+      window.open('https://wa.me/?text=' + encodeURIComponent(textos[0]), '_blank');
+    });
+
+    var bts = tela.querySelectorAll('[data-txt]');
+    for (var i = 0; i < bts.length; i++) {
+      (function (b) {
+        b.addEventListener('click', function () { copiar(textos[Number(b.dataset.txt)], b, 'Copiar'); });
+      })(bts[i]);
+    }
+
+    ligarInstalar();
+
+    var btPix = document.getElementById('btPix');
+    btPix.addEventListener('click', async function () {
+      var corpo = {
+        tipo: document.getElementById('pixTipo').value,
+        chave: document.getElementById('pixChave').value.trim(),
+        nomeTitular: document.getElementById('pixNome').value.trim(),
+      };
+      if (!corpo.chave || !corpo.nomeTitular) {
+        msg.innerHTML = '<div class="aviso erro">Preencha a chave e o nome do titular.</div>';
+        window.scrollTo({ top: msg.offsetTop - 90, behavior: 'smooth' });
+        return;
+      }
+      btPix.disabled = true;
+      var r = await api('/api/af/pix', { corpo: corpo, comToken: true });
+      btPix.disabled = false;
+      if (r.status === 401) return sairPorSessao();
+      msg.innerHTML = '<div class="aviso ' + (r.dados.success ? 'bom' : 'erro') + '">' + esc(r.dados.message || 'Não consegui salvar.') + '</div>';
+      window.scrollTo({ top: msg.offsetTop - 90, behavior: 'smooth' });
+      if (r.dados.success) setTimeout(abrirPainel, 1500);
+    });
+
+    var btSacar = document.getElementById('btSacar');
+    btSacar.addEventListener('click', async function () {
+      btSacar.disabled = true; btSacar.textContent = 'Enviando...';
+      var r = await api('/api/af/saque', { corpo: {}, comToken: true });
+      btSacar.textContent = 'Sacar via Pix';
+      if (r.status === 401) return sairPorSessao();
+      if (r.dados.success) {
+        msg.innerHTML = '<div class="aviso bom">Saque de ' + dinheiro(r.dados.saque.valor)
+          + ' solicitado. Ele fica <b>pendente de aprovação</b> e o Pix cai na sua chave assim que for aprovado. '
+          + 'Você acompanha por aqui.</div>';
+        setTimeout(abrirPainel, 2600);
+      } else {
+        btSacar.disabled = false;
+        msg.innerHTML = '<div class="aviso erro">' + esc(r.dados.message || 'Não consegui pedir o saque.') + '</div>';
+      }
+    });
+  }
+
+  function sairPorSessao() {
+    limparToken();
+    telaEntrada('entrar');
+    var m = document.getElementById('msg');
+    if (m) m.innerHTML = '<div class="aviso erro">Sua sessão expirou. Entre de novo.</div>';
+  }
+
+  // ---- fluxo ----
+  async function abrirPainel() {
+    if (!pegarToken()) return telaEntrada('criar');
+    telaCarregando();
+
+    var r;
+    try { r = await api('/api/af/me', { comToken: true }); }
+    catch (e) {
+      tela.innerHTML = '<div class="card" style="margin-top:20px"><h2>Sem conexão</h2>'
+        + '<div class="sub">Não consegui falar com o servidor. Verifique sua internet.</div>'
+        + '<button class="btn" id="btDeNovo">Tentar de novo</button></div>';
+      document.getElementById('btDeNovo').addEventListener('click', abrirPainel);
+      return;
+    }
+
+    if (r.status === 401) return sairPorSessao();
+    if (!r.dados || !r.dados.success) {
+      tela.innerHTML = '<div class="card" style="margin-top:20px"><h2>Não consegui carregar</h2>'
+        + '<div class="sub">Tente de novo em instantes.</div>'
+        + '<button class="btn" id="btDeNovo">Tentar de novo</button></div>';
+      document.getElementById('btDeNovo').addEventListener('click', abrirPainel);
+      return;
+    }
+
+    // O sorteio é opcional: se falhar, o painel abre sem ele em vez de quebrar.
+    var rifa = null;
+    try {
+      var rr = await fetch(API + '/api/rifa/status', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: r.dados.email || '' }),
+      });
+      var dd = await rr.json();
+      if (dd && dd.success) rifa = dd;
+    } catch (e) {}
+
+    telaPainel(r.dados, rifa);
+    window.scrollTo({ top: 0 });
+  }
+
+  btSair.addEventListener('click', function () {
+    limparToken();
+    telaEntrada('entrar');
+    window.scrollTo({ top: 0 });
+  });
+
+  // Service worker: é o que permite instalar o app.
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('sw.js').catch(function () {});
+    });
+  }
+
+  abrirPainel();
+})();
+</script>
+</body>
+</html>
