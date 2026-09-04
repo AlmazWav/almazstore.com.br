@@ -180,6 +180,12 @@
   .vazio{padding:26px;border-radius:13px;text-align:center;background:var(--bg-2);
     border:1px dashed var(--border-2);color:var(--muted);font-size:.86rem;line-height:1.7}
   .vazio b{color:#fff}
+  .tabelinha{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+  .tabelinha > div{flex:1;min-width:120px;padding:14px 16px;border-radius:11px;
+    background:rgba(63,217,104,.07);border:1px solid rgba(63,217,104,.22)}
+  .tabelinha b{display:block;font-family:var(--head);font-size:1.3rem;color:var(--ok);line-height:1.1}
+  .tabelinha span{display:block;font-size:.75rem;color:var(--muted);margin-top:5px;
+    text-transform:uppercase;letter-spacing:.8px;font-weight:700}
 
   .copias{display:grid;gap:8px}
   .copia{display:flex;gap:10px;align-items:flex-start;padding:13px 15px;border-radius:11px;
@@ -559,7 +565,17 @@
       +   '<h2>Suas indicações</h2>'
       +   (linhas
           ? '<div style="overflow-x:auto"><table><thead><tr><th>Data</th><th>Quem comprou</th><th>Plano</th><th>Você ganhou</th><th>Situação</th></tr></thead><tbody>' + linhas + '</tbody></table></div>'
-          : '<div class="vazio"><b>Nenhuma indicação ainda.</b><br>Copie seu link acima e mande para alguém. Assim que a pessoa comprar, metade do valor aparece aqui.</div>')
+          /* Painel novo mostra três zeros, e zerado parece que não funciona.
+             Em vez de inventar saldo, o vazio mostra QUANTO VALE cada plano.
+             É verdade, é útil, e responde a pergunta que a pessoa tem agora:
+             "quanto eu ganho com isso?" */
+          : '<div class="vazio"><b>Nenhuma indicação ainda.</b><br>'
+            + 'Copie seu link acima e mande pra alguém. É isto que entra quando a pessoa comprar:'
+            + '<div class="tabelinha">'
+            +   '<div><b>R$ 24,98</b><span>Vitalício</span></div>'
+            +   '<div><b>R$ 9,98</b><span>Avançado</span></div>'
+            +   '<div><b>R$ 4,98</b><span>Básico</span></div>'
+            + '</div></div>')
       + '</div>'
 
       + '<div class="card">'
