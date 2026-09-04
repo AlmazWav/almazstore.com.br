@@ -459,10 +459,20 @@
         + '<td><span class="tag ' + esc(c.status) + '">' + esc(rotulo(c)) + '</span></td></tr>';
     }).join('');
 
+    /* Textos prontos.
+       Os primeiros aqui eram de propaganda ("vale muito a pena", "não faz
+       sentido") e ninguém manda isso pro amigo: parece corrente e o amigo não
+       responde. Estes são escritos como mensagem de pessoa, com preço na frente
+       e a objeção respondida antes de ser feita. */
     var textos = [
-      'Cara, se você joga no PC dá uma olhada nisso: acesso a milhares de jogos na Steam por um preço que não faz sentido. ' + d.link,
-      'Achei isso e tô usando direto. Vale muito a pena: ' + d.link,
-      'Você que tava querendo jogar aquele jogo, olha isso aqui: ' + d.link,
+      'Tu ainda compra jogo separado? Paguei uma vez e agora baixo tudo pela Steam, '
+        + 'inclusive lançamento. Começa em R$ 9,97: ' + d.link,
+
+      'Lembra do jogo que tu queria e tava caro? Olha isso antes de comprar. '
+        + 'Pagamento único, não vira assinatura: ' + d.link,
+
+      'Antes que tu pergunte: não cobra de novo, os jogos entram na TUA conta da Steam, '
+        + 'e tem 7 dias de garantia. ' + d.link,
     ];
 
     var blocoRifa = '';
