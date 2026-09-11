@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALMAZ - Resultado da Votação</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07070d; --card:rgba(20,20,35,.6); --linha:rgba(220,38,38,.15);
+  --vermelho:#dc2626; --vermelho2:#ef4444; --texto:#f1f5f9; --fraco:#94a3b8;
+  --ok:#10b981; --aviso:#f59e0b;
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',system-ui,sans-serif}
+body{background:var(--bg);color:var(--texto);padding:22px}
+.wrap{max-width:1120px;margin:0 auto}
+
+.topo{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:22px}
+h1{font-size:1.5rem;font-weight:800}
+h1 span{color:var(--vermelho2)}
+.voltar{color:var(--fraco);text-decoration:none;font-size:.85rem}
+.voltar:hover{color:var(--texto)}
+
+.cartoes{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));margin-bottom:20px}
+.cartao{background:var(--card);border:1px solid var(--linha);border-radius:13px;padding:16px}
+.cartao .r{font-size:1.8rem;font-weight:800;line-height:1}
+.cartao .l{font-size:.74rem;color:var(--fraco);text-transform:uppercase;letter-spacing:.7px;margin-top:6px}
+
+.painel{background:var(--card);border:1px solid var(--linha);border-radius:13px;padding:16px;margin-bottom:20px;
+  display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.painel label{font-size:.82rem;color:var(--fraco);display:flex;align-items:center;gap:7px}
+.painel input[type=number]{width:70px}
+.painel input[type=text]{flex:1;min-width:220px}
+.painel input{padding:9px 11px;border-radius:9px;background:rgba(255,255,255,.05);
+  border:1px solid var(--linha);color:var(--texto);outline:none;font-size:.88rem}
+
+.btn{padding:9px 18px;border:none;border-radius:9px;font-size:.85rem;font-weight:700;cursor:pointer;
+  background:linear-gradient(135deg,var(--vermelho),var(--vermelho2));color:#fff;text-decoration:none;
+  display:inline-block}
+.btn.ghost{background:rgba(255,255,255,.06);border:1px solid var(--linha);color:var(--texto)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+
+.abas{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.aba{padding:8px 16px;border-radius:9px;font-size:.84rem;font-weight:600;cursor:pointer;
+  background:rgba(255,255,255,.05);border:1px solid var(--linha);color:var(--fraco)}
+.aba.on{background:var(--vermelho);border-color:var(--vermelho);color:#fff}
+
+.sec{display:none}.sec.on{display:block}
+
+table{width:100%;border-collapse:collapse;font-size:.86rem}
+th{text-align:left;padding:10px;color:var(--fraco);font-size:.72rem;text-transform:uppercase;
+  letter-spacing:.7px;border-bottom:1px solid var(--linha);position:sticky;top:0;background:#0b0b14}
+td{padding:9px 10px;border-bottom:1px solid rgba(255,255,255,.045);vertical-align:middle}
+tr:hover td{background:rgba(255,255,255,.02)}
+.pos{font-weight:800;color:var(--vermelho2);width:34px}
+.capa{width:72px;aspect-ratio:460/215;object-fit:cover;border-radius:4px;background:#12121f;display:block}
+.barrinha{height:6px;border-radius:3px;background:rgba(255,255,255,.07);overflow:hidden;min-width:70px}
+.barrinha i{display:block;height:100%;background:linear-gradient(90deg,var(--vermelho),var(--vermelho2))}
+.pill{padding:3px 9px;border-radius:6px;font-size:.7rem;font-weight:700;white-space:nowrap}
+.pill.tem{background:rgba(245,158,11,.14);color:#fcd34d}
+.pill.falta{background:rgba(16,185,129,.14);color:#6ee7b7}
+.pill.cli{background:rgba(16,185,129,.14);color:#6ee7b7}
+.pill.lead{background:rgba(148,163,184,.14);color:#cbd5e1}
+.jogos-td{color:var(--fraco);font-size:.8rem;line-height:1.45}
+.carregando,.nada{text-align:center;color:var(--fraco);padding:50px 20px}
+.rolagem{max-height:72vh;overflow:auto;border-radius:11px;border:1px solid var(--linha)}
+input.filtro{width:100%;padding:11px 13px;border-radius:10px;margin-bottom:12px;font-size:.9rem;
+  background:rgba(255,255,255,.05);border:1px solid var(--linha);color:var(--texto);outline:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topo">
+    <div>
+      <h1>Resultado da <span>Votação</span></h1>
+      <a class="voltar" href="https://keys-server-9zq2.onrender.com/admin/">&larr; voltar pro painel de keys</a>
+    </div>
+    <div style="display:flex;gap:8px">
+      <a class="btn ghost" href="/votacao/" target="_blank">Ver a página do cliente</a>
+      <button class="btn" id="btn-csv">Baixar CSV</button>
+    </div>
+  </div>
+
+  <div class="cartoes" id="cartoes"></div>
+
+  <div class="painel">
+    <label><input type="checkbox" id="cfg-aberta"> Votação aberta</label>
+    <label>Máx. de escolhas <input type="number" id="cfg-max" min="1" max="20"></label>
+    <input type="text" id="cfg-titulo" placeholder="Título que o cliente vê">
+    <button class="btn ghost" id="btn-salvar">Salvar</button>
+    <span id="aviso-cfg" style="font-size:.8rem;color:var(--ok)"></span>
+  </div>
+
+  <div class="abas">
+    <div class="aba on" data-s="ranking">Ranking dos jogos</div>
+    <div class="aba" data-s="pessoas">Quem votou</div>
+  </div>
+
+  <div class="sec on" id="sec-ranking">
+    <div class="abas" style="margin-bottom:12px">
+      <div class="aba on" data-f="0">Todo mundo</div>
+      <div class="aba" data-f="1">Só quem já é cliente</div>
+    </div>
+    <div class="rolagem">
+      <table>
+        <thead><tr>
+          <th></th><th></th><th>Jogo</th><th>Votos</th><th style="width:140px">Fatia</th><th>Situação</th>
+        </tr></thead>
+        <tbody id="tb-ranking"><tr><td colspan="6" class="carregando">Carregando...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="sec" id="sec-pessoas">
+    <input class="filtro" id="filtro-pessoas" placeholder="Filtrar por e-mail, nome ou jogo...">
+    <div class="rolagem">
+      <table>
+        <thead><tr>
+          <th>E-mail</th><th>Nome</th><th>Tipo</th><th>Escolheu</th><th>Quando</th>
+        </tr></thead>
+        <tbody id="tb-pessoas"><tr><td colspan="5" class="carregando">Carregando...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Mesma autenticação do painel de keys: guarda o ADMIN_TOKEN no navegador e
+// manda no cabeçalho. Usa a MESMA chave do localStorage, então quem já entrou
+// no /admin não digita a senha de novo aqui.
+(function () {
+  const _fetch = window.fetch.bind(window);
+  const TKEY = 'almaz_admin_token';
+  const comToken = (o) => {
+    const t = localStorage.getItem(TKEY);
+    return t ? { ...o, headers: { ...(o.headers || {}), 'x-admin-token': t } } : o;
+  };
+  window.fetch = async function (url, opts = {}) {
+    if (!String(url).includes('/api/')) return _fetch(url, opts);
+    let res = await _fetch(url, comToken(opts));
+    if (res.status === 403) {
+      const t = prompt('Senha do painel admin:');
+      if (t) { localStorage.setItem(TKEY, t); res = await _fetch(url, comToken(opts)); }
+    }
+    return res;
+  };
+})();
+
+// Mesma ideia da pagina do cliente: o painel pode estar sendo servido pelo
+// Render ou pelo dominio, e a API mora sempre no Render.
+const API = location.hostname.endsWith('onrender.com')
+  ? location.origin
+  : 'https://keys-server-9zq2.onrender.com';
+
+const $ = (id) => document.getElementById(id);
+let soClientes = 0;
+let PESSOAS = [];
+
+const esc = (s) => String(s == null ? '' : s)
+  .replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+const quando = (iso) => {
+  if (!iso) return '';
+  const d = new Date(iso);
+  return d.toLocaleDateString('pt-BR') + ' ' +
+         d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+};
+
+// ---------- abas ----------
+document.querySelectorAll('.abas .aba[data-s]').forEach(a => a.onclick = () => {
+  document.querySelectorAll('.aba[data-s]').forEach(x => x.classList.toggle('on', x === a));
+  document.querySelectorAll('.sec').forEach(s => s.classList.toggle('on', s.id === 'sec-' + a.dataset.s));
+});
+document.querySelectorAll('.aba[data-f]').forEach(a => a.onclick = () => {
+  document.querySelectorAll('.aba[data-f]').forEach(x => x.classList.toggle('on', x === a));
+  soClientes = +a.dataset.f;
+  carregarRanking();
+});
+
+// ---------- ranking ----------
+async function carregarRanking() {
+  const tb = $('tb-ranking');
+  tb.innerHTML = '<tr><td colspan="6" class="carregando">Carregando...</td></tr>';
+  const r = await fetch(API + '/api/admin/votacao/ranking?clientes=' + soClientes).then(r => r.json());
+  if (!r.success) { tb.innerHTML = '<tr><td colspan="6" class="nada">Sem acesso.</td></tr>'; return; }
+
+  if (!r.itens.length) {
+    tb.innerHTML = '<tr><td colspan="6" class="nada">Ninguém votou ainda. Manda o link do /votacao no grupo.</td></tr>';
+  } else {
+    const maior = r.itens[0].votos || 1;
+    tb.innerHTML = r.itens.map((j, i) => `
+      <tr>
+        <td class="pos">${i + 1}</td>
+        <td><img class="capa" loading="lazy" alt=""
+                 src="${j.capa ? r.prefixoCapa + j.capa : ''}"
+                 onerror="this.style.visibility='hidden'"></td>
+        <td><b>${esc(j.nome)}</b><br><span style="color:var(--fraco);font-size:.75rem">AppID ${j.appid}</span></td>
+        <td><b style="font-size:1rem">${j.votos}</b></td>
+        <td>
+          <div class="barrinha"><i style="width:${Math.round(j.votos / maior * 100)}%"></i></div>
+          <span style="font-size:.72rem;color:var(--fraco)">${j.pct}% de quem votou</span>
+        </td>
+        <td>${j.jaTem
+          ? '<span class="pill tem">já no pacote</span>'
+          : '<span class="pill falta">FALTA entregar</span>'}</td>
+      </tr>`).join('');
+  }
+  desenharCartoes(r);
+}
+
+function desenharCartoes(r) {
+  const falta = r.itens.filter(j => !j.jaTem);
+  $('cartoes').innerHTML = `
+    <div class="cartao"><div class="r">${r.totalVotantes}</div><div class="l">pessoas votaram</div></div>
+    <div class="cartao"><div class="r">${r.itens.length}</div><div class="l">jogos com voto</div></div>
+    <div class="cartao"><div class="r" style="color:#6ee7b7">${falta.length}</div><div class="l">pedidos que faltam</div></div>
+    <div class="cartao"><div class="r" style="font-size:1rem;line-height:1.3">${falta.length ? esc(falta[0].nome) : '-'}</div>
+      <div class="l">mais pedido que falta</div></div>`;
+}
+
+// ---------- pessoas ----------
+async function carregarPessoas() {
+  const r = await fetch(API + '/api/admin/votacao/votantes').then(r => r.json());
+  if (!r.success) return;
+  PESSOAS = r.votantes;
+  desenharPessoas();
+}
+
+function desenharPessoas() {
+  const t = $('filtro-pessoas').value.trim().toLowerCase();
+  const lista = !t ? PESSOAS : PESSOAS.filter(v =>
+    v.email.toLowerCase().includes(t) ||
+    (v.nome || '').toLowerCase().includes(t) ||
+    v.jogos.some(j => j.nome.toLowerCase().includes(t))
+  );
+
+  $('tb-pessoas').innerHTML = !lista.length
+    ? '<tr><td colspan="5" class="nada">Nada aqui.</td></tr>'
+    : lista.map(v => `
+      <tr>
+        <td>${esc(v.email)}</td>
+        <td>${esc(v.nome) || '<span style="color:#475569">-</span>'}</td>
+        <td>${v.cliente
+          ? '<span class="pill cli">cliente</span>'
+          : '<span class="pill lead">ainda não comprou</span>'}</td>
+        <td class="jogos-td">${v.jogos.map(j => esc(j.nome)).join(' &middot; ')}</td>
+        <td style="white-space:nowrap;color:var(--fraco);font-size:.78rem">
+          ${quando(v.atualizadoEm)}${v.versao > 1 ? '<br><span style="color:#64748b">trocou ' + (v.versao - 1) + 'x</span>' : ''}
+        </td>
+      </tr>`).join('');
+}
+
+$('filtro-pessoas').oninput = desenharPessoas;
+
+// ---------- config ----------
+async function carregarConfig() {
+  const c = await fetch(API + '/api/votacao/config').then(r => r.json());
+  $('cfg-aberta').checked = c.aberta !== false;
+  $('cfg-max').value = c.maxEscolhas || 5;
+  $('cfg-titulo').value = c.titulo || '';
+}
+
+$('btn-salvar').onclick = async () => {
+  const b = $('btn-salvar');
+  b.disabled = true;
+  const r = await fetch(API + '/api/admin/votacao/config', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      aberta: $('cfg-aberta').checked,
+      maxEscolhas: $('cfg-max').value,
+      titulo: $('cfg-titulo').value
+    })
+  }).then(r => r.json());
+  b.disabled = false;
+  $('aviso-cfg').textContent = r.success ? 'salvo' : 'erro ao salvar';
+  setTimeout(() => $('aviso-cfg').textContent = '', 2500);
+};
+
+// O CSV vai por fetch (e não por link direto) porque o download precisa do
+// cabeçalho x-admin-token, que um <a href> não manda.
+$('btn-csv').onclick = async () => {
+  const res = await fetch(API + '/api/admin/votacao/export.csv');
+  if (!res.ok) return alert('Sem acesso.');
+  const url = URL.createObjectURL(await res.blob());
+  const a = document.createElement('a');
+  a.href = url; a.download = 'votacao-almaz.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+};
+
+carregarConfig();
+carregarRanking();
+carregarPessoas();
+</script>
+</body>
+</html>

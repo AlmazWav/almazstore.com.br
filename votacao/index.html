@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALMAZ - Vote nos jogos que você quer</title>
+<meta name="description" content="Escolha os jogos que você mais quer. Os mais votados entram primeiro.">
+<meta property="og:title" content="Vote nos jogos que você quer na ALMAZ">
+<meta property="og:description" content="Escolha seus jogos. Os mais votados entram primeiro.">
+<link rel="icon" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07070d; --card:rgba(20,20,35,.6); --linha:rgba(220,38,38,.15);
+  --linha2:rgba(220,38,38,.45); --vermelho:#dc2626; --vermelho2:#ef4444;
+  --texto:#f1f5f9; --fraco:#94a3b8; --ok:#10b981;
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',system-ui,sans-serif}
+body{background:var(--bg);color:var(--texto);-webkit-tap-highlight-color:transparent}
+body::before{content:'';position:fixed;inset:0;z-index:-1;
+  background:radial-gradient(900px 500px at 50% -10%,rgba(220,38,38,.16),transparent 70%)}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 14px 140px}
+
+/* ---------- topo ---------- */
+header{padding:34px 0 18px;text-align:center}
+header img{height:46px;margin-bottom:14px}
+h1{font-size:clamp(1.5rem,5vw,2.3rem);font-weight:800;line-height:1.15}
+h1 b{color:var(--vermelho2)}
+.sub{color:var(--fraco);margin-top:10px;font-size:.98rem;line-height:1.5}
+.contador-gente{display:inline-flex;align-items:center;gap:7px;margin-top:14px;padding:6px 14px;
+  border:1px solid var(--linha);border-radius:999px;font-size:.8rem;color:var(--fraco);background:var(--card)}
+.bolinha{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok)}
+
+/* ---------- controles ---------- */
+.controles{position:sticky;top:0;z-index:30;padding:12px 0;background:rgba(7,7,13,.92);
+  backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.05)}
+.busca{position:relative}
+.busca input{width:100%;padding:13px 15px 13px 42px;border-radius:12px;font-size:1rem;
+  background:rgba(255,255,255,.05);border:1px solid var(--linha);color:var(--texto);outline:none}
+.busca input:focus{border-color:var(--linha2)}
+.busca svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);opacity:.45}
+.chips{display:flex;gap:8px;margin-top:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;padding:7px 14px;border-radius:999px;font-size:.8rem;font-weight:600;cursor:pointer;
+  background:rgba(255,255,255,.05);border:1px solid var(--linha);color:var(--fraco);white-space:nowrap}
+.chip.on{background:var(--vermelho);border-color:var(--vermelho);color:#fff}
+
+/* ---------- grade ---------- */
+.grade{display:grid;gap:12px;margin-top:18px;
+  grid-template-columns:repeat(auto-fill,minmax(158px,1fr))}
+.jogo{position:relative;border-radius:13px;overflow:hidden;cursor:pointer;background:var(--card);
+  border:1px solid var(--linha);transition:border-color .15s,transform .12s}
+.jogo:active{transform:scale(.975)}
+.jogo.on{border-color:var(--vermelho2);box-shadow:0 0 0 2px var(--vermelho2),0 0 22px rgba(220,38,38,.35)}
+.jogo .capa{width:100%;aspect-ratio:460/215;object-fit:cover;display:block;background:#12121f}
+.jogo .nome{padding:9px 10px 10px;font-size:.82rem;font-weight:600;line-height:1.3;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.selo{position:absolute;top:7px;left:7px;padding:3px 8px;border-radius:6px;font-size:.62rem;
+  font-weight:700;text-transform:uppercase;letter-spacing:.4px;background:rgba(0,0,0,.75);color:#cbd5e1}
+.check{position:absolute;top:7px;right:7px;width:26px;height:26px;border-radius:50%;
+  background:var(--vermelho2);display:none;align-items:center;justify-content:center;
+  box-shadow:0 2px 10px rgba(0,0,0,.5)}
+.jogo.on .check{display:flex}
+.vazio{text-align:center;color:var(--fraco);padding:60px 20px}
+.mais{display:block;margin:26px auto 0;padding:12px 34px;border-radius:11px;cursor:pointer;
+  background:rgba(255,255,255,.05);border:1px solid var(--linha);color:var(--texto);font-weight:600}
+
+/* ---------- barra de baixo ---------- */
+.barra{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:12px 14px;
+  padding-bottom:calc(12px + env(safe-area-inset-bottom));
+  background:rgba(10,10,18,.96);backdrop-filter:blur(12px);border-top:1px solid var(--linha);
+  transform:translateY(130%);transition:transform .22s}
+.barra.on{transform:none}
+.barra-in{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.barra .qtd{flex:1;font-size:.85rem;color:var(--fraco);line-height:1.35}
+.barra .qtd b{color:var(--texto);font-size:1rem;display:block}
+.btn{padding:13px 26px;border:none;border-radius:11px;font-size:.95rem;font-weight:700;cursor:pointer;
+  background:linear-gradient(135deg,var(--vermelho),var(--vermelho2));color:#fff;white-space:nowrap}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.ghost{background:rgba(255,255,255,.07);border:1px solid var(--linha)}
+
+/* ---------- modal ---------- */
+.fundo{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);
+  display:none;align-items:center;justify-content:center;padding:16px}
+.fundo.on{display:flex}
+.modal{width:100%;max-width:430px;background:#101019;border:1px solid var(--linha);
+  border-radius:16px;padding:26px}
+.modal h2{font-size:1.25rem;margin-bottom:6px}
+.modal p{color:var(--fraco);font-size:.88rem;line-height:1.5;margin-bottom:18px}
+.campo{margin-bottom:13px}
+.campo label{display:block;font-size:.78rem;color:var(--fraco);margin-bottom:6px;font-weight:600}
+.campo input{width:100%;padding:12px 14px;border-radius:10px;font-size:1rem;
+  background:rgba(255,255,255,.05);border:1px solid var(--linha);color:var(--texto);outline:none}
+.campo input:focus{border-color:var(--linha2)}
+.erro{color:#fca5a5;font-size:.83rem;margin-bottom:12px;display:none}
+.erro.on{display:block}
+.escolhidos{max-height:130px;overflow-y:auto;margin-bottom:16px;display:flex;flex-wrap:wrap;gap:6px}
+.tag{padding:4px 10px;border-radius:7px;font-size:.73rem;background:rgba(220,38,38,.14);
+  border:1px solid var(--linha);color:#fecaca}
+
+/* ---------- fim ---------- */
+.fim{display:none;text-align:center;padding:50px 0}
+.fim.on{display:block}
+.fim .ok{width:70px;height:70px;border-radius:50%;background:rgba(16,185,129,.13);
+  border:2px solid var(--ok);display:flex;align-items:center;justify-content:center;
+  margin:0 auto 20px;font-size:2rem}
+.fim h2{font-size:1.5rem;margin-bottom:10px}
+.fim p{color:var(--fraco);line-height:1.55;max-width:440px;margin:0 auto 26px}
+.top{max-width:520px;margin:0 auto;text-align:left}
+.top h3{font-size:.8rem;text-transform:uppercase;letter-spacing:1px;color:var(--fraco);
+  margin-bottom:12px;text-align:center}
+.linha-top{display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:10px;
+  background:var(--card);border:1px solid var(--linha);margin-bottom:7px}
+.linha-top .pos{width:22px;font-weight:800;color:var(--vermelho2);font-size:.95rem}
+.linha-top img{width:62px;aspect-ratio:460/215;object-fit:cover;border-radius:5px;background:#12121f}
+.linha-top .n{flex:1;font-size:.85rem;font-weight:600;line-height:1.25}
+.linha-top .v{font-size:.78rem;color:var(--fraco);white-space:nowrap}
+footer{text-align:center;color:#475569;font-size:.75rem;padding:30px 0 10px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div id="tela-votar">
+    <header>
+      <img src="logo.png" alt="ALMAZ" onerror="this.style.display='none'">
+      <h1 id="titulo">Quais jogos você quer <b>primeiro</b>?</h1>
+      <p class="sub" id="subtitulo">Escolha os que você mais quer jogar. Os mais votados entram primeiro.</p>
+      <div class="contador-gente"><span class="bolinha"></span><span id="quantos">carregando...</span></div>
+    </header>
+
+    <div class="controles">
+      <div class="busca">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+        </svg>
+        <input id="busca" type="search" placeholder="Buscar jogo pelo nome..." autocomplete="off">
+      </div>
+      <div class="chips" id="chips"></div>
+    </div>
+
+    <div class="grade" id="grade"></div>
+    <div class="vazio" id="vazio" style="display:none">Nenhum jogo com esse nome.</div>
+    <button class="mais" id="mais" style="display:none">Ver mais jogos</button>
+  </div>
+
+  <div class="fim" id="tela-fim">
+    <div class="ok">✓</div>
+    <h2>Voto registrado!</h2>
+    <p id="msg-fim">Valeu! Sua escolha entrou na conta. Se mudar de ideia, é só abrir esse link de novo e votar outra vez, que o voto antigo é substituído.</p>
+    <div class="top">
+      <h3>O que a galera mais quer agora</h3>
+      <div id="lista-top"></div>
+    </div>
+    <button class="btn ghost" style="margin-top:26px" onclick="location.reload()">Mudar meu voto</button>
+  </div>
+
+  <footer>ALMAZ STORE</footer>
+</div>
+
+<div class="barra" id="barra">
+  <div class="barra-in">
+    <div class="qtd"><b id="qtd-n">0 de 5</b><span id="qtd-t">jogos escolhidos</span></div>
+    <button class="btn" id="btn-enviar">Enviar escolha</button>
+  </div>
+</div>
+
+<div class="fundo" id="fundo">
+  <div class="modal">
+    <h2>Quase lá</h2>
+    <p>Só pra eu saber quem pediu o quê e te avisar quando o jogo entrar.</p>
+    <div class="escolhidos" id="escolhidos"></div>
+    <div class="campo">
+      <label for="email">Seu e-mail</label>
+      <input id="email" type="email" inputmode="email" autocomplete="email" placeholder="voce@email.com">
+    </div>
+    <div class="campo">
+      <label for="nome">Seu nome (opcional)</label>
+      <input id="nome" type="text" autocomplete="name" placeholder="Como te chamar">
+    </div>
+    <div class="erro" id="erro"></div>
+    <div style="display:flex;gap:10px">
+      <button class="btn ghost" style="flex:0 0 auto" id="btn-voltar">Voltar</button>
+      <button class="btn" style="flex:1" id="btn-confirmar">Confirmar voto</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+// Esta pagina roda em DOIS lugares: servida pelo proprio servidor de keys
+// (Render) e servida pelo site estatico do dominio (GitHub Pages, que e quem
+// responde por almazstore.com.br). O catalogo.json fica junto da pagina nos
+// dois casos, mas a API so existe no Render, entao o endereco dela e fixo
+// quando a pagina nao esta sendo servida de la.
+const API = location.hostname.endsWith('onrender.com')
+  ? location.origin
+  : 'https://keys-server-9zq2.onrender.com';
+
+let CAT = { jogos: [], tags: [], prefixoCapa: '' };
+let CFG = { maxEscolhas: 5, aberta: true };
+let escolhidos = new Set();
+let filtro = 'faltando';   // começa no que ainda NÃO está no pacote
+let termo = '';
+let mostrando = 0;
+const PAGINA = 60;
+
+// O e-mail fica salvo no aparelho só pra pessoa não digitar de novo quando
+// voltar pra trocar o voto. Quem decide se o voto vale é o servidor.
+const LEMBRAR = 'almaz_votacao_email';
+
+// ---------- carregar ----------
+async function iniciar() {
+  const [cat, cfg] = await Promise.all([
+    fetch('catalogo.json').then(r => r.json()),
+    fetch(API + '/api/votacao/config').then(r => r.json()).catch(() => ({}))
+  ]);
+
+  CAT = cat;
+  // jogos vem compacto: [appid, nome, capa, qtdFixes, [tags], jaTem]
+  CAT.lista = cat.jogos.map(j => ({
+    id: j[0], nome: j[1], capa: j[2], fixes: j[3], tags: j[4] || [], jaTem: !!j[5],
+    busca: j[1].toLowerCase()
+  }));
+
+  if (cfg && cfg.success) {
+    CFG = cfg;
+    if (cfg.titulo) $('titulo').textContent = cfg.titulo;
+    if (cfg.subtitulo) $('subtitulo').textContent = cfg.subtitulo;
+    const n = cfg.totalVotantes || 0;
+    $('quantos').textContent = n === 0
+      ? 'seja o primeiro a votar'
+      : (n === 1 ? '1 pessoa já votou' : n + ' pessoas já votaram');
+    if (cfg.aberta === false) encerrada();
+  }
+
+  montarChips();
+  render();
+  atualizarBarra();
+
+  // Se a pessoa já votou, reabre com a escolha dela marcada.
+  const salvo = localStorage.getItem(LEMBRAR);
+  if (salvo) {
+    $('email').value = salvo;
+    try {
+      const r = await fetch(API + '/api/votacao/meu?email=' + encodeURIComponent(salvo)).then(r => r.json());
+      if (r.voto && r.voto.jogos) {
+        r.voto.jogos.forEach(id => escolhidos.add(id));
+        if (r.voto.nome) $('nome').value = r.voto.nome;
+        render(); atualizarBarra();
+      }
+    } catch (e) { /* votar do zero continua funcionando */ }
+  }
+}
+
+function encerrada() {
+  $('tela-votar').innerHTML =
+    '<header><h1>A votação foi <b>encerrada</b></h1>' +
+    '<p class="sub">Obrigado a todo mundo que votou. Os mais pedidos já estão na fila.</p></header>';
+  $('barra').classList.remove('on');
+}
+
+// ---------- filtros ----------
+function montarChips() {
+  const c = $('chips');
+  const botoes = [
+    { k: 'faltando', t: 'Ainda não tem' },
+    { k: 'todos', t: 'Todos' },
+    ...CAT.tags.map((t, i) => ({ k: 'tag' + i, t: t.nome }))
+  ];
+  c.innerHTML = botoes.map(b =>
+    `<div class="chip${b.k === filtro ? ' on' : ''}" data-k="${b.k}">${b.t}</div>`
+  ).join('');
+  c.querySelectorAll('.chip').forEach(el => el.onclick = () => {
+    filtro = el.dataset.k;
+    c.querySelectorAll('.chip').forEach(x => x.classList.toggle('on', x === el));
+    mostrando = 0; render();
+  });
+}
+
+function filtrados() {
+  return CAT.lista.filter(j => {
+    if (termo && !j.busca.includes(termo)) return false;
+    if (filtro === 'faltando') return !j.jaTem;
+    if (filtro.startsWith('tag')) return j.tags.includes(+filtro.slice(3));
+    return true;
+  });
+}
+
+// ---------- desenhar ----------
+function render() {
+  const lista = filtrados();
+  mostrando = Math.max(mostrando, PAGINA);
+  const fatia = lista.slice(0, mostrando);
+
+  $('grade').innerHTML = fatia.map(j => `
+    <div class="jogo${escolhidos.has(j.id) ? ' on' : ''}" data-id="${j.id}">
+      <img class="capa" loading="lazy" alt=""
+           src="${j.capa ? CAT.prefixoCapa + j.capa : ''}"
+           onerror="this.style.visibility='hidden'">
+      ${j.jaTem ? '<span class="selo">já tem</span>' : ''}
+      <div class="check">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5">
+          <path d="M20 6 9 17l-5-5"/>
+        </svg>
+      </div>
+      <div class="nome">${escapar(j.nome)}</div>
+    </div>`).join('');
+
+  $('grade').querySelectorAll('.jogo').forEach(el => el.onclick = () => alternar(el.dataset.id, el));
+  $('vazio').style.display = lista.length ? 'none' : 'block';
+  $('mais').style.display = lista.length > mostrando ? 'block' : 'none';
+}
+
+function escapar(s) {
+  return s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+}
+
+function alternar(id, el) {
+  if (escolhidos.has(id)) {
+    escolhidos.delete(id);
+  } else {
+    if (escolhidos.size >= CFG.maxEscolhas) {
+      // Avisa em vez de ignorar o toque: sem isso parece que a página travou.
+      $('qtd-t').textContent = 'limite de ' + CFG.maxEscolhas + ' atingido, tire um pra trocar';
+      $('barra').animate(
+        [{ transform: 'translateX(0)' }, { transform: 'translateX(-6px)' },
+         { transform: 'translateX(6px)' }, { transform: 'translateX(0)' }],
+        { duration: 180 }
+      );
+      return;
+    }
+    escolhidos.add(id);
+  }
+  el.classList.toggle('on', escolhidos.has(id));
+  atualizarBarra();
+}
+
+function atualizarBarra() {
+  const n = escolhidos.size;
+  $('qtd-n').textContent = n + ' de ' + CFG.maxEscolhas;
+  $('qtd-t').textContent = n === 1 ? 'jogo escolhido' : 'jogos escolhidos';
+  $('barra').classList.toggle('on', n > 0);
+}
+
+// ---------- enviar ----------
+$('busca').oninput = (e) => { termo = e.target.value.trim().toLowerCase(); mostrando = 0; render(); };
+$('mais').onclick = () => { mostrando += PAGINA; render(); };
+$('btn-voltar').onclick = () => $('fundo').classList.remove('on');
+$('fundo').onclick = (e) => { if (e.target === $('fundo')) $('fundo').classList.remove('on'); };
+
+$('btn-enviar').onclick = () => {
+  const nomes = [...escolhidos].map(id => {
+    const j = CAT.lista.find(x => x.id === id);
+    return '<span class="tag">' + escapar(j ? j.nome : id) + '</span>';
+  }).join('');
+  $('escolhidos').innerHTML = nomes;
+  $('erro').classList.remove('on');
+  $('fundo').classList.add('on');
+  if (!$('email').value) setTimeout(() => $('email').focus(), 120);
+};
+
+$('btn-confirmar').onclick = async () => {
+  const email = $('email').value.trim();
+  const nome = $('nome').value.trim();
+  const erro = $('erro');
+
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(email)) {
+    erro.textContent = 'Digite um e-mail válido.';
+    erro.classList.add('on');
+    return;
+  }
+
+  const btn = $('btn-confirmar');
+  btn.disabled = true; btn.textContent = 'Enviando...';
+  try {
+    const r = await fetch(API + '/api/votacao', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, nome, jogos: [...escolhidos] })
+    }).then(r => r.json());
+
+    if (!r.success) {
+      erro.textContent = r.message || 'Não deu pra salvar. Tente de novo.';
+      erro.classList.add('on');
+      btn.disabled = false; btn.textContent = 'Confirmar voto';
+      return;
+    }
+
+    localStorage.setItem(LEMBRAR, email);
+    $('fundo').classList.remove('on');
+    $('barra').classList.remove('on');
+    $('tela-votar').style.display = 'none';
+    $('tela-fim').classList.add('on');
+    if (r.trocou) $('msg-fim').textContent =
+      'Seu voto anterior foi substituído por esse. Pode trocar quantas vezes quiser, sempre vale o último.';
+    window.scrollTo(0, 0);
+    carregarTop();
+  } catch (e) {
+    erro.textContent = 'Sem conexão com o servidor. Tente de novo.';
+    erro.classList.add('on');
+    btn.disabled = false; btn.textContent = 'Confirmar voto';
+  }
+};
+
+async function carregarTop() {
+  try {
+    const r = await fetch(API + '/api/votacao/top').then(r => r.json());
+    if (!r.success || !r.itens.length) return;
+    $('lista-top').innerHTML = r.itens.map((j, i) => `
+      <div class="linha-top">
+        <span class="pos">${i + 1}</span>
+        <img loading="lazy" alt="" src="${j.capa ? r.prefixoCapa + j.capa : ''}"
+             onerror="this.style.visibility='hidden'">
+        <span class="n">${escapar(j.nome)}</span>
+        <span class="v">${j.votos} voto${j.votos > 1 ? 's' : ''}</span>
+      </div>`).join('');
+  } catch (e) { /* o topo é enfeite, não pode derrubar a tela de obrigado */ }
+}
+
+iniciar();
+</script>
+</body>
+</html>
