@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jogos disponíveis | Almaz Store</title>
+<meta name="description" content="Veja quais jogos estão disponíveis pra jogar agora e quais ainda precisam de fix.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b1219; --bg2:#0f1a24; --panel:#16222f; --panel2:#1d2b3a;
+  --line:rgba(146,186,220,.13); --line2:rgba(146,186,220,.28);
+  --txt:#dbe6f1; --txt2:#aebfd0; --dim:#8399ae;
+  --blue:#59a6e0; --blue-dim:rgba(89,166,224,.12);
+  --ok:#57b533; --ok-dim:rgba(87,181,51,.14);
+  --warn:#e0a03a; --warn-dim:rgba(224,160,58,.14);
+  --f:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --r:8px; --r2:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:var(--f);line-height:1.5;
+  -webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:1240px;margin:0 auto;padding:0 16px 80px}
+a{color:inherit}
+
+header{padding:32px 0 20px}
+h1{font-size:clamp(1.4rem,4vw,2rem);font-weight:800;letter-spacing:-.02em}
+.sub{color:var(--txt2);margin-top:8px;font-size:.95rem;max-width:660px}
+
+/* ---- numeros ---- */
+.nums{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin:20px 0 4px}
+.num{background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);padding:14px 16px}
+.num b{display:block;font-size:1.5rem;font-weight:800;line-height:1.1}
+.num span{font-size:.73rem;color:var(--dim);text-transform:uppercase;letter-spacing:.06em}
+.num.ok b{color:var(--ok)} .num.warn b{color:var(--warn)}
+
+/* ---- controles ---- */
+.controles{position:sticky;top:0;z-index:20;background:rgba(11,18,25,.94);
+  backdrop-filter:blur(10px);padding:14px 0 10px;border-bottom:1px solid var(--line);margin-top:14px}
+.abas{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.abas::-webkit-scrollbar{display:none}
+.aba{flex:0 0 auto;padding:9px 16px;border-radius:var(--r);font-size:.85rem;font-weight:600;
+  cursor:pointer;background:var(--panel);border:1px solid var(--line);color:var(--txt2);white-space:nowrap}
+.aba:hover{border-color:var(--line2)}
+.aba.on{background:var(--blue);border-color:var(--blue);color:#08131c}
+.aba .c{opacity:.65;font-weight:500;margin-left:5px;font-size:.78rem}
+.busca{position:relative;margin-top:10px}
+.busca input{width:100%;padding:12px 14px 12px 40px;border-radius:var(--r);font-size:.95rem;
+  background:var(--panel);border:1px solid var(--line);color:var(--txt);outline:none;font-family:var(--f)}
+.busca input:focus{border-color:var(--blue)}
+.busca svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);opacity:.45}
+.cats{display:flex;gap:6px;margin-top:9px;overflow-x:auto;scrollbar-width:none;padding-bottom:3px}
+.cats::-webkit-scrollbar{display:none}
+.cat{flex:0 0 auto;padding:6px 12px;border-radius:999px;font-size:.78rem;cursor:pointer;
+  background:transparent;border:1px solid var(--line);color:var(--dim);white-space:nowrap}
+.cat.on{background:var(--blue-dim);border-color:var(--blue);color:var(--blue)}
+
+/* ---- aviso da aba ---- */
+.aviso{margin-top:14px;padding:12px 15px;border-radius:var(--r2);font-size:.86rem;
+  line-height:1.5;color:var(--txt2);background:var(--panel);border:1px solid var(--line)}
+.aviso b{color:var(--txt)}
+.aviso a{color:var(--blue);font-weight:600}
+
+/* ---- grade ---- */
+.grade{display:grid;gap:14px;margin-top:16px;grid-template-columns:repeat(auto-fill,minmax(184px,1fr))}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);
+  overflow:hidden;display:flex;flex-direction:column;transition:border-color .15s,transform .12s}
+.card:hover{border-color:var(--line2);transform:translateY(-2px)}
+.card .capa{width:100%;aspect-ratio:460/215;object-fit:cover;display:block;background:var(--panel2)}
+.card .corpo{padding:10px 11px 11px;display:flex;flex-direction:column;gap:7px;flex:1}
+.card .nome{font-size:.85rem;font-weight:600;line-height:1.3;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.selo{align-self:flex-start;padding:3px 9px;border-radius:5px;font-size:.68rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:.04em}
+.selo.ok{background:var(--ok-dim);color:var(--ok)}
+.selo.pac{background:var(--blue-dim);color:var(--blue)}
+.selo.fix{background:var(--warn-dim);color:var(--warn)}
+.rodape{margin-top:auto;padding-top:8px;border-top:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;gap:8px}
+.appid{font-size:.72rem;color:var(--dim);font-variant-numeric:tabular-nums}
+.appid b{color:var(--txt2)}
+.acao{font-size:.75rem;font-weight:700;color:var(--blue);text-decoration:none;white-space:nowrap}
+.acao:hover{text-decoration:underline}
+
+.vazio{text-align:center;color:var(--dim);padding:60px 20px}
+.mais{display:block;margin:26px auto 0;padding:12px 32px;border-radius:var(--r);cursor:pointer;
+  background:var(--panel);border:1px solid var(--line2);color:var(--txt);font-weight:600;
+  font-family:var(--f);font-size:.9rem}
+.mais:hover{background:var(--panel2)}
+footer{text-align:center;color:var(--dim);font-size:.76rem;padding:36px 0 0;line-height:1.7}
+footer a{color:var(--blue)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Jogos disponíveis</h1>
+    <p class="sub">Busque o seu jogo e veja a situação dele. Pra adicionar no launcher, use o
+      <b>AppID</b> que aparece em cada card: é só digitar o número na busca do launcher.</p>
+    <div class="nums" id="nums"></div>
+  </header>
+
+  <div class="controles">
+    <div class="abas" id="abas"></div>
+    <div class="busca">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+      </svg>
+      <input id="busca" type="search" placeholder="Buscar pelo nome ou pelo AppID..." autocomplete="off">
+    </div>
+    <div class="cats" id="cats"></div>
+  </div>
+
+  <div class="aviso" id="aviso"></div>
+  <div class="grade" id="grade"></div>
+  <div class="vazio" id="vazio" style="display:none"></div>
+  <button class="mais" id="mais" style="display:none">Ver mais jogos</button>
+
+  <footer>
+    Não somos afiliados nem representantes da Valve Corporation. Steam é marca registrada da Valve.<br>
+    Os downloads são feitos pelos servidores oficiais da Steam.
+  </footer>
+</div>
+
+<script src="../assets/catalogo.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var TUDO = window.ALMAZ_CATALOGO || [];
+  var $ = function (id) { return document.getElementById(id); };
+
+  // Indice por appid. O catalogo/index.html ja aprendeu essa licao e deixou
+  // registrada: procurar com find() dentro do laco de desenho da 60 x 40.000 =
+  // 2,4 milhoes de comparacoes por tecla digitada, e trava celular fraco.
+  var PORID = {};
+  TUDO.forEach(function (g) { PORID[g.i] = g; });
+
+  // status-jogos.json diz, appid a appid, o que a gente entrega HOJE. O
+  // catalogo.js diz o que EXISTE, que e outra pergunta.
+  var ST = { funciona: [], pacote: [], precisaFix: [], fixes: {} };
+  var SIT = {};   // appid -> 2 funciona | 1 pacote | 0 precisa de fix
+
+  var PASSO = 60;
+  var estado = { aba: 'disp', cat: '', busca: '', mostrando: PASSO };
+
+  var CATS = [
+    ['', 'Todos'], ['acao', 'Ação'], ['aventura', 'Aventura'], ['rpg', 'RPG'], ['fps', 'FPS'],
+    ['terror', 'Terror'], ['esportes', 'Esportes'], ['corrida', 'Corrida'], ['coop', 'Co-op'],
+    ['sobrevivencia', 'Sobrevivência'], ['mundoaberto', 'Mundo aberto'],
+    ['simulador', 'Simulador'], ['indie', 'Indie'], ['vr', 'VR']
+  ];
+
+  var ABAS = {
+    disp: {
+      titulo: 'Disponíveis',
+      aviso: 'Estes <b>entram na sua conta Steam</b> pelo launcher. Procure pelo nome no launcher; ' +
+             'se não achar, digite o AppID do card, que funciona sempre.'
+    },
+    ok: {
+      titulo: 'Funcionando agora',
+      aviso: 'Lista curta e <b>conferida hoje</b>. São os jogos com os dados de download mais ' +
+             'recentes, então é onde a chance de dar erro é menor. Quando um jogo da aba ' +
+             '"Disponíveis" der erro de conexão, é porque ele ainda não passou por aqui.'
+    },
+    fix: {
+      titulo: 'Precisa de fix',
+      aviso: 'Estes <b>ainda não entram</b> pelo launcher, mas já existe fix pronto pra eles. ' +
+             'São os candidatos a entrar primeiro. <a href="/votacao/">Vote no que você quer</a> ' +
+             'e os mais pedidos furam a fila.'
+    }
+  };
+
+  // Mesma regra do catalogo/index.html e da home: capa escrita a mao quando
+  // existe, senao monta pelo appid. Manter igual evita capa quebrada so aqui.
+  function capa(g) {
+    if (g.u) return g.u;
+    var base = 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/' + g.i + '/';
+    return g.h ? base + g.h + '/header.jpg' : base + 'header.jpg';
+  }
+
+  // Lançamento costuma não ter header.jpg ainda, mas tem library_hero. Tenta as
+  // variantes antes de desistir; desistindo, fica o fundo do card, porque
+  // esconder o card faria o contador mentir.
+  function fallback(img, g) {
+    var base = 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/' + g.i + '/';
+    var tenta = [base + 'library_hero.jpg', base + 'capsule_616x353.jpg'];
+    var n = 0;
+    img.onerror = function () {
+      if (n < tenta.length) { img.src = tenta[n++]; }
+      else { img.onerror = null; img.style.visibility = 'hidden'; }
+    };
+  }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+  function nf(n) { return n.toLocaleString('pt-BR'); }
+
+  // ---------- carregar ----------
+  fetch('../assets/status-jogos.json')
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      ST = d;
+      d.funciona.forEach(function (i) { SIT[i] = 2; });
+      d.pacote.forEach(function (i) { SIT[i] = 1; });
+      d.precisaFix.forEach(function (i) { SIT[i] = 0; });
+      iniciar();
+    })
+    .catch(function () {
+      // Sem o status a pagina nao tem o que dizer, e mostrar 40.000 jogos como
+      // se todos funcionassem seria pior que nao mostrar nada.
+      $('aviso').innerHTML = 'Não deu pra carregar a lista agora. Recarregue a página.';
+      $('grade').innerHTML = '';
+    });
+
+  function iniciar() {
+    var nFunc = ST.funciona.length, nPac = ST.pacote.length, nFix = ST.precisaFix.length;
+    $('nums').innerHTML =
+      '<div class="num ok"><b>' + nf(nFunc + nPac) + '</b><span>disponíveis pra jogar</span></div>' +
+      '<div class="num"><b>' + nf(nFunc) + '</b><span>conferidos hoje</span></div>' +
+      '<div class="num warn"><b>' + nf(nFix) + '</b><span>esperando fix</span></div>';
+
+    $('abas').innerHTML =
+      aba('disp', ABAS.disp.titulo, nFunc + nPac) +
+      aba('ok', ABAS.ok.titulo, nFunc) +
+      aba('fix', ABAS.fix.titulo, nFix);
+
+    $('cats').innerHTML = CATS.map(function (c) {
+      return '<div class="cat' + (c[0] === '' ? ' on' : '') + '" data-c="' + c[0] + '">' + c[1] + '</div>';
+    }).join('');
+
+    $('abas').addEventListener('click', function (e) {
+      var el = e.target.closest('.aba'); if (!el) return;
+      estado.aba = el.dataset.a; estado.mostrando = PASSO;
+      [].forEach.call($('abas').children, function (x) { x.classList.toggle('on', x === el); });
+      desenhar();
+    });
+    $('cats').addEventListener('click', function (e) {
+      var el = e.target.closest('.cat'); if (!el) return;
+      estado.cat = el.dataset.c; estado.mostrando = PASSO;
+      [].forEach.call($('cats').children, function (x) { x.classList.toggle('on', x === el); });
+      desenhar();
+    });
+    $('busca').addEventListener('input', function (e) {
+      estado.busca = e.target.value.trim().toLowerCase();
+      estado.mostrando = PASSO;
+      desenhar();
+    });
+    $('mais').addEventListener('click', function () { estado.mostrando += PASSO; desenhar(); });
+
+    desenhar();
+  }
+
+  function aba(id, titulo, n) {
+    return '<div class="aba' + (id === estado.aba ? ' on' : '') + '" data-a="' + id + '">' +
+      titulo + '<span class="c">' + nf(n) + '</span></div>';
+  }
+
+  function filtrar() {
+    var q = estado.busca;
+    var soNumero = /^\d+$/.test(q);
+    return TUDO.filter(function (g) {
+      var s = SIT[g.i];
+      if (s === undefined) return false;              // nem entrega nem tem fix
+      if (estado.aba === 'disp' && s === 0) return false;
+      if (estado.aba === 'ok' && s !== 2) return false;
+      if (estado.aba === 'fix' && s !== 0) return false;
+      if (estado.cat && g.c !== estado.cat) return false;
+      if (!q) return true;
+      // Busca por AppID também: é o número que o cliente digita no launcher,
+      // então é natural ele procurar por ele aqui.
+      return soNumero ? g.i.indexOf(q) === 0 : g.n.toLowerCase().indexOf(q) !== -1;
+    });
+  }
+
+  function desenhar() {
+    $('aviso').innerHTML = ABAS[estado.aba].aviso;
+
+    var lista = filtrar();
+    var fatia = lista.slice(0, estado.mostrando);
+
+    $('grade').innerHTML = fatia.map(function (g) {
+      var s = SIT[g.i];
+      var selo = s === 2 ? '<span class="selo ok">funciona agora</span>'
+               : s === 1 ? '<span class="selo pac">no seu pacote</span>'
+                         : '<span class="selo fix">precisa de fix</span>';
+      // No grupo do fix, o rodapé é o lugar onde o botão de baixar vai entrar
+      // quando o site de fixes existir. Por enquanto leva pra votação, que é o
+      // que decide a ordem de quem entra primeiro.
+      var acao = s === 0
+        ? '<a class="acao" href="/votacao/">votar &rsaquo;</a>'
+        : '';
+      var qtd = s === 0 && ST.fixes[g.i]
+        ? '<span class="appid">' + ST.fixes[g.i] + ' fix' + (ST.fixes[g.i] > 1 ? 'es' : '') + '</span>'
+        : '<span class="appid">AppID <b>' + g.i + '</b></span>';
+
+      return '<div class="card">' +
+        '<img class="capa" loading="lazy" alt="" src="' + capa(g) + '" data-i="' + g.i + '">' +
+        '<div class="corpo">' + selo +
+          '<div class="nome">' + esc(g.n) + '</div>' +
+          '<div class="rodape">' + qtd + acao + '</div>' +
+        '</div></div>';
+    }).join('');
+
+    [].forEach.call($('grade').querySelectorAll('img.capa'), function (img) {
+      var g = PORID[img.dataset.i];
+      if (g) fallback(img, g);
+    });
+
+    var vazio = $('vazio');
+    if (!lista.length) {
+      vazio.style.display = 'block';
+      vazio.textContent = estado.busca
+        ? 'Nada encontrado para "' + estado.busca + '" nesta aba.'
+        : 'Nada nesta aba com esse filtro.';
+    } else {
+      vazio.style.display = 'none';
+    }
+    $('mais').style.display = lista.length > estado.mostrando ? 'block' : 'none';
+  }
+})();
+</script>
+</body>
+</html>
