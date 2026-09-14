@@ -836,6 +836,54 @@ body.gm-open{overflow:hidden}
 .gr-card h3{font-size:16px;margin-bottom:6px}
 .gr-card p{font-size:13.5px;color:var(--dim);line-height:1.65}
 
+/* ---------- area de WhatsApp ----------
+   Entrou em 14/09/2026. Ate aqui o WhatsApp so aparecia citado em texto (FAQ,
+   rodape) e dentro do fluxo de reembolso: quem queria perguntar alguma coisa
+   antes de comprar nao tinha onde clicar. O card fica logo abaixo do catalogo,
+   que e onde a pessoa acabou de procurar o jogo dela.
+   O verde e o do proprio WhatsApp (#25D366), diferente do verde de compra
+   (--buy), pra nao competir com o botao de checkout. */
+.wpp{max-width:680px;margin-inline:auto}
+.wpp-card{
+  background:var(--panel);border:1px solid rgba(37,211,102,.3);border-radius:var(--r2);
+  padding:24px 20px;text-align:center;
+}
+.wpp-badge{
+  width:44px;height:44px;border-radius:11px;margin:0 auto 12px;
+  background:rgba(37,211,102,.14);border:1px solid rgba(37,211,102,.35);
+  display:flex;align-items:center;justify-content:center;
+}
+.wpp-badge svg{width:24px;height:24px;fill:#25D366}
+.wpp-card h2{font-size:clamp(19px,2.6vw,24px)}
+.wpp-sub{color:var(--dim);font-size:14px;margin-top:6px}
+.wpp-lista{
+  list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:8px 10px;
+  margin:16px 0 18px;
+}
+.wpp-lista li{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--panel2);border:1px solid var(--line);border-radius:100px;
+  padding:6px 13px;font-size:12.5px;color:var(--txt2);
+}
+.wpp-lista li::before{content:"";width:5px;height:5px;border-radius:50%;background:#25D366;flex-shrink:0}
+.wpp-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  background:#25D366;color:#06281a;font-weight:700;font-size:15px;
+  padding:13px 28px;border-radius:var(--r);border:1px solid rgba(0,0,0,.25);
+  box-shadow:0 1px 0 rgba(255,255,255,.2) inset,0 4px 14px rgba(0,0,0,.35);
+  transition:filter .15s,transform .1s;
+}
+.wpp-btn svg{width:19px;height:19px;fill:currentColor}
+.wpp-btn:hover{filter:brightness(1.07)}
+.wpp-btn:active{transform:translateY(1px)}
+.wpp-num{margin-top:12px;font-size:12.5px;color:var(--dim)}
+.wpp-num strong{color:var(--txt2);font-weight:600}
+@media(max-width:520px){
+  .wpp-card{padding:20px 16px}
+  .wpp-btn{width:100%}
+}
+
+
 /* ---------- caixinhas do Instagram (mesmo carrossel dos feedbacks em video) ---------- */
 .qbx-rail{position:relative}
 /* flex-start de proposito (o vfb-grid usa center porque os 3 videos cabem):
@@ -1768,6 +1816,46 @@ var io = (function(){
   </div>
 </section>
 
+<!-- ===================== FALE NO WHATSAPP ===================== -->
+<!-- Fica logo abaixo do catalogo (14/09/2026, pedido do Almaz). E o ponto da
+     pagina onde a pessoa acabou de procurar um jogo: ou achou e quer confirmar,
+     ou nao achou e quer perguntar. O clique e capturado pelo interceptador
+     global la embaixo, que dispara o evento Contact. -->
+<section class="sec" id="whatsapp">
+  <div class="wrap">
+    <div class="wpp">
+      <div class="wpp-card reveal">
+
+        <div class="wpp-badge">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.15h-.01c-1.52 0-3.01-.41-4.31-1.18l-.31-.18-3.2.84.85-3.12-.2-.32a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.83 2.41a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.06-.11-.23-.17-.48-.29z"/></svg>
+        </div>
+
+        <h2>Fale com a gente no WhatsApp</h2>
+        <p class="wpp-sub">
+          Não achou o seu jogo na lista ou ficou com alguma dúvida? Chama a nossa
+          equipe no WhatsApp que a gente te responde por lá.
+        </p>
+
+        <ul class="wpp-lista">
+          <li>Saber se um jogo está incluso</li>
+          <li>Ajuda na hora de ativar</li>
+          <li>Suporte depois da compra</li>
+        </ul>
+
+        <a class="wpp-btn"
+           href="https://wa.me/5537933003670?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20Almaz%20Store%20e%20queria%20tirar%20uma%20d%C3%BAvida."
+           target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.15h-.01c-1.52 0-3.01-.41-4.31-1.18l-.31-.18-3.2.84.85-3.12-.2-.32a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.83 2.41a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.06-.11-.23-.17-.48-.29z"/></svg>
+          Chamar no WhatsApp
+        </a>
+
+        <p class="wpp-num">Nosso número: <strong>(37) 93300-3670</strong></p>
+
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ===================== QUANTO CUSTA COMPRAR NA STEAM ===================== -->
 <section class="sec" id="conta">
   <div class="wrap">
@@ -2322,7 +2410,7 @@ var io = (function(){
   <div class="wrap foot-in">
     <div>
       <div class="foot-brand"><img src="assets/logo-128.png" alt="Almaz Store"> Almaz Store</div>
-      <p style="margin-top:8px">Suporte pelo WhatsApp e Discord. Pagamento por PIX.</p>
+      <p style="margin-top:8px">Suporte pelo <a href="#whatsapp" style="color:var(--blue)">WhatsApp</a> e Discord. Pagamento por PIX.</p>
     </div>
     <p style="max-width:420px">
       Não somos afiliados nem representantes da Valve Corporation. Steam é marca registrada
