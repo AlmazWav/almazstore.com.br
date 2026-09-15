@@ -31,7 +31,7 @@
 
 <script>
 
-  window.pixelId = "6a185fdf262a79a6a040ba4e";
+  window.pixelId = "6a8331f816fe7033bc1acbf7";
 
   var a = document.createElement("script");
 
@@ -882,7 +882,6 @@ body.gm-open{overflow:hidden}
   .wpp-card{padding:20px 16px}
   .wpp-btn{width:100%}
 }
-
 
 /* ---------- caixinhas do Instagram (mesmo carrossel dos feedbacks em video) ---------- */
 .qbx-rail{position:relative}
@@ -2403,6 +2402,7 @@ var io = (function(){
 
   </div>
 </section>
+
 </main>
 
 <!-- ===================== RODAPÉ ===================== -->
@@ -2558,6 +2558,8 @@ var io = (function(){
   </div>
 </div>
 
+<!-- A lista de destaques mora fora do HTML porque o /catalogo usa a mesma. -->
+<script src="assets/destaques.js"></script>
 <script>
 
 (function(){
@@ -2570,70 +2572,8 @@ var io = (function(){
 
 
 
-  // DESTAQUES: fura a fila. A ordem normal do catálogo vem do nº de avaliações na Steam,
-  // que às vezes não reflete o que O SEU cliente procura (jogo de LEGO, por exemplo, vende
-  // muito e avalia pouco). Cole aqui o appid do jogo e ele vai pro topo da seção dele.
-  // A ordem desta lista é a ordem em que eles aparecem.
-
-  var DESTAQUES=[
-
-    '3768760',  // 007 First Light          -> 1º em Ação
-
-    '2807960',  // Battlefield 6            -> 1º em FPS
-
-    '3764200',  // Resident Evil Requiem    -> 1º em Terror
-
-    '1245620',  // Elden Ring               -> 1º em RPG
-
-    '2483190',  // Forza Horizon 6          -> 1º em Corrida
-
-    '2215200',  // LEGO Batman: Legacy of the Dark Knight -> 1º em Mundo Aberto
-
-    '3405690',  // EA SPORTS FC 26          -> 1º em Esportes
-
-    '4704690',  // MECCHA CHAMELEON         -> 1º em Indie (jogo em alta)
-
-    '2358720',  // Black Myth: Wukong       -> 2º em Ação
-
-    '4435490',  // Call of Duty: MW4        -> 2º em FPS
-
-    '1174180',  // Red Dead Redemption 2    -> 2º em Mundo Aberto
-
-    '3321460',  // Crimson Desert           -> 3º em Mundo Aberto
-
-    '292030',   // The Witcher 3            -> 2º em RPG
-
-    '1086940',  // Baldur's Gate 3          -> 3º em RPG
-
-    '3280350',  // Death Stranding 2        -> 1º em Aventura
-
-    '3357650',  // Pragmata                 -> 2º em Aventura
-
-    '1623730',  // Palworld                 -> 1º em Sobrevivência
-
-    '1962700',  // Subnautica 2             -> 2º em Sobrevivência
-
-    '1030300',  // Hollow Knight: Silksong  -> 1º em Indie
-
-    '2001120',  // Split Fiction            -> 1º em Coop
-
-    '3164500',  // Schedule I               -> 1º em Simulador
-
-    '2537590',  // Microsoft Flight Simulator 2024 -> 2º em Simulador
-
-    '553850',   // Helldivers 2             -> 3º em FPS
-
-    '1808500',  // ARC Raiders              -> 4º em FPS
-
-    '2651280',  // Marvel's Spider-Man 2    -> 3º em Ação
-
-    '3472040',  // NBA 2K26                 -> 2º em Esportes
-
-    '4080220',  // EA SPORTS FC 27          -> 3º em Esportes
-
-    '381210'    // Dead by Daylight         -> 2º em Terror
-
-  ];
+  /* A lista mora em assets/destaques.js, porque o /catalogo usa a mesma. */
+  var DESTAQUES = window.ALMAZ_DESTAQUES || [];
 
   var DEST={}; DESTAQUES.forEach(function(id,k){ DEST[id]=k; });
 
@@ -3362,7 +3302,7 @@ var io = (function(){
   /* UPSELL_URL é o checkout do Vitalício com os 50% OFF já aplicados: cobra R$24,98
      (R$23,73 no PIX), o mesmo valor que o popup anuncia. Se trocar este link, confira
      o preço na página do checkout — o popup promete R$24,98 e precisa bater. */
-  var UPSELL_URL = 'https://ggcheckout.app/checkout/v5/uDIPxkFgNZlX2eQzy1ua';
+  var UPSELL_URL = 'https://pay.almazstore.com.br/checkout/v5/uDIPxkFgNZlX2eQzy1ua';
   var UPSELL_VAL = 24.98;
   /* ============================================================ */
   var PLANOS = {
@@ -4249,7 +4189,7 @@ function checkout(url,val){
 
     planName = 'Plano Básico';
 
-  } else if (url.indexOf('Tjjri534N4VrT34qfUTm') !== -1) {
+  } else if (url.indexOf('Tjjri534N4VrT34qfUTm') !== -1 || url.indexOf('uDIPxkFgNZlX2eQzy1ua') !== -1) {
 
     planName = 'Plano Vitalício';
 
@@ -5138,6 +5078,380 @@ else{el.scrollIntoView({behavior:'smooth'});}
 </script>
 
 
+
+<!-- ===================== MODAL DE REEMBOLSO =====================
+     Popup na propria pagina, pra nao tirar a pessoa do funil (navegar pra fora
+     derruba conversao). Tudo aqui e prefixado com "rmb-" e isolado sob
+     #rmb-modal, de proposito: a pagina de vendas ja usa .btn, .sub e .wrap, e
+     este bloco nao pode encostar em nenhuma regra existente.
+     Nao tem servidor: no fim monta uma mensagem e abre o WhatsApp do
+     atendimento, com o cliente anexando o comprovante na conversa. -->
+<style id="rmb-estilos">
+#rmb-modal{position:fixed;inset:0;z-index:9800;display:none}
+#rmb-modal.rmb-on{display:block}
+.rmb-backdrop{position:absolute;inset:0;background:rgba(6,10,14,.82);backdrop-filter:blur(3px)}
+.rmb-painel{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:min(560px,94vw);max-height:92vh;overflow-y:auto;
+  background:var(--bg2);border:1px solid var(--line2);border-radius:16px;
+  box-shadow:0 20px 60px rgba(0,0,0,.55);padding:26px 24px 30px;
+  -webkit-overflow-scrolling:touch;
+}
+@media(max-width:600px){
+  /* No celular vira uma folha que sobe de baixo, ocupando quase a tela toda.
+     E o formato que o publico ja conhece de app, e o polegar alcanca o topo. */
+  .rmb-painel{left:0;right:0;bottom:0;top:auto;transform:none;width:100%;
+    max-height:94vh;border-radius:18px 18px 0 0;border-bottom:none;padding:22px 18px 26px}
+}
+.rmb-x{
+  position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;
+  background:var(--panel2);color:var(--txt2);font-size:20px;line-height:1;
+  display:flex;align-items:center;justify-content:center;border:1px solid var(--line2);z-index:2;
+}
+.rmb-x:hover{color:var(--txt);border-color:var(--blue)}
+
+.rmb-trilha{display:flex;gap:5px;margin:2px 0 22px}
+.rmb-trilha i{flex:1;height:3px;border-radius:2px;background:var(--panel2);transition:background .3s}
+.rmb-trilha i.rmb-feito{background:var(--buy2)}
+
+.rmb-etapa{display:none}
+.rmb-etapa.rmb-ativa{display:block;animation:rmb-entra .26s ease}
+@keyframes rmb-entra{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.rmb-etapa.rmb-ativa{animation:none}}
+
+#rmb-modal h2{font-size:clamp(19px,4.4vw,23px);font-weight:700;line-height:1.22;letter-spacing:-.02em;margin:0}
+.rmb-sub{color:var(--txt2);font-size:14.5px;margin-top:9px;line-height:1.55}
+.rmb-h-quiz{margin-top:22px;font-size:17px;font-weight:700}
+
+.rmb-opcoes{display:flex;flex-direction:column;gap:9px;margin-top:16px}
+.rmb-opcao{
+  display:flex;align-items:center;gap:12px;width:100%;text-align:left;
+  background:var(--panel);border:1px solid var(--line2);border-radius:12px;
+  padding:15px 15px;font-size:14.5px;font-weight:500;color:var(--txt);
+  transition:border-color .15s,background .15s;min-height:56px;cursor:pointer;
+}
+.rmb-opcao:hover{border-color:var(--blue);background:var(--panel2)}
+.rmb-opcao.rmb-marcada{border-color:var(--buy);background:var(--panel2)}
+.rmb-bolinha{width:19px;height:19px;flex-shrink:0;border-radius:50%;border:2px solid var(--line2);position:relative;transition:border-color .15s}
+.rmb-opcao.rmb-marcada .rmb-bolinha{border-color:var(--buy2)}
+.rmb-opcao.rmb-marcada .rmb-bolinha::after{content:'';position:absolute;inset:3px;border-radius:50%;background:var(--buy2)}
+
+.rmb-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  background:linear-gradient(180deg,var(--buy2),var(--buy));
+  color:#fff;font-weight:700;font-size:15px;
+  padding:14px 24px;border-radius:8px;border:1px solid rgba(0,0,0,.25);
+  box-shadow:0 1px 0 rgba(255,255,255,.14) inset,0 4px 14px rgba(0,0,0,.35);
+  transition:filter .15s;width:100%;margin-top:20px;cursor:pointer;
+}
+.rmb-btn:hover{filter:brightness(1.1)}
+.rmb-btn:disabled{opacity:.45;cursor:not-allowed;filter:none}
+.rmb-btn-wpp{background:linear-gradient(180deg,#25d366,#20bd5a)}
+.rmb-btn-wpp svg{width:20px;height:20px;fill:#fff;flex-shrink:0}
+.rmb-btn-sec{background:none;box-shadow:none;border:1px solid var(--line2);color:var(--txt2);font-weight:600;font-size:14px;padding:12px 20px;margin-top:9px}
+.rmb-btn-sec:hover{filter:none;border-color:var(--blue);color:var(--txt)}
+.rmb-voltar{background:none;color:var(--dim);font-size:13.5px;font-weight:500;padding:9px 0;margin-top:14px;cursor:pointer}
+.rmb-voltar:hover{color:var(--txt2)}
+
+.rmb-caixa{background:var(--panel);border:1px solid var(--line2);border-radius:12px;padding:16px;margin-top:18px}
+.rmb-caixa-tit{font-weight:700;font-size:14.5px;margin-bottom:7px}
+.rmb-caixa p{color:var(--txt2);font-size:14px}
+.rmb-caixa ol,.rmb-caixa ul{margin:9px 0 0 18px;color:var(--txt2);font-size:14px}
+.rmb-caixa li{margin-bottom:5px}
+
+.rmb-campo{margin-top:16px}
+.rmb-campo label{display:block;font-weight:600;font-size:14px;margin-bottom:6px}
+.rmb-campo input,.rmb-campo textarea{width:100%;background:var(--bg);border:1px solid var(--line2);border-radius:8px;padding:13px 14px;color:var(--txt);font-size:16px;transition:border-color .15s;font-family:inherit}
+.rmb-campo input:focus,.rmb-campo textarea:focus{outline:none;border-color:var(--blue)}
+.rmb-campo textarea{min-height:100px;resize:vertical;line-height:1.55}
+.rmb-campo .rmb-ajuda{color:var(--dim);font-size:12.5px;margin-top:6px}
+.rmb-erro{color:#e05a4a;font-size:13px;margin-top:7px;display:none}
+.rmb-erro.rmb-on{display:block}
+
+.rmb-centro{text-align:center}
+.rmb-selo-ok{width:58px;height:58px;margin:2px auto 0;border-radius:50%;background:rgba(87,181,51,.14);display:flex;align-items:center;justify-content:center}
+.rmb-selo-ok svg{width:30px;height:30px;stroke:var(--buy2);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.rmb-passo{display:flex;gap:11px;align-items:flex-start;margin-top:13px}
+.rmb-passo .rmb-n{width:23px;height:23px;flex-shrink:0;border-radius:50%;background:var(--panel3);color:var(--txt);font-size:12.5px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.rmb-passo p{color:var(--txt2);font-size:14px}
+</style>
+
+<div id="rmb-modal" role="dialog" aria-modal="true" aria-label="Solicitar reembolso">
+  <div class="rmb-backdrop" id="rmb-backdrop"></div>
+  <div class="rmb-painel">
+    <button type="button" class="rmb-x" id="rmb-fechar" aria-label="Fechar">&times;</button>
+
+    <div class="rmb-trilha" id="rmb-trilha" hidden>
+      <i data-p="1"></i><i data-p="2"></i><i data-p="3"></i><i data-p="4"></i>
+    </div>
+
+    <!-- 1. quiz -->
+    <section class="rmb-etapa rmb-ativa" id="rmb-e-motivo" data-p="1">
+      <h2>Lamentamos que sua experiência não tenha sido boa.</h2>
+      <p class="rmb-sub">Queremos entender o que aconteceu. São algumas perguntas rápidas e no final você finaliza pelo WhatsApp.</p>
+      <div class="rmb-h-quiz">Como podemos te ajudar?</div>
+      <div class="rmb-opcoes" id="rmb-motivos"></div>
+    </section>
+
+    <!-- 2. ajuda -->
+    <section class="rmb-etapa" id="rmb-e-ajuda" data-p="2">
+      <h2 id="rmb-ajuda-tit"></h2>
+      <div class="rmb-caixa" id="rmb-ajuda-cx"></div>
+      <button class="rmb-btn" id="rmb-resolveu">Isso resolveu, obrigado</button>
+      <button class="rmb-btn rmb-btn-sec" id="rmb-seguir">Ainda quero pedir o reembolso</button>
+      <button class="rmb-voltar" data-volta="rmb-e-motivo">Voltar</button>
+    </section>
+
+    <!-- 3. relato -->
+    <section class="rmb-etapa" id="rmb-e-relato" data-p="3">
+      <h2>Conta pra gente o que aconteceu.</h2>
+      <p class="rmb-sub">Quanto mais detalhe, mais rápido a gente resolve. Se preferir, pode pular.</p>
+      <div class="rmb-campo">
+        <textarea id="rmb-relato" maxlength="1500" placeholder="Ex: tentei ativar no dia 20, apareceu um erro de senha e não consegui entrar."></textarea>
+        <p class="rmb-ajuda"><span id="rmb-relato-n">0</span> de 1500 caracteres</p>
+      </div>
+      <button class="rmb-btn" id="rmb-relato-seguir">Continuar</button>
+      <button class="rmb-voltar" data-volta="rmb-e-ajuda">Voltar</button>
+    </section>
+
+    <!-- 4. dados -->
+    <section class="rmb-etapa" id="rmb-e-dados" data-p="4">
+      <h2>Os dados da sua compra.</h2>
+      <p class="rmb-sub">Preencha igual ao que você usou no momento da compra.</p>
+      <div class="rmb-campo">
+        <label for="rmb-email">E-mail usado na compra</label>
+        <input type="email" id="rmb-email" inputmode="email" autocomplete="email" placeholder="seunome@gmail.com" spellcheck="false">
+        <p class="rmb-erro" id="rmb-email-erro"></p>
+      </div>
+      <div class="rmb-campo">
+        <label for="rmb-nome">Nome completo usado na compra</label>
+        <input type="text" id="rmb-nome" autocomplete="name" placeholder="Seu nome completo">
+        <p class="rmb-erro" id="rmb-nome-erro"></p>
+      </div>
+      <button class="rmb-btn" id="rmb-dados-seguir">Continuar</button>
+      <p class="rmb-ajuda rmb-centro" id="rmb-check-nota" style="display:none">Verificando sua compra, isso pode levar alguns segundos.</p>
+      <button class="rmb-voltar" data-volta="rmb-e-relato">Voltar</button>
+    </section>
+
+    <!-- 4b. e-mail sem compra (so aparece com o webhook ligado) -->
+    <section class="rmb-etapa" id="rmb-e-sem-compra">
+      <h2>Não encontramos compra nesse e-mail.</h2>
+      <p class="rmb-sub">Nenhum pagamento aprovado foi localizado para <b id="rmb-sem-email"></b>.</p>
+      <div class="rmb-caixa">
+        <div class="rmb-caixa-tit">O que costuma ser</div>
+        <ul>
+          <li>O pagamento foi feito com outro e-mail, por exemplo o do trabalho ou o de outra pessoa da casa.</li>
+          <li>Tem um erro de digitação no e-mail (gmail.com escrito como gmail.con, hotmail em vez de gmail).</li>
+          <li>O PIX foi gerado mas não chegou a ser pago, então não existe cobrança para devolver.</li>
+        </ul>
+      </div>
+      <button class="rmb-btn" id="rmb-sem-tentar">Tentar com outro e-mail</button>
+    </section>
+
+    <!-- 5. whatsapp -->
+    <section class="rmb-etapa" id="rmb-e-pronto">
+      <div class="rmb-centro">
+        <div class="rmb-selo-ok"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <h2 style="margin-top:14px">Falta só um passo.</h2>
+      </div>
+      <p class="rmb-sub rmb-centro">Seu pedido já está montado. Toque no botão para enviar pelo WhatsApp, onde você anexa o comprovante e a nossa equipe dá continuidade.</p>
+      <a class="rmb-btn rmb-btn-wpp" id="rmb-wpp" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.7 1-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2z"/></svg>
+        Enviar pedido pelo WhatsApp
+      </a>
+      <div class="rmb-caixa">
+        <div class="rmb-caixa-tit">O que acontece agora</div>
+        <div class="rmb-passo"><span class="rmb-n">1</span><p>O WhatsApp abre com o seu pedido já escrito. É só apertar enviar.</p></div>
+        <div class="rmb-passo"><span class="rmb-n">2</span><p>Anexe ali a foto do comprovante do pagamento, o print do PIX ou a fatura.</p></div>
+        <div class="rmb-passo"><span class="rmb-n">3</span><p>A nossa equipe confere e entra em contato para concluir o reembolso.</p></div>
+      </div>
+      <button class="rmb-voltar" data-volta="rmb-e-dados">Voltar e revisar</button>
+    </section>
+
+    <!-- agradecimento (quem resolveu) -->
+    <section class="rmb-etapa" id="rmb-e-resolvido">
+      <div class="rmb-centro">
+        <div class="rmb-selo-ok"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <h2 style="margin-top:14px">Que bom que resolveu.</h2>
+      </div>
+      <p class="rmb-sub rmb-centro">Se aparecer qualquer outra coisa, é só voltar aqui. O reembolso continua disponível enquanto sua compra estiver dentro dos 7 dias.</p>
+      <button class="rmb-btn" id="rmb-fechar2">Voltar para a loja</button>
+      <button class="rmb-btn rmb-btn-sec" id="rmb-mudei">Mudei de ideia, quero o reembolso</button>
+    </section>
+
+  </div>
+</div>
+
+<script>
+/* Modal de reembolso. Sem servidor: monta a mensagem e abre o WhatsApp. */
+(function(){
+  var WHATSAPP='5545999515463';
+
+  /* Servidor que sabe quem comprou (o mesmo do webhook do GGCheckout). Local
+     aponta pro servidor de teste; no ar, pro Render. */
+  var API='https://keys-server-9zq2.onrender.com';
+  if(location.hostname==='localhost'||location.hostname==='127.0.0.1')API='http://localhost:3399';
+
+  var MOTIVOS=[
+    {id:'ativacao',rotulo:'Não consegui ativar ou entrar na conta',titulo:'Vamos tentar resolver a ativação primeiro.',
+     ajuda:'<div class="rmb-caixa-tit">O que costuma destravar</div><ol>'+
+       '<li>Feche o Steam por completo, inclusive o ícone ao lado do relógio, e abra de novo.</li>'+
+       '<li>Entre com os dados exatamente como recebeu, sem espaço no fim e sem trocar maiúscula por minúscula.</li>'+
+       '<li>Se pedir código de confirmação, ele chega no e-mail da conta, e às vezes cai no spam.</li>'+
+       '<li>Se aparecer "conta em uso", espere 2 minutos e tente de novo.</li></ol>'},
+    {id:'jogo',rotulo:'O jogo que eu queria não está incluso',titulo:'Vamos conferir esse jogo.',
+     ajuda:'<div class="rmb-caixa-tit">Antes de desistir</div><ul>'+
+       '<li>Muito jogo está na biblioteca com o nome oficial, diferente do nome popular. FIFA aparece como EA SPORTS FC, PES aparece como eFootball.</li>'+
+       '<li>Jogo que não existe na Steam, como Minecraft Java, não entra em biblioteca da Steam, seja qual for a loja.</li>'+
+       '<li>A busca da loja mostra a lista completa e o que entra sem custo depois.</li></ul>'},
+    {id:'funcionamento',rotulo:'Não funcionou como eu esperava',titulo:'Conta o que travou.',
+     ajuda:'<div class="rmb-caixa-tit">Os dois casos mais comuns</div><ul>'+
+       '<li>Jogo baixando devagar: o download vem dos servidores da Steam, e a velocidade muda com a região em Downloads nas configurações.</li>'+
+       '<li>Erro ao abrir o jogo: quase sempre falta a verificação de arquivos, em Propriedades do jogo, Arquivos locais.</li></ul>'},
+    {id:'duplicado',rotulo:'Comprei sem querer ou paguei duas vezes',titulo:'Cobrança repetida a gente devolve.',
+     ajuda:'<div class="rmb-caixa-tit">Como funciona</div><p>Se saíram duas cobranças pela mesma compra, devolvemos a segunda e você fica com o acesso normalmente. Tenha em mãos o comprovante das duas cobranças para anexar no WhatsApp.</p>'},
+    {id:'arrependimento',rotulo:'Me arrependi da compra',titulo:'Tudo bem, é seu direito.',
+     ajuda:'<div class="rmb-caixa-tit">Antes de você seguir</div><p>Compra pela internet tem 7 dias de arrependimento pelo Código de Defesa do Consumidor, contados do pagamento. Dentro do prazo a devolução é direta.</p><p style="margin-top:9px">Se o motivo foi o preço, dá pra trocar por um plano menor em vez de devolver tudo. É só escrever isso no próximo passo.</p>'},
+    {id:'outro',rotulo:'Outro motivo',titulo:'Sem problema.',
+     ajuda:'<div class="rmb-caixa-tit">Siga em frente</div><p>Você vai poder escrever o que aconteceu com suas palavras no próximo passo, e isso vai direto para a nossa equipe.</p>'}
+  ];
+
+  var est={motivo:'',motivoRotulo:'',relato:'',email:'',nome:''};
+  var $=function(id){return document.getElementById(id);};
+  var modal=$('rmb-modal');
+
+  function ir(idEtapa){
+    var es=modal.querySelectorAll('.rmb-etapa');
+    for(var i=0;i<es.length;i++)es[i].classList.remove('rmb-ativa');
+    var alvo=$(idEtapa);alvo.classList.add('rmb-ativa');
+    var p=alvo.getAttribute('data-p');
+    var tr=$('rmb-trilha');tr.hidden=!p;
+    if(p){var bs=tr.querySelectorAll('i');for(var j=0;j<bs.length;j++)bs[j].classList.toggle('rmb-feito',Number(bs[j].getAttribute('data-p'))<=Number(p));}
+    modal.querySelector('.rmb-painel').scrollTop=0;
+  }
+
+  function erro(id,txt){var e=$(id);e.textContent=txt;e.classList.add('rmb-on');}
+  function limpa(id){$(id).classList.remove('rmb-on');}
+
+  function abrir(){
+    est={motivo:'',motivoRotulo:'',relato:'',email:'',nome:''};
+    $('rmb-relato').value='';$('rmb-relato-n').textContent='0';
+    $('rmb-email').value='';$('rmb-nome').value='';
+    limpa('rmb-email-erro');limpa('rmb-nome-erro');
+    var ms=modal.querySelectorAll('.rmb-opcao');for(var i=0;i<ms.length;i++)ms[i].classList.remove('rmb-marcada');
+    ir('rmb-e-motivo');
+    modal.classList.add('rmb-on');
+    document.body.style.overflow='hidden';
+  }
+  function fechar(){modal.classList.remove('rmb-on');document.body.style.overflow='';}
+
+  /* monta os motivos */
+  (function(){
+    var lista=$('rmb-motivos');
+    MOTIVOS.forEach(function(m){
+      var b=document.createElement('button');
+      b.className='rmb-opcao';b.type='button';
+      b.innerHTML='<span class="rmb-bolinha"></span><span>'+m.rotulo+'</span>';
+      b.addEventListener('click',function(){
+        est.motivo=m.id;est.motivoRotulo=m.rotulo;
+        var todas=lista.querySelectorAll('.rmb-opcao');for(var i=0;i<todas.length;i++)todas[i].classList.remove('rmb-marcada');
+        b.classList.add('rmb-marcada');
+        $('rmb-ajuda-tit').textContent=m.titulo;$('rmb-ajuda-cx').innerHTML=m.ajuda;
+        setTimeout(function(){ir('rmb-e-ajuda');},170);
+      });
+      lista.appendChild(b);
+    });
+  })();
+
+  $('rmb-resolveu').addEventListener('click',function(){ir('rmb-e-resolvido');});
+  $('rmb-seguir').addEventListener('click',function(){ir('rmb-e-relato');});
+  $('rmb-mudei').addEventListener('click',function(){ir('rmb-e-relato');});
+  $('rmb-relato').addEventListener('input',function(){$('rmb-relato-n').textContent=this.value.length;});
+  $('rmb-relato-seguir').addEventListener('click',function(){est.relato=$('rmb-relato').value.trim();ir('rmb-e-dados');});
+
+  /* Pergunta pro servidor se o e-mail tem compra. Volta uma de tres respostas:
+       'comprou'     -> o servidor confirmou a compra
+       'nao_comprou' -> o servidor respondeu com clareza que nao ha compra
+       'indefinido'  -> nao deu pra saber (webhook ainda nao ligado, servidor
+                        dormindo, sem internet). Nesse caso a gente NAO barra, pra
+                        nunca travar um comprador de verdade por causa de infra.
+     So barra no 'nao_comprou'. Enquanto o webhook nao estiver no ar, cai sempre
+     em 'indefinido' e o fluxo segue direto pro WhatsApp, como hoje. */
+  function checarEmail(email){
+    return new Promise(function(resolve){
+      var corta=(typeof AbortController!=='undefined')?new AbortController():null;
+      var prazo=setTimeout(function(){if(corta)corta.abort();resolve('indefinido');},15000);
+      var opc={method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email})};
+      if(corta)opc.signal=corta.signal;
+      fetch(API+'/api/reembolso/consulta',opc)
+        .then(function(r){if(!r.ok)return null;return r.json().catch(function(){return null;});})
+        .then(function(d){clearTimeout(prazo);
+          if(d&&typeof d.encontrado==='boolean')resolve(d.encontrado?'comprou':'nao_comprou');
+          else resolve('indefinido');
+        })
+        .catch(function(){clearTimeout(prazo);resolve('indefinido');});
+    });
+  }
+
+  function montarWppEIr(){
+    var linhas=['Olá! Quero solicitar o reembolso da minha compra na Almaz Store.','','Motivo: '+est.motivoRotulo,'E-mail da compra: '+est.email,'Nome na compra: '+est.nome];
+    if(est.relato)linhas.push('O que aconteceu: '+est.relato);
+    linhas.push('');linhas.push('Vou anexar aqui o comprovante do pagamento.');
+    $('rmb-wpp').href='https://wa.me/'+WHATSAPP+'?text='+encodeURIComponent(linhas.join('\n'));
+    ir('rmb-e-pronto');
+  }
+
+  $('rmb-dados-seguir').addEventListener('click',function(){
+    var email=$('rmb-email').value.trim(),nome=$('rmb-nome').value.trim();
+    limpa('rmb-email-erro');limpa('rmb-nome-erro');var ok=true;
+    if(!/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(email)){erro('rmb-email-erro','Confira o e-mail, parece que falta alguma coisa.');ok=false;}
+    if(nome.length<3){erro('rmb-nome-erro','Escreva o nome completo usado na compra.');ok=false;}
+    if(!ok)return;
+    est.email=email;est.nome=nome;
+
+    var botao=this,rotulo=botao.textContent;
+    botao.disabled=true;botao.textContent='Verificando...';
+    /* A nota so aparece se demorar (servidor do Render acordando). */
+    var mostraNota=setTimeout(function(){$('rmb-check-nota').style.display='block';},4000);
+
+    checarEmail(email).then(function(resultado){
+      clearTimeout(mostraNota);
+      $('rmb-check-nota').style.display='none';
+      botao.disabled=false;botao.textContent=rotulo;
+      if(resultado==='nao_comprou'){
+        $('rmb-sem-email').textContent=email;
+        ir('rmb-e-sem-compra');
+        return;
+      }
+      montarWppEIr();
+    });
+  });
+
+  $('rmb-sem-tentar').addEventListener('click',function(){
+    $('rmb-email').value='';ir('rmb-e-dados');$('rmb-email').focus();
+  });
+
+  /* voltar, fechar */
+  var vs=modal.querySelectorAll('[data-volta]');
+  for(var i=0;i<vs.length;i++)vs[i].addEventListener('click',function(){ir(this.getAttribute('data-volta'));});
+  $('rmb-fechar').addEventListener('click',fechar);
+  $('rmb-fechar2').addEventListener('click',fechar);
+  $('rmb-backdrop').addEventListener('click',fechar);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('rmb-on'))fechar();});
+
+  /* o gatilho no card de garantia */
+  var gatilho=$('rmb-abrir');
+  if(gatilho)gatilho.addEventListener('click',function(e){e.preventDefault();abrir();});
+
+  /* deixa disponivel caso algum outro ponto queira abrir o popup */
+  window.abrirReembolso=abrir;
+
+  /* Abre sozinho quando a pessoa chega por um link de reembolso (o /reembolso/
+     redireciona pra ca com #reembolso). Assim o link antigo continua valendo,
+     mas cai no mesmo popup, sem um fluxo paralelo que pularia a checagem. */
+  if(location.hash==='#reembolso'){abrir();}
+})();
+</script>
 
 </body>
 </html>
