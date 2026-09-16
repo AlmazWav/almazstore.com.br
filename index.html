@@ -836,6 +836,10 @@ body.gm-open{overflow:hidden}
 .gr-card h3{font-size:16px;margin-bottom:6px}
 .gr-card p{font-size:13.5px;color:var(--dim);line-height:1.65}
 
+/* ---------- feedbacks de clientes (16/09/2026): mesmo carrossel das caixinhas ---------- */
+/* os recortes sao 1080x1310, nao 9:16 */
+#fbk-track .qbx-shot{aspect-ratio:1080/1310}
+
 /* ---------- caixinhas do Instagram (mesmo carrossel dos feedbacks em video) ---------- */
 .qbx-rail{position:relative}
 /* flex-start de proposito (o vfb-grid usa center porque os 3 videos cabem):
@@ -2064,6 +2068,27 @@ var io = (function(){
       </ul>
     </div>
 
+  </div>
+</section>
+
+<!-- ===================== FEEDBACKS DE CLIENTES ===================== -->
+<!-- 16/09/2026: logo DEPOIS da oferta, primeiro tratamento de objecao ("sera que
+     funciona?"). Nao entra antes do #pricing pra nao empurrar o preco pra baixo
+     (ver o comentario de 21/08 logo abaixo). Sao os stories de feedback recortados
+     antes do botao "Link na bio"; arquivos em assets/feedbacks (fb-NN.webp no
+     cartao, fb-NN-g.webp no visor). Reusa o visual do carrossel das caixinhas. -->
+<section class="sec" id="feedbacks">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Quem já comprou</h2>
+      <p>Mensagens que chegaram no nosso WhatsApp, de clientes que já estão jogando. Toque em qualquer uma pra ver inteira.</p>
+    </div>
+    <div class="qbx-rail reveal">
+      <button class="qbx-arrow prev off" id="fbk-prev" type="button" aria-label="Anterior">&#8249;</button>
+      <button class="qbx-arrow next off" id="fbk-next" type="button" aria-label="Próximo">&#8250;</button>
+      <div class="qbx-track" id="fbk-track"></div>
+    </div>
+    <div class="flow reveal"><a href="#pricing" class="btn-ghost">Ver os planos</a></div>
   </div>
 </section>
 
@@ -3302,6 +3327,54 @@ var io = (function(){
   }
   document.addEventListener('visibilitychange',function(){ document.hidden?stop():play(); });
   play();
+})();
+
+/* Feedbacks de clientes (16/09/2026). Numero do arquivo em assets/feedbacks,
+   na ordem de exibicao: o mais forte primeiro. Clique abre no visor das
+   caixinhas (almazOpenPrint), que ja tem o CTA pros planos. */
+(function(){
+  var tr=document.getElementById('fbk-track'),
+      prev=document.getElementById('fbk-prev'), next=document.getElementById('fbk-next');
+  if(!tr||!prev||!next) return;
+  var L=[
+    [3,'Avaliação 5 estrelas: pegou 1.000 jogos e recomenda o serviço'],
+    [1,'Cliente conta que achou que era golpe e diz que foi o melhor investimento do ano'],
+    [6,'Cliente agradece e mostra a biblioteca da Steam cheia'],
+    [4,'Cliente já baixou Stellar Blade, Homem-Aranha 2 e outros'],
+    [12,'Cliente diz que antes o problema era jogo e agora é tempo pra jogar'],
+    [10,'Foto da biblioteca da Steam de um cliente'],
+    [2,'Clientes comentando no grupo que estão jogando'],
+    [7,'Cliente mostra que vieram até as expansões dos jogos'],
+    [8,'Cliente elogia o atendimento e mostra a biblioteca'],
+    [9,'Cliente comprou o pacote e já estava baixando'],
+    [11,'Cliente mostra mais de 43 mil jogos na biblioteca'],
+    [5,'Cliente agradece depois de baixar e jogar']
+  ];
+  var lupa='<span class="qbx-zoom"><svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>';
+  tr.innerHTML=L.map(function(f){
+    var n=(f[0]<10?'0':'')+f[0];
+    return '<button class="qbx-card" type="button" data-fbk="assets/feedbacks/fb-'+n+'-g.webp">'
+      +'<span class="qbx-shot"><img src="assets/feedbacks/fb-'+n+'.webp" alt="'+f[1]+'" loading="lazy" decoding="async">'+lupa+'</span>'
+      +'</button>';
+  }).join('');
+
+  tr.addEventListener('click',function(e){
+    var c=e.target.closest('[data-fbk]'); if(!c||!window.almazOpenPrint) return;
+    window.almazOpenPrint(c.getAttribute('data-fbk'),
+      'Esse pode ser você. <strong>Pagamento único</strong> e 7 dias de garantia.');
+  });
+
+  function passo(){ var c=tr.querySelector('.qbx-card'); return c? c.getBoundingClientRect().width+14 : 260; }
+  function setas(){
+    var max=tr.scrollWidth-tr.clientWidth;
+    prev.classList.toggle('off', tr.scrollLeft<=4);
+    next.classList.toggle('off', tr.scrollLeft>=max-4);
+  }
+  prev.addEventListener('click',function(){ tr.scrollBy({left:-passo(),behavior:'smooth'}); });
+  next.addEventListener('click',function(){ tr.scrollBy({left:passo(),behavior:'smooth'}); });
+  tr.addEventListener('scroll',setas,{passive:true});
+  window.addEventListener('resize',setas);
+  setas();
 })();
 
 /* Faixa de prints do grupo: a lista e duplicada pra emenda ficar invisivel
