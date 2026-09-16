@@ -148,6 +148,26 @@ b,strong{color:#fff}
   border-radius:var(--r);padding:9px 11px;
 }
 
+/* feedbacks */
+.fbk{margin:0 -16px}
+.fbk-trilho{
+  display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;
+  padding:4px 16px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+}
+.fbk-trilho::-webkit-scrollbar{display:none}
+.fbk-card{
+  flex:0 0 78%;max-width:300px;scroll-snap-align:center;border-radius:var(--r2);
+  overflow:hidden;border:1px solid var(--line2);background:var(--panel);
+  cursor:zoom-in;padding:0;box-shadow:0 8px 22px rgba(0,0,0,.35);
+}
+.fbk-card img{width:100%;height:auto;aspect-ratio:1080/1310;object-fit:cover;background:var(--panel2)}
+.fbk-ctl{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:10px;color:var(--dim);font-size:13px}
+.fbk-seta{
+  width:36px;height:36px;border-radius:50%;background:var(--panel);border:1px solid var(--line2);
+  color:var(--txt);font-size:22px;line-height:1;display:grid;place-items:center;
+}
+.fbk-seta:disabled{opacity:.35}
+
 /* como funciona */
 .passos{display:grid;gap:10px;counter-reset:p}
 .passo{
@@ -315,6 +335,23 @@ b,strong{color:#fff}
     </div>
   </section>
 
+  <!-- FEEDBACKS (16/09/2026): logo depois dos planos, que e onde a pessoa esta
+       decidindo. Sao os stories de feedback recortados ANTES do botao "Link na bio"
+       (no site aquele botao nao leva a lugar nenhum). Miniatura 600px no carrossel,
+       versao -g no zoom. Ordem: o mais forte primeiro (avaliacao 5 estrelas). -->
+  <section class="sec" id="feedbacks">
+    <h2>Quem já comprou</h2>
+    <p class="sub">Mensagens que chegaram no nosso WhatsApp. Arraste pro lado e toque pra ampliar.</p>
+    <div class="fbk">
+      <div class="fbk-trilho" id="fbk-trilho"></div>
+      <div class="fbk-ctl">
+        <button type="button" class="fbk-seta" id="fbk-ant" aria-label="Anterior">&#8249;</button>
+        <span id="fbk-cont">1 de 12</span>
+        <button type="button" class="fbk-seta" id="fbk-prox" aria-label="Próximo">&#8250;</button>
+      </div>
+    </div>
+  </section>
+
   <!-- COMO FUNCIONA -->
   <section class="sec">
     <h2>Do pagamento ao jogo rodando</h2>
@@ -471,7 +508,44 @@ b,strong{color:#fff}
   var msg = 'Oi! Vi a página dos planos e fiquei com uma dúvida sobre o ' + p.nome + '.';
   document.getElementById('voltar').href = 'https://wa.me/5537933003670?text=' + encodeURIComponent(msg);
 
-  // Zoom dos prints
+  // Feedbacks: numero do arquivo (assets/feedbacks/fb-NN.webp) na ordem de exibicao.
+  var FEEDBACKS = [
+    [3,  'Avaliação 5 estrelas: pegou 1.000 jogos e recomenda o serviço'],
+    [1,  'Cliente conta que achou que era golpe e diz que foi o melhor investimento do ano'],
+    [6,  'Cliente agradece e mostra a biblioteca da Steam cheia'],
+    [4,  'Cliente já baixou Stellar Blade, Homem-Aranha 2 e outros'],
+    [12, 'Cliente diz que antes o problema era jogo e agora é tempo pra jogar'],
+    [10, 'Foto da biblioteca da Steam de um cliente'],
+    [2,  'Clientes comentando no grupo que estão jogando'],
+    [7,  'Cliente mostra que vieram até as expansões dos jogos'],
+    [8,  'Cliente elogia o atendimento e mostra a biblioteca'],
+    [9,  'Cliente comprou o pacote e já estava baixando'],
+    [11, 'Cliente mostra mais de 43 mil jogos na biblioteca'],
+    [5,  'Cliente agradece depois de baixar e jogar']
+  ];
+  var trilho = document.getElementById('fbk-trilho');
+  trilho.innerHTML = FEEDBACKS.map(function (f) {
+    var n = (f[0] < 10 ? '0' : '') + f[0];
+    return '<button type="button" class="fbk-card" data-zoom="/assets/feedbacks/fb-' + n + '-g.webp">' +
+      '<img src="/assets/feedbacks/fb-' + n + '.webp" alt="' + f[1] + '" loading="lazy" width="600" height="728"></button>';
+  }).join('');
+  var cont = document.getElementById('fbk-cont');
+  var ant = document.getElementById('fbk-ant');
+  var prox = document.getElementById('fbk-prox');
+  function passo() { var c = trilho.querySelector('.fbk-card'); return c ? c.getBoundingClientRect().width + 12 : 280; }
+  function atual() { return Math.min(FEEDBACKS.length - 1, Math.round(trilho.scrollLeft / passo())); }
+  function pintarCont() {
+    var i = atual();
+    cont.textContent = (i + 1) + ' de ' + FEEDBACKS.length;
+    ant.disabled = i === 0;
+    prox.disabled = i === FEEDBACKS.length - 1;
+  }
+  trilho.addEventListener('scroll', function () { window.requestAnimationFrame(pintarCont); }, { passive: true });
+  ant.addEventListener('click', function () { trilho.scrollBy({ left: -passo(), behavior: 'smooth' }); });
+  prox.addEventListener('click', function () { trilho.scrollBy({ left: passo(), behavior: 'smooth' }); });
+  pintarCont();
+
+  // Zoom dos prints (caixinhas e feedbacks)
   var zoom = document.getElementById('zoom');
   var zimg = document.getElementById('zoom-img');
   document.querySelectorAll('[data-zoom]').forEach(function (b) {
