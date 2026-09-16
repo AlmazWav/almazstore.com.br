@@ -839,6 +839,17 @@ body.gm-open{overflow:hidden}
 /* ---------- feedbacks de clientes (16/09/2026): mesmo carrossel das caixinhas ---------- */
 /* os recortes sao 1080x1310, nao 9:16 */
 #fbk-track .qbx-shot{aspect-ratio:1080/1310}
+.fbk-ctl{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:10px}
+.fbk-seta{
+  width:44px;height:44px;border-radius:50%;flex:none;
+  background:var(--panel2);border:1px solid var(--line2);color:var(--txt);
+  font-size:26px;line-height:1;display:flex;align-items:center;justify-content:center;
+  padding-bottom:3px;transition:background .15s,opacity .15s;
+}
+.fbk-seta:hover{background:var(--panel3)}
+.fbk-seta:disabled{opacity:.3;cursor:default}
+.fbk-cont{min-width:130px;text-align:center;font-size:14px;color:var(--txt2);font-weight:600}
+.fbk-cont b{color:var(--txt)}
 
 /* ---------- caixinhas do Instagram (mesmo carrossel dos feedbacks em video) ---------- */
 .qbx-rail{position:relative}
@@ -2084,9 +2095,14 @@ var io = (function(){
       <p>Mensagens que chegaram no nosso WhatsApp, de clientes que já estão jogando. Toque em qualquer uma pra ver inteira.</p>
     </div>
     <div class="qbx-rail reveal">
-      <button class="qbx-arrow prev off" id="fbk-prev" type="button" aria-label="Anterior">&#8249;</button>
-      <button class="qbx-arrow next off" id="fbk-next" type="button" aria-label="Próximo">&#8250;</button>
       <div class="qbx-track" id="fbk-track"></div>
+    </div>
+    <!-- Setas + contador EMBAIXO (pedido do Almaz em 16/09/2026): com as setas so
+         nas laterais o cliente nao percebia que havia mais feedbacks pro lado. -->
+    <div class="fbk-ctl reveal">
+      <button class="fbk-seta" id="fbk-prev" type="button" aria-label="Feedback anterior">&#8249;</button>
+      <span class="fbk-cont" id="fbk-cont" aria-live="polite">1 de 12 feedbacks</span>
+      <button class="fbk-seta" id="fbk-next" type="button" aria-label="Próximo feedback">&#8250;</button>
     </div>
     <div class="flow reveal"><a href="#pricing" class="btn-ghost">Ver os planos</a></div>
   </div>
@@ -3364,11 +3380,20 @@ var io = (function(){
       'Esse pode ser você. <strong>Pagamento único</strong> e 7 dias de garantia.');
   });
 
+  var cont=document.getElementById('fbk-cont');
   function passo(){ var c=tr.querySelector('.qbx-card'); return c? c.getBoundingClientRect().width+14 : 260; }
-  function setas(){
+  /* O numero e o do cartao mais a esquerda que esta inteiro na tela. No fim da
+     rolagem forca o ultimo, senao no desktop (4 visiveis) nunca chegaria em 12. */
+  function atual(){
     var max=tr.scrollWidth-tr.clientWidth;
-    prev.classList.toggle('off', tr.scrollLeft<=4);
-    next.classList.toggle('off', tr.scrollLeft>=max-4);
+    if(tr.scrollLeft>=max-4) return L.length-1;
+    return Math.max(0,Math.min(L.length-1,Math.round(tr.scrollLeft/passo())));
+  }
+  function setas(){
+    var max=tr.scrollWidth-tr.clientWidth, i=atual();
+    prev.disabled = tr.scrollLeft<=4;
+    next.disabled = tr.scrollLeft>=max-4;
+    if(cont) cont.innerHTML='<b>'+(i+1)+'</b> de '+L.length+' feedbacks';
   }
   prev.addEventListener('click',function(){ tr.scrollBy({left:-passo(),behavior:'smooth'}); });
   next.addEventListener('click',function(){ tr.scrollBy({left:passo(),behavior:'smooth'}); });
