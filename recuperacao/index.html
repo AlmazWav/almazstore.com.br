@@ -99,11 +99,6 @@
                 </select>
             </div>
 
-            <div id="pixInstabilityAlert" class="alert" style="display: none; background: rgba(224, 58, 58, 0.1); border-left: 4px solid #ff6b6b; color: #ff9b9b; margin-top: 5px;">
-                <strong style="color: #ff6b6b;">Aviso de Instabilidade PIX</strong>
-                O sistema PIX do Banco Central está apresentando lentidão neste exato momento. Para liberação imediata da sua Key, recomendamos fortemente o uso de <strong>Cartão de Crédito</strong>. Se preferir manter no PIX, aguarde a normalização do sistema após o pagamento.
-            </div>
-
             <!-- Dados de Pagamento -->
             <div id="creditCardFields" class="payment-info">
                 <div class="form-group">
@@ -141,16 +136,12 @@
         const method = document.getElementById('paymentMethod').value;
         const ccFields = document.getElementById('creditCardFields');
         const pixContainer = document.getElementById('pixContainer');
-        const pixAlert = document.getElementById('pixInstabilityAlert');
         
         ccFields.classList.remove('active');
         pixContainer.classList.remove('active');
-        pixAlert.style.display = 'none';
         
         if (method === 'credit_card') {
             ccFields.classList.add('active');
-        } else if (method === 'pix') {
-            pixAlert.style.display = 'block';
         }
     }
 
