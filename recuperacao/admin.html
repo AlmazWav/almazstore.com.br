@@ -85,7 +85,7 @@
                     <td>${new Date(customer.created_at).toLocaleString('pt-BR')}</td>
                     <td class="${statusClass}">${customer.payment_status.toUpperCase()}</td>
                     <td>
-                        <button class="btn-refund" onclick="refundCustomer(${customer.id})" 
+                        <button class="btn-refund" onclick="refundCustomer('${customer.id}')" 
                             ${customer.payment_status === 'refunded' || customer.payment_status === 'pending' ? 'disabled' : ''}>
                             Reembolsar
                         </button>
