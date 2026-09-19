@@ -9,6 +9,10 @@
 
 window.ALMAZ_DESTAQUES=[
 
+    '4080220',  // EA SPORTS FC 27          -> 1º em Esportes e Lançamentos (saiu 19/09/2026)
+
+    '4356430',  // NBA 2K27                 -> 2º em Esportes e Lançamentos (saiu 3/09/2026)
+
     '3768760',  // 007 First Light          -> 1º em Ação
 
     '2807960',  // Battlefield 6            -> 1º em FPS

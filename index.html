@@ -1610,7 +1610,13 @@ var io = (function(){
       <!-- arte + miniaturas -->
       <div class="art reveal">
         <div class="art-stage" id="art-stage">
-          <div class="art-slide on"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3768760/library_hero.jpg" alt="007 First Light" fetchpriority="high" decoding="async"></div>
+          <!-- Lancamentos que acabaram de sair, entraram na FRENTE em 19/09/2026 (NBA 2K27
+               saiu 3/09, EA FC 27 liberado agora). O data-tag troca a etiqueta verde da
+               legenda so neste slide; quem nao tem data-tag mostra "Incluso no plano".
+               Quando deixarem de ser novidade, tire o data-tag (e o slide, se quiser). -->
+          <div class="art-slide on" data-tag="Já disponível"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4080220/98909665528dc40a7d43fd3dd6edc8088ed98c44/library_hero.jpg" alt="EA Sports FC 27" fetchpriority="high" decoding="async"></div>
+          <div class="art-slide" data-tag="Já disponível"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4356430/df162f57e7a2dac7873158d6c37af11f076bc10e/library_hero.jpg" alt="NBA 2K27" loading="lazy" decoding="async"></div>
+          <div class="art-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3768760/library_hero.jpg" alt="007 First Light" loading="lazy" decoding="async"></div>
           <!-- Lancamentos recentes, entraram em 13/08/2026 (Black Flag Resynced 09/07/2026,
                LOTR 11/08/2026). Ate 20/08/2026 estes dois usavam SCREENSHOT de gameplay,
                porque se acreditava que nao tinham library_hero. Tinham: o erro foi tentar
@@ -1635,8 +1641,8 @@ var io = (function(){
           <div class="art-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/271590/library_hero.jpg" alt="Grand Theft Auto V" loading="lazy" decoding="async"></div>
           <div class="art-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/library_hero.jpg" alt="Elden Ring" loading="lazy" decoding="async"></div>
           <div class="art-cap">
-            <span class="art-cap-name" id="art-name">007 First Light</span>
-            <span class="art-cap-tag">Incluso no plano</span>
+            <span class="art-cap-name" id="art-name">EA Sports FC 27</span>
+            <span class="art-cap-tag" id="art-tag">Já disponível</span>
           </div>
         </div>
         <div class="art-thumbs" id="art-thumbs">
@@ -1645,15 +1651,17 @@ var io = (function(){
                As miniaturas reusam a MESMA URL do slide de proposito: o navegador serve
                do cache e a miniatura sai de graca. Desde 20/08/2026 isso vale pras nove,
                sem excecao: Black Flag e LOTR trocaram o screenshot pelo library_hero. -->
-          <div class="art-thumb on" data-i="0"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3768760/library_hero.jpg" alt="007 First Light" loading="lazy"></div>
-          <div class="art-thumb" data-i="1"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3751950/09d7b766ce8a26bce32887ec7eaf00fc36552025/library_hero.jpg" alt="Assassin's Creed Black Flag Resynced" loading="lazy"></div>
-          <div class="art-thumb" data-i="2"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2523770/8323cc91de5f9da103ee259bc5cfc2cff70324f2/library_hero.jpg" alt="The Lord of the Rings: War in the North" loading="lazy"></div>
-          <div class="art-thumb" data-i="3"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1623730/library_hero.jpg" alt="Palworld" loading="lazy"></div>
-          <div class="art-thumb" data-i="4"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3321460/library_hero.jpg" alt="Crimson Desert" loading="lazy"></div>
-          <div class="art-thumb" data-i="5"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3764200/library_hero.jpg" alt="Resident Evil Requiem" loading="lazy"></div>
-          <div class="art-thumb" data-i="6"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/2358720/library_hero.jpg" alt="Black Myth: Wukong" loading="lazy"></div>
-          <div class="art-thumb" data-i="7"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/271590/library_hero.jpg" alt="Grand Theft Auto V" loading="lazy"></div>
-          <div class="art-thumb" data-i="8"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/library_hero.jpg" alt="Elden Ring" loading="lazy"></div>
+          <div class="art-thumb on" data-i="0"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4080220/98909665528dc40a7d43fd3dd6edc8088ed98c44/library_hero.jpg" alt="EA Sports FC 27" loading="lazy"></div>
+          <div class="art-thumb" data-i="1"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4356430/df162f57e7a2dac7873158d6c37af11f076bc10e/library_hero.jpg" alt="NBA 2K27" loading="lazy"></div>
+          <div class="art-thumb" data-i="2"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3768760/library_hero.jpg" alt="007 First Light" loading="lazy"></div>
+          <div class="art-thumb" data-i="3"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3751950/09d7b766ce8a26bce32887ec7eaf00fc36552025/library_hero.jpg" alt="Assassin's Creed Black Flag Resynced" loading="lazy"></div>
+          <div class="art-thumb" data-i="4"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2523770/8323cc91de5f9da103ee259bc5cfc2cff70324f2/library_hero.jpg" alt="The Lord of the Rings: War in the North" loading="lazy"></div>
+          <div class="art-thumb" data-i="5"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1623730/library_hero.jpg" alt="Palworld" loading="lazy"></div>
+          <div class="art-thumb" data-i="6"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3321460/library_hero.jpg" alt="Crimson Desert" loading="lazy"></div>
+          <div class="art-thumb" data-i="7"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3764200/library_hero.jpg" alt="Resident Evil Requiem" loading="lazy"></div>
+          <div class="art-thumb" data-i="8"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/2358720/library_hero.jpg" alt="Black Myth: Wukong" loading="lazy"></div>
+          <div class="art-thumb" data-i="9"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/271590/library_hero.jpg" alt="Grand Theft Auto V" loading="lazy"></div>
+          <div class="art-thumb" data-i="10"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/library_hero.jpg" alt="Elden Ring" loading="lazy"></div>
         </div>
       </div>
 
@@ -1877,21 +1885,33 @@ var io = (function(){
   <div class="wrap">
     <div class="sec-head reveal">
       <h2>Os jogos que ainda nem saíram já são seus</h2>
-      <p>Nenhum destes existe na Steam ainda. Quando chegarem, eles aparecem na sua biblioteca e você não paga nada por isso.</p>
+      <p>EA FC 27 e NBA 2K27 acabaram de sair e já estão no catálogo. Os outros ainda nem existem na Steam: quando chegarem, aparecem na sua biblioteca e você não paga nada por isso.</p>
     </div>
 
     <div class="cresce reveal">
 
-      <!-- Atualizado em 16/09/2026 com as datas da Steam (horario de Brasilia).
-           NBA 2K27 saiu daqui: lancou em 3/09. Quando um destes lancar, troque por
-           outro da lista "mais desejados" da Steam que ainda nao saiu. -->
+      <!-- Atualizado em 19/09/2026. Os DOIS primeiros cards sao prova: lancamentos que
+           ja sairam (NBA 2K27 3/09, EA FC 27 liberado agora) com "Ja disponivel no
+           catalogo". Os outros quatro ainda vao sair (datas da Steam, horario de
+           Brasilia). Fable (23 fev 2027) saiu pra manter 6 cards. Quando um destes
+           lancar, troque por outro da lista "mais desejados" da Steam que ainda nao
+           saiu; e quando FC 27/NBA 2K27 deixarem de ser novidade, idem. -->
 
       <div class="cresce-card">
         <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4080220/05d419a45653a1299ce46d13dbff4533fa076c1c/header.jpg?t=1788235145" alt="EA Sports FC 27" loading="lazy" decoding="async">
         <div class="cresce-txt">
           <span class="cresce-nome">EA Sports FC 27</span>
-          <span class="cresce-dt">Chega em 24 set 2026</span>
-          <span class="cresce-ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Já incluso no seu acesso</span>
+          <span class="cresce-dt">Lançado, já pode jogar</span>
+          <span class="cresce-ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Já disponível no catálogo</span>
+        </div>
+      </div>
+
+      <div class="cresce-card">
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4356430/9152438fde7de9f4c20b4fd9072ba69f844dacab/header.jpg?t=1789075530" alt="NBA 2K27" loading="lazy" decoding="async">
+        <div class="cresce-txt">
+          <span class="cresce-nome">NBA 2K27</span>
+          <span class="cresce-dt">Lançado, já pode jogar</span>
+          <span class="cresce-ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Já disponível no catálogo</span>
         </div>
       </div>
 
@@ -1927,15 +1947,6 @@ var io = (function(){
         <div class="cresce-txt">
           <span class="cresce-nome">Metro 2039</span>
           <span class="cresce-dt">Chega em 4 fev 2027</span>
-          <span class="cresce-ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Já incluso no seu acesso</span>
-        </div>
-      </div>
-
-      <div class="cresce-card">
-        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2769570/d2ffd7e15a91f3e5485601d3d876988ba3a859d7/header.jpg?t=1788984944" alt="Fable" loading="lazy" decoding="async">
-        <div class="cresce-txt">
-          <span class="cresce-nome">Fable</span>
-          <span class="cresce-dt">Chega em 23 fev 2027</span>
           <span class="cresce-ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Já incluso no seu acesso</span>
         </div>
       </div>
@@ -3302,6 +3313,7 @@ var io = (function(){
   var slides=[].slice.call(document.querySelectorAll('.art-slide'));
   var thumbs=[].slice.call(document.querySelectorAll('.art-thumb'));
   var nameEl=document.getElementById('art-name');
+  var tagEl=document.getElementById('art-tag');
   if(!slides.length) return;
   var i=0, timer=null;
   function show(n){
@@ -3310,6 +3322,7 @@ var io = (function(){
     thumbs.forEach(function(t,k){ t.classList.toggle('on',k===i); });
     var img=slides[i].querySelector('img');
     if(nameEl && img) nameEl.textContent=img.getAttribute('alt')||'';
+    if(tagEl) tagEl.textContent=slides[i].getAttribute('data-tag')||'Incluso no plano';
   }
   function play(){ stop(); timer=setInterval(function(){ show(i+1); },5000); }
   function stop(){ if(timer) clearInterval(timer); timer=null; }
@@ -3323,7 +3336,7 @@ var io = (function(){
      mortos do Clarity pularam de 0,67% (27/07, design antigo) pra 10,19% em 7 dias,
      e o design com esta arte entrou em 29/07. Agora ela abre a MESMA confirmação que
      um card de jogo abre, com o jogo que está aparecendo no momento.
-     Nenhum dos 9 jogos do banner tem soon:1 no assets/catalogo.js, então a confirmação
+     Nenhum dos jogos do banner tem soon:1 no assets/catalogo.js, então a confirmação
      diz "Disponível agora" pros nove, igualzinho ao que o catálogo já diz quando a
      pessoa toca neles lá embaixo. Se entrar um lançamento aqui, passe soon/dt. */
   var stage=document.getElementById('art-stage');
