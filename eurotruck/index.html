@@ -564,10 +564,15 @@ body.zoom-open{overflow:hidden}
      cair na pagina com o JS travado; este bloco manda em tudo: caixa de compra,
      os dois planos, a caixa de comparacao e a linha de valor do destacado.
 
-     ANTES DE SUBIR: troque os dois `link` pelo checkout de verdade. Enquanto
-     estiver 'PREENCHER', o botao NAO navega (avisa no console e fica parado),
-     de proposito, pra ninguem publicar uma pagina que cobra e nao abre o
-     pagamento.
+     Os dois `link` sao os checkouts de verdade (preenchidos em 20/09/2026).
+     A trava continua no codigo: se alguem apagar um link ou deixar 'PREENCHER',
+     o botao NAO navega, de proposito, pra ninguem publicar uma pagina que cobra
+     e nao abre o pagamento.
+
+     Sao links do ggcheckout.app, e nao do pay.almazstore.com.br: estes dois
+     checkouts NAO estao no dominio proprio, o pay.almazstore.com.br devolve 307
+     e joga pro ggcheckout.app. Se um dia entrarem no dominio proprio, troque o
+     dominio aqui e o cliente para de ver o endereco generico na hora de pagar.
 
      requisito.android e requisito.espaco: confirme com o arquivo que voce
      entrega hoje antes de subir. Sao o que costuma valer pro Euro Truck no
@@ -580,14 +585,14 @@ window.ETM = {
     tag:   'o jogo instalado',
     preco: 'R$ 19,97',
     val:   19.97,
-    link:  'PREENCHER'
+    link:  'https://ggcheckout.app/checkout/v5/oA9BVTiZtVg3siYUkQgq'
   },
   completo: {
     nome:  'Completo',
     tag:   'tudo desbloqueado',
     preco: 'R$ 29,97',
     val:   29.97,
-    link:  'PREENCHER'
+    link:  'https://ggcheckout.app/checkout/v5/9tHEct03RnlpoTVEqE4G'
   },
   requisito: {
     /* Roda em QUALQUER Android e QUALQUER iPhone (Almaz, 20/09/2026). Nao
