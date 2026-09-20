@@ -232,6 +232,53 @@ h2{font-size:clamp(21px,3.1vw,27px);margin-bottom:6px}
   .shot-nome{font-size:12.5px}
 }
 
+/* ---------- bonus ----------
+   Secao nova em 20/09/2026, a pedido do Almaz. O card do plano diz "todos os
+   caminhoes liberados" numa linha de texto de 14px; aqui a mesma frase vira um
+   caminhao na tela. E o bloco que constroi o valor ANTES de a pessoa ver o
+   preco, e por isso ele fica entre a prova (#dentro) e a ancora (#custo).
+   A .bonus-nota no fim NAO e decoracao: e ela que diz que os bonus sao do
+   Completo e que no Padrao a pessoa desbloqueia dirigindo. Sem ela, quem compra
+   o Padrao acha que levou tudo e volta pedindo reembolso. Nao tire.
+
+   SEM PILULA AQUI (Almaz, 20/09/2026): a primeira versao tinha um selo verde
+   "INCLUSO" por cima de cada foto e uma faixa com pontinho verde acima do H1.
+   Ele mandou tirar as duas: "parece inteligencia artificial", e a do pontinho
+   ainda lembrava indicador de status online. Os cards ele aprovou. Entao a
+   regra e: card com imagem e texto pode, etiqueta/selo/pilula nao. */
+.bonus{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.bonus-card{
+  position:relative;background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--r2);overflow:hidden;display:flex;flex-direction:column;
+  transition:border-color .15s,transform .15s;
+}
+.bonus-card:hover{border-color:rgba(87,181,51,.45);transform:translateY(-2px)}
+.bonus-card img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:var(--panel2)}
+.bonus-txt{padding:12px 14px 15px;display:flex;flex-direction:column;gap:4px;flex:1}
+.bonus-nome{font-size:14.5px;font-weight:700;color:#fff;line-height:1.3}
+.bonus-sub{font-size:13px;color:var(--txt2);line-height:1.5}
+.bonus-nota{
+  margin-top:14px;background:var(--panel2);border:1px solid var(--line2);
+  border-radius:var(--r);padding:12px 14px;font-size:13.5px;color:var(--txt2);line-height:1.55;
+}
+.bonus-nota b{color:#fff;font-weight:600}
+.bonus-cta{
+  margin-top:16px;background:linear-gradient(180deg,rgba(87,181,51,.09),var(--panel) 60%);
+  border:1px solid rgba(87,181,51,.4);border-radius:var(--r2);
+  padding:18px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+}
+.bonus-cta p{font-size:15px;line-height:1.55;color:var(--txt);max-width:600px}
+.bonus-cta p strong{color:#fff;font-weight:700}
+.bonus-cta .offer-btn{flex:0 0 auto;width:auto;min-width:290px}
+@media(max-width:860px){
+  .bonus{grid-template-columns:repeat(2,1fr);gap:10px}
+  .bonus-txt{padding:11px 12px 13px}
+  .bonus-nome{font-size:13.5px}
+  .bonus-sub{font-size:12.5px}
+  .bonus-cta{flex-direction:column;align-items:stretch;text-align:center;padding:16px 14px}
+  .bonus-cta .offer-btn{min-width:0;width:100%}
+}
+
 /* visor pra ampliar a imagem no toque */
 .zoom{position:fixed;inset:0;z-index:9600;background:rgba(3,7,11,.93);display:none;align-items:center;justify-content:center;padding:18px}
 .zoom.on{display:flex}
@@ -720,7 +767,83 @@ window.ETM = {
       </button>
     </div>
 
-    <div class="flow reveal"><a href="#custo" class="btn-ghost">Quanto isso custa no PC</a></div>
+    <div class="flow reveal"><a href="#bonus" class="btn-ghost">O que já vem liberado pra você</a></div>
+  </div>
+</section>
+
+<!-- ===================== OS BONUS =====================
+     Entrou em 20/09/2026 a pedido do Almaz. Aqui mora o "tudo liberado" da
+     manchete: cada bonus com a imagem do que ele destrava, porque a lista do
+     card do plano e curta demais pra vender isso.
+     ORDEM: caminhoes primeiro (e o que a pessoa quer), dinheiro em segundo (e o
+     que mais trava a carreira) e os de personalizacao no fim. Nao inverta: o
+     primeiro card e o unico que todo mundo ve com certeza.
+     NAO reponha o selo "INCLUSO" por cima das fotos: foi tirado a pedido.
+     A .bonus-nota NAO sai. E ela que separa Completo de Padrao. Sem ela, quem
+     compra o Padrao acha que levou os seis bonus e volta pedindo reembolso. -->
+<section class="sec" id="bonus">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Você não começa do zero</h2>
+      <p>No plano Completo, tudo isto já está aberto na primeira vez que você liga o jogo.</p>
+    </div>
+
+    <div class="bonus reveal">
+      <div class="bonus-card">
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/e57e1ef726416e161007bc90d4160d5b529498a4/ss_e57e1ef726416e161007bc90d4160d5b529498a4.jpg" alt="Caminhão Scania prata liberado na garagem" loading="lazy" decoding="async">
+        <div class="bonus-txt">
+          <h3 class="bonus-nome">Todos os caminhões liberados</h3>
+          <p class="bonus-sub">Os caminhões que a carreira faria você comprar em semanas já estão na sua mão. Escolhe o que quiser e sai dirigindo.</p>
+        </div>
+      </div>
+      <div class="bonus-card">
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/67f69404e444fffe8c16774d54510d0f3b5042bd/ss_67f69404e444fffe8c16774d54510d0f3b5042bd.jpg" alt="Tela de finanças e cargas com o dinheiro disponível" loading="lazy" decoding="async">
+        <div class="bonus-txt">
+          <h3 class="bonus-nome">Dinheiro liberado na conta</h3>
+          <p class="bonus-sub">Você não começa juntando moeda pra pagar combustível. Começa escolhendo a carga que quiser levar.</p>
+        </div>
+      </div>
+      <div class="bonus-card">
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/bd8f79513af1759d8dd01092b2fd064214227683/ss_bd8f79513af1759d8dd01092b2fd064214227683.jpg" alt="Interior de uma garagem com as vagas abertas" loading="lazy" decoding="async">
+        <div class="bonus-txt">
+          <h3 class="bonus-nome">Todas as garagens abertas</h3>
+          <p class="bonus-sub">Garagem espalhada pela Europa inteira, sem ter que comprar uma cidade de cada vez pra poder trabalhar nela.</p>
+        </div>
+      </div>
+      <div class="bonus-card">
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/c94a1cd5dc2ae212f94b098e8162c1f78dc9fd9d/ss_c94a1cd5dc2ae212f94b098e8162c1f78dc9fd9d.jpg" alt="Mapa da Europa com todas as rotas disponíveis" loading="lazy" decoding="async">
+        <div class="bonus-txt">
+          <h3 class="bonus-nome">O mapa inteiro destravado</h3>
+          <p class="bonus-sub">As cidades, as estradas e as rotas todas abertas desde a primeira viagem. Nada de mapa que abre aos pedacinhos.</p>
+        </div>
+      </div>
+      <div class="bonus-card">
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/06aa11ece5d3303cfcfeafb3c81734258a7dd614/ss_06aa11ece5d3303cfcfeafb3c81734258a7dd614.jpg" alt="Oficina de pintura e acessórios do caminhão" loading="lazy" decoding="async">
+        <div class="bonus-txt">
+          <h3 class="bonus-nome">Pintura e acessórios</h3>
+          <p class="bonus-sub">Cor, rodas, escapamento, farol e chifre. O caminhão fica com a sua cara, sem pagar nada por isso.</p>
+        </div>
+      </div>
+      <div class="bonus-card">
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/eb434cd5ec7b731f36c3869aa772950ac1e876ca/ss_eb434cd5ec7b731f36c3869aa772950ac1e876ca.jpg" alt="Interior da cabine com cama e acabamento" loading="lazy" decoding="async">
+        <div class="bonus-txt">
+          <h3 class="bonus-nome">A cabine do seu jeito</h3>
+          <p class="bonus-sub">Painel, banco e cama também liberados. Quem passa a viagem inteira ali dentro sabe o quanto isso muda.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bonus-nota reveal">
+      <b>E no plano Padrão?</b> O jogo é o mesmo e vem completo, mas você desbloqueia isto
+      tudo dirigindo, do jeito que o jogo foi feito. O Completo só entrega tudo aberto
+      desde a primeira viagem.
+    </div>
+
+    <div class="bonus-cta reveal">
+      <p><strong>É o Euro Truck com tudo liberado.</strong> Todos os caminhões, o mapa inteiro,
+      as garagens e o dinheiro, por uma taxa única no PIX, no celular que você já tem no bolso.</p>
+      <a href="#planos" class="offer-btn">Quero com tudo liberado</a>
+    </div>
   </div>
 </section>
 
@@ -1289,6 +1412,10 @@ window.ETM = {
     if (!cta) return;
     var zonas = [
       { el: document.getElementById('planos'), corte: .85 },
+      // As caixas verdes do corpo da pagina tem botao de compra proprio. Sem
+      // elas nesta lista o fixo passa por cima e ficam dois botoes verdes
+      // brigando pelo mesmo dedo. Criou outra caixa verde com botao? Some aqui.
+      { el: document.querySelector('.bonus-cta'), corte: 1 },
       { el: document.querySelector('.req-cta'), corte: 1 }
     ].filter(function (z) { return z.el; });
 
