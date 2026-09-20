@@ -57,7 +57,13 @@
   })(window, document, "clarity", "script", "xeud5hnipq");
 </script>
 
-<!-- Utmify Pixel (mesmo da home) -->
+<!-- ===================== UTMIFY: PIXEL =====================
+     ATENCAO: este pixelId ainda e O DA LOJA DE PC (o mesmo da home). Enquanto
+     ele estiver aqui, as visitas e as vendas do Euro Truck Mobile caem no
+     mesmo pixel do outro produto e sujam a otimizacao das duas campanhas.
+     O Almaz vai criar um pixel proprio pro Euro Truck; quando o id chegar,
+     troque SO a linha do window.pixelId abaixo. Nao precisa mexer em mais nada.
+     ========================================================================= -->
 <script>
   window.pixelId = "6a8331f816fe7033bc1acbf7";
   var a = document.createElement("script");
@@ -65,6 +71,85 @@
   a.setAttribute("defer", "");
   a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
   document.head.appendChild(a);
+</script>
+
+<!-- ===================== UTMIFY: UTMS =====================
+     Mesmo script e mesmos atributos da home. Os dois data-utmify-prevent-*
+     existem pra UTMify nao inventar xcod/sck/subids por conta propria: quem
+     manda nesses campos e o nosso modulo de tracking la embaixo.
+     ======================================================================== -->
+<script
+  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+  data-utmify-prevent-xcod-sck
+  data-utmify-prevent-subids
+  async
+  defer
+></script>
+
+<!-- ===================== UTMIFY: LEAD STITCHING =====================
+     Script do suporte da UTMify, copiado da home sem alteracao.
+     Costura o _id do lead da UTMify dentro do utm_source (ex: FBjLj<id>) pra
+     que a venda no checkout seja casada com a visita/pixel (fbp/fbc). SEM isso
+     a UTMify recebe a venda mas NAO dispara o Purchase/IC pra Meta.
+     Ele da um location.replace quando costura, entao roda cedo, no <head>, e
+     so age se a pessoa chegou com utm_source=FB ou utm_source=google.
+     ================================================================== -->
+<script>
+(function () {
+  const POLL_MS = 500;
+  const MAX_ATTEMPTS = 40; // ~20s; evita timer infinito apos a costura
+
+  function getStorageKey() {
+    const url = new URL(window.location.href);
+    const current = url.searchParams.get("utm_source");
+    if (current === "FB") return "lead";
+    if (current === "google") return "lead-google";
+    return null;
+  }
+
+  function getLeadId(storageKey) {
+    if (!storageKey) return null;
+    const raw = localStorage.getItem(storageKey);
+    if (!raw) return null;
+    try {
+      const obj = JSON.parse(raw);
+      return obj && obj._id ? String(obj._id) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function applyUtmIfNeeded() {
+    const url = new URL(window.location.href);
+    const current = url.searchParams.get("utm_source");
+    const storageKey = getStorageKey();
+    const id = getLeadId(storageKey);
+    if (!id) return false;
+
+    let desired = null;
+    if (current === "FB") {
+      desired = "FBjLj" + id;
+    } else if (current === "google") {
+      desired = "googlejLj" + id;
+    }
+
+    if (!desired) return false;
+
+    url.searchParams.set("utm_source", desired);
+    window.location.replace(url.toString());
+    return true;
+  }
+
+  if (applyUtmIfNeeded()) return;
+
+  let attempts = 0;
+  const interval = setInterval(() => {
+    attempts++;
+    if (applyUtmIfNeeded() || getStorageKey() === null || attempts >= MAX_ATTEMPTS) {
+      clearInterval(interval);
+    }
+  }, POLL_MS);
+})();
 </script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1196,6 +1281,167 @@ window.ETM = {
   <img id="zoom-img" src="" alt="">
 </div>
 
+<!-- ===================== TRACKING =====================
+     Portado da home (index.html) em 20/09/2026, a pedido do Almaz, pra esta
+     pagina medir igual a loja de PC. O que veio, na mesma ordem de la:
+
+       1. merge das UTMs da URL com o que ja estava em localStorage/session
+       2. fallback organico pelo referrer (google/facebook/instagram/tiktok)
+       3. generateEventId .......... event_id unico por clique, pra dedup
+       4. decorateUrlWithTracking .. cola as UTMs + event_id na URL do checkout
+       5. trackEvent ............... TikTok e GA se existirem, e log no console
+       6. ViewContent .............. dispara no load
+
+     O QUE NAO VEIO, de proposito:
+     - fbq manual. O pixel da UTMify injeta e dispara o fbq sozinho (browser)
+       + CAPI (server-side) com deduplicacao, desde que o pixel da Meta esteja
+       conectado NO PAINEL da UTMify. Chamar fbq aqui contaria em dobro.
+     - O ramo do chatbot (utm_source=AssistenteIA) do decorateUrlWithTracking
+       da home: esta pagina nao tem chatbot, entao seria codigo morto. Se um dia
+       entrar um chat aqui, copie aquele trecho de volta da home.
+     ==================================================================== -->
+<script>
+// --- SISTEMA DE TRACKING AVANCADO FOCADO EM META ADS (copia da home) ---
+(function () {
+  var trackingKeys = [
+    'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term',
+    'src', 'sck', 'xcod', 'fbclid', 'gclid', 'ttclid', 'msclkid', 'irclickid', 'utm_id'
+  ];
+
+  // 1. Extrair parametros da URL
+  var urlParams = new URLSearchParams(window.location.search);
+  var currentTracking = {};
+  var hasParamsInUrl = false;
+  trackingKeys.forEach(function (key) {
+    var val = urlParams.get(key);
+    if (val) {
+      currentTracking[key] = val;
+      hasParamsInUrl = true;
+    }
+  });
+
+  // 2. Armazenamento (localStorage e sessionStorage).
+  // Chave PROPRIA desta pagina: se usasse a mesma 'almaz_utm_tracker' da loja
+  // de PC, quem visitasse os dois produtos levaria a UTM de um pro checkout do
+  // outro, e a venda entraria com o credito da campanha errada.
+  var storageKey = 'almaz_utm_tracker_eurotruck';
+  var storedTracking = {};
+  try {
+    var rawStored = localStorage.getItem(storageKey) || sessionStorage.getItem(storageKey);
+    if (rawStored) {
+      storedTracking = JSON.parse(rawStored);
+    }
+  } catch (e) {
+    console.error('Erro ao ler UTMs do cache:', e);
+  }
+
+  // Se a URL tem parametros novos, atualiza o cache. Senao, mantem o salvo.
+  var mergedTracking = {};
+  if (hasParamsInUrl) {
+    mergedTracking = Object.assign({}, storedTracking, currentTracking);
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(mergedTracking));
+      sessionStorage.setItem(storageKey, JSON.stringify(mergedTracking));
+    } catch (e) {
+      console.error('Erro ao salvar UTMs no cache:', e);
+    }
+  } else {
+    mergedTracking = storedTracking;
+  }
+
+  // 3. Fallback organico se nenhum canal for detectado
+  if (!mergedTracking['utm_source'] && !mergedTracking['src']) {
+    var referrer = document.referrer;
+    if (referrer) {
+      var referrerHost = '';
+      try { referrerHost = new URL(referrer).hostname; } catch (err) {}
+
+      if (referrerHost) {
+        if (referrerHost.indexOf('google') !== -1) {
+          mergedTracking['utm_source'] = 'organic_google';
+        } else if (referrerHost.indexOf('facebook') !== -1) {
+          mergedTracking['utm_source'] = 'organic_facebook';
+        } else if (referrerHost.indexOf('instagram') !== -1) {
+          mergedTracking['utm_source'] = 'organic_instagram';
+        } else if (referrerHost.indexOf('tiktok') !== -1) {
+          mergedTracking['utm_source'] = 'organic_tiktok';
+        } else {
+          mergedTracking['utm_source'] = 'referrer_' + referrerHost.replace(/\./g, '_');
+        }
+        mergedTracking['utm_medium'] = 'organic';
+      }
+    }
+  }
+
+  window.getMergedTrackingParams = function () {
+    return mergedTracking;
+  };
+
+  // event_id unico por clique, anexado na URL do checkout. O ggcheckout pode
+  // repassa-lo no Purchase server-side (CAPI/Utmify) pra identificar e
+  // deduplicar a venda. crypto.randomUUID com fallback pra navegador antigo.
+  window.generateEventId = function () {
+    try {
+      if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+        return window.crypto.randomUUID();
+      }
+    } catch (e) {}
+    return 'evt-' + Date.now() + '-' + Math.random().toString(16).slice(2);
+  };
+
+  window.decorateUrlWithTracking = function (rawUrl, eventId) {
+    try {
+      var urlObj = new URL(rawUrl);
+      var params = window.getMergedTrackingParams();
+      for (var key in params) {
+        if (params.hasOwnProperty(key) && params[key]) {
+          urlObj.searchParams.set(key, params[key]);
+        }
+      }
+      if (eventId) {
+        urlObj.searchParams.set('event_id', eventId);
+      }
+      return urlObj.toString();
+    } catch (e) {
+      return rawUrl;
+    }
+  };
+
+  window.trackEvent = function (eventName, params, eventID) {
+    // Meta: NAO disparamos fbq aqui de proposito (ver o comentario do bloco).
+    if (typeof window.ttq === 'object' && typeof window.ttq.track === 'function') {
+      window.ttq.track(eventName, params);
+    }
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', eventName, params);
+    }
+    console.log('[TRACKING EVENT]:', eventName, params, eventID ? '(eventID: ' + eventID + ')' : '');
+  };
+})();
+
+// ViewContent (visualizacao da pagina de produto). O InitiateCheckout sai no
+// clique do botao de compra, la no script da pagina.
+(function () {
+  function fireViewContent() {
+    if (typeof window.trackEvent !== 'function') return;
+    var etm = window.ETM || {};
+    var base = (etm.padrao && Number(etm.padrao.val)) || 19.97;
+    window.trackEvent('ViewContent', {
+      content_name: 'Euro Truck Mobile',
+      content_type: 'product',
+      content_category: 'Landing Page',
+      value: base,
+      currency: 'BRL'
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fireViewContent);
+  } else {
+    fireViewContent();
+  }
+})();
+</script>
+
 <script>
 (function () {
   'use strict';
@@ -1232,20 +1478,34 @@ window.ETM = {
   })();
 
   /* ---------- checkout ----------
-     Leva as UTMs que chegaram na pagina pro checkout. Sem isto a venda entra
-     como organica no painel e a campanha que pagou pelo clique fica sem credito.
-     Se o link chegou SEM utm_campaign, marcamos 'eurotruck' so pra dar nome a
-     venda direta; campanha que veio na URL nunca e sobrescrita. O parametro
-     `produto` vai sempre, pra separar esta pagina da loja de PC no painel. */
-  var KEYS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','src','sck','xcod','fbclid','gclid'];
-  function comUtm(base) {
+     Usa o modulo de tracking portado da home (o bloco TRACKING logo acima):
+       decorateUrlWithTracking -> cola as UTMs mescladas + o event_id
+       generateEventId         -> um id por clique, pra dedup do Purchase
+       trackEvent              -> InitiateCheckout
+
+     Em cima disso ficam os dois marcadores proprios desta pagina:
+       produto=eurotruck  -> sempre, pra separar da loja de PC no painel
+       utm_campaign       -> so vira 'eurotruck' se nao veio nenhuma campanha,
+                             pra dar nome a venda direta. Campanha que chegou na
+                             URL NUNCA e sobrescrita, senao o anuncio que pagou
+                             pelo clique fica sem credito.
+
+     NAO disparamos Purchase aqui. A venda so existe depois que o PIX e pago no
+     checkout externo; o Purchase real e server-side pelo webhook do ggcheckout,
+     reaproveitando o event_id que vai na URL. */
+  function marcar(url) {
     var u;
-    try { u = new URL(base); } catch (e) { return base; }
-    var cur = new URLSearchParams(window.location.search);
-    KEYS.forEach(function (k) { var v = cur.get(k); if (v) u.searchParams.set(k, v); });
+    try { u = new URL(url); } catch (e) { return url; }
     if (!u.searchParams.get('utm_campaign')) u.searchParams.set('utm_campaign', 'eurotruck');
     u.searchParams.set('produto', 'eurotruck');
     return u.toString();
+  }
+
+  function montarLink(base, eventId) {
+    var url = window.decorateUrlWithTracking
+      ? window.decorateUrlWithTracking(base, eventId)
+      : base;
+    return marcar(url);
   }
 
   var SPIN = '<span class="btn-spin" aria-hidden="true"></span>Abrindo checkout...';
@@ -1265,9 +1525,28 @@ window.ETM = {
       return;
     }
 
-    btn.href = comUtm(link);
-    btn.addEventListener('click', function () {
-      try { if (window.clarity) window.clarity('event', 'etm_checkout_' + id); } catch (e) {}
+    // href ja sai pronto (sem event_id, que e por clique): o link precisa ser
+    // um link de verdade pra quem abre em nova aba e pro pixel da UTMify, que
+    // le o href da pagina.
+    btn.href = montarLink(link, null);
+
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      var eventId = window.generateEventId ? window.generateEventId() : null;
+      var url = montarLink(link, eventId);
+
+      if (window.trackEvent) {
+        window.trackEvent('InitiateCheckout', {
+          value: Number(plano.val) || 0,
+          currency: 'BRL',
+          content_name: 'Euro Truck Mobile ' + (plano.nome || id),
+          content_type: 'product',
+          contents: [{ id: link.split('/').pop().split('?')[0], quantity: 1 }]
+        }, eventId);
+      }
+      try { if (window.clarity) window.clarity('event', 'etm_checkout_' + id); } catch (err) {}
+
       var orig = btn.innerHTML;
       // setTimeout(0) de proposito: a troca do texto so pode acontecer DEPOIS da
       // propagacao do clique, porque o pixel da Utmify le o TEXTO do botao pra
@@ -1275,6 +1554,9 @@ window.ETM = {
       setTimeout(function () { btn.innerHTML = SPIN; }, 0);
       // Failsafe: se a navegacao nao acontecer, o botao volta ao normal.
       setTimeout(function () { btn.innerHTML = orig; }, 6000);
+
+      // 800ms, igual a home: da tempo de o pixel disparar antes de sair da pagina.
+      setTimeout(function () { window.location.href = url; }, 800);
     });
   });
 
