@@ -58,14 +58,20 @@
 </script>
 
 <!-- ===================== UTMIFY: PIXEL =====================
-     ATENCAO: este pixelId ainda e O DA LOJA DE PC (o mesmo da home). Enquanto
-     ele estiver aqui, as visitas e as vendas do Euro Truck Mobile caem no
-     mesmo pixel do outro produto e sujam a otimizacao das duas campanhas.
-     O Almaz vai criar um pixel proprio pro Euro Truck; quando o id chegar,
-     troque SO a linha do window.pixelId abaixo. Nao precisa mexer em mais nada.
+     Pixel PROPRIO do Euro Truck Mobile (20/09/2026). NAO e o da loja de PC:
+     aquele e o 6a8331f816fe7033bc1acbf7 e continua so na home. Os dois produtos
+     tem pixel separado de proposito, senao as visitas de um sujam a otimizacao
+     das campanhas do outro.
+
+     O Almaz mandou este pixel como um snippet ofuscado (base64 + XOR) da
+     propria UTMify. Decodificado, ele carregava exatamente isto: a mesma
+     pixel.js do CDN da UTMify, sem atributo nenhum, e um unico global,
+     pixelId = 6aafd2a1d4f7d3ce6049236c. Entao esta aqui na forma legivel, que
+     faz a mesma coisa e e a mesma forma usada na home. A ofuscacao nao protege
+     de bloqueador: quem bloqueia bloqueia pela URL do script, que e a mesma.
      ========================================================================= -->
 <script>
-  window.pixelId = "6a8331f816fe7033bc1acbf7";
+  window.pixelId = "6aafd2a1d4f7d3ce6049236c";
   var a = document.createElement("script");
   a.setAttribute("async", "");
   a.setAttribute("defer", "");
@@ -1096,7 +1102,7 @@ window.ETM = {
               <span class="ed-once">pagamento único</span>
             </span>
           </div>
-          <a href="#planos" class="offer-btn" data-etm-buy="padrao">Quero só o jogo</a>
+          <a href="#planos" class="offer-btn" data-etm-buy="padrao">COMPRAR AGORA</a>
           <div class="offer-methods">Pagamento no PIX</div>
           <div class="offer-trust"><strong>Entrega na hora</strong> e 7 dias de garantia</div>
         </div>
@@ -1134,7 +1140,7 @@ window.ETM = {
               <span class="ed-once">pagamento único</span>
             </span>
           </div>
-          <a href="#planos" class="offer-btn" data-etm-buy="completo">Quero com tudo liberado</a>
+          <a href="#planos" class="offer-btn" data-etm-buy="completo">COMPRAR AGORA</a>
           <div class="offer-methods">Pagamento no PIX</div>
           <div class="offer-trust"><strong>Entrega na hora</strong> e 7 dias de garantia</div>
         </div>
