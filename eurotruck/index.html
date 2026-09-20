@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0b1219">
+<title>Euro Truck Mobile | Almaz Store</title>
+<meta name="description" content="O Euro Truck com tudo liberado, rodando em qualquer celular Android ou iPhone. Sem PC e sem emulador. Taxa única no PIX e entrega na hora.">
+<link rel="canonical" href="https://almazstore.com.br/eurotruck/">
+<meta property="og:type" content="product">
+<meta property="og:url" content="https://almazstore.com.br/eurotruck/">
+<meta property="og:title" content="Euro Truck Mobile | Com tudo liberado, no seu celular">
+<meta property="og:description" content="Todos os caminhões, o mapa inteiro e o dinheiro liberados desde a primeira viagem. Roda em qualquer Android ou iPhone. Pagamento único no PIX.">
+<meta property="og:image" content="https://cdn.cloudflare.steamstatic.com/steam/apps/227300/library_hero.jpg">
+<link rel="icon" href="/assets/logo-128.png">
+<link rel="apple-touch-icon" href="/assets/logo-180.png">
+
+<!--
+  PAGINA DO EURO TRUCK MOBILE (20/09/2026)
+
+  E a estrutura da home (index.html) com a promessa trocada. A home vende
+  "voce nunca mais gasta com jogo na Steam"; aqui a promessa e "o Euro Truck
+  com tudo liberado, em qualquer celular, sem precisar de PC". A ordem das
+  secoes e a mesma e foi mantida de proposito, porque ela e um funil testado:
+
+    ficha do produto -> o jogo por dentro -> quanto custa no PC ->
+    sera que roda -> planos -> quem ja comprou -> 3 passos ->
+    como instala -> garantia + FAQ
+
+  DIFERENCAS QUE IMPORTAM EM RELACAO A HOME:
+  - Nao tem catalogo, nao tem launcher e nao tem lancamento futuro: e um jogo so.
+  - A secao #custo compara com o preco REAL do Euro Truck no PC (Steam BR), que e
+    a unica ancora verificavel que esta pagina tem. Nao invente preco aqui.
+  - A secao #roda existe porque a objecao numero 1 do mobile nao e "vou tomar ban",
+    e "sera que roda no meu celular". Ela ocupa o lugar da secao dos lancamentos.
+  - RODA EM QUALQUER ANDROID E QUALQUER IPHONE (Almaz, 20/09/2026). Nao escreva
+    "so Android" e nao invente versao minima ("Android 8", "iOS 13"): numero
+    chutado aqui vira cliente desistindo na ficha tecnica por nada.
+  - A pagina INDEXA. O /x1/ e noindex porque e material de WhatsApp; esta aqui e
+    pagina de produto e deve aparecer na busca.
+
+  ANTES DE SUBIR: preencha os dois links de checkout no bloco window.ETM logo
+  depois do <body>. Sem eles o botao nao navega, de proposito.
+
+  IMAGENS: sao as artes oficiais do Euro Truck Simulator 2 servidas pelo CDN da
+  Steam, as mesmas que a home ja usa pros outros jogos. Os enderecos com hash
+  comprido vieram do IStoreBrowseService/GetItems/v1 (o jeito documentado no
+  index.html). Nao troque pelo formato curto /steam/apps/227300/ss_*.jpg: da 404.
+-->
+
+<!-- Microsoft Clarity (mesmo projeto da home e do /x1/) -->
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "xeud5hnipq");
+</script>
+
+<!-- Utmify Pixel (mesmo da home) -->
+<script>
+  window.pixelId = "6a8331f816fe7033bc1acbf7";
+  var a = document.createElement("script");
+  a.setAttribute("async", "");
+  a.setAttribute("defer", "");
+  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+  document.head.appendChild(a);
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="preconnect" href="https://shared.akamai.steamstatic.com">
+<link rel="preconnect" href="https://cdn.cloudflare.steamstatic.com">
+
+<style>
+/* Os tokens sao os MESMOS da home. Se um dia mudar a cor da marca la, mude aqui
+   junto, senao as duas paginas do mesmo dominio ficam com verde diferente. */
+:root{
+  --bg:#0b1219; --bg2:#0f1a24; --panel:#16222f; --panel2:#1d2b3a; --panel3:#243546;
+  --line:rgba(146,186,220,.13); --line2:rgba(146,186,220,.22);
+  --txt:#dbe6f1; --txt2:#aebfd0; --dim:#8399ae;
+  --blue:#59a6e0; --blue-dim:rgba(89,166,224,.12);
+  --buy:#4a9d2a; --buy2:#57b533; --buy-dark:#2f6b18;
+  --deal-bg:#2f5d10; --deal-tx:#bce337;
+  --warn:#e0a03a;
+  --f:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --r:8px; --r2:12px;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:70px;-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--f);background:var(--bg);color:var(--txt);line-height:1.6;
+  font-size:15px;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;border:none;cursor:pointer;color:inherit;background:none}
+img{display:block;max-width:100%}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+.num{font-variant-numeric:tabular-nums}
+h1,h2,h3{font-weight:700;line-height:1.15;letter-spacing:-.02em}
+h2{font-size:clamp(21px,3.1vw,27px);margin-bottom:6px}
+.sec{padding:52px 0;border-top:1px solid var(--line)}
+.sec-head{margin-bottom:22px;max-width:640px}
+.sec-head p{color:var(--dim);font-size:14.5px;margin-top:4px}
+
+.reveal{opacity:0;transform:translateY(8px);transition:opacity .4s ease,transform .4s ease}
+.reveal.visible{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+/* ---------- botoes ---------- */
+.offer-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  background:linear-gradient(180deg,var(--buy2),var(--buy));
+  color:#fff;font-weight:700;font-size:15px;letter-spacing:.01em;
+  padding:13px 26px;border-radius:var(--r);border:1px solid rgba(0,0,0,.25);
+  box-shadow:0 1px 0 rgba(255,255,255,.14) inset,0 4px 14px rgba(0,0,0,.35);
+  transition:filter .15s,transform .1s;width:100%;text-align:center;
+}
+.offer-btn:hover{filter:brightness(1.1)}
+.offer-btn:active{transform:translateY(1px)}
+.btn-ghost{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  background:var(--panel2);color:var(--txt);font-weight:600;font-size:14px;
+  padding:11px 20px;border-radius:var(--r);border:1px solid var(--line2);
+  transition:background .15s,border-color .15s;
+}
+.btn-ghost:hover{background:var(--panel3);border-color:var(--blue)}
+.btn-spin{
+  display:inline-block;width:13px;height:13px;border-radius:50%;
+  border:2px solid rgba(255,255,255,.35);border-top-color:#fff;
+  animation:spin .7s linear infinite;margin-right:7px;vertical-align:-2px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.offer-methods{font-size:12px;color:var(--dim);text-align:center;margin-top:9px}
+.offer-trust{font-size:12px;color:var(--dim);text-align:center;margin-top:5px}
+.offer-trust strong{color:var(--txt2);font-weight:600}
+.flow{margin-top:28px;display:flex;justify-content:center}
+
+/* ---------- barra superior ---------- */
+.topbar{
+  position:sticky;top:0;z-index:600;background:rgba(11,18,25,.92);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+}
+.topbar-in{max-width:1180px;margin:0 auto;padding:0 20px;height:58px;display:flex;align-items:center;justify-content:center}
+.tb-brand{display:flex;align-items:center;gap:9px}
+.tb-brand img{width:26px;height:26px;border-radius:5px}
+.tb-brand span{font-weight:700;font-size:15px;letter-spacing:-.01em}
+@media(max-width:720px){.topbar-in{height:52px}}
+
+/* ---------- topo: ficha do produto ---------- */
+.ph{padding:26px 0 0}
+.ph-crumb{font-size:12.5px;color:var(--dim);margin-bottom:12px}
+.ph-crumb b{color:var(--txt2);font-weight:500}
+.ph h1{font-size:clamp(25px,4.2vw,38px);max-width:820px}
+.ph-sub{color:var(--txt2);font-size:15.5px;margin-top:8px;max-width:620px}
+
+.pg{display:grid;grid-template-columns:minmax(0,1fr) 336px;gap:22px;margin-top:22px;align-items:start}
+@media(max-width:900px){.pg{grid-template-columns:1fr;gap:16px}}
+
+.art{background:#000;border:1px solid var(--line);border-radius:var(--r2);overflow:hidden;box-shadow:var(--shadow)}
+.art-stage{position:relative;aspect-ratio:16/9;background:#05080b}
+.art-slide{position:absolute;inset:0;opacity:0;transition:opacity .5s ease}
+.art-slide.on{opacity:1}
+.art-slide img{width:100%;height:100%;object-fit:cover}
+.art-cap{
+  position:absolute;left:0;right:0;bottom:0;padding:34px 16px 12px;
+  background:linear-gradient(to top,rgba(3,6,9,.92),transparent);
+  display:flex;align-items:flex-end;justify-content:space-between;gap:12px;
+}
+.art-cap-name{font-size:14px;font-weight:600;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.8)}
+.art-cap-tag{font-size:11.5px;color:var(--deal-tx);background:rgba(47,93,16,.85);padding:3px 9px;border-radius:4px;font-weight:600;flex-shrink:0}
+.art-thumbs{display:flex;gap:6px;padding:8px;background:var(--panel);overflow-x:auto;scrollbar-width:none}
+.art-thumbs::-webkit-scrollbar{display:none}
+.art-thumb{
+  flex:0 0 auto;width:104px;aspect-ratio:16/9;border-radius:5px;overflow:hidden;
+  border:2px solid transparent;opacity:.55;transition:opacity .15s,border-color .15s;cursor:pointer;
+}
+.art-thumb.on{opacity:1;border-color:var(--blue)}
+.art-thumb:hover{opacity:1}
+.art-thumb img{width:100%;height:100%;object-fit:cover}
+
+.side{display:flex;flex-direction:column;gap:14px}
+.side-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);padding:16px}
+.side-desc{font-size:14px;color:var(--txt2);line-height:1.65}
+.spec{margin-top:14px;border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:7px}
+.spec-row{display:flex;justify-content:space-between;gap:12px;font-size:13.5px}
+.spec-row dt{color:var(--dim)}
+.spec-row dd{color:var(--txt);font-weight:600;text-align:right}
+.spec-row dd.ok{color:var(--buy2)}
+
+.buybox{background:var(--panel2);border:1px solid var(--line2);border-radius:var(--r2);padding:14px}
+.buybox-top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.buybox-prices{display:flex;flex-direction:column;line-height:1.15}
+.buybox-from{font-size:12.5px;color:var(--dim);margin-bottom:1px}
+.buybox-once{font-size:12.5px;color:var(--dim);margin-top:4px}
+.buybox-new{font-size:23px;font-weight:700;color:#fff;letter-spacing:-.02em}
+.buybox-pay{font-size:12.5px;color:var(--txt2);margin-top:9px;text-align:center}
+.buybox-pay b{color:var(--txt);font-weight:600}
+.side-note{font-size:12.5px;color:var(--dim);text-align:center;line-height:1.5}
+
+/* As 3 duvidas que travam a compra, respondidas ja na dobra e JA ABERTAS.
+   Na home sao "vou tomar ban", "pago de novo" e "funciona online". Aqui duas
+   delas mudaram: no celular a pessoa nao tem medo de ban, tem medo de o jogo
+   nao rodar no aparelho dela e de ter que mexer em coisa que nao sabe. */
+.medos{margin-top:12px;border-top:1px solid var(--line);padding-top:12px;display:grid;gap:11px}
+.medo{display:flex;gap:9px;align-items:flex-start}
+.medo>svg{
+  width:15px;height:15px;flex-shrink:0;margin-top:2px;
+  stroke:var(--buy2);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;
+}
+.medo-txt{min-width:0;text-align:left}
+.medo-q{display:block;font-size:13px;font-weight:600;color:var(--txt);line-height:1.3}
+.medo-a{display:block;font-size:12.5px;color:var(--txt2);line-height:1.45;margin-top:2px}
+
+/* ---------- o jogo por dentro ---------- */
+.shots{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.shot{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);
+  overflow:hidden;display:flex;flex-direction:column;text-align:left;cursor:zoom-in;
+  transition:border-color .15s,transform .15s;
+}
+.shot:hover{border-color:var(--line2);transform:translateY(-2px)}
+.shot img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:var(--panel2)}
+.shot-txt{padding:11px 13px 13px;display:flex;flex-direction:column;gap:4px;flex:1}
+.shot-nome{font-size:13.5px;font-weight:600;color:var(--txt);line-height:1.35}
+.shot-sub{font-size:12.5px;color:var(--dim);line-height:1.5}
+@media(max-width:860px){
+  .shots{grid-template-columns:repeat(2,1fr);gap:10px}
+  .shot-txt{padding:10px 11px 12px}
+  .shot-nome{font-size:12.5px}
+}
+
+/* visor pra ampliar a imagem no toque */
+.zoom{position:fixed;inset:0;z-index:9600;background:rgba(3,7,11,.93);display:none;align-items:center;justify-content:center;padding:18px}
+.zoom.on{display:flex}
+.zoom img{max-height:88vh;border-radius:var(--r2)}
+.zoom button{position:absolute;top:12px;right:16px;font-size:32px;color:#fff;line-height:1}
+body.zoom-open{overflow:hidden}
+
+/* ---------- quanto custa no PC (mesma caixa da home) ---------- */
+.conta{display:grid;grid-template-columns:1.25fr 1fr;gap:16px;align-items:start}
+.conta-cart{background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);overflow:hidden}
+.conta-cart-hd{
+  padding:12px 16px;border-bottom:1px solid var(--line);background:var(--bg2);
+  font-size:12.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--dim);
+}
+.conta-row{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--line)}
+/* 92x43 mantem o 460x215 do header da Steam; sem aspect-ratio fixo as linhas
+   pulam de altura enquanto as capas carregam. */
+.conta-row img{width:92px;aspect-ratio:460/215;object-fit:cover;border-radius:5px;flex-shrink:0;background:var(--panel2)}
+.conta-nome{flex:1;font-size:13.5px;font-weight:600;color:var(--txt);line-height:1.35}
+.conta-nome small{display:block;font-weight:400;font-size:12px;color:var(--dim);margin-top:2px}
+.conta-preco{font-size:14px;font-weight:700;color:var(--txt2);white-space:nowrap}
+.conta-total{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:14px 16px;background:var(--panel2)}
+.conta-total span:first-child{font-size:13.5px;font-weight:600;color:var(--txt2)}
+.conta-total b{font-size:clamp(20px,3.4vw,25px);font-weight:700;color:#fff;letter-spacing:-.02em}
+.conta-anos{border-top:1px solid var(--line);padding:13px 16px 15px;display:flex;flex-direction:column;gap:10px}
+.conta-ano{display:flex;align-items:baseline;gap:11px;font-size:13px;line-height:1.5;color:var(--txt2)}
+.conta-ano>span{flex-shrink:0;width:56px;font-weight:700;font-size:12.5px;color:var(--dim);font-variant-numeric:tabular-nums}
+.conta-ano.now>span{color:var(--txt)}
+.conta-ano b{font-weight:700;color:var(--txt);white-space:nowrap}
+.conta-ano.next{color:var(--warn)}
+.conta-vs{
+  background:linear-gradient(180deg,rgba(87,181,51,.06),var(--panel) 60%);
+  border:1px solid rgba(87,181,51,.34);border-radius:var(--r2);padding:20px 18px;
+  position:sticky;top:74px;
+}
+.conta-vs-lbl{font-size:13px;font-weight:600;color:var(--txt2);margin-bottom:6px}
+.conta-vs-price{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.conta-vs-price b{font-size:clamp(30px,6vw,40px);font-weight:700;color:#fff;letter-spacing:-.03em;line-height:1}
+.conta-vs-price span{font-size:13px;color:var(--dim)}
+.conta-vs-sub{margin-top:12px;font-size:13.5px;line-height:1.6;color:var(--txt2)}
+.conta-vs-sub strong{color:#fff;font-weight:600}
+.conta-vs .btn-ghost{margin-top:16px;width:100%;min-width:0}
+@media(max-width:860px){
+  .conta{grid-template-columns:1fr}
+  /* sticky num grid de 1 coluna gruda a caixa no fim da tela e cobre o carrinho */
+  .conta-vs{position:static}
+  .conta-row img{width:74px}
+}
+
+/* ---------- sera que roda ---------- */
+.req{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:760px){.req{grid-template-columns:1fr}}
+.req-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);padding:16px 18px}
+.req-card svg{width:22px;height:22px;stroke:var(--buy2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;margin-bottom:10px}
+.req-card h3{font-size:15px;margin-bottom:4px}
+.req-card p{font-size:13.5px;color:var(--dim);line-height:1.6}
+.req-card b{color:var(--txt);font-weight:600}
+/* a regra da casa: todo bloco termina num CTA, senao a pessoa le a prova,
+   concorda, e nao tem pra onde ir. */
+.req-cta{
+  margin-top:16px;background:linear-gradient(180deg,rgba(87,181,51,.06),var(--panel) 60%);
+  border:1px solid rgba(87,181,51,.34);border-radius:var(--r2);
+  padding:18px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+}
+.req-cta p{font-size:14.5px;line-height:1.55;color:var(--txt);max-width:600px}
+.req-cta p strong{color:#fff;font-weight:600}
+/* o .offer-btn nasce com width:100%. Aqui ele divide a linha com o texto,
+   entao precisa voltar a ter largura propria. */
+.req-cta .offer-btn{flex:0 0 auto;width:auto;min-width:280px}
+@media(max-width:860px){
+  .req-cta{flex-direction:column;align-items:stretch;text-align:center;padding:16px 14px}
+  .req-cta .offer-btn{min-width:0;width:100%}
+}
+
+/* ---------- planos ----------
+   Dois cards, nao tres. O destacado e o Completo e fica a DIREITA no desktop e
+   PRIMEIRO no celular, que e a mesma logica de podio da home. */
+.eds{display:grid;grid-template-columns:1fr 1.22fr;gap:20px;align-items:center;max-width:820px;margin:0 auto}
+.offer-card{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);
+  overflow:hidden;display:flex;flex-direction:column;transition:border-color .15s;
+}
+.offer-card:hover{border-color:var(--line2)}
+.offer-card:not(.featured) .ed-new{font-size:19px;color:var(--txt2)}
+.offer-card:not(.featured) .ed-name{font-size:14.5px}
+.offer-card:not(.featured) .offer-features li{font-size:13px}
+.offer-card:not(.featured) .offer-btn{
+  background:var(--panel3);border-color:var(--line2);color:var(--txt);box-shadow:none;font-size:14.5px;padding:12px 20px;
+}
+.offer-card:not(.featured) .offer-btn:hover{background:#2b4054;filter:none}
+.offer-card.featured{
+  border-width:2px;border-color:var(--buy);
+  background:linear-gradient(180deg,rgba(74,157,42,.12) 0%,var(--panel) 26%);
+  box-shadow:0 0 0 1px rgba(74,157,42,.22),0 18px 44px rgba(0,0,0,.5),0 0 70px rgba(74,157,42,.09);
+}
+.ed-ribbon{display:none}
+.featured .ed-ribbon{
+  display:block;background:var(--buy);color:#fff;text-align:center;
+  font-size:11.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:8px 10px;
+}
+.featured .ed-top{padding:16px 18px}
+.featured .ed-name{font-size:18px}
+.featured .ed-name small{font-size:13px}
+.featured .ed-body{padding:16px 18px}
+.featured .offer-features li{font-size:14px}
+.featured .ed-buy{padding:16px 18px}
+.featured .ed-new{font-size:34px}
+.featured .offer-btn{padding:16px 26px;font-size:16.5px}
+.ed-gain{
+  display:none;background:rgba(74,157,42,.1);border:1px solid rgba(74,157,42,.28);
+  border-radius:var(--r);padding:9px 12px;margin-bottom:12px;
+  font-size:12.5px;color:var(--txt2);line-height:1.5;text-align:center;
+}
+.featured .ed-gain{display:block}
+.ed-gain b{color:var(--buy2);font-weight:700}
+.ed-top{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.ed-name{font-size:15.5px;font-weight:700}
+.ed-name small{display:block;font-size:12.5px;font-weight:400;color:var(--dim);margin-top:2px}
+.ed-body{padding:14px 16px;flex:1}
+.ed-buy{padding:14px 16px;border-top:1px solid var(--line);background:var(--panel2)}
+.ed-price-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.ed-price{display:flex;flex-direction:column;line-height:1.15}
+.ed-new{font-size:21px;font-weight:700;color:#fff;letter-spacing:-.02em}
+.ed-once{font-size:12px;color:var(--dim);margin-top:3px}
+/* rotulo que so aparece no celular, pra ordem "recomendado primeiro" ficar
+   proposital em vez de parecer preco fora de ordem */
+.eds-alt{display:none;text-align:center;font-size:12.5px;color:var(--dim);padding:4px 0 0}
+.offer-features{list-style:none;display:flex;flex-direction:column;gap:8px}
+/* gap:0 + margin no ::before, em vez de gap no li: com gap, cada pedaco de texto
+   solto vira item de flex e ganha espaco no meio da frase. */
+.offer-features li{font-size:13.5px;color:var(--txt2);display:flex;gap:0;align-items:flex-start;line-height:1.5}
+.offer-features li::before{content:'\2713';color:var(--buy2);font-weight:700;flex-shrink:0;margin-right:8px}
+.offer-features li strong{color:var(--txt);font-weight:600}
+.offer-features li.no{color:var(--dim)}
+.offer-features li.no::before{content:'\2715';color:#7a8a99}
+@media(max-width:860px){
+  .eds{grid-template-columns:1fr;max-width:430px;gap:18px;align-items:stretch}
+  .offer-card.featured{order:-1}
+  .eds-alt{display:block;order:0}
+}
+
+/* selo de pagamento seguro. Fica SO aqui de proposito: e o unico ponto da
+   pagina onde a pessoa compra. Se trocar de gateway, troque este selo junto. */
+.selo{
+  margin-top:24px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);
+  padding:18px 22px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;
+}
+.selo-hd{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;font-size:14.5px;font-weight:600;color:var(--txt)}
+.selo-hd svg{width:15px;height:15px;flex-shrink:0;fill:none;stroke:var(--buy2);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.selo-hd img{display:block;height:34px;width:auto}
+.selo-list{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:8px 20px}
+.selo-list li{font-size:12.5px;color:var(--txt2);line-height:1.5;display:flex;gap:7px;align-items:center}
+.selo-list li::before{content:'\2713';color:var(--buy2);font-weight:700;flex-shrink:0}
+
+/* ---------- feedbacks ---------- */
+.fbk-trilho{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.fbk-trilho::-webkit-scrollbar{display:none}
+.fbk-card{
+  flex:0 0 260px;scroll-snap-align:center;border-radius:var(--r2);overflow:hidden;
+  border:1px solid var(--line2);background:var(--panel);cursor:zoom-in;padding:0;
+}
+.fbk-card img{width:100%;height:auto;display:block;background:var(--panel2)}
+.fbk-ctl{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:6px;color:var(--dim);font-size:13px}
+.fbk-seta{width:36px;height:36px;border-radius:50%;background:var(--panel);border:1px solid var(--line2);color:var(--txt);font-size:22px;line-height:1;display:grid;place-items:center}
+.fbk-seta:disabled{opacity:.35}
+
+/* ---------- 3 passos ---------- */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:760px){.steps{grid-template-columns:1fr}}
+.step{background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);padding:16px 18px}
+.step-n{
+  width:26px;height:26px;border-radius:6px;background:var(--blue-dim);border:1px solid rgba(89,166,224,.3);
+  color:var(--blue);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:10px;
+}
+.step h3{font-size:15px;margin-bottom:4px}
+.step p{font-size:13.5px;color:var(--dim);line-height:1.6}
+
+/* ---------- como instala ---------- */
+.inst{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:900px}
+@media(max-width:760px){.inst{grid-template-columns:1fr}}
+.inst-item{display:flex;gap:12px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);padding:14px 16px}
+.inst-item svg{flex:none;width:22px;height:22px;stroke:var(--buy2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;margin-top:2px}
+.inst-item h3{font-size:14.5px;margin-bottom:3px}
+.inst-item p{font-size:13.5px;color:var(--txt2);line-height:1.55}
+
+/* ---------- garantia + FAQ ----------
+   No celular ficam empilhados na ordem do HTML: garantia, titulo, perguntas.
+   Do desktop pra cima viram duas colunas e o card da garantia preenche o vazio
+   que existia embaixo do titulo. */
+.faq-list{max-width:820px;display:flex;flex-direction:column;gap:8px}
+@media(min-width:1000px){
+  .faq-wrap{display:grid;grid-template-columns:380px 1fr;gap:14px 40px;align-items:start}
+  .faq-wrap .gr{grid-column:1;grid-row:1 / span 2;max-width:none;margin:0}
+  .faq-wrap .sec-head{grid-column:2;grid-row:1;margin-bottom:0}
+  /* align-items:start e obrigatorio: sem ele, abrir uma resposta estica junto a
+     pergunta vizinha da mesma linha. */
+  .faq-wrap .faq-list{grid-column:2;grid-row:2;max-width:none;display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;align-items:start}
+}
+.gr{max-width:680px;margin-inline:auto}
+.gr-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);padding:20px}
+.gr-badge{width:40px;height:40px;border-radius:9px;background:rgba(74,157,42,.15);border:1px solid rgba(74,157,42,.35);display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.gr-badge svg{width:21px;height:21px;stroke:var(--buy2);fill:none;stroke-width:2}
+.gr-card h3{font-size:16px;margin-bottom:6px}
+.gr-card p{font-size:13.5px;color:var(--dim);line-height:1.65}
+.faq-item{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.faq-q{
+  width:100%;background:none;text-align:left;font-size:14.5px;font-weight:600;color:var(--txt);
+  padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.faq-q:hover{background:var(--panel2)}
+.faq-chev{font-size:10px;color:var(--dim);transition:transform .2s;flex-shrink:0}
+.faq-q.open .faq-chev{transform:rotate(180deg);color:var(--blue)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .28s ease,padding .28s ease;font-size:14px;color:var(--txt2);line-height:1.7;padding:0 16px}
+.faq-a.open{max-height:460px;padding:0 16px 15px}
+
+/* ---------- rodape ---------- */
+.foot{border-top:1px solid var(--line);padding:26px 0 34px;background:var(--bg2)}
+.foot-in{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.foot-brand{display:flex;align-items:center;gap:9px;font-weight:600;font-size:14px}
+.foot-brand img{width:24px;height:24px;border-radius:5px}
+.foot p{font-size:12.5px;color:var(--dim);line-height:1.6}
+.foot a{color:var(--blue)}
+
+/* ---------- CTA fixo no celular ---------- */
+#sticky-cta{
+  position:fixed;left:12px;right:12px;bottom:12px;z-index:700;display:none;
+  align-items:center;justify-content:center;gap:8px;
+  background:linear-gradient(180deg,var(--buy2),var(--buy));color:#fff;font-weight:700;font-size:15px;
+  padding:14px;border-radius:var(--r);box-shadow:0 6px 22px rgba(0,0,0,.5);
+}
+@media(max-width:820px){#sticky-cta.on{display:flex}}
+
+/* ---------- celular ---------- */
+@media(max-width:720px){
+  .wrap{padding:0 16px}
+  .sec{padding:40px 0}
+  /* migalha de pao e mobilia de desktop: no celular e so ruido */
+  .ph-crumb{display:none}
+  .ph{padding:20px 0 0}
+  .ph h1{text-align:center;font-size:27px;line-height:1.18}
+  .ph-sub{text-align:center;margin:10px auto 0;max-width:330px;font-size:14.5px}
+  .pg{margin-top:18px}
+  .sec-head{text-align:center;margin-left:auto;margin-right:auto}
+  .sec-head p{max-width:330px;margin-left:auto;margin-right:auto}
+  /* a arte sangra de ponta a ponta: no celular fica bem mais imponente */
+  .art{margin:0 -16px;border-radius:0;border-left:0;border-right:0}
+  .art-thumb{width:82px}
+  .art-cap{padding:30px 14px 11px}
+  .side-desc{text-align:center}
+  /* a caixa de compra sobe pra ANTES da ficha tecnica, senao o botao cai pra
+     fora da primeira tela. Mesma decisao da home. */
+  .buybox{order:-1;padding:16px}
+  .buybox-top{justify-content:center;gap:12px;margin-bottom:14px}
+  .buybox-prices{text-align:center}
+  .buybox-new{font-size:27px}
+  .offer-btn{padding:15px 24px;font-size:16px}
+  .step{text-align:center;padding:18px 16px}
+  .step-n{margin-left:auto;margin-right:auto}
+  .req-card{text-align:center}
+  .req-card svg{margin-left:auto;margin-right:auto}
+  .ed-top{flex-direction:column;align-items:center;text-align:center;gap:8px}
+  .ed-price-row{justify-content:center}
+  .ed-new{font-size:24px}
+  .gr-card{text-align:center;padding:22px 18px}
+  .gr-badge{margin-left:auto;margin-right:auto}
+  .gr-card p{max-width:320px;margin-left:auto;margin-right:auto}
+  .faq-q{font-size:14px;padding:14px}
+  /* o link tinha 15px de altura: pequeno demais pra dedo */
+  .side-note a{display:inline-block;padding:11px 8px;text-decoration:underline;text-underline-offset:3px}
+  .foot-in{flex-direction:column;text-align:center;gap:14px}
+  .foot-brand{justify-content:center}
+  .foot p{max-width:330px;margin-left:auto;margin-right:auto}
+  #sticky-cta{padding:15px;font-size:15.5px}
+  body{padding-bottom:78px}
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===== FONTE UNICA DA OFERTA =====================================
+     TROQUE SO AQUI. O preco escrito no HTML mais abaixo e fallback pra quem
+     cair na pagina com o JS travado; este bloco manda em tudo: caixa de compra,
+     os dois planos, a caixa de comparacao e a linha de valor do destacado.
+
+     ANTES DE SUBIR: troque os dois `link` pelo checkout de verdade. Enquanto
+     estiver 'PREENCHER', o botao NAO navega (avisa no console e fica parado),
+     de proposito, pra ninguem publicar uma pagina que cobra e nao abre o
+     pagamento.
+
+     requisito.android e requisito.espaco: confirme com o arquivo que voce
+     entrega hoje antes de subir. Sao o que costuma valer pro Euro Truck no
+     Android, nao uma medicao do seu pacote.
+     ================================================================= -->
+<script>
+window.ETM = {
+  padrao: {
+    nome:  'Padrão',
+    tag:   'o jogo instalado',
+    preco: 'R$ 19,97',
+    val:   19.97,
+    link:  'PREENCHER'
+  },
+  completo: {
+    nome:  'Completo',
+    tag:   'tudo desbloqueado',
+    preco: 'R$ 29,97',
+    val:   29.97,
+    link:  'PREENCHER'
+  },
+  requisito: {
+    /* Roda em QUALQUER Android e QUALQUER iPhone (Almaz, 20/09/2026). Nao
+       coloque versao minima aqui: numero chutado na ficha tecnica so serve
+       pra pessoa se achar de fora e fechar a pagina. */
+    sistema: 'qualquer Android ou iPhone'
+  },
+  /* Prints de quem comprou o EURO TRUCK MOBILE. Enquanto a lista estiver vazia
+     a secao "Quem ja comprou" se apaga sozinha: e melhor nao ter a secao do que
+     ter a secao com print de outro produto. Quem esta comprando jogo de celular
+     percebe print de biblioteca Steam na hora.
+     Pra ligar: salve os arquivos em /assets/feedbacks-eurotruck/ e coloque aqui
+     {img:'/assets/feedbacks-eurotruck/et-01.webp', alt:'...'}. */
+  feedbacks: []
+};
+</script>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a href="/" class="tb-brand">
+      <img src="/assets/logo-128.png" alt="Almaz Store" width="26" height="26">
+      <span>Almaz Store</span>
+    </a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ===================== TOPO: FICHA DO PRODUTO ===================== -->
+<section class="ph">
+  <div class="wrap">
+
+    <div class="ph-crumb">Almaz Store &nbsp;&#8250;&nbsp; <b>Euro Truck Mobile</b></div>
+
+    <!-- A manchete vende a CONSEQUENCIA, igual a home. O que a pessoa quer nao e
+         "um jogo de caminhao pra Android": e dirigir o Euro Truck sem ter o PC
+         que o Euro Truck sempre exigiu dela. O "sem precisar de PC" e o eixo da
+         pagina inteira, e e ele que a secao #custo sustenta com preco real.
+         Se for mexer aqui, mexa nas palavras, nao na promessa. -->
+    <h1>O Euro Truck com tudo liberado, rodando no seu celular</h1>
+    <p class="ph-sub">Todos os caminhões, o mapa inteiro e o dinheiro liberados. Roda em qualquer Android ou iPhone, sem PC e sem emulador.</p>
+
+    <div class="pg">
+
+      <!-- arte + miniaturas -->
+      <div class="art reveal">
+        <div class="art-stage" id="art-stage">
+          <div class="art-slide on"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/e040f74641ac21f15e3ec7c2415fc8b4de0b6bf9/ss_e040f74641ac21f15e3ec7c2415fc8b4de0b6bf9.jpg" alt="Caminhão carregando no pátio" fetchpriority="high" decoding="async"></div>
+          <div class="art-slide"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/4e725a12f1639d71c94a23ec219d098d8273d78c/ss_4e725a12f1639d71c94a23ec219d098d8273d78c.jpg" alt="Estrada de montanha no fim da tarde" loading="lazy" decoding="async"></div>
+          <div class="art-slide"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/a944c7f801629bfa0cfb91fa7b23b4ff95e11753/ss_a944c7f801629bfa0cfb91fa7b23b4ff95e11753.jpg" alt="Cabine do caminhão por dentro" loading="lazy" decoding="async"></div>
+          <div class="art-slide"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/e8f2f677d41086916804ffca0e3da04c7c5b600f/ss_e8f2f677d41086916804ffca0e3da04c7c5b600f.jpg" alt="Caminhão tanque na autoestrada" loading="lazy" decoding="async"></div>
+          <div class="art-slide"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/d7e184079e3ecd5612c355f87c60430a00b69ab9/ss_d7e184079e3ecd5612c355f87c60430a00b69ab9.jpg" alt="Carga de contêiner saindo do porto" loading="lazy" decoding="async"></div>
+          <div class="art-slide"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/06aa11ece5d3303cfcfeafb3c81734258a7dd614/ss_06aa11ece5d3303cfcfeafb3c81734258a7dd614.jpg" alt="Oficina de personalização do caminhão" loading="lazy" decoding="async"></div>
+          <div class="art-slide"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/f903e4e63d478e9fe1db48ed05dfc5b314f262ad/ss_f903e4e63d478e9fe1db48ed05dfc5b314f262ad.jpg" alt="Carga pesada viajando à noite" loading="lazy" decoding="async"></div>
+          <div class="art-slide"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/c94a1cd5dc2ae212f94b098e8162c1f78dc9fd9d/ss_c94a1cd5dc2ae212f94b098e8162c1f78dc9fd9d.jpg" alt="Mapa da Europa com as cargas disponíveis" loading="lazy" decoding="async"></div>
+          <div class="art-cap">
+            <span class="art-cap-name" id="art-name">Caminhão carregando no pátio</span>
+            <span class="art-cap-tag">Euro Truck Mobile</span>
+          </div>
+        </div>
+        <!-- data-i tem que bater com a ORDEM dos .art-slide acima. As miniaturas
+             reusam a MESMA URL do slide de proposito: o navegador serve do cache
+             e a miniatura sai de graca. -->
+        <div class="art-thumbs" id="art-thumbs">
+          <div class="art-thumb on" data-i="0"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/e040f74641ac21f15e3ec7c2415fc8b4de0b6bf9/ss_e040f74641ac21f15e3ec7c2415fc8b4de0b6bf9.jpg" alt="" loading="lazy"></div>
+          <div class="art-thumb" data-i="1"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/4e725a12f1639d71c94a23ec219d098d8273d78c/ss_4e725a12f1639d71c94a23ec219d098d8273d78c.jpg" alt="" loading="lazy"></div>
+          <div class="art-thumb" data-i="2"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/a944c7f801629bfa0cfb91fa7b23b4ff95e11753/ss_a944c7f801629bfa0cfb91fa7b23b4ff95e11753.jpg" alt="" loading="lazy"></div>
+          <div class="art-thumb" data-i="3"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/e8f2f677d41086916804ffca0e3da04c7c5b600f/ss_e8f2f677d41086916804ffca0e3da04c7c5b600f.jpg" alt="" loading="lazy"></div>
+          <div class="art-thumb" data-i="4"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/d7e184079e3ecd5612c355f87c60430a00b69ab9/ss_d7e184079e3ecd5612c355f87c60430a00b69ab9.jpg" alt="" loading="lazy"></div>
+          <div class="art-thumb" data-i="5"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/06aa11ece5d3303cfcfeafb3c81734258a7dd614/ss_06aa11ece5d3303cfcfeafb3c81734258a7dd614.jpg" alt="" loading="lazy"></div>
+          <div class="art-thumb" data-i="6"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/f903e4e63d478e9fe1db48ed05dfc5b314f262ad/ss_f903e4e63d478e9fe1db48ed05dfc5b314f262ad.jpg" alt="" loading="lazy"></div>
+          <div class="art-thumb" data-i="7"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/c94a1cd5dc2ae212f94b098e8162c1f78dc9fd9d/ss_c94a1cd5dc2ae212f94b098e8162c1f78dc9fd9d.jpg" alt="" loading="lazy"></div>
+        </div>
+      </div>
+
+      <!-- ficha tecnica + caixa de compra -->
+      <aside class="side">
+
+        <div class="side-card">
+          <p class="side-desc">
+            Você recebe o jogo e o passo a passo da instalação. Instala no seu celular,
+            abre e já está dirigindo, com os caminhões, as garagens e o mapa abertos.
+            Sem PC, sem emulador e sem login de terceiros.
+          </p>
+          <dl class="spec">
+            <div class="spec-row"><dt>Aparelho</dt><dd class="ok">Qualquer Android ou iPhone</dd></div>
+            <div class="spec-row"><dt>Instalação</dt><dd class="ok">Direto no celular</dd></div>
+            <div class="spec-row"><dt>Entrega</dt><dd class="ok">Na hora do pagamento</dd></div>
+            <div class="spec-row"><dt>Caminhões e mapa</dt><dd class="ok">Tudo liberado</dd></div>
+            <div class="spec-row"><dt>Licença</dt><dd>Vitalícia, taxa única</dd></div>
+            <div class="spec-row"><dt>Anúncio no jogo</dt><dd class="ok">Nenhum</dd></div>
+            <div class="spec-row"><dt>Garantia</dt><dd>7 dias</dd></div>
+          </dl>
+        </div>
+
+        <div class="buybox">
+          <div class="buybox-top">
+            <span class="buybox-prices">
+              <span class="buybox-from">a partir de</span>
+              <span class="buybox-new num" data-etm-preco="padrao">R$ 19,97</span>
+              <span class="buybox-once">pagamento único</span>
+            </span>
+          </div>
+          <!-- Degrau 1 do funil: NAO vai direto pro checkout. Abre a leitura pelo
+               jogo, igual a home faz com a biblioteca. Quem ja esta decidido tem o
+               link "Comparar os 2 planos" logo abaixo e o botao fixo no celular. -->
+          <a href="#dentro" class="offer-btn">Ver o jogo por dentro</a>
+          <div class="buybox-pay">Pagamento no <b>PIX</b>, entrega na hora</div>
+
+          <div class="medos">
+            <div class="medo">
+              <svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"></rect><path d="M11 18h2"></path></svg>
+              <span class="medo-txt">
+                <span class="medo-q">Vai rodar no meu celular?</span>
+                <span class="medo-a">Roda em qualquer Android e em qualquer iPhone, com o gráfico ajustável pro seu aparelho. Se não rodar no seu, você tem 7 dias pra pedir o dinheiro de volta.</span>
+              </span>
+            </div>
+            <div class="medo">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M8 12.5l2.5 2.5L16 9"></path></svg>
+              <span class="medo-txt">
+                <span class="medo-q">Preciso de PC ou de emulador?</span>
+                <span class="medo-a">Não. O arquivo instala direto no celular, como qualquer aplicativo, e o suporte acompanha você na instalação.</span>
+              </span>
+            </div>
+            <div class="medo">
+              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 12l2 2 4-4"></path></svg>
+              <span class="medo-txt">
+                <span class="medo-q">Vou ter que comprar caminhão dentro do jogo?</span>
+                <span class="medo-a">Não. No Completo os caminhões, as garagens e o dinheiro já vêm abertos. Paga uma vez, sem mensalidade e sem pacote de moedas.</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="side-note">Quer ver a diferença entre eles? <a href="#planos" style="color:var(--blue)">Comparar os 2 planos</a></div>
+
+      </aside>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== O JOGO POR DENTRO ===================== -->
+<!-- Equivalente da secao "Um pedaco da biblioteca" da home. La a prova e a
+     quantidade de jogos; aqui a prova e o jogo em si, porque e um produto so. -->
+<section class="sec" id="dentro">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>É o Euro Truck de verdade</h2>
+      <p>A mesma cabine, a mesma carga, o mesmo mapa da Europa. Nada de imitação de loja de aplicativo. Toque em qualquer imagem pra ampliar.</p>
+    </div>
+
+    <div class="shots reveal">
+      <button class="shot" type="button" data-zoom="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/a944c7f801629bfa0cfb91fa7b23b4ff95e11753/ss_a944c7f801629bfa0cfb91fa7b23b4ff95e11753.jpg">
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/a944c7f801629bfa0cfb91fa7b23b4ff95e11753/ss_a944c7f801629bfa0cfb91fa7b23b4ff95e11753.jpg" alt="Cabine do caminhão por dentro, com volante e painel" loading="lazy" decoding="async">
+        <span class="shot-txt"><span class="shot-nome">A cabine por dentro</span><span class="shot-sub">Volante, painel, retrovisor e a estrada pela frente.</span></span>
+      </button>
+      <button class="shot" type="button" data-zoom="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/c94a1cd5dc2ae212f94b098e8162c1f78dc9fd9d/ss_c94a1cd5dc2ae212f94b098e8162c1f78dc9fd9d.jpg">
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/c94a1cd5dc2ae212f94b098e8162c1f78dc9fd9d/ss_c94a1cd5dc2ae212f94b098e8162c1f78dc9fd9d.jpg" alt="Mapa da Europa com as cargas disponíveis" loading="lazy" decoding="async">
+        <span class="shot-txt"><span class="shot-nome">O mapa da Europa</span><span class="shot-sub">Você escolhe a carga, o destino e o caminho que vai fazer.</span></span>
+      </button>
+      <button class="shot" type="button" data-zoom="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/06aa11ece5d3303cfcfeafb3c81734258a7dd614/ss_06aa11ece5d3303cfcfeafb3c81734258a7dd614.jpg">
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/06aa11ece5d3303cfcfeafb3c81734258a7dd614/ss_06aa11ece5d3303cfcfeafb3c81734258a7dd614.jpg" alt="Oficina de personalização, escolhendo peças do caminhão" loading="lazy" decoding="async">
+        <span class="shot-txt"><span class="shot-nome">A oficina</span><span class="shot-sub">Cor, cabine, rodas, escapamento. O caminhão fica com a sua cara.</span></span>
+      </button>
+      <button class="shot" type="button" data-zoom="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/4e725a12f1639d71c94a23ec219d098d8273d78c/ss_4e725a12f1639d71c94a23ec219d098d8273d78c.jpg">
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/4e725a12f1639d71c94a23ec219d098d8273d78c/ss_4e725a12f1639d71c94a23ec219d098d8273d78c.jpg" alt="Estrada de montanha no fim da tarde" loading="lazy" decoding="async">
+        <span class="shot-txt"><span class="shot-nome">A estrada de verdade</span><span class="shot-sub">Amanhecer, anoitecer e chuva. A viagem muda de cara no caminho.</span></span>
+      </button>
+      <button class="shot" type="button" data-zoom="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/f903e4e63d478e9fe1db48ed05dfc5b314f262ad/ss_f903e4e63d478e9fe1db48ed05dfc5b314f262ad.jpg">
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/f903e4e63d478e9fe1db48ed05dfc5b314f262ad/ss_f903e4e63d478e9fe1db48ed05dfc5b314f262ad.jpg" alt="Carga pesada e comprida viajando à noite" loading="lazy" decoding="async">
+        <span class="shot-txt"><span class="shot-nome">Carga pesada</span><span class="shot-sub">Das mais simples até as compridas, que pedem mão firme na curva.</span></span>
+      </button>
+      <button class="shot" type="button" data-zoom="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/d7e184079e3ecd5612c355f87c60430a00b69ab9/ss_d7e184079e3ecd5612c355f87c60430a00b69ab9.jpg">
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/d7e184079e3ecd5612c355f87c60430a00b69ab9/ss_d7e184079e3ecd5612c355f87c60430a00b69ab9.jpg" alt="Caminhão com contêiner saindo do porto" loading="lazy" decoding="async">
+        <span class="shot-txt"><span class="shot-nome">Portos e fábricas</span><span class="shot-sub">Pega a carga onde ela nasce e entrega do outro lado do mapa.</span></span>
+      </button>
+    </div>
+
+    <div class="flow reveal"><a href="#custo" class="btn-ghost">Quanto isso custa no PC</a></div>
+  </div>
+</section>
+
+<!-- ===================== QUANTO CUSTA NO PC ===================== -->
+<!-- Esta e a ancora da pagina, o equivalente do carrinho da Steam da home.
+     TODO PRECO AQUI E REAL: veio da loja brasileira da Steam em 20/09/2026,
+     pela API appdetails com cc=br. NAO invente numero nesta caixa: a forca dela
+     e justamente a pessoa poder abrir a Steam e conferir. O mesmo erro que a
+     home ja cometeu uma vez (o "de R$ 497,00" inventado) mata a ancora boa.
+     Se for atualizar os precos, atualize a data no .sec-head junto. -->
+<section class="sec" id="custo">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>No PC, essa estrada custa isto</h2>
+      <p>O jogo e os mapas, com o preço que a Steam brasileira cobrava em 20/09/2026. E ainda sem nada liberado.</p>
+    </div>
+
+    <div class="conta reveal">
+
+      <div class="conta-cart">
+        <div class="conta-cart-hd">Carrinho na Steam</div>
+
+        <div class="conta-row">
+          <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/9a81dc3126c56637297b654f9dcac057cfd79b77/header.jpg" alt="Euro Truck Simulator 2" loading="lazy" decoding="async">
+          <span class="conta-nome">Euro Truck Simulator 2<small>o jogo base</small></span>
+          <span class="conta-preco num">R$ 61,99</span>
+        </div>
+        <div class="conta-row">
+          <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227310/ff67a1defadae8f710e3439d90a16dc5f8ae42f5/header.jpg" alt="Going East!" loading="lazy" decoding="async">
+          <span class="conta-nome">Going East!<small>mapa do leste europeu</small></span>
+          <span class="conta-preco num">R$ 31,99</span>
+        </div>
+        <div class="conta-row">
+          <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/304212/c8a19f31c2eef65f1b78b1210c04073867220a02/header.jpg" alt="Scandinavia" loading="lazy" decoding="async">
+          <span class="conta-nome">Scandinavia<small>mapa da Escandinávia</small></span>
+          <span class="conta-preco num">R$ 56,99</span>
+        </div>
+        <div class="conta-row">
+          <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/531130/12e1527163a739ab37f5a910045f9a74246b1d7e/header.jpg" alt="Vive la France" loading="lazy" decoding="async">
+          <span class="conta-nome">Vive la France<small>mapa da França</small></span>
+          <span class="conta-preco num">R$ 56,99</span>
+        </div>
+        <div class="conta-row">
+          <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/558244/81e219d061a698d9195fd54f12490fd39d667c52/header.jpg" alt="Italia" loading="lazy" decoding="async">
+          <span class="conta-nome">Italia<small>mapa da Itália</small></span>
+          <span class="conta-preco num">R$ 56,99</span>
+        </div>
+        <div class="conta-row">
+          <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/925580/735f6c4b4f67b9709b3c2b19bbf0c5ff6209885f/header.jpg" alt="Beyond the Baltic Sea" loading="lazy" decoding="async">
+          <span class="conta-nome">Beyond the Baltic Sea<small>mapa do Báltico</small></span>
+          <span class="conta-preco num">R$ 56,99</span>
+        </div>
+        <div class="conta-row">
+          <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1209460/826486bdcbe5668b0aa70bca2b7a6ee5a59bba85/header.jpg" alt="Iberia" loading="lazy" decoding="async">
+          <span class="conta-nome">Iberia<small>mapa de Espanha e Portugal</small></span>
+          <span class="conta-preco num">R$ 56,99</span>
+        </div>
+
+        <div class="conta-total">
+          <span>Total do carrinho</span>
+          <b class="num">R$ 378,93</b>
+        </div>
+
+        <div class="conta-anos">
+          <div class="conta-ano now"><span>Hoje</span><b class="num">R$ 378,93</b></div>
+          <div class="conta-ano next"><span>Depois</span>e ainda falta o PC que aguenta rodar tudo isso</div>
+          <div class="conta-ano next"><span>Sempre</span>e nada vem liberado: caminhão e garagem você compra dirigindo</div>
+        </div>
+      </div>
+
+      <div class="conta-vs">
+        <div class="conta-vs-lbl">No celular, uma vez só</div>
+        <div class="conta-vs-price">
+          <b class="num" data-etm-preco="padrao">R$ 19,97</b>
+          <span>e acabou</span>
+        </div>
+        <p class="conta-vs-sub">
+          A mesma estrada, <strong>com tudo já liberado</strong>, no aparelho que você já tem no bolso.
+          Sem PC, sem mapa vendido separado e sem pagar de novo.
+        </p>
+        <!-- degrau do funil: a caixa faz a comparacao de preco, que e o trabalho
+             dela, e manda a pessoa pra objecao seguinte em vez de pro checkout. -->
+        <a href="#roda" class="btn-ghost">Será que roda no meu celular?</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SERA QUE RODA ===================== -->
+<!-- Esta secao ocupa o lugar que na home e dos lancamentos futuros. Trocou
+     porque a objecao muda de produto: no PC a duvida e "vou tomar ban", no
+     celular a duvida e "meu aparelho aguenta". Se ela sair, a garantia de 7
+     dias passa a ser a unica resposta pra isso, e ai a secao faz falta. -->
+<section class="sec" id="roda">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Roda no seu celular, seja ele qual for</h2>
+      <p>É a pergunta que mais chega pra gente, e a resposta é simples: qualquer Android, qualquer iPhone. E se não rodar no seu, você tem 7 dias pra pedir o dinheiro de volta.</p>
+    </div>
+
+    <div class="req reveal">
+      <div class="req-card">
+        <svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"></rect><path d="M10.5 18.5h3"></path></svg>
+        <h3>Qualquer celular</h3>
+        <p>Roda em <b data-etm-req="sistema">qualquer Android ou iPhone</b>. Não precisa ser aparelho novo nem caro.</p>
+      </div>
+      <div class="req-card">
+        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="13" rx="2"></rect><path d="M8 21h8M12 17v4"></path></svg>
+        <h3>Sem PC no meio</h3>
+        <p>Nada de emulador, nada de programa no computador. <b>O celular sozinho dá conta</b> do começo ao fim.</p>
+      </div>
+      <div class="req-card">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+        <h3>Gráfico ajustável</h3>
+        <p>Dentro do jogo você <b>baixa o gráfico</b> se o aparelho for mais simples, e sobe se ele for forte.</p>
+      </div>
+    </div>
+
+    <div class="req-cta reveal">
+      <p><strong>Na dúvida, a garantia resolve.</strong> Você compra, instala e testa no seu próprio celular. Se não rodar do jeito que você esperava, pede o reembolso em até 7 dias e devolvemos o valor.</p>
+      <a href="#planos" class="offer-btn">Quero com tudo liberado</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PLANOS ===================== -->
+<section class="sec" id="planos">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Escolha como você quer começar</h2>
+      <p>Taxa única nos dois, sem mensalidade. A diferença não é o jogo, é o quanto dele já vem aberto quando você liga pela primeira vez.</p>
+    </div>
+
+    <div class="eds reveal">
+
+      <div class="eds-alt">Ou comece pelo jogo puro</div>
+
+      <!-- Padrao: o jogo sem nada desbloqueado -->
+      <div class="offer-card" data-plan-id="padrao">
+        <div class="ed-top">
+          <div class="ed-name">Padrão<small>o jogo instalado</small></div>
+        </div>
+        <div class="ed-body">
+          <ul class="offer-features">
+            <li><span><strong>O jogo completo</strong> instalado no seu celular</span></li>
+            <li>Mapa da Europa com as cidades e as estradas</li>
+            <li>Carreira do zero: você compra o seu primeiro caminhão</li>
+            <li>Sem anúncio e sem pacote de moedas</li>
+            <li>Passo a passo da instalação</li>
+            <li>Suporte no WhatsApp</li>
+            <li class="no">Caminhões e garagens começam bloqueados</li>
+            <li class="no">Dinheiro você junta dirigindo</li>
+          </ul>
+        </div>
+        <div class="ed-buy">
+          <div class="ed-price-row">
+            <span class="ed-price">
+              <span class="ed-new num" data-etm-preco="padrao">R$ 19,97</span>
+              <span class="ed-once">pagamento único</span>
+            </span>
+          </div>
+          <a href="#planos" class="offer-btn" data-etm-buy="padrao">Quero só o jogo</a>
+          <div class="offer-methods">Pagamento no PIX</div>
+          <div class="offer-trust"><strong>Entrega na hora</strong> e 7 dias de garantia</div>
+        </div>
+      </div>
+
+      <!-- Completo: tudo desbloqueado (destacado) -->
+      <div class="offer-card featured" data-plan-id="completo">
+        <div class="ed-ribbon">Mais escolhido</div>
+        <div class="ed-top">
+          <div class="ed-name">Completo<small>tudo desbloqueado</small></div>
+        </div>
+        <div class="ed-body">
+          <ul class="offer-features">
+            <li><span><strong>Tudo o que tem no Padrão</strong>, mais o que vem abaixo</span></li>
+            <li><span><strong>Todos os caminhões liberados</strong> desde a primeira viagem</span></li>
+            <li>Todas as garagens abertas, em toda a Europa</li>
+            <li>O mapa inteiro destravado, sem cidade fechada</li>
+            <li>Dinheiro liberado, sem precisar juntar</li>
+            <li>Pintura, acessórios e cabine desbloqueados</li>
+            <li>Sem anúncio e sem pacote de moedas</li>
+            <li>Passo a passo da instalação</li>
+            <li>Suporte no WhatsApp</li>
+          </ul>
+        </div>
+        <div class="ed-buy">
+          <!-- Linha de valor: a aritmetica sai dos precos dos proprios planos,
+               entao ela se atualiza sozinha se voce mexer no window.ETM. O texto
+               chumbado aqui e so o fallback pro caso de o JS nao rodar. -->
+          <div class="ed-gain" id="ed-gain">
+            São <b>R$ 10,00</b> a mais, e é a diferença entre <b>já sair dirigindo o caminhão que você quer</b> ou passar semanas juntando dinheiro.
+          </div>
+          <div class="ed-price-row">
+            <span class="ed-price">
+              <span class="ed-new num" data-etm-preco="completo">R$ 29,97</span>
+              <span class="ed-once">pagamento único</span>
+            </span>
+          </div>
+          <a href="#planos" class="offer-btn" data-etm-buy="completo">Quero com tudo liberado</a>
+          <div class="offer-methods">Pagamento no PIX</div>
+          <div class="offer-trust"><strong>Entrega na hora</strong> e 7 dias de garantia</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="selo reveal">
+      <div class="selo-hd">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
+        <span>Pagamento seguro por</span>
+        <img src="/assets/mercado-pago-branco.svg" alt="Mercado Pago" width="84" height="34" loading="lazy" decoding="async">
+      </div>
+      <ul class="selo-list">
+        <li>Ambiente criptografado</li>
+        <li>PIX com liberação na hora</li>
+        <li>7 dias de garantia</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== QUEM JA COMPROU =====================
+     Nasce escondida e SO aparece se window.ETM.feedbacks tiver print deste
+     produto. Se a lista estiver vazia o script apaga a secao inteira, e a
+     pagina fecha sem buraco. -->
+<section class="sec" id="feedbacks" hidden>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Quem já comprou</h2>
+      <p>Mensagens que chegaram no nosso WhatsApp. Arraste pro lado e toque pra ampliar.</p>
+    </div>
+    <div class="fbk-trilho" id="fbk-trilho"></div>
+    <div class="fbk-ctl">
+      <button type="button" class="fbk-seta" id="fbk-ant" aria-label="Anterior">&#8249;</button>
+      <span id="fbk-cont"></span>
+      <button type="button" class="fbk-seta" id="fbk-prox" aria-label="Próximo">&#8250;</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== COMO FUNCIONA (3 PASSOS) ===================== -->
+<section class="sec" id="passos">
+  <div class="wrap">
+    <div class="sec-head reveal"><h2>Do pagamento ao caminhão andando</h2></div>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-n num">1</div>
+        <h3>Escolhe o plano e paga</h3>
+        <p>Pagamento no PIX. A confirmação sai na hora que o pagamento cai.</p>
+      </div>
+      <div class="step">
+        <div class="step-n num">2</div>
+        <h3>Recebe o arquivo e o passo a passo</h3>
+        <p>Chega em poucos minutos, com as instruções escritas pra instalar no celular.</p>
+      </div>
+      <div class="step">
+        <div class="step-n num">3</div>
+        <h3>Instala e pega a estrada</h3>
+        <p>Toca no arquivo, instala como qualquer app e o jogo abre pronto pra jogar.</p>
+      </div>
+    </div>
+    <div class="flow reveal"><a href="#instalacao" class="btn-ghost">Como é a instalação</a></div>
+  </div>
+</section>
+
+<!-- ===================== COMO INSTALA =====================
+     Equivalente da secao "Isso nao e jogo pirata" da home: e o bloco que tira o
+     medo tecnico. No PC o medo e ban; no celular o medo e "vou ter que mexer em
+     alguma coisa do meu aparelho e estragar". -->
+<section class="sec" id="instalacao">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Não precisa mexer no seu celular</h2>
+      <p>Android ou iPhone, o passo a passo que chega no seu e-mail é o do seu aparelho. Nada além disso.</p>
+    </div>
+    <div class="inst reveal">
+      <div class="inst-item">
+        <svg viewBox="0 0 24 24"><path d="M12 3v12"></path><path d="M8 11l4 4 4-4"></path><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"></path></svg>
+        <div><h3>Instala como qualquer app</h3><p>Você segue o passo a passo do seu aparelho e o jogo entra como qualquer outro aplicativo. São poucos minutos.</p></div>
+      </div>
+      <div class="inst-item">
+        <svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
+        <div><h3>Não precisa de root nem jailbreak</h3><p>Nada de destravar o aparelho, trocar sistema ou instalar programa de PC pra preparar o celular.</p></div>
+      </div>
+      <div class="inst-item">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M15 9l-6 6M9 9l6 6"></path></svg>
+        <div><h3>Não pede login de nada</h3><p>O jogo não pede a sua conta Google nem a sua Apple ID, não pede senha e não entra em conta de terceiro. É seu, no seu aparelho.</p></div>
+      </div>
+      <div class="inst-item">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        <div><h3>Travou? A gente instala com você</h3><p>Se emperrar em qualquer etapa, é só chamar no WhatsApp. O suporte acompanha até o jogo abrir.</p></div>
+      </div>
+    </div>
+    <div class="flow reveal"><a href="#planos" class="btn-ghost">Voltar pros planos</a></div>
+  </div>
+</section>
+
+<!-- ===================== GARANTIA + FAQ ===================== -->
+<section class="sec" id="faq">
+  <div class="wrap faq-wrap">
+
+    <div class="gr">
+      <div class="gr-card reveal">
+        <div class="gr-badge">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 12l2 2 4-4"></path></svg>
+        </div>
+        <h3>7 dias pra testar sem risco</h3>
+        <p>
+          Compra, instala no seu celular e testa. Se não curtir por qualquer motivo, você
+          pede o reembolso dentro de 7 dias e devolvemos o valor, sem enrolação.
+        </p>
+      </div>
+    </div>
+
+    <div class="sec-head reveal"><h2>Perguntas frequentes</h2></div>
+    <div class="faq-list" id="fl"></div>
+
+  </div>
+</section>
+
+</main>
+
+<!-- ===================== RODAPÉ ===================== -->
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div>
+      <div class="foot-brand"><img src="/assets/logo-128.png" alt="Almaz Store" width="24" height="24"> Almaz Store</div>
+      <p style="margin-top:8px">Suporte pelo WhatsApp. Pagamento por PIX.</p>
+    </div>
+    <p style="max-width:460px">
+      Não somos afiliados nem representantes da SCS Software. Euro Truck Simulator é marca
+      registrada da SCS Software. As imagens desta página são material oficial do jogo e
+      servem para ilustrar a jogabilidade.
+    </p>
+  </div>
+</footer>
+
+<a id="sticky-cta" href="#planos" role="button" aria-label="Ver os planos">Quero com tudo liberado</a>
+
+<div class="zoom" id="zoom" role="dialog" aria-modal="true" aria-label="Imagem ampliada">
+  <button type="button" id="zoom-x" aria-label="Fechar">&times;</button>
+  <img id="zoom-img" src="" alt="">
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var ETM = window.ETM || {};
+
+  /* ---------- reveal ---------- */
+  var io = new IntersectionObserver(function (e) {
+    e.forEach(function (x) { if (x.isIntersecting) x.target.classList.add('visible'); });
+  }, { threshold: .06 });
+  document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+
+  /* ---------- preco e requisitos vindos do window.ETM ----------
+     O HTML ja nasce com um valor escrito dentro (fallback pra JS travado); isto
+     aqui so sobrescreve. Por isso nunca apaga o texto se o dado faltar. */
+  document.querySelectorAll('[data-etm-preco]').forEach(function (el) {
+    var p = ETM[el.getAttribute('data-etm-preco')];
+    if (p && p.preco) el.textContent = p.preco;
+  });
+  document.querySelectorAll('[data-etm-req]').forEach(function (el) {
+    var v = (ETM.requisito || {})[el.getAttribute('data-etm-req')];
+    if (v) el.textContent = v;
+  });
+
+  /* Linha de valor do plano destacado: a diferenca sai dos dois precos, entao
+     ela nunca fica mentindo depois de um reajuste. */
+  (function () {
+    var g = document.getElementById('ed-gain');
+    if (!g || !ETM.padrao || !ETM.completo) return;
+    var dif = (Number(ETM.completo.val) || 0) - (Number(ETM.padrao.val) || 0);
+    if (!(dif > 0)) { g.style.display = 'none'; return; }
+    var txt = 'R$ ' + dif.toFixed(2).replace('.', ',');
+    g.innerHTML = 'São <b>' + txt + '</b> a mais, e é a diferença entre ' +
+                  '<b>já sair dirigindo o caminhão que você quer</b> ou passar semanas juntando dinheiro.';
+  })();
+
+  /* ---------- checkout ----------
+     Leva as UTMs que chegaram na pagina pro checkout. Sem isto a venda entra
+     como organica no painel e a campanha que pagou pelo clique fica sem credito.
+     Se o link chegou SEM utm_campaign, marcamos 'eurotruck' so pra dar nome a
+     venda direta; campanha que veio na URL nunca e sobrescrita. O parametro
+     `produto` vai sempre, pra separar esta pagina da loja de PC no painel. */
+  var KEYS = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','src','sck','xcod','fbclid','gclid'];
+  function comUtm(base) {
+    var u;
+    try { u = new URL(base); } catch (e) { return base; }
+    var cur = new URLSearchParams(window.location.search);
+    KEYS.forEach(function (k) { var v = cur.get(k); if (v) u.searchParams.set(k, v); });
+    if (!u.searchParams.get('utm_campaign')) u.searchParams.set('utm_campaign', 'eurotruck');
+    u.searchParams.set('produto', 'eurotruck');
+    return u.toString();
+  }
+
+  var SPIN = '<span class="btn-spin" aria-hidden="true"></span>Abrindo checkout...';
+  document.querySelectorAll('[data-etm-buy]').forEach(function (btn) {
+    var id = btn.getAttribute('data-etm-buy');
+    var plano = ETM[id] || {};
+    var link = plano.link;
+
+    // Trava de seguranca: sem link de checkout o botao nao navega. E melhor o
+    // botao nao fazer nada do que mandar o cliente pra um 404 depois de ele ja
+    // ter decidido comprar.
+    if (!link || link === 'PREENCHER') {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        console.warn('[eurotruck] falta o link de checkout do plano "' + id + '" em window.ETM');
+      });
+      return;
+    }
+
+    btn.href = comUtm(link);
+    btn.addEventListener('click', function () {
+      try { if (window.clarity) window.clarity('event', 'etm_checkout_' + id); } catch (e) {}
+      var orig = btn.innerHTML;
+      // setTimeout(0) de proposito: a troca do texto so pode acontecer DEPOIS da
+      // propagacao do clique, porque o pixel da Utmify le o TEXTO do botao pra
+      // decidir o InitiateCheckout. Mesma pegadinha ja documentada na home.
+      setTimeout(function () { btn.innerHTML = SPIN; }, 0);
+      // Failsafe: se a navegacao nao acontecer, o botao volta ao normal.
+      setTimeout(function () { btn.innerHTML = orig; }, 6000);
+    });
+  });
+
+  /* ---------- galeria ---------- */
+  (function () {
+    var stage = document.getElementById('art-stage');
+    if (!stage) return;
+    var slides = stage.querySelectorAll('.art-slide');
+    var thumbs = document.querySelectorAll('#art-thumbs .art-thumb');
+    var nome = document.getElementById('art-name');
+    var i = 0, timer = null;
+
+    function mostrar(n) {
+      i = (n + slides.length) % slides.length;
+      slides.forEach(function (s, k) { s.classList.toggle('on', k === i); });
+      thumbs.forEach(function (t, k) { t.classList.toggle('on', k === i); });
+      var img = slides[i].querySelector('img');
+      if (nome && img) nome.textContent = img.alt || '';
+    }
+    function andar() { timer = setInterval(function () { mostrar(i + 1); }, 4500); }
+    function parar() { if (timer) { clearInterval(timer); timer = null; } }
+
+    thumbs.forEach(function (t) {
+      t.addEventListener('click', function () {
+        parar();
+        mostrar(Number(t.getAttribute('data-i')) || 0);
+        andar();
+      });
+    });
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) andar();
+  })();
+
+  /* ---------- visor de imagem ---------- */
+  (function () {
+    var zoom = document.getElementById('zoom');
+    var zimg = document.getElementById('zoom-img');
+    if (!zoom || !zimg) return;
+    function abrir(src, alt) {
+      zimg.src = src; zimg.alt = alt || '';
+      zoom.classList.add('on'); document.body.classList.add('zoom-open');
+    }
+    function fechar() {
+      zoom.classList.remove('on'); document.body.classList.remove('zoom-open'); zimg.src = '';
+    }
+    // Delegado no document: pega tambem os feedbacks, que nascem depois deste
+    // script rodar.
+    document.addEventListener('click', function (e) {
+      var alvo = e.target.closest('[data-zoom]');
+      if (!alvo) return;
+      var img = alvo.querySelector('img');
+      abrir(alvo.getAttribute('data-zoom'), img ? img.alt : '');
+    });
+    document.getElementById('zoom-x').addEventListener('click', fechar);
+    zoom.addEventListener('click', function (e) { if (e.target === zoom) fechar(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') fechar(); });
+  })();
+
+  /* ---------- feedbacks (some sozinho se nao tiver print) ---------- */
+  (function () {
+    var sec = document.getElementById('feedbacks');
+    if (!sec) return;
+    var lista = ETM.feedbacks || [];
+    if (!lista.length) { sec.remove(); return; }
+    sec.hidden = false;
+
+    var trilho = document.getElementById('fbk-trilho');
+    trilho.innerHTML = lista.map(function (f) {
+      return '<button type="button" class="fbk-card" data-zoom="' + (f.zoom || f.img) + '">' +
+             '<img src="' + f.img + '" alt="' + (f.alt || 'Mensagem de cliente') + '" loading="lazy"></button>';
+    }).join('');
+
+    var cont = document.getElementById('fbk-cont');
+    var ant = document.getElementById('fbk-ant');
+    var prox = document.getElementById('fbk-prox');
+    function passo() {
+      var c = trilho.querySelector('.fbk-card');
+      return c ? c.getBoundingClientRect().width + 12 : 272;
+    }
+    function pintar() {
+      var i = Math.min(lista.length - 1, Math.round(trilho.scrollLeft / passo()));
+      cont.textContent = (i + 1) + ' de ' + lista.length;
+      ant.disabled = i === 0;
+      prox.disabled = i === lista.length - 1;
+    }
+    trilho.addEventListener('scroll', function () { window.requestAnimationFrame(pintar); }, { passive: true });
+    ant.addEventListener('click', function () { trilho.scrollBy({ left: -passo(), behavior: 'smooth' }); });
+    prox.addEventListener('click', function () { trilho.scrollBy({ left: passo(), behavior: 'smooth' }); });
+    pintar();
+  })();
+
+  /* ---------- FAQ ---------- */
+  (function () {
+    var F = [
+      { q: 'Vai rodar no meu celular?',
+        a: 'Roda em qualquer Android e em qualquer iPhone, e dentro do jogo dá pra baixar o gráfico se o seu aparelho for mais simples. E você tem 7 dias de garantia: se não rodar do jeito que você esperava, devolvemos o valor.' },
+      { q: 'Preciso de PC ou de emulador?',
+        a: 'Não. Você recebe o jogo e instala direto no celular, seguindo o passo a passo do seu aparelho.' },
+      { q: 'Como recebo depois de pagar?',
+        a: 'Confirmou o PIX, o arquivo e o passo a passo chegam em poucos minutos. Aí é instalar e jogar.' },
+      { q: 'Funciona no iPhone?',
+        a: 'Funciona, em qualquer iPhone. E o passo a passo que chega no seu e-mail é o do aparelho que você tem.' },
+      { q: 'Qual a diferença entre o Padrão e o Completo?',
+        a: 'O jogo é o mesmo e vem completo nos dois. No Padrão você desbloqueia tudo dirigindo, do jeito que o jogo foi feito. No Completo os caminhões, as garagens, o mapa e o dinheiro já vêm liberados desde a primeira viagem, sem pagar nada por fora.' },
+      { q: 'Tem anúncio ou compra dentro do jogo?',
+        a: 'Não. Você paga uma vez só e não aparece anúncio no meio da viagem nem pacote de moedas pra comprar. No Completo o dinheiro do jogo já vem liberado.' },
+      { q: 'Vou ter que pagar de novo algum dia?',
+        a: 'Não. É pagamento único, sem mensalidade e sem renovação.' },
+      { q: 'Preciso de internet pra jogar?',
+        a: 'Você precisa de internet pra receber e baixar o arquivo. Depois de instalado, o jogo fica no seu aparelho.' },
+      { q: 'Quais as formas de pagamento?',
+        a: 'No momento só PIX, com liberação na hora depois da confirmação do pagamento.' },
+      { q: 'E se eu precisar de ajuda pra instalar?',
+        a: 'O suporte é pelo WhatsApp e acompanha você em todo o processo, até o jogo abrir no seu celular.' }
+    ];
+    var fl = document.getElementById('fl');
+    if (!fl) return;
+    fl.innerHTML = F.map(function (f) {
+      return '<div class="faq-item reveal"><button class="faq-q" type="button">' + f.q +
+             '<span class="faq-chev">&#9660;</span></button><div class="faq-a">' + f.a + '</div></div>';
+    }).join('');
+    fl.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+    fl.addEventListener('click', function (e) {
+      var b = e.target.closest('.faq-q');
+      if (!b) return;
+      var aberto = b.classList.contains('open');
+      fl.querySelectorAll('.faq-q.open').forEach(function (q) {
+        q.classList.remove('open');
+        q.nextElementSibling.classList.remove('open');
+      });
+      if (!aberto) { b.classList.add('open'); b.nextElementSibling.classList.add('open'); }
+    });
+  })();
+
+  /* ---------- CTA fixo no celular ----------
+     Some quando os planos ou a caixa verde do "sera que roda" estao na tela,
+     senao ficam dois botoes verdes disputando o mesmo dedo. Mesma logica de
+     zonas que a home usa. */
+  (function () {
+    var cta = document.getElementById('sticky-cta');
+    if (!cta) return;
+    var zonas = [
+      { el: document.getElementById('planos'), corte: .85 },
+      { el: document.querySelector('.req-cta'), corte: 1 }
+    ].filter(function (z) { return z.el; });
+
+    function ver() {
+      var h = window.innerHeight;
+      var dentro = zonas.some(function (z) {
+        var r = z.el.getBoundingClientRect();
+        return r.top < h * z.corte && r.bottom > 0;
+      });
+      cta.classList.toggle('on', window.scrollY > 620 && !dentro);
+    }
+    window.addEventListener('scroll', ver, { passive: true });
+    window.addEventListener('resize', ver);
+    ver();
+  })();
+})();
+</script>
+</body>
+</html>
