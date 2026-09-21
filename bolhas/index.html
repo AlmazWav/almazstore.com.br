@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BubblesWins | Estoure bolhas e ganhe desconto</title>
+<meta name="description" content="BubblesWins é um jogo casual de atirar bolhas: mire, junte bolhas da mesma cor, suba o multiplicador, resgate a tempo e troque seus diamantes por desconto na ALMAZ.">
+<meta name="theme-color" content="#f4f1ff">
+<meta property="og:title" content="BubblesWins">
+<meta property="og:description" content="Estoure bolhas, junte diamantes e troque por desconto na ALMAZ.">
+<meta property="og:image" content="https://almazstore.com.br/bolhas/img/icone.png">
+<link rel="icon" href="img/icone-64.png">
+<link rel="apple-touch-icon" href="img/icone-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;600;700;800&display=swap">
+
+<!-- Microsoft Clarity (mesmo projeto da pagina principal) -->
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "xeud5hnipq");
+</script>
+<!-- Utmify Pixel (mesmo da pagina principal) + UTMs repassadas pro jogo -->
+<script>
+  window.pixelId = "6a8331f816fe7033bc1acbf7";
+  var a = document.createElement("script");
+  a.setAttribute("async", ""); a.setAttribute("defer", "");
+  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+  document.head.appendChild(a);
+</script>
+<script src="https://cdn.utmify.com.br/scripts/utms/latest.js" data-utmify-prevent-subids async defer></script>
+
+<style>
+:root{
+  --fundo:#f4f1ff; --cartao:#ffffff; --texto:#1f1747; --suave:#6b6290; --linha:#e7e2fb;
+  --roxo:#7c3aed; --rosa:#ec4899; --azul:#3b82f6; --verde:#22c55e; --laranja:#f59e0b;
+  --sombra:0 10px 30px rgba(76,48,160,.12); --sombra-leve:0 4px 14px rgba(76,48,160,.08);
+  --raio:22px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;color:var(--texto);background:var(--fundo);font:500 16px/1.55 "Nunito",system-ui,sans-serif;padding-bottom:96px;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:
+  radial-gradient(260px 260px at 8% 12%,rgba(236,72,153,.14),transparent 70%),
+  radial-gradient(320px 320px at 95% 28%,rgba(59,130,246,.14),transparent 70%),
+  radial-gradient(280px 280px at 12% 78%,rgba(34,197,94,.12),transparent 70%),
+  radial-gradient(300px 300px at 90% 92%,rgba(245,158,11,.12),transparent 70%)}
+h1,h2,h3{font-family:"Baloo 2","Nunito",sans-serif;line-height:1.1;margin:0}
+p{margin:0}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1060px;margin:0 auto;padding:0 16px}
+
+/* ---------- topo ---------- */
+.topo{display:flex;align-items:center;gap:10px;padding:14px 0}
+.topo img{width:36px;height:36px;object-fit:contain}
+.topo b{font-family:"Baloo 2";font-weight:800;font-size:1.1rem}
+
+/* ---------- hero ---------- */
+.hero{display:grid;grid-template-columns:1fr 1.15fr;background:var(--cartao);border-radius:28px;box-shadow:var(--sombra);overflow:hidden}
+.hero-txt{padding:36px 34px}
+.app{display:flex;align-items:center;gap:18px}
+.icone{width:92px;height:92px;border-radius:22px;background:#fff;box-shadow:var(--sombra-leve);display:grid;place-items:center;flex:0 0 auto}
+.icone img{width:74px;height:74px;object-fit:contain}
+.app h1{font-size:2.6rem;font-weight:800}
+.app .cat{color:var(--roxo);font-weight:800;font-size:.95rem;margin-top:2px}
+.numeros{display:flex;margin:22px 0 18px}
+.numeros div{flex:1;text-align:center;font-size:.8rem;color:var(--suave);font-weight:700}
+.numeros div+div{border-left:1px solid var(--linha)}
+.numeros b{display:block;font-family:"Baloo 2";font-size:1.15rem;color:var(--texto)}
+.desc{color:var(--suave);font-size:1.02rem}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 22px}
+.tag{padding:6px 13px;border-radius:999px;font-size:.82rem;font-weight:800}
+.t1{background:#efeaff;color:var(--roxo)}.t2{background:#fdeaf3;color:#be185d}.t3{background:#e8f9ee;color:#15803d}.t4{background:#fff4e0;color:#b45309}
+.cta{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;max-width:340px;padding:16px 22px;border-radius:18px;
+  background:linear-gradient(90deg,var(--roxo),var(--rosa));color:#fff;font-family:"Baloo 2";font-weight:800;font-size:1.2rem;
+  box-shadow:0 12px 26px rgba(124,58,237,.3);transition:transform .15s}
+.cta:hover{transform:translateY(-2px)}
+.cta svg{width:18px;height:18px}
+
+/* arte do hero: noite mágica com bolhas flutuando, desenhada em CSS */
+.arte{position:relative;min-height:440px;overflow:hidden;
+  background:radial-gradient(420px 260px at 50% 110%,rgba(251,191,36,.55),transparent 70%),
+             linear-gradient(180deg,#2a1459 0%,#5b21b6 55%,#c026d3 100%)}
+.arte .ceu{position:absolute;inset:0;background-image:
+  radial-gradient(1.5px 1.5px at 12% 18%,#fff,transparent),radial-gradient(1px 1px at 30% 8%,#fff,transparent),
+  radial-gradient(1.5px 1.5px at 72% 14%,#fff,transparent),radial-gradient(1px 1px at 88% 30%,#fff,transparent),
+  radial-gradient(1px 1px at 55% 26%,#fff,transparent),radial-gradient(1.5px 1.5px at 20% 40%,#fff,transparent),
+  radial-gradient(1px 1px at 82% 50%,#fff,transparent);opacity:.8}
+.bolha{position:absolute;border-radius:50%;animation:flutua 6s ease-in-out infinite}
+.bolha::after{content:"";position:absolute;left:20%;top:16%;width:32%;height:20%;border-radius:50%;background:rgba(255,255,255,.75);transform:rotate(-30deg)}
+@keyframes flutua{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+.b-v{background:radial-gradient(circle at 35% 30%,#fecaca,#ef4444 45%,#991b1b)}
+.b-a{background:radial-gradient(circle at 35% 30%,#bfdbfe,#3b82f6 45%,#1e3a8a)}
+.b-g{background:radial-gradient(circle at 35% 30%,#bbf7d0,#22c55e 45%,#14532d)}
+.b-y{background:radial-gradient(circle at 35% 30%,#fde68a,#f59e0b 45%,#92400e)}
+.b-r{background:radial-gradient(circle at 35% 30%,#e9d5ff,#a855f7 45%,#581c87)}
+.b-p{background:radial-gradient(circle at 35% 30%,#fbcfe8,#ec4899 45%,#831843)}
+.marca{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;z-index:2}
+.marca img{width:120px;filter:drop-shadow(0 10px 24px rgba(0,0,0,.35));margin-bottom:6px}
+.marca .nome{font-family:"Baloo 2";font-weight:800;font-size:4.2rem;line-height:.9;
+  background:linear-gradient(180deg,#fff 0%,#fde68a 45%,#f59e0b 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 4px 0 #7c2d12) drop-shadow(0 12px 20px rgba(0,0,0,.35))}
+.marca .nome small{display:block;font-size:.62em;background:linear-gradient(180deg,#e0f2fe,#60a5fa 50%,#7c3aed);-webkit-background-clip:text;background-clip:text}
+.chao{position:absolute;left:-5%;right:-5%;bottom:-40px;height:110px;border-radius:50% 50% 0 0;background:#1e0b45;opacity:.7}
+
+/* ---------- seções ---------- */
+.sec{margin-top:56px}
+.sec h2{font-size:2rem;font-weight:800}
+.sec .lead{color:var(--suave);margin-top:4px}
+.demo-box{margin-top:18px;display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center}
+.celular{width:300px;border-radius:34px;padding:10px;background:#1f1747;box-shadow:0 30px 60px rgba(31,23,71,.3)}
+.celular canvas{display:block;width:280px;height:458px;border-radius:26px}
+.demo-lado .card{background:var(--cartao);border-radius:var(--raio);box-shadow:var(--sombra-leve);padding:20px;margin-bottom:14px}
+.demo-lado h3{font-size:1.3rem}
+.demo-lado p{color:var(--suave);margin-top:6px}
+
+.passos{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:20px}
+.passo{background:var(--cartao);border-radius:var(--raio);box-shadow:var(--sombra-leve);padding:20px}
+.passo .n{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;color:#fff;font-family:"Baloo 2";font-weight:800;font-size:1.2rem}
+.passo:nth-child(1) .n{background:var(--roxo)}.passo:nth-child(2) .n{background:var(--rosa)}
+.passo:nth-child(3) .n{background:var(--azul)}.passo:nth-child(4) .n{background:var(--verde)}
+.passo h3{font-size:1.2rem;margin-top:12px}
+.passo p{color:var(--suave);font-size:.92rem;margin-top:4px}
+
+.loja{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
+.cupom{background:var(--cartao);border-radius:var(--raio);box-shadow:var(--sombra-leve);padding:22px;text-align:center;position:relative;overflow:hidden}
+.cupom .pct{font-family:"Baloo 2";font-weight:800;font-size:2.6rem;line-height:1;
+  background:linear-gradient(90deg,var(--roxo),var(--rosa));-webkit-background-clip:text;background-clip:text;color:transparent}
+.cupom p{color:var(--suave);font-size:.9rem;margin-top:4px}
+.cupom .custo{display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:6px 14px;border-radius:999px;background:#f1ecff;color:var(--roxo);font-weight:800}
+.cupom .custo svg{width:18px;height:18px}
+
+.feats{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:20px}
+.feat{background:var(--cartao);border-radius:var(--raio);box-shadow:var(--sombra-leve);padding:20px}
+.feat .ic{font-size:1.7rem}
+.feat h3{font-size:1.1rem;margin-top:8px}
+.feat p{color:var(--suave);font-size:.88rem;margin-top:4px}
+
+.final{margin-top:56px;border-radius:28px;padding:40px 24px;text-align:center;color:#fff;
+  background:linear-gradient(135deg,#5b21b6,#c026d3 60%,#ec4899)}
+.final h2{font-size:2.2rem}
+.final p{opacity:.85;margin:6px 0 20px}
+.final .cta{margin:0 auto;background:#fff;color:var(--roxo)}
+.rodape{text-align:center;color:var(--suave);font-size:.82rem;padding:28px 0 8px}
+.rodape p+p{margin-top:4px}
+
+/* barra fixa de baixo */
+.fixo{position:fixed;left:0;right:0;bottom:0;z-index:30;padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+  background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-top:1px solid var(--linha);display:flex;justify-content:center;
+  transform:translateY(110%);transition:transform .3s}
+.fixo.on{transform:none}
+.fixo .cta{max-width:420px}
+
+/* ---------- celular ---------- */
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr}
+  .arte{order:-1;min-height:300px}
+  .marca img{width:84px}.marca .nome{font-size:3.1rem}
+  .hero-txt{padding:24px 20px 26px}
+  .app h1{font-size:2.1rem}
+  .icone{width:76px;height:76px}.icone img{width:60px;height:60px}
+  .cta{max-width:none}
+  .demo-box{grid-template-columns:1fr;justify-items:center}
+  .passos{grid-template-columns:1fr 1fr}
+  .loja{grid-template-columns:1fr}
+  .feats{grid-template-columns:1fr 1fr}
+  .sec h2{font-size:1.65rem}
+}
+@media (max-width:380px){.celular{width:272px}.celular canvas{width:252px;height:412px}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="gg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#67e8f9"/><stop offset=".5" stop-color="#818cf8"/><stop offset="1" stop-color="#c026d3"/></linearGradient>
+    <symbol id="gema" viewBox="0 0 32 32"><path d="M8 4h16l6 8-14 17L2 12z" fill="url(#gg)"/><path d="M2 12h28M8 4l4 8 4-8 4 8 4-8M12 12l4 17 4-17" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.2"/></symbol>
+    <symbol id="play" viewBox="0 0 24 24"><path d="M6 4v16l14-8z" fill="currentColor"/></symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <header class="topo"><img src="img/logo.webp" alt="BubblesWins" style="height:54px;width:auto"></header>
+
+  <section class="hero">
+    <div class="hero-txt">
+      <div class="app">
+        <div class="icone"><img src="img/icone-192.png" alt="" style="width:100%;height:100%;border-radius:22px"></div>
+        <div><h1>BubblesWins</h1><div class="cat">Bubble shooter casual</div></div>
+      </div>
+      <div class="numeros">
+        <div><b>200 💎</b>de boas-vindas</div>
+        <div><b>Até 20x</b>multiplicador</div>
+        <div><b>Cupons</b>de desconto</div>
+      </div>
+      <p class="desc">Mire, dispare e junte bolhas da mesma cor. Cada bolha estourada sobe o multiplicador: resgate antes de o tabuleiro descer demais. Diamante vira desconto na ALMAZ.</p>
+      <div class="tags"><span class="tag t1">Casual</span><span class="tag t2">Atirar bolhas</span><span class="tag t3">Multiplicador</span><span class="tag t4">Desconto na loja</span></div>
+      <a class="cta" href="entrar/" id="cta-hero"><svg><use href="#play"/></svg>Jogar agora</a>
+    </div>
+    <div class="arte" aria-hidden="true">
+      <div class="ceu"></div>
+      <div class="bolha b-r" style="width:64px;height:64px;left:8%;top:10%;animation-delay:-1s"></div>
+      <div class="bolha b-v" style="width:34px;height:34px;left:30%;top:6%;animation-delay:-3s"></div>
+      <div class="bolha b-a" style="width:40px;height:40px;right:26%;top:9%;animation-delay:-2s"></div>
+      <div class="bolha b-g" style="width:56px;height:56px;right:7%;top:20%;animation-delay:-4s"></div>
+      <div class="bolha b-y" style="width:48px;height:48px;left:6%;bottom:22%;animation-delay:-2.5s"></div>
+      <div class="bolha b-p" style="width:30px;height:30px;left:24%;bottom:12%;animation-delay:-.5s"></div>
+      <div class="bolha b-a" style="width:26px;height:26px;right:18%;bottom:26%;animation-delay:-1.8s"></div>
+      <div class="bolha b-v" style="width:44px;height:44px;right:6%;bottom:10%;animation-delay:-3.6s"></div>
+      <div class="chao"></div>
+      <div class="marca"><img src="img/logo.webp" alt="BubblesWins" style="width:min(80%,420px);filter:drop-shadow(0 12px 24px #0008)"></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>Veja o jogo</h2>
+    <p class="lead">Rodando ao vivo, aqui mesmo na página.</p>
+    <div class="demo-box">
+      <div class="celular"><canvas id="demo"></canvas></div>
+      <div class="demo-lado">
+        <div class="card"><h3>Sobre o jogo</h3>
+          <p>BubblesWins é um jogo casual de atirar bolhas. Você mira, lança a bolha e, quando junta três ou mais da mesma cor, elas estouram. Cada bolha estourada sobe o multiplicador do seu resgate.</p></div>
+        <div class="card"><h3>Leve e rápido</h3>
+          <p>Abre direto no navegador, no celular ou no PC. Sem baixar nada: cria a conta com o telefone e já começa com diamantes. Uma partida leva poucos minutos.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>Como jogar</h2>
+    <div class="passos">
+      <div class="passo"><div class="n">1</div><h3>Mire</h3><p>Arraste o dedo pra apontar. Dá pra ricochetear na parede.</p></div>
+      <div class="passo"><div class="n">2</div><h3>Dispare</h3><p>Solte o dedo e a bolha vai no ponto escolhido.</p></div>
+      <div class="passo"><div class="n">3</div><h3>Junte cores iguais</h3><p>Três ou mais da mesma cor juntas estouram.</p></div>
+      <div class="passo"><div class="n">4</div><h3>Resgate a tempo</h3><p>Cada bolha sobe o multiplicador. Resgate antes de o tabuleiro chegar no limite.</p></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>Troque diamantes por desconto</h2>
+    <p class="lead">Ganhe 💎 jogando, no bônus diário e indicando amigos. Junte e troque por cupom nos planos da ALMAZ.</p>
+    <div class="loja" id="loja">
+      <div class="cupom"><div class="pct">5% OFF</div><p>em qualquer plano</p><span class="custo"><svg><use href="#gema"/></svg>300</span></div>
+      <div class="cupom"><div class="pct">10% OFF</div><p>em qualquer plano</p><span class="custo"><svg><use href="#gema"/></svg>700</span></div>
+      <div class="cupom"><div class="pct">20% OFF</div><p>em qualquer plano</p><span class="custo"><svg><use href="#gema"/></svg>1.500</span></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2>O que tem no jogo</h2>
+    <div class="feats">
+      <div class="feat"><div class="ic">📈</div><h3>Multiplicador</h3><p>Cada bolha estourada soma. Quanto mais arrisca, mais leva.</p></div>
+      <div class="feat"><div class="ic">🎨</div><h3>Bolhas coloridas</h3><p>Cores vivas, combos e efeitos ao estourar.</p></div>
+      <div class="feat"><div class="ic">💎</div><h3>Diamantes</h3><p>Bônus diário, indicação e resgates. Troque por desconto.</p></div>
+      <div class="feat"><div class="ic">💣</div><h3>Bombas e pedras</h3><p>Desvie da bomba e das pedras que não estouram.</p></div>
+      <div class="feat"><div class="ic">🤝</div><h3>Indique e ganhe</h3><p>Ganhe diamantes em até 3 níveis de indicação.</p></div>
+    </div>
+  </section>
+
+  <section class="final">
+    <h2>Pronto pra estourar bolhas?</h2>
+    <p>Comece com 200 💎 de boas-vindas.</p>
+    <a class="cta" href="entrar/"><svg><use href="#play"/></svg>Jogar agora</a>
+  </section>
+
+  <footer class="rodape">
+    <p>© 2026 BubblesWins · os cupons valem na loja ALMAZ</p>
+    <p>Diamantes não são dinheiro: não se compram, não têm saque e só servem pra jogar e trocar por desconto na loja.</p>
+  </footer>
+</div>
+
+<div class="fixo" id="fixo"><a class="cta" href="entrar/"><svg><use href="#play"/></svg>Jogar agora</a></div>
+
+<script src="regras.js"></script>
+<script src="visual.js"></script>
+<script>
+// Demo que se joga sozinha no lugar do vídeo de gameplay: as mesmas regras
+// e as mesmas bolhas da partida de verdade, com um robô mirando.
+(function () {
+  const R = BolhasRegras, V = BolhasVisual, cv = document.getElementById('demo'), g = cv.getContext('2d');
+  let st, bala = null, espera = 0.8, rodando = false, ultimo = 0, pops = [];
+  function nova() { st = R.novoEstado(R.gerar((Math.random() * 1e9) >>> 0)); bala = null; espera = 1; }
+  function mirar() {
+    let m = -Math.PI / 2, n = -1e9;
+    for (let k = 0; k < 40; k++) {
+      const a = -Math.PI + 0.15 + (k / 39) * (Math.PI - 0.3), t = R.tiroDoAngulo(a), p = R.prever(st, R.anguloDoTiro(t));
+      if (!p.targetCell || (p.hitCell && R.ehBomba(p.hitCell.v))) continue;
+      const c = JSON.parse(JSON.stringify(st)); c.cfg = st.cfg;
+      const ev = R.atirar(c, t); if (!ev) continue; const s = ev.estouradas.length * 10 - p.targetCell.r - (ev.fim ? 1000 : 0) + Math.random();
+      if (s > n) { n = s; m = t; }
+    }
+    return typeof m === 'number' && m < -1 ? m : R.tiroDoAngulo(-Math.PI / 2);
+  }
+  function tam() { const d = Math.min(2, devicePixelRatio || 1); cv.width = cv.clientWidth * d; cv.height = cv.clientHeight * d; }
+  function quadro(agora) {
+    if (!rodando) return;
+    const dt = Math.min(0.05, (agora - ultimo) / 1000 || 0); ultimo = agora;
+    if (!bala && !st.ended) { espera -= dt; if (espera <= 0) { const t = mirar(); bala = { t, pts: R.prever(st, R.anguloDoTiro(t)).pontos, d: 0, cor: st.nextColor }; } }
+    else if (bala) {
+      bala.d += 900 * dt;
+      let tot = 0; for (let i = 1; i < bala.pts.length; i++) tot += Math.hypot(bala.pts[i].x - bala.pts[i - 1].x, bala.pts[i].y - bala.pts[i - 1].y);
+      if (bala.d >= tot) {
+        const ev = R.atirar(st, bala.t); bala = null; espera = 0.7;
+        ev.estouradas.forEach(([r, c]) => pops.push({ ...R.centro(r, c), cor: ev.cor, t: 0 }));
+        if (st.ended || st.mult >= 1.8) setTimeout(nova, 900), espera = 2;
+      }
+    }
+    pops.forEach((p) => (p.t += dt)); pops = pops.filter((p) => p.t < 0.3);
+    desenhar(); requestAnimationFrame(quadro);
+  }
+  function ponto(pts, d) { for (let i = 1; i < pts.length; i++) { const a = pts[i - 1], b = pts[i], l = Math.hypot(b.x - a.x, b.y - a.y); if (d <= l) return { x: a.x + (b.x - a.x) * d / l, y: a.y + (b.y - a.y) * d / l }; d -= l; } return pts[pts.length - 1]; }
+  function desenhar() {
+    const w = cv.width, h = cv.height, e = Math.min(w / R.W, h / R.H), ox = (w - R.W * e) / 2, oy = (h - R.H * e) / 2;
+    g.setTransform(1, 0, 0, 1, 0, 0);
+    const fundo = g.createLinearGradient(0, 0, 0, h); fundo.addColorStop(0, '#e7d3ff'); fundo.addColorStop(1, '#b48fe0');
+    g.fillStyle = fundo; g.fillRect(0, 0, w, h);
+    g.setTransform(e, 0, 0, e, ox, oy);
+    const px = Math.round(R.C * e), bol = (v, x, y, s, a) => { const sp = V.sprite(v, px), t = (sp.width / e) * (s || 1); g.globalAlpha = a === undefined ? 1 : a; g.drawImage(sp, x - t / 2, y - t / 2, t, t); g.globalAlpha = 1; };
+    for (let r = 0; r < st.cfg.max_rows; r++) for (let c = 0; c < R.colunas(r); c++) { const v = st.board[r][c]; if (v !== null) { const p = R.centro(r, c); bol(v, p.x, p.y); } }
+    pops.forEach((p) => bol(p.cor, p.x, p.y, 1 + p.t * 2, 1 - p.t / 0.3));
+    if (bala) { const q = ponto(bala.pts, bala.d); bol(bala.cor, q.x, q.y); }
+    g.fillStyle = 'rgba(255,255,255,.55)'; g.beginPath(); g.arc(R.ATIRADOR.x, R.ATIRADOR.y, 36, 0, Math.PI * 2); g.fill();
+    if (!bala) bol(st.nextColor, R.ATIRADOR.x, R.ATIRADOR.y);
+    g.font = '900 26px Inter, sans-serif'; g.textAlign = 'center'; g.lineWidth = 6; g.strokeStyle = '#fff';
+    g.strokeText(st.mult.toFixed(2) + 'x', R.W / 2, R.H - 110); g.fillStyle = '#7c3aed'; g.fillText(st.mult.toFixed(2) + 'x', R.W / 2, R.H - 110);
+  }
+  nova();
+  new IntersectionObserver((es) => {
+    if (es[0].isIntersecting && !rodando) { rodando = true; tam(); ultimo = performance.now(); requestAnimationFrame(quadro); }
+    else if (!es[0].isIntersecting) rodando = false;
+  }).observe(cv);
+})();
+
+// Barra fixa aparece depois que o botão do topo sai da tela.
+new IntersectionObserver((es) => document.getElementById('fixo').classList.toggle('on', !es[0].isIntersecting))
+  .observe(document.getElementById('cta-hero'));
+
+// Loja real, vinda do servidor (preço em 💎 editável no admin).
+(async function () {
+  const API = location.hostname.endsWith('onrender.com') ? location.origin : 'https://keys-server-9zq2.onrender.com';
+  try {
+    const r = await fetch(API + '/api/bolhas/config').then((x) => x.json());
+    if (!r.success || !r.loja || !r.loja.length) return;
+    const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    document.getElementById('loja').innerHTML = r.loja.slice(0, 3).map((i) =>
+      `<div class="cupom"><div class="pct">${esc(i.titulo)}</div><p>${esc(i.descricao || '')}</p>
+       <span class="custo"><svg><use href="#gema"/></svg>${Number(i.custo).toLocaleString('pt-BR')}</span></div>`).join('');
+  } catch (e) {}
+})();
+</script>
+</body>
+</html>

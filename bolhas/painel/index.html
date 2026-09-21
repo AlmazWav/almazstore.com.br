@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BubblesWins | Estoure e ganhe</title>
+<meta name="theme-color" content="#0d081e">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../img/icone-64.png">
+<link rel="apple-touch-icon" href="../img/icone-180.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap">
+<link rel="stylesheet" href="../estilo.css">
+<script>try{if(localStorage.getItem('bolhasTema')==='claro')document.documentElement.dataset.tema='claro'}catch(e){}</script>
+<!-- Microsoft Clarity (mesmo projeto da pagina principal) -->
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "xeud5hnipq");
+</script>
+</head>
+<body>
+<div class="fundo" id="fundo"></div>
+
+<div class="install-bar" id="install-bar">
+  <button class="install-bar-close" onclick="fecharInstalar()" aria-label="Fechar">✕</button>
+  <img class="install-bar-icon" src="../img/icone-192.png" alt="">
+  <div class="install-bar-text">Baixe Nosso APP,<br>Ganhe Super Prêmios!</div>
+  <button class="install-bar-cta" onclick="instalar()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16"/></svg>Instalar</button>
+</div>
+
+<header class="topbar">
+  <div class="logo"><img class="logo-img" src="../img/logo.webp" alt="BubblesWins"></div>
+  <div class="acoes">
+    <div class="saldo"><span>SALDO</span><b id="saldo"><svg viewBox="0 0 32 32"><use href="#gema"/></svg><em style="font-style:normal">...</em></b></div>
+    <button class="btn-redondo btn-tema" onclick="trocarTema()" aria-label="Tema"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z"/></svg></button>
+    <button class="btn-redondo btn-perfil" id="avatar" onclick="abrir('perfil')">A</button>
+  </div>
+</header>
+
+<main class="pagina">
+  <section class="card">
+    <div class="banner tem-img" id="banner" onclick="if(!event.target.closest('.online'))jogar()">
+      <div class="banner-arte">
+        <div class="banner-txt">
+          <h2>ESTOURE, JOGUE E<br><em>GANHE DESCONTOS</em></h2>
+          <p>Aqui é habilidade. Mais diversão. Mais prêmios.</p>
+          <div class="banner-selos"><span>💎 Diamantes<br>grátis</span><span>🎮 Jogue em<br>minutos</span><span>🎁 Cupons<br>reais</span></div>
+          <button class="banner-cta" onclick="jogar()">JOGAR AGORA →</button>
+        </div>
+        <canvas class="banner-bolhas" id="banner-bolhas"></canvas>
+      </div>
+      <div class="online"><b id="online">1</b>online</div>
+    </div>
+
+    <div class="corpo">
+      <div class="rotulo">VALOR DE ENTRADA</div>
+      <div class="entry-grid" id="entradas"></div>
+      <label class="money-input"><span class="prefix"><svg viewBox="0 0 32 32"><use href="#gema"/></svg></span><input id="valor" type="number" inputmode="numeric" min="1" step="1"></label>
+      <div class="reward-box">
+        <div class="label">Recompensa mínima</div>
+        <div class="value"><svg viewBox="0 0 32 32"><use href="#gema"/></svg><span id="recompensa">0</span></div>
+      </div>
+      <button class="panel-cta" id="btn-jogar" onclick="jogar()">Jogar</button>
+    </div>
+  </section>
+  <div class="logo logo-rodape"><img class="logo-img" src="../img/logo.webp" alt="BubblesWins"></div>
+</main>
+
+<div class="live-toast" id="live-toast">
+  <div class="live-toast-icon">↑</div>
+  <div><div class="live-toast-name" id="lt-nome"></div><div class="live-toast-text">acabou de resgatar</div></div>
+  <div class="live-toast-amount"><svg viewBox="0 0 32 32"><use href="#gema"/></svg><span id="lt-valor"></span></div>
+</div>
+
+<nav class="bottom-nav"><div>
+  <button class="nav-item" onclick="abrir('ganhar')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10h18M7 15h4"/></svg>Ganhar</button>
+  <button class="nav-item" onclick="abrir('resgatar')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16"/></svg>Resgatar</button>
+  <button class="nav-item center" onclick="jogar()"><span class="nav-circle"><span class="nav-bubble"></span></span>Jogar</button>
+  <button class="nav-item" onclick="abrir('indicar')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.6"/><path d="M3 20c.5-3.5 3-5.5 6-5.5s5.5 2 6 5.5M15 14.6c2.8-.3 5.2 1.3 6 4.4"/></svg>Indicar</button>
+  <button class="nav-item" onclick="abrir('perfil')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c.8-4 4-6.5 8-6.5s7.2 2.5 8 6.5"/></svg>Perfil</button>
+</div></nav>
+
+<!-- ===================== GANHAR 💎 (no lugar do "Depositar") ===================== -->
+<div class="modal" id="m-ganhar" onclick="if(event.target===this)fechar()"><div class="folha">
+  <div class="folha-banner" id="bn-ganhar"></div>
+  <button class="folha-fechar" onclick="fechar()" aria-label="Fechar">✕</button>
+  <div class="folha-corpo">
+    <div class="caixa">
+      <div class="rotulo">FORMAS DE GANHAR</div>
+      <div class="tiles">
+        <button class="tile c3" id="t-bonus" onclick="pegarBonus()"><span class="selo">HOT</span><span id="t-bonus-v">+20</span><small>Bônus diário</small></button>
+        <button class="tile c2" onclick="abrir('indicar')"><span class="selo">HOT</span><span id="t-ind-v">+100</span><small>Por amigo</small></button>
+        <button class="tile c4" onclick="document.getElementById('in-codigo').focus()"><span>🎟️</span><small>Código</small></button>
+      </div>
+      <label class="campo"><span>🎟️</span><input id="in-codigo" placeholder="Tenho um código promocional" autocapitalize="characters"></label>
+    </div>
+    <button class="btn-verde" onclick="usarCodigo()">Ativar código</button>
+    <p class="aviso">Diamantes não se compram. Você ganha jogando, com o bônus diário, indicando amigos e com códigos das nossas campanhas.</p>
+  </div>
+</div></div>
+
+<!-- ===================== RESGATAR (no lugar do "Sacar") ===================== -->
+<div class="modal" id="m-resgatar" onclick="if(event.target===this)fechar()"><div class="folha">
+  <div class="folha-banner" id="bn-resgatar"></div>
+  <button class="folha-fechar" onclick="fechar()" aria-label="Fechar">✕</button>
+  <div class="folha-corpo">
+    <div class="caixa" style="display:flex;align-items:center;gap:12px">
+      <div style="width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#00e5a81f;border:1px solid #00e5a855"><svg width="22" height="22" viewBox="0 0 32 32"><use href="#gema"/></svg></div>
+      <div><div class="rotulo" style="margin:0">SALDO DISPONÍVEL</div><b style="font-size:1.25rem;font-weight:900" id="rs-saldo">0</b></div>
+    </div>
+    <div class="rotulo" style="margin-top:16px">TROQUE POR CUPOM DE DESCONTO</div>
+    <div class="tiles" id="rs-itens"></div>
+    <label class="campo"><span>@</span><input id="rs-email" type="email" inputmode="email" placeholder="E-mail que você usa na compra"></label>
+    <div id="rs-cupom" style="display:none"><div class="cupom-grande" id="rs-codigo"></div></div>
+    <button class="btn-verde" id="rs-btn" onclick="resgatar()">Solicitar resgate</button>
+    <p class="aviso">O cupom sai na hora e fica salvo no seu perfil. Use no checkout da ALMAZ.</p>
+  </div>
+</div></div>
+
+<!-- ===================== INDICAR ===================== -->
+<div class="modal" id="m-indicar" onclick="if(event.target===this)fechar()"><div class="folha">
+  <div class="folha-banner" id="bn-indicar"></div>
+  <button class="folha-fechar" onclick="fechar()" aria-label="Fechar">✕</button>
+  <div class="folha-corpo">
+    <div class="card-verde">
+      <div class="topo">
+        <div><small>SALDO DE COMISSÕES</small><b><svg viewBox="0 0 32 32"><use href="#gema"/></svg><span id="ind-saldo">0</span></b><small style="letter-spacing:0;font-weight:600">total recebido: <span id="ind-total">0</span> 💎</small></div>
+        <div style="text-align:right"><small>INDICADOS</small><b style="justify-content:flex-end" id="ind-qtd">0</b><small style="letter-spacing:0;font-weight:600">no total</small></div>
+      </div>
+      <button onclick="sacarComissao()">↑ Sacar Comissões</button>
+    </div>
+    <div class="caixa" style="margin-top:12px">
+      <div class="rotulo" style="color:var(--accent)">SEU LINK EXCLUSIVO</div>
+      <div class="link-caixa"><code id="ind-link">...</code><button onclick="Bolhas.copiar(document.getElementById('ind-link').textContent)">COPIAR</button></div>
+      <p class="aviso" id="ind-regra" style="text-align:left"></p>
+    </div>
+    <div id="ind-niveis"></div>
+    <div class="caixa" style="margin-top:12px"><div class="sec-titulo">HISTÓRICO DE COMISSÕES</div><div id="ind-hist"></div></div>
+    <div class="caixa"><div class="sec-titulo">HISTÓRICO DE SAQUES</div><div id="ind-saques"></div></div>
+  </div>
+</div></div>
+
+<!-- ===================== PERFIL ===================== -->
+<div class="modal" id="m-perfil" onclick="if(event.target===this)fechar()"><div class="folha">
+  <div class="folha-puxador"></div>
+  <div class="folha-corpo">
+    <div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">Perfil</h3>
+      <button class="folha-fechar" style="position:static" onclick="fechar()" aria-label="Fechar">✕</button></div>
+    <div class="caixa" style="margin-top:12px;display:flex;gap:14px;align-items:flex-start">
+      <div class="btn-redondo btn-perfil" id="pf-avatar" style="flex-shrink:0">A</div>
+      <div style="min-width:0;flex:1">
+        <b id="pf-nome" style="display:block;font-size:1.02rem;font-weight:900;text-transform:uppercase"></b>
+        <span id="pf-tel" style="color:var(--text-dim);font-size:.9rem"></span>
+        <div style="display:flex;gap:8px;align-items:center;margin-top:6px"><code id="pf-link" style="font-size:.72rem;color:var(--text-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0"></code>
+          <button onclick="Bolhas.copiar(document.getElementById('pf-link').textContent)" style="flex-shrink:0;padding:6px 10px;border-radius:9px;background:#ffffff14;font-size:.78rem;font-weight:800">Copiar link</button></div>
+      </div>
+    </div>
+    <div class="grade2" style="margin-top:12px">
+      <div class="stat"><b id="st-partidas">0</b><span>Partidas</span></div>
+      <div class="stat"><b id="st-resgates">0</b><span>Resgates</span></div>
+      <div class="stat"><b><svg viewBox="0 0 32 32"><use href="#gema"/></svg><span id="st-total">0</span></b><span>Total ganho</span></div>
+      <div class="stat"><b><svg viewBox="0 0 32 32"><use href="#gema"/></svg><span id="st-maior">0</span></b><span>Maior resgate</span></div>
+    </div>
+    <div class="caixa" style="margin-top:12px"><div class="sec-titulo">ÚLTIMAS TRANSAÇÕES <button onclick="alternar('pf-extrato')">Ver histórico ⌄</button></div><div id="pf-extrato" style="display:none;margin-top:8px"></div></div>
+    <div class="caixa"><div class="sec-titulo">HISTÓRICO DE PARTIDAS <button onclick="alternar('pf-partidas')">Ver partidas ⌄</button></div><div id="pf-partidas" style="display:none;margin-top:8px"></div></div>
+    <div class="caixa"><div class="sec-titulo">MEUS CUPONS <button onclick="alternar('pf-cupons')">Ver cupons ⌄</button></div><div id="pf-cupons" style="display:none;margin-top:8px"></div></div>
+    <div class="caixa"><div class="sec-titulo">ALTERAR SENHA <button onclick="alternar('pf-senha')">Alterar senha</button></div>
+      <div id="pf-senha" style="display:none">
+        <label class="campo"><span>🔒</span><input id="sn-atual" type="password" placeholder="Senha atual"></label>
+        <label class="campo"><span>🔑</span><input id="sn-nova" type="password" placeholder="Nova senha (mín. 6)"></label>
+        <button class="btn-verde" onclick="trocarSenha()">Salvar nova senha</button>
+      </div>
+    </div>
+    <button class="btn-sec" style="color:#ff8aa0" onclick="sairConta()">SAIR DA CONTA</button>
+  </div>
+</div></div>
+
+<script src="../app.js"></script>
+<script src="../visual.js"></script>
+<script>
+const { api, fmt, esc, GEMA, toast, dataCurta } = Bolhas;
+const $ = (id) => document.getElementById(id);
+let CFG = null, EU = null, entrada = 10;
+
+if (!Bolhas.token()) Bolhas.irParaEntrar();
+
+// ---------- banner: cacho de bolhas desenhado ----------
+function desenharBanner() {
+  const cv = $('banner-bolhas'); const w = cv.clientWidth, h = cv.clientHeight; if (!w) return;
+  const dpr = Math.min(2, devicePixelRatio || 1); cv.width = w * dpr; cv.height = h * dpr;
+  const g = cv.getContext('2d'); g.scale(dpr, dpr);
+  const d = Math.max(16, h / 5.2);
+  for (let r = 0; r < 6; r++) for (let c = 0; c < 7; c++) {
+    if (c > 6 - Math.abs(r - 2.5)) continue;
+    const x = w - d * 0.2 - c * d * 0.92 - (r % 2) * d * 0.46, y = d * 0.6 + r * d * 0.8;
+    const sp = BolhasVisual.sprite((r * 7 + c * 3) % 6, d);
+    g.drawImage(sp, x - sp.width / 2, y - sp.height / 2);
+  }
+}
+
+// ---------- dados ----------
+async function carregar() {
+  try {
+    const [c, e] = await Promise.all([api('/config'), api('/eu')]);
+    CFG = c; EU = e.conta;
+  } catch (err) { toast(err.message); return; }
+  const lembrada = Number(sessionStorage.getItem('bolhasEntrada'));
+  entrada = CFG.entradas.includes(lembrada) ? lembrada : (CFG.entradas.includes(10) ? 10 : CFG.entradas[0]);
+  $('t-bonus-v').textContent = '+' + fmt(CFG.bonusDiario);
+  $('t-ind-v').textContent = '+' + fmt(CFG.indicacao.n1);
+  pintar();
+  aoVivo(); setInterval(aoVivo, 15000);
+  setInterval(async () => { if (document.visibilityState !== 'visible') return; try { EU = (await api('/eu')).conta; pintarSaldo(); } catch (e) {} }, 8000);
+}
+
+function pintarSaldo() {
+  $('saldo').querySelector('em').textContent = fmt(EU.diamantes);
+  $('rs-saldo').textContent = fmt(EU.diamantes) + ' 💎';
+}
+function pintar() {
+  pintarSaldo();
+  const ini = (EU.nome || 'A').trim().charAt(0).toUpperCase();
+  $('avatar').textContent = ini; $('pf-avatar').textContent = ini;
+  $('entradas').innerHTML = CFG.entradas.map((v) => `<button class="entry-chip${v === entrada ? ' active' : ''}" onclick="escolher(${v})">${GEMA}${fmt(v)}</button>`).join('');
+  $('valor').value = entrada;
+  $('recompensa').textContent = fmt(entrada * CFG.recompensaMult);
+  $('t-bonus').disabled = !!EU.bonusHoje;
+}
+function escolher(v) { BolhasVisual.som('clique'); entrada = v; pintar(); }
+$('valor').addEventListener('input', () => {
+  const v = Math.floor(Number($('valor').value) || 0);
+  if (v > 0) { entrada = v; document.querySelectorAll('.entry-chip').forEach((b, i) => b.classList.toggle('active', CFG.entradas[i] === v));
+    $('recompensa').textContent = fmt(v * CFG.recompensaMult); }
+});
+
+// ---------- jogar ----------
+function jogar() {
+  if (!CFG || !EU) return;
+  if (entrada < CFG.entradaMin) return toast('A entrada mínima é ' + CFG.entradaMin + ' 💎.');
+  if (entrada > CFG.entradaMax) return toast('A entrada máxima é ' + CFG.entradaMax + ' 💎.');
+  if (EU.diamantes < entrada) { toast('Saldo insuficiente. Ganhe mais diamantes!'); return abrir('ganhar'); }
+  sessionStorage.setItem('bolhasEntrada', String(entrada));
+  location.href = '../jogo/';
+}
+
+// ---------- ao vivo (online + "acabou de resgatar") ----------
+let fila = [], vistos = new Set();
+async function aoVivo() {
+  try {
+    const r = await api('/ao-vivo');
+    $('online').textContent = fmt(Math.max(1, r.online));
+    // só o que aconteceu nos últimos 10 min: resgate de ontem não é "acabou de"
+    const recente = Date.now() - 10 * 60e3;
+    for (const x of r.resgates.slice().reverse()) { const k = x.nome + x.em; if (!vistos.has(k)) { vistos.add(k); if (new Date(x.em).getTime() >= recente) fila.push(x); } }
+    mostrarToastVivo();
+  } catch (e) {}
+}
+let mostrando = false;
+function mostrarToastVivo() {
+  if (mostrando || !fila.length) return;
+  const x = fila.shift(); mostrando = true;
+  $('lt-nome').textContent = x.nome; $('lt-valor').textContent = fmt(x.valor);
+  $('live-toast').classList.add('on');
+  setTimeout(() => { $('live-toast').classList.remove('on'); setTimeout(() => { mostrando = false; mostrarToastVivo(); }, 900); }, 4000);
+}
+
+// ---------- modais ----------
+const BANNERS = {
+  ganhar: ['GANHE <em>DIAMANTES</em><br>TODO DIA', 'Bônus diário, indicação e códigos'],
+  resgatar: ['RESGATE <em>INSTANTÂNEO</em>', 'Troque diamantes por cupom na hora'],
+  indicar: ['INDIQUE E<br><em>GANHE 💎</em>', 'Até 3 níveis de indicação'],
+};
+// Banners com arte pronta (o resto ainda é desenhado).
+const ARTES = { resgatar: '../img/banner-resgate.jpg' };
+function montarBanner(nome) {
+  const el = $('bn-' + nome); if (!el || el.dataset.ok) return;
+  if (ARTES[nome]) { el.style.background = `url(${ARTES[nome]}) center/cover no-repeat`; el.dataset.ok = 1; return; }
+  const [t, s] = BANNERS[nome];
+  el.style.background = 'radial-gradient(400px 200px at 80% 30%,#d84aff55,transparent),linear-gradient(135deg,#2a0f5a,#5b1fa8 60%,#9b2fd0)';
+  el.innerHTML = `<div style="position:absolute;inset:0;display:flex;align-items:center;padding:0 22px">
+    <div style="position:relative;z-index:2"><div style="font-family:var(--titulo);font-size:clamp(1.4rem,6vw,2.1rem);line-height:1;color:#fff;text-shadow:0 3px 0 #3a0d6e">${t.replace('<em>', '<em style="font-style:normal;color:#ffd84d">')}</div>
+    <div style="margin-top:8px;font-size:.78rem;font-weight:800;color:#e8d8ff">${s}</div></div></div>`;
+  const cv = document.createElement('canvas'); cv.style.cssText = 'position:absolute;right:0;top:0;height:100%;width:45%';
+  el.appendChild(cv); el.dataset.ok = 1;
+  requestAnimationFrame(() => {
+    const w = cv.clientWidth, h = cv.clientHeight, g = cv.getContext('2d'); cv.width = w * 2; cv.height = h * 2; g.scale(2, 2);
+    [[0.7, 0.3, 0.3, 5], [0.35, 0.65, 0.22, 1], [0.8, 0.78, 0.18, 2], [0.2, 0.22, 0.14, 3], [0.55, 0.9, 0.12, 0]].forEach(([x, y, s, c]) => {
+      const sp = BolhasVisual.sprite(c, h * s * 2); g.drawImage(sp, x * w - sp.width / 2, y * h - sp.height / 2);
+    });
+  });
+}
+function abrir(nome) {
+  fechar(); BolhasVisual.som('clique');
+  $('m-' + nome).classList.add('on');
+  if (BANNERS[nome]) montarBanner(nome);
+  if (nome === 'resgatar') montarResgatar();
+  if (nome === 'indicar') carregarIndicacao();
+  if (nome === 'perfil') carregarPerfil();
+}
+function fechar() { document.querySelectorAll('.modal.on').forEach((m) => m.classList.remove('on')); }
+function alternar(id) { const e = $(id); e.style.display = e.style.display === 'none' ? '' : 'none'; }
+
+// Ganhar
+async function pegarBonus() {
+  try { const r = await api('/bonus-diario', {}); EU = r.conta; pintar(); BolhasVisual.som('resgate'); toast('+' + fmt(r.valor) + ' 💎 de bônus diário!'); }
+  catch (e) { toast(e.message); }
+}
+async function usarCodigo() {
+  const c = $('in-codigo').value.trim(); if (!c) return toast('Digite o código.');
+  try { const r = await api('/codigo', { codigo: c }); EU = r.conta; pintar(); $('in-codigo').value = ''; BolhasVisual.som('resgate'); toast('+' + fmt(r.valor) + ' 💎 do código!'); }
+  catch (e) { toast(e.message); }
+}
+
+// Resgatar
+let itemSel = null;
+function montarResgatar() {
+  $('rs-cupom').style.display = 'none'; $('rs-btn').textContent = 'Solicitar resgate'; $('rs-btn').onclick = resgatar;
+  $('rs-email').value = EU.email || '';
+  const cores = ['c1', 'c2', 'c3', 'c4'];
+  $('rs-itens').innerHTML = CFG.loja.map((i, n) => `<button class="tile ${cores[n % 4]}${itemSel === i.id ? ' on' : ''}" ${i.disponivel ? '' : 'disabled'} onclick="itemSel='${esc(i.id)}';marcarItem()" data-id="${esc(i.id)}">
+    ${n === CFG.loja.length - 1 && i.disponivel ? '<span class="selo">HOT</span>' : ''}${esc(i.titulo)}<small>${i.disponivel ? fmt(i.custo) + ' 💎' : 'Em breve'}</small></button>`).join('');
+  marcarItem();
+}
+function marcarItem() {
+  document.querySelectorAll('#rs-itens .tile').forEach((t) => { t.style.outline = t.dataset.id === itemSel ? '2px solid #fff' : ''; });
+}
+async function resgatar() {
+  if (!itemSel) return toast('Escolha um cupom.');
+  const b = $('rs-btn'); b.disabled = true;
+  try {
+    const r = await api('/resgatar', { item: itemSel, email: $('rs-email').value });
+    EU = r.conta; pintar(); BolhasVisual.som('vitoria');
+    $('rs-cupom').style.display = ''; $('rs-codigo').textContent = r.cupom; Bolhas.copiar(r.cupom);
+    b.textContent = 'Usar na loja agora'; b.onclick = () => { location.href = r.linkLoja; };
+  } catch (e) { toast(e.message); }
+  b.disabled = false;
+}
+
+// Indicar
+function linkIndicacao(cod) { return location.origin + Bolhas.raizBolhas() + 'entrar/?ref=' + cod; }
+async function carregarIndicacao() {
+  try {
+    const r = await api('/indicacao');
+    $('ind-saldo').textContent = fmt(r.comissao); $('ind-total').textContent = fmt(r.comissaoTotal);
+    $('ind-qtd').textContent = fmt(r.niveis.n1.total + r.niveis.n2.total + r.niveis.n3.total);
+    $('ind-link').textContent = linkIndicacao(r.codigo);
+    $('ind-regra').textContent = `Você ganha ${fmt(CFG.indicacao.n1)} 💎 por amigo direto, ${fmt(CFG.indicacao.n2)} 💎 no 2º nível e ${fmt(CFG.indicacao.n3)} 💎 no 3º, quando o indicado joga ${CFG.indicacao.partidasParaPagar} partidas.`;
+    const nomes = { n1: ['N1', 'diretos'], n2: ['N2', '2º nível'], n3: ['N3', '3º nível'] };
+    $('ind-niveis').innerHTML = Object.entries(r.niveis).map(([k, v]) => `<div class="nivel"><div class="n">${nomes[k][0]}<small>${nomes[k][1]}</small></div>
+      <div><b>${fmt(v.total)}</b><span>INDICADOS</span></div><div><b>${fmt(v.ativos)}</b><span>JÁ JOGARAM</span></div></div>`).join('');
+    $('ind-hist').innerHTML = r.comissoes.length ? r.comissoes.map((c) => `<div class="linha-hist"><div>${esc(c.de)} (${c.nivel.toUpperCase()})<small>${dataCurta(c.em)}</small></div><b class="mais">+${fmt(c.valor)} 💎</b></div>`).join('')
+      : '<p class="vazio">Nenhuma comissão recebida ainda. Compartilhe seu link!</p>';
+    $('ind-saques').innerHTML = r.saques.length ? r.saques.map((s) => `<div class="linha-hist"><div>Saque de comissões<small>${dataCurta(s.em)}</small></div><b class="mais">+${fmt(s.valor)} 💎</b></div>`).join('')
+      : '<p class="vazio">Nenhum saque de comissão ainda.</p>';
+  } catch (e) { toast(e.message); }
+}
+async function sacarComissao() {
+  try { const r = await api('/indicacao/sacar', {}); EU = r.conta; pintar(); toast('+' + fmt(r.valor) + ' 💎 no seu saldo!'); carregarIndicacao(); }
+  catch (e) { toast(e.message); }
+}
+
+// Perfil
+const TIPOS = { entrada: 'Entrada de partida', resgate: 'Resgate', bonus: 'Bônus diário', codigo: 'Código promocional', comissao: 'Comissões', loja: 'Cupom da loja', 'boas-vindas': 'Boas-vindas' };
+async function carregarPerfil() {
+  $('pf-nome').textContent = EU.nome;
+  $('pf-tel').textContent = EU.telefone.replace(/^(\d{2})(\d{4,5})(\d{4})$/, '($1) $2-$3');
+  $('pf-link').textContent = linkIndicacao(EU.codigo);
+  $('st-partidas').textContent = fmt(EU.stats.partidas); $('st-resgates').textContent = fmt(EU.stats.resgates);
+  $('st-total').textContent = fmt(EU.stats.totalGanho); $('st-maior').textContent = fmt(EU.stats.maiorResgate);
+  $('pf-cupons').innerHTML = EU.cupons.length ? EU.cupons.slice().reverse().map((c) => `<div class="linha-hist"><div>${esc(c.titulo)}<small>${dataCurta(c.em)}</small></div><button onclick="Bolhas.copiar(this.textContent)" style="font-weight:900;color:var(--accent)">${esc(c.cupom)}</button></div>`).join('')
+    : '<p class="vazio">Você ainda não trocou nenhum cupom.</p>';
+  try {
+    const h = await api('/historico');
+    $('pf-extrato').innerHTML = h.extrato.length ? h.extrato.map((e) => `<div class="linha-hist"><div>${esc(TIPOS[e.tipo] || e.tipo)}<small>${dataCurta(e.em)}</small></div><b class="${e.valor >= 0 ? 'mais' : 'menos'}">${e.valor >= 0 ? '+' : ''}${fmt(e.valor)} 💎</b></div>`).join('') : '<p class="vazio">Nenhuma transação.</p>';
+    const st = { resgatou: ['Resgatou', 'mais'], perdeu: ['Perdeu', 'menos'], ativa: ['Em andamento', ''] };
+    $('pf-partidas').innerHTML = h.partidas.length ? h.partidas.map((p) => `<div class="linha-hist"><div>Entrada ${fmt(p.entrada)} 💎 · ${Number(p.mult).toFixed(2)}x<small>${dataCurta(p.em)}</small></div><b class="${st[p.status][1]}">${p.status === 'resgatou' ? '+' + fmt(p.premio) + ' 💎' : st[p.status][0]}</b></div>`).join('') : '<p class="vazio">Nenhuma partida ainda.</p>';
+  } catch (e) {}
+}
+async function trocarSenha() {
+  try { await api('/senha', { atual: $('sn-atual').value, nova: $('sn-nova').value }); toast('Senha alterada!'); $('sn-atual').value = $('sn-nova').value = ''; alternar('pf-senha'); }
+  catch (e) { toast(e.message); }
+}
+async function sairConta() { try { await api('/sair', {}); } catch (e) {} Bolhas.salvarToken(''); Bolhas.irParaEntrar(); }
+
+// ---------- tema e instalar ----------
+function trocarTema() {
+  const claro = document.documentElement.dataset.tema !== 'claro';
+  if (claro) document.documentElement.dataset.tema = 'claro'; else delete document.documentElement.dataset.tema;
+  try { localStorage.setItem('bolhasTema', claro ? 'claro' : 'escuro'); } catch (e) {}
+}
+let pedidoInstalar = null;
+addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); pedidoInstalar = e; });
+function instalar() {
+  if (pedidoInstalar) { pedidoInstalar.prompt(); pedidoInstalar = null; return; }
+  toast(/iphone|ipad/i.test(navigator.userAgent) ? 'No Safari: toque em Compartilhar e depois em "Adicionar à Tela de Início".' : 'No menu do navegador, toque em "Instalar app" ou "Adicionar à tela inicial".');
+}
+function fecharInstalar() { $('install-bar').remove(); try { sessionStorage.setItem('bolhasSemBarra', '1'); } catch (e) {} }
+try { if (sessionStorage.getItem('bolhasSemBarra')) $('install-bar').remove(); } catch (e) {}
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('../sw.js').catch(() => {});
+
+addEventListener('resize', desenharBanner);
+document.fonts && document.fonts.ready.then(desenharBanner);
+desenharBanner();
+carregar();
+</script>
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>BubblesWins | Partida</title>
+<meta name="theme-color" content="#c8a8e7">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../img/icone-64.png">
+<link rel="apple-touch-icon" href="../img/icone-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800;900&family=Lilita+One&display=swap">
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;font-family:Inter,system-ui,Arial,sans-serif;background:#c8a8e7}
+/* Fundo ilustrado (retrato no celular, paisagem no PC). */
+body{background:#2a1450 url(../img/fundo-cel.jpg) center top/cover no-repeat fixed}
+@media(min-width:700px){body{background-image:url(../img/fundo-pc.jpg);background-position:center}}
+button{font:inherit;border:0;cursor:pointer;color:inherit}
+.game{height:100dvh;display:flex;flex-direction:column;align-items:center;padding:env(safe-area-inset-top) 10px calc(env(safe-area-inset-bottom) + 10px);color:#3b2454}
+.top{position:relative;width:min(100%,480px);display:flex;align-items:center;justify-content:space-between;padding:10px 4px 6px}
+.back{background:#fff8;border-radius:18px;width:42px;height:42px;font-size:22px;font-weight:700}
+.logo{display:flex;align-items:center;gap:6px;position:absolute;left:50%;transform:translateX(-50%)}
+.logo img{height:38px;filter:drop-shadow(0 3px 6px #5b3a7d55)}
+.logo b{font-family:"Lilita One",sans-serif;font-weight:400;font-size:1.35rem;line-height:.85;background:linear-gradient(180deg,#fff,#ffe27a 45%,#ff9f1a);
+  -webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 0 #6a1fa0)}
+.logo b small{display:block;font-size:.66em;background:linear-gradient(180deg,#f0fbff,#4fc8ff 55%,#7c5cff);-webkit-background-clip:text;background-clip:text}
+.balance{display:flex;align-items:center;gap:5px;background:#fff9;border:1px solid #ffffffaa;border-radius:18px;padding:8px 12px;font-weight:800;box-shadow:0 6px 24px #5b3a7d22}
+.balance svg,.pill svg,.cash svg{width:16px;height:16px;vertical-align:-3px}
+.goal{width:min(100%,460px);display:flex;justify-content:space-between;gap:8px;margin:2px 0 6px}
+.pill{flex:1;text-align:center;background:#fff9;border-radius:17px;padding:8px 10px;font-weight:800;box-shadow:0 5px 18px #6d4a8d1d;font-size:.92rem}
+.pill span{color:inherit}
+.pill.pulsa{animation:pulsa .35s ease}
+@keyframes pulsa{50%{transform:scale(1.08);background:#fff}}
+.board-wrap{position:relative;width:min(96vw,430px,calc((100dvh - 190px) * .724));aspect-ratio:391/540;background:linear-gradient(#ffffff28,#ffffff08);border-radius:24px;
+  border:1px solid #ffffff70;box-shadow:inset 0 0 36px #fff5,0 12px 32px #60437722;overflow:hidden;flex-shrink:1}
+#board{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
+.toast{position:absolute;top:68px;left:50%;transform:translateX(-50%);background:#fff;border-radius:14px;padding:8px 12px;font-weight:800;opacity:0;transition:.2s;pointer-events:none;z-index:8;white-space:nowrap;box-shadow:0 6px 18px #5b397d33}
+.toast.show{opacity:1}
+.dock{width:min(100%,460px);display:flex;gap:8px;padding-top:8px}
+.btn{border-radius:18px;padding:13px 14px;font-weight:900;font-size:15px;box-shadow:0 7px 18px #5b397d2e}
+.cash{flex:1;background:linear-gradient(#ffd95c,#ffb720);color:#513817}
+.cash:disabled{opacity:.48;filter:grayscale(.3)}
+.cash:not(:disabled){animation:brilha 1.2s ease-in-out infinite alternate}
+@keyframes brilha{from{box-shadow:0 7px 18px #5b397d2e}to{box-shadow:0 7px 24px #ffb72099,0 0 0 3px #fff6}}
+.quit{width:88px;background:#fff8;color:#5f4578}
+.status{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:#6b4b8cb8;z-index:10;padding:20px}
+.modal{width:min(92%,360px);background:#fff;border-radius:26px;padding:22px;text-align:center;box-shadow:0 18px 55px #2a193d55;animation:pula .35s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pula{from{transform:scale(.7);opacity:0}to{transform:none;opacity:1}}
+.modal .arte{width:100%;max-width:300px;aspect-ratio:1680/640;object-fit:cover;display:block;margin:0 auto;border-radius:14px}
+.modal h2{margin:8px 0;color:#5e397e;font-size:1.5rem;font-weight:900}
+.modal p{margin:6px 0 14px;font-weight:600}
+.modal .premio{font-size:1.6rem;font-weight:900;color:#7c3aed;display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:10px}
+.modal .premio svg{width:26px;height:26px}
+.modal button{width:100%;border-radius:16px;padding:13px;font-size:16px;font-weight:900;background:#8b58b7;color:#fff}
+.tutorial{position:absolute;inset:0;z-index:9;display:none;align-items:flex-end;justify-content:center;padding-bottom:120px;background:#3b245455;pointer-events:none}
+.tutorial.on{display:flex}
+.tutorial p{background:#fff;border-radius:14px;padding:10px 14px;font-weight:800;box-shadow:0 8px 20px #0003}
+.mao{position:absolute;left:50%;bottom:70px;font-size:44px;animation:mira 2.2s ease-in-out infinite;filter:drop-shadow(0 4px 6px #0004)}
+@keyframes mira{0%{transform:translate(-50%,0)}35%{transform:translate(-120%,-160px)}65%{transform:translate(20%,-170px)}100%{transform:translate(-50%,0)}}
+</style>
+</head>
+<body>
+<div class="game">
+  <div class="top">
+    <button class="back" id="back" aria-label="Voltar">‹</button>
+    <div class="logo"><img src="../img/logo.webp" alt="BubblesWins" style="height:52px;filter:drop-shadow(0 3px 6px #0006)"></div>
+    <div class="balance" id="balance"><svg viewBox="0 0 32 32"><use href="#gema"/></svg><span>...</span></div>
+  </div>
+  <div class="goal">
+    <div class="pill">Aposta <span id="bet"><svg viewBox="0 0 32 32"><use href="#gema"/></svg> 0</span></div>
+    <div class="pill" id="pill-mult">Multiplicador <span id="mult">1.00x</span></div>
+  </div>
+  <div class="board-wrap" id="wrap">
+    <canvas id="board"></canvas>
+    <div class="toast" id="toast"></div>
+    <div class="tutorial" id="tutorial"><div class="mao">👆</div><p>Arraste pra mirar e solte pra atirar</p></div>
+    <div class="status" id="status"><div class="modal">
+      <img id="res-arte" class="arte" alt="">
+      <h2 id="res-titulo">Resultado</h2>
+      <p id="res-texto"></p>
+      <button id="res-btn">Continuar</button>
+    </div></div>
+  </div>
+  <div class="dock">
+    <button class="btn quit" id="quit">Sair</button>
+    <button class="btn cash" id="cash" disabled>Resgatar</button>
+  </div>
+</div>
+
+<script src="../app.js"></script>
+<script src="../visual.js"></script>
+<script src="../regras.js"></script>
+<script>
+const R = BolhasRegras, V = BolhasVisual, { fmt, api } = Bolhas;
+const $ = (id) => document.getElementById(id);
+const canvas = $('board'), ctx = canvas.getContext('2d');
+if (!Bolhas.token()) Bolhas.irParaEntrar();
+
+let st = null, gid = null, entrada = Number(sessionStorage.getItem('bolhasEntrada')) || 10;
+let tiros = [], saldo = 0, acabou = false, animando = false, finalizando = false;
+let mirando = false, angulo = -Math.PI / 2, predicao = null;
+let escala = 1, dpr = 1;
+let bala = null, tremor = 0;
+let congelado = null;   // tabuleiro de antes do estouro, mostrado por 110 ms
+
+// ---------- início ----------
+async function comecar() {
+  $('bet').innerHTML = '<svg viewBox="0 0 32 32"><use href="#gema"/></svg> ' + fmt(entrada);
+  try {
+    const r = await api('/partida/iniciar', { entrada });
+    gid = r.game_id; saldo = r.balance;
+    st = R.novoEstado({ board: r.board, queue: r.queue, pushRows: r.push_rows, entrada }, r.config);
+    atualizar();
+    try { if (!localStorage.getItem('bolhasTutorial')) $('tutorial').classList.add('on'); } catch (e) {}
+  } catch (e) {
+    mostrar('Não foi possível iniciar', e.message, false, 0, () => sair());
+  }
+}
+
+function atualizar() {
+  $('balance').querySelector('span').textContent = fmt(saldo);
+  if (!st) return;
+  $('mult').textContent = st.mult.toFixed(2) + 'x';
+  const valor = R.valorResgate(st);
+  const cash = $('cash');
+  cash.innerHTML = 'Resgatar <svg viewBox="0 0 32 32"><use href="#gema"/></svg> ' + fmt(valor);
+  cash.disabled = !R.podeResgatar(st) || acabou || animando || finalizando;
+}
+
+// ---------- tamanho ----------
+function redimensionar() {
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  dpr = Math.min(2, devicePixelRatio || 1);
+  canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+  escala = Math.min(w / R.W, h / R.H);
+}
+addEventListener('resize', redimensionar);
+
+// Converte o toque na tela pra coordenada lógica do tabuleiro.
+function paraLogico(ev) {
+  const b = canvas.getBoundingClientRect();
+  const ox = (b.width - R.W * escala) / 2, oy = (b.height - R.H * escala) / 2;
+  return { x: (ev.clientX - b.left - ox) / escala, y: (ev.clientY - b.top - oy) / escala };
+}
+
+// ---------- mira ----------
+function mirar(ev) {
+  const p = paraLogico(ev);
+  angulo = R.limitarAngulo(Math.atan2(p.y - R.ATIRADOR.y, p.x - R.ATIRADOR.x));
+  predicao = R.prever(st, R.anguloDoTiro(R.tiroDoAngulo(angulo)));
+}
+canvas.addEventListener('pointerdown', (ev) => {
+  if (!st || acabou || animando || finalizando) return;
+  canvas.setPointerCapture && canvas.setPointerCapture(ev.pointerId);
+  mirando = true; mirar(ev);
+  $('tutorial').classList.remove('on'); try { localStorage.setItem('bolhasTutorial', '1'); } catch (e) {}
+});
+canvas.addEventListener('pointermove', (ev) => { if (mirando) mirar(ev); });
+canvas.addEventListener('pointerup', (ev) => {
+  if (!mirando) return;
+  mirando = false;
+  const p = paraLogico(ev);
+  if (p.y < R.ATIRADOR.y - 20) atirar();
+  predicao = null;
+});
+canvas.addEventListener('pointercancel', () => { mirando = false; predicao = null; });
+
+// ---------- tiro ----------
+function atirar() {
+  // st.ended: a partida já acabou (ex.: erro de rede ao finalizar e o
+  // jogador tocou de novo). Sem encaixe possível o tiro vai mesmo assim: as
+  // regras encerram como derrota, igual o servidor vai ver na replicação.
+  if (!st || st.ended || acabou || animando) return;
+  const t = R.tiroDoAngulo(angulo);
+  const pred = R.prever(st, R.anguloDoTiro(t));
+  animando = true; atualizar();
+  V.som('tiro');
+  bala = { pontos: pred.pontos, cor: st.nextColor, dist: 0, total: comprimento(pred.pontos), tiro: t };
+}
+function comprimento(pts) { let s = 0; for (let i = 1; i < pts.length; i++) s += Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y); return s; }
+function pontoNoCaminho(pts, d) {
+  for (let i = 1; i < pts.length; i++) {
+    const a = pts[i - 1], b = pts[i], l = Math.hypot(b.x - a.x, b.y - a.y);
+    if (d <= l) return { x: a.x + (b.x - a.x) * (d / l), y: a.y + (b.y - a.y) * (d / l) };
+    d -= l;
+  }
+  return pts[pts.length - 1];
+}
+
+function pousar() {
+  const t = bala.tiro; bala = null;
+  tiros.push(t);
+  const antes = st.board.map((l) => l.slice());
+  const ev = R.atirar(st, t);
+  if (ev.bomba) {
+    V.som('bomba'); tremor = 10; toast('💣 BOMBA! Rodada perdida');
+  }
+  if (ev.estouradas.length) {
+    // Igual à referência: o grupo aparece encaixado por um instante (110 ms)
+    // e some de uma vez, sem partículas.
+    congelado = antes; congelado[ev.casa.r][ev.casa.c] = ev.cor;
+    setTimeout(() => { congelado = null; }, 110);
+    V.som('pop', ev.estouradas.length);
+    toast('💥 ' + ev.estouradas.length + ' bolhas!');
+  }
+  if (ev.desceu) { V.som('desceu'); toast('O tabuleiro desceu!'); }
+  animando = false;
+  atualizar();
+  if (ev.fim) setTimeout(() => finalizar('lose', ev.fim), ev.bomba ? 900 : 500);
+}
+
+// ---------- efeitos ----------
+let tt;
+function toast(t) { const e = $('toast'); e.textContent = t; e.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => e.classList.remove('show'), 900); }
+
+// ---------- desenho ----------
+let ultimo = performance.now();
+function quadro(agora) {
+  const dt = Math.min(0.04, (agora - ultimo) / 1000); ultimo = agora;
+  passo(dt); desenhar();
+  requestAnimationFrame(quadro);
+}
+function passo(dt) {
+  if (bala) { bala.dist += 700 * dt; if (bala.dist >= bala.total) pousar(); }
+  tremor = Math.max(0, tremor - dt * 40);
+}
+
+function bolha(codigo, x, y, esc, alfa) {
+  const px = Math.round(R.C * escala * dpr);
+  const sp = V.sprite(codigo, px), tam = (sp.width / (escala * dpr)) * (esc || 1);
+  if (alfa !== undefined) ctx.globalAlpha = alfa;
+  ctx.drawImage(sp, x - tam / 2, y - tam / 2, tam, tam);
+  ctx.globalAlpha = 1;
+}
+
+function desenhar() {
+  const w = canvas.width / dpr, h = canvas.height / dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, w, h);
+  const ox = (w - R.W * escala) / 2, oy = (h - R.H * escala) / 2;
+  const tx = tremor ? (Math.random() - 0.5) * tremor : 0, ty = tremor ? (Math.random() - 0.5) * tremor : 0;
+  ctx.setTransform(dpr * escala, 0, 0, dpr * escala, (ox + tx) * dpr, (oy + ty) * dpr);
+  if (!st) return;
+
+  // tabuleiro
+  const grade = congelado || st.board;
+  for (let r = 0; r < st.cfg.max_rows; r++) for (let c = 0; c < R.colunas(r); c++) {
+    const v = grade[r][c]; if (v === null || v === undefined) continue;
+    const p = R.centro(r, c); bolha(v, p.x, p.y);
+  }
+
+  // mira: linha tracejada branca + bolinhas-guia (como a referência)
+  if (mirando && predicao && !animando) {
+    const pts = predicao.pontos;
+    ctx.save(); ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
+    for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+    ctx.setLineDash([8, 8]); ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(255,255,255,.9)';
+    ctx.shadowColor = 'rgba(95,55,130,.45)'; ctx.shadowBlur = 5; ctx.stroke(); ctx.setLineDash([]);
+    const total = comprimento(pts);
+    for (let s = 24; s < total - 10; s += 26) {
+      const q = pontoNoCaminho(pts, s);
+      ctx.beginPath(); ctx.arc(q.x, q.y, 3.4, 0, Math.PI * 2); ctx.fillStyle = 'rgba(255,255,255,.95)'; ctx.fill();
+    }
+    ctx.restore();
+    if (predicao.targetCell) {
+      const p = R.centro(predicao.targetCell.r, predicao.targetCell.c);
+      bolha(st.nextColor, p.x, p.y, 1, 0.4);
+    }
+  }
+
+  // bala voando
+  if (bala) { const q = pontoNoCaminho(bala.pontos, bala.dist); bolha(bala.cor, q.x, q.y); }
+
+  // atirador (círculo claro com a próxima bolha, como a referência)
+  const A = R.ATIRADOR;
+  ctx.fillStyle = 'rgba(255,255,255,.55)'; ctx.shadowColor = 'rgba(91,57,125,.3)'; ctx.shadowBlur = 20;
+  ctx.beginPath(); ctx.arc(A.x, A.y, 36, 0, Math.PI * 2); ctx.fill(); ctx.shadowBlur = 0;
+  if (!bala && !acabou) bolha(st.nextColor, A.x, A.y, 1.04);
+  if (!mirando && !bala && !acabou) {
+    // setinha de mira parada
+    ctx.save(); ctx.translate(A.x, A.y); ctx.rotate(angulo + Math.PI / 2);
+    const g = ctx.createLinearGradient(0, -40, 0, -130); g.addColorStop(0, 'rgba(113,74,159,.55)'); g.addColorStop(1, 'rgba(113,74,159,0)');
+    ctx.fillStyle = g; ctx.fillRect(-2.5, -130, 5, 90); ctx.restore();
+  }
+
+}
+
+// ---------- fim ----------
+const MOTIVOS = { // só pro histórico; a tela mostra o texto da referência
+  bomb_exploded: 'Você acertou uma bomba.',
+  board_limit: 'As bolhas chegaram no limite.',
+  quit: 'Você saiu da partida.', back: 'Você saiu da partida.',
+  abaixo_do_minimo: 'O multiplicador não chegou no mínimo de resgate.',
+  rapido_demais: 'Partida rápida demais.',
+};
+async function finalizar(action, motivo) {
+  if (finalizando || !gid) return;
+  finalizando = true; acabou = true; atualizar();
+  try {
+    const r = await api('/partida/finalizar', { game_id: gid, action, shots: tiros, end_reason: motivo || action });
+    saldo = r.balance; atualizar();
+    const ganhou = r.result === 'won';
+    V.som(ganhou ? 'vitoria' : 'derrota');
+    mostrar(ganhou ? 'Parabéns!' : 'Rodada encerrada',
+      ganhou ? 'Você resgatou ' + fmt(r.win_amount) + ' 💎' : 'Não houve prêmio nesta rodada.',
+      ganhou, r.win_amount, () => sair());
+  } catch (e) {
+    finalizando = false; acabou = !!st.ended; atualizar();
+    mostrar('Erro ao finalizar', e.message, false, 0, () => {
+      $('status').style.display = 'none';
+      if (st.ended) finalizar('lose', st.motivo);   // perdeu antes do erro: tenta registrar de novo
+    });
+  }
+}
+
+function mostrar(titulo, texto, ganhou, premio, acao) {
+  $('res-titulo').textContent = titulo;
+  $('res-texto').textContent = texto;
+  $('res-btn').onclick = acao;
+  $('status').style.display = 'flex';
+  $('res-arte').src = ganhou ? '../img/banner-parabens.jpg' : '../img/banner-resgate.jpg';
+}
+
+function sair() { location.href = '../painel/'; }
+$('cash').onclick = () => { if (!$('cash').disabled) { V.som('resgate'); finalizar('cashout', 'cashout'); } };
+$('quit').onclick = () => (gid && !acabou ? finalizar('lose', 'quit') : sair());
+$('back').onclick = () => (gid && !acabou ? finalizar('lose', 'back') : sair());
+// Fechou a aba no meio: a partida vira derrota (a entrada já saiu no início).
+addEventListener('pagehide', () => { if (gid && !acabou) Bolhas.apiAoSair('/partida/desistir'); });
+
+['../img/banner-parabens.jpg', '../img/banner-resgate.jpg'].forEach((u) => { new Image().src = u; });
+redimensionar();
+requestAnimationFrame(quadro);
+comecar();
+</script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BubblesWins | Entrar</title>
+<meta name="theme-color" content="#0d081e">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../img/icone-64.png">
+<link rel="apple-touch-icon" href="../img/icone-180.png">
+<link rel="manifest" href="../manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap">
+<link rel="stylesheet" href="../estilo.css">
+<!-- Microsoft Clarity (mesmo projeto da pagina principal) -->
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "xeud5hnipq");
+</script>
+<style>
+.entrar{position:relative;z-index:5;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 16px 40px}
+.entrar .logo{margin-bottom:18px}
+.entrar .logo .logo-img{height:120px}
+.entrar .logo b{font-size:2.5rem}
+.abas{display:flex;background:#0d0820cc;border:1px solid var(--border);border-radius:14px;padding:4px;margin-bottom:14px}
+.abas button{flex:1;padding:10px;border-radius:10px;font-weight:800;color:var(--text-dim)}
+.abas button.on{background:linear-gradient(135deg,#7c5cff,#5a3df5);color:#fff;box-shadow:0 4px 14px #5a3df566}
+.presente{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;background:#00e5a814;border:1px solid #00e5a855;font-size:.86rem;font-weight:700;margin-bottom:4px}
+.presente svg{width:26px;height:26px;flex-shrink:0}
+</style>
+</head>
+<body>
+<div class="fundo" id="fundo"></div>
+<main class="entrar">
+  <div class="logo"><img class="logo-img" src="../img/logo.webp" alt="BubblesWins"></div>
+  <section class="card" style="max-width:420px;padding:20px">
+    <div class="abas"><button id="ab-cad" class="on" onclick="aba('cad')">Criar conta</button><button id="ab-log" onclick="aba('log')">Entrar</button></div>
+
+    <form id="f-cad" onsubmit="event.preventDefault();cadastrar()">
+      <div class="presente" id="presente"><svg viewBox="0 0 32 32"><use href="#gema"/></svg><span>Crie sua conta e ganhe <b id="bv">200</b> diamantes pra começar!</span></div>
+      <label class="campo"><span>👤</span><input id="c-nome" autocomplete="name" placeholder="Nome completo" required></label>
+      <label class="campo"><span>📱</span><input id="c-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="Telefone com DDD" required></label>
+      <label class="campo"><span>🔒</span><input id="c-senha" type="password" autocomplete="new-password" placeholder="Crie uma senha (mín. 6)" required></label>
+      <label class="campo" id="campo-ref" style="display:none"><span>🎟️</span><input id="c-ref" placeholder="Código de indicação"></label>
+      <button class="panel-cta" style="margin-top:16px" id="b-cad">Criar conta e jogar</button>
+    </form>
+
+    <form id="f-log" style="display:none" onsubmit="event.preventDefault();entrar()">
+      <label class="campo"><span>📱</span><input id="l-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="Telefone com DDD" required></label>
+      <label class="campo"><span>🔒</span><input id="l-senha" type="password" autocomplete="current-password" placeholder="Senha" required></label>
+      <button class="panel-cta" style="margin-top:16px" id="b-log">Entrar</button>
+    </form>
+    <p class="aviso">Diamantes não são dinheiro: não se compram e não se sacam. Servem pra jogar e trocar por desconto na ALMAZ.</p>
+  </section>
+</main>
+
+<script src="../app.js"></script>
+<script src="../visual.js"></script>
+<script>
+const $ = (id) => document.getElementById(id);
+const ref = new URLSearchParams(location.search).get('ref') || '';
+if (ref) { $('c-ref').value = ref; $('campo-ref').style.display = ''; }
+if (Bolhas.token()) location.href = '../painel/';
+
+Bolhas.api('/config').then((c) => { $('bv').textContent = Bolhas.fmt(c.boasVindas); }).catch(() => {});
+
+function aba(q) {
+  $('ab-cad').classList.toggle('on', q === 'cad'); $('ab-log').classList.toggle('on', q === 'log');
+  $('f-cad').style.display = q === 'cad' ? '' : 'none'; $('f-log').style.display = q === 'log' ? '' : 'none';
+}
+// máscara de telefone: (45) 99999-0000
+function mascara(e) {
+  const d = e.target.value.replace(/\D/g, '').slice(0, 11);
+  e.target.value = d.length > 6 ? `(${d.slice(0, 2)}) ${d.slice(2, d.length - 4)}-${d.slice(-4)}` : d.length > 2 ? `(${d.slice(0, 2)}) ${d.slice(2)}` : d;
+}
+$('c-tel').addEventListener('input', mascara); $('l-tel').addEventListener('input', mascara);
+
+async function cadastrar() {
+  const b = $('b-cad'); b.disabled = true;
+  try {
+    const r = await Bolhas.api('/cadastro', { nome: $('c-nome').value, telefone: $('c-tel').value, senha: $('c-senha').value, ref: $('c-ref').value });
+    Bolhas.salvarToken(r.token); location.href = '../painel/';
+  } catch (e) { Bolhas.toast(e.message); b.disabled = false; }
+}
+async function entrar() {
+  const b = $('b-log'); b.disabled = true;
+  try {
+    const r = await Bolhas.api('/login', { telefone: $('l-tel').value, senha: $('l-senha').value });
+    Bolhas.salvarToken(r.token); location.href = '../painel/';
+  } catch (e) { Bolhas.toast(e.message); b.disabled = false; }
+}
+</script>
+</body>
+</html>
