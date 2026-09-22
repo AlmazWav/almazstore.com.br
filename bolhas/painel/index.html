@@ -36,7 +36,7 @@
 <header class="topbar">
   <div class="logo"><img class="logo-img" src="../img/logo.webp" alt="BubblesWins"></div>
   <div class="acoes">
-    <div class="saldo"><span>SALDO</span><b id="saldo"><svg viewBox="0 0 32 32"><use href="#gema"/></svg><em style="font-style:normal">...</em></b></div>
+    <div class="saldo"><span>SALDO</span><b id="saldo">R$ <em style="font-style:normal">...</em></b></div>
     <button class="btn-redondo btn-tema" onclick="trocarTema()" aria-label="Tema"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z"/></svg></button>
     <button class="btn-redondo btn-perfil" id="avatar" onclick="abrir('perfil')">A</button>
   </div>
@@ -49,7 +49,7 @@
         <div class="banner-txt">
           <h2>ESTOURE, JOGUE E<br><em>GANHE DESCONTOS</em></h2>
           <p>Aqui é habilidade. Mais diversão. Mais prêmios.</p>
-          <div class="banner-selos"><span>💎 Diamantes<br>grátis</span><span>🎮 Jogue em<br>minutos</span><span>🎁 Cupons<br>reais</span></div>
+          <div class="banner-selos"><span>💎 reais<br>grátis</span><span>🎮 Jogue em<br>minutos</span><span>🎁 Cupons<br>reais</span></div>
           <button class="banner-cta" onclick="jogar()">JOGAR AGORA →</button>
         </div>
         <canvas class="banner-bolhas" id="banner-bolhas"></canvas>
@@ -60,10 +60,10 @@
     <div class="corpo">
       <div class="rotulo">VALOR DE ENTRADA</div>
       <div class="entry-grid" id="entradas"></div>
-      <label class="money-input"><span class="prefix"><svg viewBox="0 0 32 32"><use href="#gema"/></svg></span><input id="valor" type="number" inputmode="numeric" min="1" step="1"></label>
+      <label class="money-input"><span class="prefix">R$ </span><input id="valor" type="number" inputmode="numeric" min="1" step="1"></label>
       <div class="reward-box">
         <div class="label">Recompensa mínima</div>
-        <div class="value"><svg viewBox="0 0 32 32"><use href="#gema"/></svg><span id="recompensa">0</span></div>
+        <div class="value">R$ <span id="recompensa">0</span></div>
       </div>
       <button class="panel-cta" id="btn-jogar" onclick="jogar()">Jogar</button>
     </div>
@@ -74,24 +74,24 @@
 <div class="live-toast" id="live-toast">
   <div class="live-toast-icon">↑</div>
   <div><div class="live-toast-name" id="lt-nome"></div><div class="live-toast-text">acabou de resgatar</div></div>
-  <div class="live-toast-amount"><svg viewBox="0 0 32 32"><use href="#gema"/></svg><span id="lt-valor"></span></div>
+  <div class="live-toast-amount">R$ <span id="lt-valor"></span></div>
 </div>
 
 <nav class="bottom-nav"><div>
-  <button class="nav-item" onclick="abrir('ganhar')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10h18M7 15h4"/></svg>Ganhar</button>
-  <button class="nav-item" onclick="abrir('resgatar')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16"/></svg>Resgatar</button>
+  <button class="nav-item" onclick="abrir('depositar')><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10h18M7 15h4"/></svg>Depositar</button>
+  <button class="nav-item" onclick="abrir('sacar')><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16"/></svg>Sacar</button>
   <button class="nav-item center" onclick="jogar()"><span class="nav-circle"><span class="nav-bubble"></span></span>Jogar</button>
   <button class="nav-item" onclick="abrir('indicar')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.6"/><path d="M3 20c.5-3.5 3-5.5 6-5.5s5.5 2 6 5.5M15 14.6c2.8-.3 5.2 1.3 6 4.4"/></svg>Indicar</button>
   <button class="nav-item" onclick="abrir('perfil')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c.8-4 4-6.5 8-6.5s7.2 2.5 8 6.5"/></svg>Perfil</button>
 </div></nav>
 
 <!-- ===================== GANHAR 💎 (no lugar do "Depositar") ===================== -->
-<div class="modal" id="m-ganhar" onclick="if(event.target===this)fechar()"><div class="folha">
-  <div class="folha-banner" id="bn-ganhar"></div>
+<div class="modal" id="m-depositar" onclick="if(event.target===this)fechar()"><div class="folha">
+  <div class="folha-banner" id="bn-depositar"></div>
   <button class="folha-fechar" onclick="fechar()" aria-label="Fechar">✕</button>
   <div class="folha-corpo">
     <div class="caixa">
-      <div class="rotulo">FORMAS DE GANHAR</div>
+      <div class="rotulo">DEPOSITAR</div>
       <div class="tiles">
         <button class="tile c3" id="t-bonus" onclick="pegarBonus()"><span class="selo">HOT</span><span id="t-bonus-v">+20</span><small>Bônus diário</small></button>
         <button class="tile c2" onclick="abrir('indicar')"><span class="selo">HOT</span><span id="t-ind-v">+100</span><small>Por amigo</small></button>
@@ -100,20 +100,20 @@
       <label class="campo"><span>🎟️</span><input id="in-codigo" placeholder="Tenho um código promocional" autocapitalize="characters"></label>
     </div>
     <button class="btn-verde" onclick="usarCodigo()">Ativar código</button>
-    <p class="aviso">Diamantes não se compram. Você ganha jogando, com o bônus diário, indicando amigos e com códigos das nossas campanhas.</p>
+    <p class="aviso">reais não se compram. Você ganha jogando, com o bônus diário, indicando amigos e com códigos das nossas campanhas.</p>
   </div>
 </div></div>
 
 <!-- ===================== RESGATAR (no lugar do "Sacar") ===================== -->
-<div class="modal" id="m-resgatar" onclick="if(event.target===this)fechar()"><div class="folha">
-  <div class="folha-banner" id="bn-resgatar"></div>
+<div class="modal" id="m-sacar" onclick="if(event.target===this)fechar()"><div class="folha">
+  <div class="folha-banner" id="bn-sacar"></div>
   <button class="folha-fechar" onclick="fechar()" aria-label="Fechar">✕</button>
   <div class="folha-corpo">
     <div class="caixa" style="display:flex;align-items:center;gap:12px">
-      <div style="width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#00e5a81f;border:1px solid #00e5a855"><svg width="22" height="22" viewBox="0 0 32 32"><use href="#gema"/></svg></div>
+      <div style="width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#00e5a81f;border:1px solid #00e5a855">R$ </div>
       <div><div class="rotulo" style="margin:0">SALDO DISPONÍVEL</div><b style="font-size:1.25rem;font-weight:900" id="rs-saldo">0</b></div>
     </div>
-    <div class="rotulo" style="margin-top:16px">TROQUE POR CUPOM DE DESCONTO</div>
+    <div class="rotulo" style="margin-top:16px">INFORME SUA CHAVE PIX</div>
     <div class="tiles" id="rs-itens"></div>
     <label class="campo"><span>@</span><input id="rs-email" type="email" inputmode="email" placeholder="E-mail que você usa na compra"></label>
     <div id="rs-cupom" style="display:none"><div class="cupom-grande" id="rs-codigo"></div></div>
@@ -129,7 +129,7 @@
   <div class="folha-corpo">
     <div class="card-verde">
       <div class="topo">
-        <div><small>SALDO DE COMISSÕES</small><b><svg viewBox="0 0 32 32"><use href="#gema"/></svg><span id="ind-saldo">0</span></b><small style="letter-spacing:0;font-weight:600">total recebido: <span id="ind-total">0</span> 💎</small></div>
+        <div><small>SALDO DE COMISSÕES</small><b>R$ <span id="ind-saldo">0</span></b><small style="letter-spacing:0;font-weight:600">total recebido: <span id="ind-total">0</span> 💎</small></div>
         <div style="text-align:right"><small>INDICADOS</small><b style="justify-content:flex-end" id="ind-qtd">0</b><small style="letter-spacing:0;font-weight:600">no total</small></div>
       </div>
       <button onclick="sacarComissao()">↑ Sacar Comissões</button>
@@ -163,8 +163,8 @@
     <div class="grade2" style="margin-top:12px">
       <div class="stat"><b id="st-partidas">0</b><span>Partidas</span></div>
       <div class="stat"><b id="st-resgates">0</b><span>Resgates</span></div>
-      <div class="stat"><b><svg viewBox="0 0 32 32"><use href="#gema"/></svg><span id="st-total">0</span></b><span>Total ganho</span></div>
-      <div class="stat"><b><svg viewBox="0 0 32 32"><use href="#gema"/></svg><span id="st-maior">0</span></b><span>Maior resgate</span></div>
+      <div class="stat"><b>R$ <span id="st-total">0</span></b><span>Total ganho</span></div>
+      <div class="stat"><b>R$ <span id="st-maior">0</span></b><span>Maior resgate</span></div>
     </div>
     <div class="caixa" style="margin-top:12px"><div class="sec-titulo">ÚLTIMAS TRANSAÇÕES <button onclick="alternar('pf-extrato')">Ver histórico ⌄</button></div><div id="pf-extrato" style="display:none;margin-top:8px"></div></div>
     <div class="caixa"><div class="sec-titulo">HISTÓRICO DE PARTIDAS <button onclick="alternar('pf-partidas')">Ver partidas ⌄</button></div><div id="pf-partidas" style="display:none;margin-top:8px"></div></div>
@@ -219,8 +219,8 @@ async function carregar() {
 }
 
 function pintarSaldo() {
-  $('saldo').querySelector('em').textContent = fmt(EU.diamantes);
-  $('rs-saldo').textContent = fmt(EU.diamantes) + ' 💎';
+  $('saldo').querySelector('em').textContent = fmt(EU.reais);
+  $('rs-saldo').textContent = fmt(EU.reais) + ' 💎';
 }
 function pintar() {
   pintarSaldo();
@@ -243,7 +243,7 @@ function jogar() {
   if (!CFG || !EU) return;
   if (entrada < CFG.entradaMin) return toast('A entrada mínima é ' + CFG.entradaMin + ' 💎.');
   if (entrada > CFG.entradaMax) return toast('A entrada máxima é ' + CFG.entradaMax + ' 💎.');
-  if (EU.diamantes < entrada) { toast('Saldo insuficiente. Ganhe mais diamantes!'); return abrir('ganhar'); }
+  if (EU.reais < entrada) { toast('Saldo insuficiente. Ganhe mais reais!'); return abrir('ganhar'); }
   sessionStorage.setItem('bolhasEntrada', String(entrada));
   location.href = '../jogo/';
 }
@@ -271,8 +271,8 @@ function mostrarToastVivo() {
 
 // ---------- modais ----------
 const BANNERS = {
-  ganhar: ['GANHE <em>DIAMANTES</em><br>TODO DIA', 'Bônus diário, indicação e códigos'],
-  resgatar: ['RESGATE <em>INSTANTÂNEO</em>', 'Troque diamantes por cupom na hora'],
+  ganhar: ['GANHE <em>reais</em><br>TODO DIA', 'Bônus diário, indicação e códigos'],
+  resgatar: ['RESGATE <em>INSTANTÂNEO</em>', 'Troque reais por cupom na hora'],
   indicar: ['INDIQUE E<br><em>GANHE 💎</em>', 'Até 3 níveis de indicação'],
 };
 // Banners com arte pronta (o resto ainda é desenhado).
@@ -410,3 +410,5 @@ carregar();
 </script>
 </body>
 </html>
+
+

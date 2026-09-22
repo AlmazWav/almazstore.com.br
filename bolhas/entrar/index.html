@@ -41,7 +41,7 @@
     <div class="abas"><button id="ab-cad" class="on" onclick="aba('cad')">Criar conta</button><button id="ab-log" onclick="aba('log')">Entrar</button></div>
 
     <form id="f-cad" onsubmit="event.preventDefault();cadastrar()">
-      <div class="presente" id="presente"><svg viewBox="0 0 32 32"><use href="#gema"/></svg><span>Crie sua conta e ganhe <b id="bv">200</b> diamantes pra começar!</span></div>
+      <div class="presente" id="presente">R$ <span>Crie sua conta e ganhe <b id="bv">200</b> reais pra começar!</span></div>
       <label class="campo"><span>👤</span><input id="c-nome" autocomplete="name" placeholder="Nome completo" required></label>
       <label class="campo"><span>📱</span><input id="c-tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="Telefone com DDD" required></label>
       <label class="campo"><span>🔒</span><input id="c-senha" type="password" autocomplete="new-password" placeholder="Crie uma senha (mín. 6)" required></label>
@@ -54,7 +54,7 @@
       <label class="campo"><span>🔒</span><input id="l-senha" type="password" autocomplete="current-password" placeholder="Senha" required></label>
       <button class="panel-cta" style="margin-top:16px" id="b-log">Entrar</button>
     </form>
-    <p class="aviso">Diamantes não são dinheiro: não se compram e não se sacam. Servem pra jogar e trocar por desconto na ALMAZ.</p>
+    <p class="aviso">reais não são dinheiro: não se compram e não se sacam. Servem pra jogar e trocar por desconto na ALMAZ.</p>
   </section>
 </main>
 
@@ -96,3 +96,5 @@ async function entrar() {
 </script>
 </body>
 </html>
+
+

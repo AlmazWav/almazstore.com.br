@@ -42,7 +42,7 @@
 
   const fmt = (n) => Math.floor(Number(n) || 0).toLocaleString('pt-BR');
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  const GEMA = '<svg viewBox="0 0 32 32"><use href="#gema"/></svg>';
+  const GEMA = 'R$ ';
   const SVG_GEMA = '<svg width="0" height="0" style="position:absolute"><defs>'
     + '<linearGradient id="gg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9ff7ff"/><stop offset=".5" stop-color="#5eb8ff"/><stop offset="1" stop-color="#b44dff"/></linearGradient>'
     + '<symbol id="gema" viewBox="0 0 32 32"><path d="M8 4h16l6 8-14 17L2 12z" fill="url(#gg)"/><path d="M2 12h28M8 4l4 8 4-8 4 8 4-8M12 12l4 17 4-17" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="1.2"/></symbol>'
@@ -66,3 +66,4 @@
 
   window.Bolhas = { API, api, apiAoSair, token, salvarToken, irParaEntrar, raizBolhas, fmt, esc, GEMA, toast, copiar, dataCurta };
 })();
+

@@ -158,7 +158,7 @@
     return (cache[chave] = cv);
   }
 
-  /** Orbe grande de enfeite (fundo do painel), com estrela ou diamante dentro. */
+  /** Orbe grande de enfeite (fundo do painel), com estrela ou real dentro. */
   function orbe(cor, simbolo, px) {
     const cv = document.createElement('canvas');
     px = px || 220;
@@ -177,7 +177,7 @@
     g.save(); g.shadowColor = k.claro; g.shadowBlur = r * 0.25;
     g.fillStyle = k.claro; g.strokeStyle = k.escuro; g.lineWidth = r * 0.04;
     g.beginPath();
-    if (simbolo === 'diamante') {
+    if (simbolo === 'real') {
       const s = r * 0.5;
       g.moveTo(-s * 0.7, -s * 0.35); g.lineTo(-s * 0.35, -s * 0.75); g.lineTo(s * 0.35, -s * 0.75); g.lineTo(s * 0.7, -s * 0.35); g.lineTo(0, s * 0.8); g.closePath();
     } else {
@@ -239,3 +239,4 @@
 
   window.BolhasVisual = { CORES, sprite, orbe, som, setMudo, get mudo() { return mudo; } };
 })();
+
