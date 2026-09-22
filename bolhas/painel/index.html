@@ -49,7 +49,7 @@
         <div class="banner-txt">
           <h2>ESTOURE, JOGUE E<br><em>GANHE DESCONTOS</em></h2>
           <p>Aqui é habilidade. Mais diversão. Mais prêmios.</p>
-          <div class="banner-selos"><span>💎 reais<br>grátis</span><span>🎮 Jogue em<br>minutos</span><span>🎁 Cupons<br>reais</span></div>
+          <div class="banner-selos"><span>💰 Saldo<br>grátis</span><span>🎮 Jogue em<br>minutos</span><span>🎁 Cupons<br>reais</span></div>
           <button class="banner-cta" onclick="jogar()">JOGAR AGORA →</button>
         </div>
         <canvas class="banner-bolhas" id="banner-bolhas"></canvas>
@@ -85,7 +85,7 @@
   <button class="nav-item" onclick="abrir('perfil')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c.8-4 4-6.5 8-6.5s7.2 2.5 8 6.5"/></svg>Perfil</button>
 </div></nav>
 
-<!-- ===================== GANHAR 💎 (no lugar do "Depositar") ===================== -->
+<!-- ===================== GANHAR (no lugar do "Depositar") ===================== -->
 <div class="modal" id="m-depositar" onclick="if(event.target===this)fechar()"><div class="folha">
   <div class="folha-banner" id="bn-depositar"></div>
   <button class="folha-fechar" onclick="fechar()" aria-label="Fechar">✕</button>
@@ -100,7 +100,7 @@
       <label class="campo"><span>🎟️</span><input id="in-codigo" placeholder="Tenho um código promocional" autocapitalize="characters"></label>
     </div>
     <button class="btn-verde" onclick="usarCodigo()">Ativar código</button>
-    <p class="aviso">reais não se compram. Você ganha jogando, com o bônus diário, indicando amigos e com códigos das nossas campanhas.</p>
+    <p class="aviso">O saldo não se compra. Você ganha jogando, com o bônus diário, indicando amigos e com códigos das nossas campanhas.</p>
   </div>
 </div></div>
 
@@ -113,7 +113,7 @@
       <div style="width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#00e5a81f;border:1px solid #00e5a855">R$ </div>
       <div><div class="rotulo" style="margin:0">SALDO DISPONÍVEL</div><b style="font-size:1.25rem;font-weight:900" id="rs-saldo">0</b></div>
     </div>
-    <div class="rotulo" style="margin-top:16px">INFORME SUA CHAVE PIX</div>
+    <div class="rotulo" style="margin-top:16px">INFORME SEU E-MAIL</div>
     <div class="tiles" id="rs-itens"></div>
     <label class="campo"><span>@</span><input id="rs-email" type="email" inputmode="email" placeholder="E-mail que você usa na compra"></label>
     <div id="rs-cupom" style="display:none"><div class="cupom-grande" id="rs-codigo"></div></div>
@@ -129,7 +129,7 @@
   <div class="folha-corpo">
     <div class="card-verde">
       <div class="topo">
-        <div><small>SALDO DE COMISSÕES</small><b>R$ <span id="ind-saldo">0</span></b><small style="letter-spacing:0;font-weight:600">total recebido: <span id="ind-total">0</span> 💎</small></div>
+        <div><small>SALDO DE COMISSÕES</small><b>R$ <span id="ind-saldo">0</span></b><small style="letter-spacing:0;font-weight:600">total recebido: R$ <span id="ind-total">0</span></small></div>
         <div style="text-align:right"><small>INDICADOS</small><b style="justify-content:flex-end" id="ind-qtd">0</b><small style="letter-spacing:0;font-weight:600">no total</small></div>
       </div>
       <button onclick="sacarComissao()">↑ Sacar Comissões</button>
@@ -220,7 +220,7 @@ async function carregar() {
 
 function pintarSaldo() {
   $('saldo').querySelector('em').textContent = fmt(EU.diamantes);
-  $('rs-saldo').textContent = fmt(EU.diamantes) + ' 💎';
+  $('rs-saldo').textContent = 'R$ ' + fmt(EU.diamantes);
 }
 function pintar() {
   pintarSaldo();
@@ -241,9 +241,9 @@ $('valor').addEventListener('input', () => {
 // ---------- jogar ----------
 function jogar() {
   if (!CFG || !EU) return;
-  if (entrada < CFG.entradaMin) return toast('A entrada mínima é ' + CFG.entradaMin + ' 💎.');
-  if (entrada > CFG.entradaMax) return toast('A entrada máxima é ' + CFG.entradaMax + ' 💎.');
-  if (EU.diamantes < entrada) { toast('Saldo insuficiente. Ganhe mais reais!'); return abrir('depositar'); }
+  if (entrada < CFG.entradaMin) return toast('A entrada mínima é R$ ' + CFG.entradaMin + '.');
+  if (entrada > CFG.entradaMax) return toast('A entrada máxima é R$ ' + CFG.entradaMax + '.');
+  if (EU.diamantes < entrada) { toast('Saldo insuficiente. Ganhe mais saldo!'); return abrir('depositar'); }
   sessionStorage.setItem('bolhasEntrada', String(entrada));
   location.href = '../jogo/';
 }
@@ -273,7 +273,7 @@ function mostrarToastVivo() {
 const BANNERS = {
   depositar: ['GANHE <em>reais</em><br>TODO DIA', 'Bônus diário, indicação e códigos'],
   sacar: ['RESGATE <em>INSTANTÂNEO</em>', 'Troque reais por cupom na hora'],
-  indicar: ['INDIQUE E<br><em>GANHE 💎</em>', 'Até 3 níveis de indicação'],
+  indicar: ['INDIQUE E<br><em>GANHE R$</em>', 'Até 3 níveis de indicação'],
 };
 // Banners com arte pronta (o resto ainda é desenhado).
 const ARTES = { sacar: '../img/banner-resgate.jpg' };
@@ -307,12 +307,12 @@ function alternar(id) { const e = $(id); e.style.display = e.style.display === '
 
 // Ganhar
 async function pegarBonus() {
-  try { const r = await api('/bonus-diario', {}); EU = r.conta; pintar(); BolhasVisual.som('resgate'); toast('+' + fmt(r.valor) + ' 💎 de bônus diário!'); }
+  try { const r = await api('/bonus-diario', {}); EU = r.conta; pintar(); BolhasVisual.som('resgate'); toast('+R$ ' + fmt(r.valor) + ' de bônus diário!'); }
   catch (e) { toast(e.message); }
 }
 async function usarCodigo() {
   const c = $('in-codigo').value.trim(); if (!c) return toast('Digite o código.');
-  try { const r = await api('/codigo', { codigo: c }); EU = r.conta; pintar(); $('in-codigo').value = ''; BolhasVisual.som('resgate'); toast('+' + fmt(r.valor) + ' 💎 do código!'); }
+  try { const r = await api('/codigo', { codigo: c }); EU = r.conta; pintar(); $('in-codigo').value = ''; BolhasVisual.som('resgate'); toast('+R$ ' + fmt(r.valor) + ' do código!'); }
   catch (e) { toast(e.message); }
 }
 
@@ -323,7 +323,7 @@ function montarResgatar() {
   $('rs-email').value = EU.email || '';
   const cores = ['c1', 'c2', 'c3', 'c4'];
   $('rs-itens').innerHTML = CFG.loja.map((i, n) => `<button class="tile ${cores[n % 4]}${itemSel === i.id ? ' on' : ''}" ${i.disponivel ? '' : 'disabled'} onclick="itemSel='${esc(i.id)}';marcarItem()" data-id="${esc(i.id)}">
-    ${n === CFG.loja.length - 1 && i.disponivel ? '<span class="selo">HOT</span>' : ''}${esc(i.titulo)}<small>${i.disponivel ? fmt(i.custo) + ' 💎' : 'Em breve'}</small></button>`).join('');
+    ${n === CFG.loja.length - 1 && i.disponivel ? '<span class="selo">HOT</span>' : ''}${esc(i.titulo)}<small>${i.disponivel ? 'R$ ' + fmt(i.custo) : 'Em breve'}</small></button>`).join('');
   marcarItem();
 }
 function marcarItem() {
@@ -349,18 +349,18 @@ async function carregarIndicacao() {
     $('ind-saldo').textContent = fmt(r.comissao); $('ind-total').textContent = fmt(r.comissaoTotal);
     $('ind-qtd').textContent = fmt(r.niveis.n1.total + r.niveis.n2.total + r.niveis.n3.total);
     $('ind-link').textContent = linkIndicacao(r.codigo);
-    $('ind-regra').textContent = `Você ganha ${fmt(CFG.indicacao.n1)} 💎 por amigo direto, ${fmt(CFG.indicacao.n2)} 💎 no 2º nível e ${fmt(CFG.indicacao.n3)} 💎 no 3º, quando o indicado joga ${CFG.indicacao.partidasParaPagar} partidas.`;
+    $('ind-regra').textContent = `Você ganha R$ ${fmt(CFG.indicacao.n1)} por amigo direto, R$ ${fmt(CFG.indicacao.n2)} no 2º nível e R$ ${fmt(CFG.indicacao.n3)} no 3º, quando o indicado joga ${CFG.indicacao.partidasParaPagar} partidas.`;
     const nomes = { n1: ['N1', 'diretos'], n2: ['N2', '2º nível'], n3: ['N3', '3º nível'] };
     $('ind-niveis').innerHTML = Object.entries(r.niveis).map(([k, v]) => `<div class="nivel"><div class="n">${nomes[k][0]}<small>${nomes[k][1]}</small></div>
       <div><b>${fmt(v.total)}</b><span>INDICADOS</span></div><div><b>${fmt(v.ativos)}</b><span>JÁ JOGARAM</span></div></div>`).join('');
-    $('ind-hist').innerHTML = r.comissoes.length ? r.comissoes.map((c) => `<div class="linha-hist"><div>${esc(c.de)} (${c.nivel.toUpperCase()})<small>${dataCurta(c.em)}</small></div><b class="mais">+${fmt(c.valor)} 💎</b></div>`).join('')
+    $('ind-hist').innerHTML = r.comissoes.length ? r.comissoes.map((c) => `<div class="linha-hist"><div>${esc(c.de)} (${c.nivel.toUpperCase()})<small>${dataCurta(c.em)}</small></div><b class="mais">+R$ ${fmt(c.valor)}</b></div>`).join('')
       : '<p class="vazio">Nenhuma comissão recebida ainda. Compartilhe seu link!</p>';
-    $('ind-saques').innerHTML = r.saques.length ? r.saques.map((s) => `<div class="linha-hist"><div>Saque de comissões<small>${dataCurta(s.em)}</small></div><b class="mais">+${fmt(s.valor)} 💎</b></div>`).join('')
+    $('ind-saques').innerHTML = r.saques.length ? r.saques.map((s) => `<div class="linha-hist"><div>Saque de comissões<small>${dataCurta(s.em)}</small></div><b class="mais">+R$ ${fmt(s.valor)}</b></div>`).join('')
       : '<p class="vazio">Nenhum saque de comissão ainda.</p>';
   } catch (e) { toast(e.message); }
 }
 async function sacarComissao() {
-  try { const r = await api('/indicacao/sacar', {}); EU = r.conta; pintar(); toast('+' + fmt(r.valor) + ' 💎 no seu saldo!'); carregarIndicacao(); }
+  try { const r = await api('/indicacao/sacar', {}); EU = r.conta; pintar(); toast('+R$ ' + fmt(r.valor) + ' no seu saldo!'); carregarIndicacao(); }
   catch (e) { toast(e.message); }
 }
 
@@ -376,9 +376,9 @@ async function carregarPerfil() {
     : '<p class="vazio">Você ainda não trocou nenhum cupom.</p>';
   try {
     const h = await api('/historico');
-    $('pf-extrato').innerHTML = h.extrato.length ? h.extrato.map((e) => `<div class="linha-hist"><div>${esc(TIPOS[e.tipo] || e.tipo)}<small>${dataCurta(e.em)}</small></div><b class="${e.valor >= 0 ? 'mais' : 'menos'}">${e.valor >= 0 ? '+' : ''}${fmt(e.valor)} 💎</b></div>`).join('') : '<p class="vazio">Nenhuma transação.</p>';
+    $('pf-extrato').innerHTML = h.extrato.length ? h.extrato.map((e) => `<div class="linha-hist"><div>${esc(TIPOS[e.tipo] || e.tipo)}<small>${dataCurta(e.em)}</small></div><b class="${e.valor >= 0 ? 'mais' : 'menos'}">${e.valor >= 0 ? '+' : '-'}R$ ${fmt(Math.abs(e.valor))}</b></div>`).join('') : '<p class="vazio">Nenhuma transação.</p>';
     const st = { resgatou: ['Resgatou', 'mais'], perdeu: ['Perdeu', 'menos'], ativa: ['Em andamento', ''] };
-    $('pf-partidas').innerHTML = h.partidas.length ? h.partidas.map((p) => `<div class="linha-hist"><div>Entrada ${fmt(p.entrada)} 💎 · ${Number(p.mult).toFixed(2)}x<small>${dataCurta(p.em)}</small></div><b class="${st[p.status][1]}">${p.status === 'resgatou' ? '+' + fmt(p.premio) + ' 💎' : st[p.status][0]}</b></div>`).join('') : '<p class="vazio">Nenhuma partida ainda.</p>';
+    $('pf-partidas').innerHTML = h.partidas.length ? h.partidas.map((p) => `<div class="linha-hist"><div>Entrada R$ ${fmt(p.entrada)} · ${Number(p.mult).toFixed(2)}x<small>${dataCurta(p.em)}</small></div><b class="${st[p.status][1]}">${p.status === 'resgatou' ? '+R$ ' + fmt(p.premio) : st[p.status][0]}</b></div>`).join('') : '<p class="vazio">Nenhuma partida ainda.</p>';
   } catch (e) {}
 }
 async function trocarSenha() {

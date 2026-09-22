@@ -1,7 +1,7 @@
 {
   "name": "BubblesWins",
   "short_name": "BubblesWins",
-  "description": "Estoure bolhas, junte diamantes e troque por desconto na ALMAZ.",
+  "description": "Estoure bolhas, junte saldo e troque por desconto na ALMAZ.",
   "start_url": "./painel/",
   "scope": "./",
   "display": "standalone",

@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>BubblesWins | Estoure bolhas e ganhe desconto</title>
-<meta name="description" content="BubblesWins é um jogo casual de atirar bolhas: mire, junte bolhas da mesma cor, suba o multiplicador, resgate a tempo e troque seus reais por dinheiro real.">
+<meta name="description" content="BubblesWins é um jogo casual de atirar bolhas: mire, junte bolhas da mesma cor, suba o multiplicador, resgate a tempo e troque seu saldo por desconto na ALMAZ.">
 <meta name="theme-color" content="#f4f1ff">
 <meta property="og:title" content="BubblesWins">
-<meta property="og:description" content="Estoure bolhas, junte reais e troque por dinheiro real.">
+<meta property="og:description" content="Estoure bolhas, junte saldo e troque por desconto na ALMAZ.">
 <meta property="og:image" content="https://almazstore.com.br/bolhas/img/icone.png">
 <link rel="icon" href="img/icone-64.png">
 <link rel="apple-touch-icon" href="img/icone-180.png">
@@ -191,11 +191,11 @@ a{color:inherit;text-decoration:none}
         <div><h1>BubblesWins</h1><div class="cat">Bubble shooter casual</div></div>
       </div>
       <div class="numeros">
-        <div><b>200 💎</b>de boas-vindas</div>
+        <div><b>R$ 200</b>de boas-vindas</div>
         <div><b>Até 20x</b>multiplicador</div>
         <div><b>Cupons</b>de desconto</div>
       </div>
-      <p class="desc">Mire, dispare e junte bolhas da mesma cor. Cada bolha estourada sobe o multiplicador: resgate antes de o tabuleiro descer demais. real vira dinheiro real.</p>
+      <p class="desc">Mire, dispare e junte bolhas da mesma cor. Cada bolha estourada sobe o multiplicador: resgate antes de o tabuleiro descer demais. O saldo vira desconto na ALMAZ.</p>
       <div class="tags"><span class="tag t1">Casual</span><span class="tag t2">Atirar bolhas</span><span class="tag t3">Multiplicador</span><span class="tag t4">Desconto na loja</span></div>
       <a class="cta" href="entrar/" id="cta-hero"><svg><use href="#play"/></svg>Jogar agora</a>
     </div>
@@ -240,7 +240,7 @@ a{color:inherit;text-decoration:none}
 
   <section class="sec">
     <h2>Multiplique seu saldo</h2>
-    <p class="lead">Ganhe 💎 jogando, no bônus diário e indicando amigos. Junte e Saque seus ganhos diretamente para sua conta.</p>
+    <p class="lead">Ganhe saldo jogando, no bônus diário e indicando amigos. Junte e troque por cupom de desconto na ALMAZ.</p>
     <div class="loja" id="loja">
       <div class="cupom"><div class="pct">5% OFF</div><p>em qualquer plano</p><span class="custo">R$ 300</span></div>
       <div class="cupom"><div class="pct">10% OFF</div><p>em qualquer plano</p><span class="custo">R$ 700</span></div>
@@ -253,7 +253,7 @@ a{color:inherit;text-decoration:none}
     <div class="feats">
       <div class="feat"><div class="ic">📈</div><h3>Multiplicador</h3><p>Cada bolha estourada soma. Quanto mais arrisca, mais leva.</p></div>
       <div class="feat"><div class="ic">🎨</div><h3>Bolhas coloridas</h3><p>Cores vivas, combos e efeitos ao estourar.</p></div>
-      <div class="feat"><div class="ic">💎</div><h3>reais</h3><p>Bônus diário, indicação e resgates. Saque via PIX.</p></div>
+      <div class="feat"><div class="ic">💰</div><h3>Saldo em R$</h3><p>Bônus diário, indicação e troca por cupom na hora.</p></div>
       <div class="feat"><div class="ic">💣</div><h3>Bombas e pedras</h3><p>Desvie da bomba e das pedras que não estouram.</p></div>
       <div class="feat"><div class="ic">🤝</div><h3>Indique e ganhe</h3><p>Ganhe reais em até 3 níveis de indicação.</p></div>
     </div>
@@ -261,13 +261,13 @@ a{color:inherit;text-decoration:none}
 
   <section class="final">
     <h2>Pronto pra estourar bolhas?</h2>
-    <p>Comece com 200 💎 de boas-vindas.</p>
+    <p>Comece com R$ 200 de boas-vindas.</p>
     <a class="cta" href="entrar/"><svg><use href="#play"/></svg>Jogar agora</a>
   </section>
 
   <footer class="rodape">
     <p>© 2026 BubblesWins · os cupons valem na loja ALMAZ</p>
-    <p>reais não são dinheiro: não se compram, não têm saque e só servem pra jogar e trocar por desconto na loja.</p>
+    <p>O saldo é bônus do jogo: não se compra, não vira dinheiro e só serve pra jogar e trocar por desconto na loja.</p>
   </footer>
 </div>
 
@@ -337,7 +337,7 @@ a{color:inherit;text-decoration:none}
 new IntersectionObserver((es) => document.getElementById('fixo').classList.toggle('on', !es[0].isIntersecting))
   .observe(document.getElementById('cta-hero'));
 
-// Loja real, vinda do servidor (preço em 💎 editável no admin).
+// Loja real, vinda do servidor (preço editável no admin).
 (async function () {
   const API = location.hostname.endsWith('onrender.com') ? location.origin : 'https://keys-server-9zq2.onrender.com';
   try {

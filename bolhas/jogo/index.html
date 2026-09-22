@@ -69,7 +69,7 @@ button{font:inherit;border:0;cursor:pointer;color:inherit}
     <div class="balance" id="balance">R$ <span>...</span></div>
   </div>
   <div class="goal">
-    <div class="pill">Aposta <span id="bet">R$  0</span></div>
+    <div class="pill">Aposta <span id="bet">R$ 0</span></div>
     <div class="pill" id="pill-mult">Multiplicador <span id="mult">1.00x</span></div>
   </div>
   <div class="board-wrap" id="wrap">
@@ -107,7 +107,7 @@ let congelado = null;   // tabuleiro de antes do estouro, mostrado por 110 ms
 
 // ---------- início ----------
 async function comecar() {
-  $('bet').innerHTML = 'R$  ' + fmt(entrada);
+  $('bet').innerHTML = 'R$ ' + fmt(entrada);
   try {
     const r = await api('/partida/iniciar', { entrada });
     gid = r.game_id; saldo = r.balance;
@@ -125,7 +125,7 @@ function atualizar() {
   $('mult').textContent = st.mult.toFixed(2) + 'x';
   const valor = R.valorResgate(st);
   const cash = $('cash');
-  cash.innerHTML = 'Sacar R$  ' + fmt(valor);
+  cash.innerHTML = 'Sacar R$ ' + fmt(valor);
   cash.disabled = !R.podeResgatar(st) || acabou || animando || finalizando;
 }
 
@@ -304,7 +304,7 @@ async function finalizar(action, motivo) {
     const ganhou = r.result === 'won';
     V.som(ganhou ? 'vitoria' : 'derrota');
     mostrar(ganhou ? 'Parabéns!' : 'Rodada encerrada',
-      ganhou ? 'Você ganhou ' + fmt(r.win_amount) + ' 💎' : 'Não houve prêmio nesta rodada.',
+      ganhou ? 'Você ganhou R$ ' + fmt(r.win_amount) : 'Não houve prêmio nesta rodada.',
       ganhou, r.win_amount, () => sair());
   } catch (e) {
     finalizando = false; acabou = !!st.ended; atualizar();
@@ -320,7 +320,7 @@ function mostrar(titulo, texto, ganhou, premio, acao) {
   $('res-texto').textContent = texto;
   $('res-btn').onclick = acao;
   $('status').style.display = 'flex';
-  $('res-arte').src = ganhou ? '../img/banner-parabens.jpg' : '../img/banner-parabens.jpg';
+  $('res-arte').src = ganhou ? '../img/banner-parabens.jpg' : '../img/banner-resgate.jpg';
 }
 
 function sair() { location.href = '../painel/'; }
@@ -330,7 +330,7 @@ $('back').onclick = () => (gid && !acabou ? finalizar('lose', 'back') : sair());
 // Fechou a aba no meio: a partida vira derrota (a entrada já saiu no início).
 addEventListener('pagehide', () => { if (gid && !acabou) Bolhas.apiAoSair('/partida/desistir'); });
 
-['../img/banner-parabens.jpg', '../img/banner-parabens.jpg'].forEach((u) => { new Image().src = u; });
+['../img/banner-parabens.jpg', '../img/banner-resgate.jpg'].forEach((u) => { new Image().src = u; });
 redimensionar();
 requestAnimationFrame(quadro);
 comecar();
