@@ -126,7 +126,7 @@ function atualizar() {
   const valor = R.valorResgate(st);
   const cash = $('cash');
   cash.innerHTML = 'Sacar R$  ' + fmt(valor);
-  cash.disabled = !R.podeSacar(st) || acabou || animando || finalizando;
+  cash.disabled = !R.podeResgatar(st) || acabou || animando || finalizando;
 }
 
 // ---------- tamanho ----------
