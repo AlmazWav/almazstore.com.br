@@ -1,1 +1,5 @@
-node_modules/  
+node_modules/
+
+# Bancos locais. Nunca vao pro GitHub: tem dado de cliente dentro.
+reembolso.sqlite
+database.sqlite

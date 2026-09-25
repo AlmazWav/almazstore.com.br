@@ -2,9 +2,10 @@ services:
   - type: web
     name: keys-server
     runtime: node
-    rootDir: server
     buildCommand: npm install
     startCommand: node server.js
     envVars:
       - key: NODE_ENV
         value: production
+      # REEMBOLSO_SENHA e DATABASE_URL sao definidas a mao no painel do Render,
+      # nunca aqui: este arquivo vai pro GitHub publico.

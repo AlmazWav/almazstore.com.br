@@ -13,11 +13,15 @@ window.ALMAZ_DESTAQUES=[
 
     '4356430',  // NBA 2K27                 -> 2º em Esportes e Lançamentos (saiu 3/09/2026)
 
-    '3768760',  // 007 First Light          -> 1º em Ação
+    '1636440',  // SILENT HILL: Townfall    -> 1º em Terror (saiu 24/09/2026)
+
+    '3669870',  // CONTROL Resonant         -> 1º em Ação (saiu 24/09/2026)
+
+    '3768760',  // 007 First Light          -> 2º em Ação
 
     '2807960',  // Battlefield 6            -> 1º em FPS
 
-    '3764200',  // Resident Evil Requiem    -> 1º em Terror
+    '3764200',  // Resident Evil Requiem    -> 2º em Terror
 
     '1245620',  // Elden Ring               -> 1º em RPG
 
@@ -29,7 +33,7 @@ window.ALMAZ_DESTAQUES=[
 
     '4704690',  // MECCHA CHAMELEON         -> 1º em Indie (jogo em alta)
 
-    '2358720',  // Black Myth: Wukong       -> 2º em Ação
+    '2358720',  // Black Myth: Wukong       -> 3º em Ação
 
     '4435490',  // Call of Duty: MW4        -> 2º em FPS
 
@@ -61,12 +65,15 @@ window.ALMAZ_DESTAQUES=[
 
     '1808500',  // ARC Raiders              -> 4º em FPS
 
-    '2651280',  // Marvel's Spider-Man 2    -> 3º em Ação
+    '2651280',  // Marvel's Spider-Man 2    -> 4º em Ação
 
     '3472040',  // NBA 2K26                 -> 2º em Esportes
 
-    '4080220',  // EA SPORTS FC 27          -> 3º em Esportes
+    /* O 4080220 (EA SPORTS FC 27) estava REPETIDO aqui embaixo desde 19/09/2026,
+       alem do lugar dele la em cima. A lista tira repetido ficando com a ULTIMA
+       aparicao, entao o jogo que devia abrir o catalogo caia pra 15a posicao.
+       Repetido nesta lista nao duplica o card: rebaixa. */
 
-    '381210'    // Dead by Daylight         -> 2º em Terror
+    '381210'    // Dead by Daylight         -> 3º em Terror
 
   ];
