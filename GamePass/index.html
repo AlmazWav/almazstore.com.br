@@ -1064,8 +1064,8 @@ var PLANOS = {
         return m ? decodeURIComponent(m[1]) : '';
       })();
       var source = urlObj.searchParams.get('src') || '';
-      // src pode conter lead stitching da Utmify; so usamos vazio ou AssistenteIA.
-      if (visitorId && (!source || source === 'AssistenteIA')) {
+      // Preserva src (incluindo origem da Utmify) e acrescenta o marcador uma unica vez.
+      if (visitorId && !/(?:^|\.)rtv_[a-z0-9-]+(?:\.|$)/i.test(source)) {
         urlObj.searchParams.set('src', (source ? source + '.' : '') + 'rtv_' + visitorId);
       }
       return urlObj.toString();

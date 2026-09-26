@@ -473,8 +473,8 @@ b,strong{color:#fff}
       if (!id) return raw;
       var u = new URL(raw, location.href);
       var src = u.searchParams.get('src') || '';
-      // Preserva src de afiliado/UTMify; usa o campo apenas quando vazio ou AssistenteIA.
-      if (!src || src === 'AssistenteIA') u.searchParams.set('src', (src ? src + '.' : '') + 'rtv_' + id);
+      // Preserva src de afiliado/UTMify e acrescenta o marcador sem duplicar.
+      if (!/(?:^|\.)rtv_[a-z0-9-]+(?:\.|$)/i.test(src)) u.searchParams.set('src', (src ? src + '.' : '') + 'rtv_' + id);
       return u.toString();
     } catch (_) { return raw; }
   }
