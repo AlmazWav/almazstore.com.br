@@ -314,11 +314,6 @@ h2{font-size:clamp(21px,3.1vw,27px);margin-bottom:6px}
 .art-cap-tag{font-size:11.5px;color:var(--deal-tx);background:rgba(47,93,16,.85);padding:3px 9px;border-radius:4px;font-weight:600;flex-shrink:0}
 .art-thumbs{display:flex;gap:6px;padding:8px;background:var(--panel);overflow-x:auto;scrollbar-width:none}
 .art-thumbs::-webkit-scrollbar{display:none}
-/* 21/09/2026: no celular as miniaturas saem. No Clarity elas levavam ~170 toques
-   em 3 dias, mais que todos os "Quero garantir" juntos (~40): a pessoa ficava
-   folheando capa na primeira tela e saia dali. O banner continua trocando
-   sozinho a cada 5s, e a caixa de compra sobe uns 70px. */
-@media(max-width:720px){.art-thumbs{display:none}}
 .art-thumb{
   flex:0 0 auto;width:104px;aspect-ratio:16/9;border-radius:5px;overflow:hidden;
   border:2px solid transparent;opacity:.55;transition:opacity .15s,border-color .15s;cursor:pointer;
@@ -344,7 +339,7 @@ h2{font-size:clamp(21px,3.1vw,27px);margin-bottom:6px}
    ancora verificavel da pagina, o carrinho real da Steam de R$ 1.573,78 na secao
    #conta. Duas ancoras, uma falsa, e a falsa contamina a verdadeira. As regras ficam
    aqui de proposito: se um dia voltar o riscado, e so repor os spans no HTML.
-   O upsell NAO entrou nessa poda: la o "de R$ 49,97 por R$ 24,98" e desconto real. */
+   O upsell NAO entrou nessa poda: la o "de .99 por R$ 24,98" e desconto real. */
 .deal{background:var(--deal-bg);color:var(--deal-tx);font-weight:700;font-size:17px;padding:6px 10px;border-radius:5px;letter-spacing:-.01em}
 .buybox-prices{display:flex;flex-direction:column;line-height:1.15}
 .buybox-old{font-size:12.5px;color:var(--dim);text-decoration:line-through}
@@ -580,7 +575,7 @@ body.gm-open{overflow:hidden}
 .step p{font-size:13.5px;color:var(--dim);line-height:1.6}
 
 /* =========================================================================
-   PLANOS: podio. O recomendado (R$ 49,97) fica no MEIO no desktop e em
+   PLANOS: podio. O recomendado (.99) fica no MEIO no desktop e em
    PRIMEIRO no celular, maior e com o unico botao verde da secao. Os outros
    dois viram secundarios (preco menor, botao cinza) pra nao disputar o olho.
    A ordem visual e feita por `order`, sem mexer na marcacao dos cards, pra
@@ -731,7 +726,7 @@ body.gm-open{overflow:hidden}
    Entrou em 20/08/2026. Antes disso o corpo da pagina tinha 2 botoes pulando DIRETO
    pro checkout (secoes #conta e #cresce) e 5 secoes sem CTA nenhum. Ou seja: ou a
    pessoa comprava no meio da leitura sem ter visto a oferta, ou nao tinha pra onde ir.
-   Com o "a partir de R$ 9,97" na primeira tela, comprar cedo virou comprar o plano
+   Com o "a partir de .99" na primeira tela, comprar cedo virou comprar o plano
    ERRADO, porque o Basico e biblioteca fechada e nao recebe jogo novo.
    Agora cada secao termina empurrando pra proxima, ate #pricing.
 
@@ -1098,7 +1093,7 @@ body.gm-open{overflow:hidden}
    Entrou em 13/08/2026. Antes disso a ancoragem de preco era so o "R$ 497,00"
    riscado, que e numero inventado por nos e ninguem acredita. Aqui o valor vem
    da propria loja: 6 jogos reais com o preco que a Steam BR cobrava no dia,
-   somando R$ 1.573,78 contra os R$ 49,97 do plano vitalicio.
+   somando R$ 1.573,78 contra os .99 do plano vitalicio.
    MANUTENCAO: os precos abaixo sao fixos e envelhecem. Pra atualizar, consulte
    store.steampowered.com/api/appdetails?appids=<id>&cc=br e use o initial_formatted
    (preco cheio), nunca o final_formatted, senao um jogo em promocao derruba o
@@ -1392,7 +1387,7 @@ body.gm-open{overflow:hidden}
   .buybox{padding:16px}
   .buybox-top{justify-content:center;gap:12px;margin-bottom:14px}
   /* o bloco de preco e centralizado como um todo, mas as duas linhas dentro dele
-     tem larguras bem diferentes ("R$ 49,97" x "pagamento unico, sem renovacao"),
+     tem larguras bem diferentes (".99" x "pagamento unico, sem renovacao"),
      entao sem isto o preco fica encostado na esquerda da linha de baixo. */
   .buybox-prices{text-align:center}
   .buybox-new{font-size:27px}
@@ -1441,6 +1436,18 @@ body.gm-open{overflow:hidden}
 </head>
 
 <body>
+
+<!-- LANGUAGE SWITCHER -->
+<div style="position: fixed; top: 20px; right: 20px; z-index: 99999; display: flex; gap: 10px; background: rgba(13, 13, 17, 0.85); backdrop-filter: blur(10px); padding: 8px 14px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+    <a href="../index.html" style="color: #888; text-decoration: none; font-size: 13px; display: flex; align-items: center; gap: 6px; font-weight: 500; font-family: sans-serif; transition: 0.2s;">
+        <img src="https://flagcdn.com/w20/br.png" width="16" alt="BR" style="opacity: 0.6;"> PT
+    </a>
+    <span style="color: #444;">|</span>
+    <a href="#" style="color: #fff; text-decoration: none; font-size: 13px; display: flex; align-items: center; gap: 6px; font-weight: 700; font-family: sans-serif;">
+        <img src="https://flagcdn.com/w20/us.png" width="16" alt="EN"> EN
+    </a>
+</div>
+
 
 <!-- ===== Fonte única da quantidade de jogos por plano (single source of truth) =====
 
@@ -1617,18 +1624,7 @@ var io = (function(){
       <!-- arte + miniaturas -->
       <div class="art reveal">
         <div class="art-stage" id="art-stage">
-          <!-- Lancamentos que acabaram de sair, entraram na FRENTE em 19/09/2026 (NBA 2K27
-               saiu 3/09, EA FC 27 liberado agora). O data-tag troca a etiqueta verde da
-               legenda so neste slide; quem nao tem data-tag mostra "Incluso no plano".
-               Quando deixarem de ser novidade, tire o data-tag (e o slide, se quiser).
-               25/09/2026: entraram Silent Hill: Townfall e CONTROL Resonant, os dois de
-               24/09, logo depois do FC 27. Mexer aqui obriga a corrigir o data-i das
-               miniaturas la embaixo, que e posicional. -->
-          <div class="art-slide on" data-tag="Já disponível"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4080220/98909665528dc40a7d43fd3dd6edc8088ed98c44/library_hero.jpg" alt="EA Sports FC 27" fetchpriority="high" decoding="async"></div>
-          <div class="art-slide" data-tag="Já disponível"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1636440/ba12dc2318482d99bb6d7cd161ba18d268955f09/library_hero.jpg" alt="Silent Hill: Townfall" loading="lazy" decoding="async"></div>
-          <div class="art-slide" data-tag="Já disponível"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3669870/6800d1c970b28815caa97e694ce811ca090f82e2/library_hero.jpg" alt="CONTROL Resonant" loading="lazy" decoding="async"></div>
-          <div class="art-slide" data-tag="Já disponível"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4356430/df162f57e7a2dac7873158d6c37af11f076bc10e/library_hero.jpg" alt="NBA 2K27" loading="lazy" decoding="async"></div>
-          <div class="art-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3768760/library_hero.jpg" alt="007 First Light" loading="lazy" decoding="async"></div>
+          <div class="art-slide on"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3768760/library_hero.jpg" alt="007 First Light" fetchpriority="high" decoding="async"></div>
           <!-- Lancamentos recentes, entraram em 13/08/2026 (Black Flag Resynced 09/07/2026,
                LOTR 11/08/2026). Ate 20/08/2026 estes dois usavam SCREENSHOT de gameplay,
                porque se acreditava que nao tinham library_hero. Tinham: o erro foi tentar
@@ -1653,8 +1649,8 @@ var io = (function(){
           <div class="art-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/271590/library_hero.jpg" alt="Grand Theft Auto V" loading="lazy" decoding="async"></div>
           <div class="art-slide"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/library_hero.jpg" alt="Elden Ring" loading="lazy" decoding="async"></div>
           <div class="art-cap">
-            <span class="art-cap-name" id="art-name">EA Sports FC 27</span>
-            <span class="art-cap-tag" id="art-tag">Já disponível</span>
+            <span class="art-cap-name" id="art-name">007 First Light</span>
+            <span class="art-cap-tag">Incluso no plano</span>
           </div>
         </div>
         <div class="art-thumbs" id="art-thumbs">
@@ -1663,19 +1659,15 @@ var io = (function(){
                As miniaturas reusam a MESMA URL do slide de proposito: o navegador serve
                do cache e a miniatura sai de graca. Desde 20/08/2026 isso vale pras nove,
                sem excecao: Black Flag e LOTR trocaram o screenshot pelo library_hero. -->
-          <div class="art-thumb on" data-i="0"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4080220/98909665528dc40a7d43fd3dd6edc8088ed98c44/library_hero.jpg" alt="EA Sports FC 27" loading="lazy"></div>
-          <div class="art-thumb" data-i="1"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1636440/ba12dc2318482d99bb6d7cd161ba18d268955f09/library_hero.jpg" alt="Silent Hill: Townfall" loading="lazy"></div>
-          <div class="art-thumb" data-i="2"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3669870/6800d1c970b28815caa97e694ce811ca090f82e2/library_hero.jpg" alt="CONTROL Resonant" loading="lazy"></div>
-          <div class="art-thumb" data-i="3"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4356430/df162f57e7a2dac7873158d6c37af11f076bc10e/library_hero.jpg" alt="NBA 2K27" loading="lazy"></div>
-          <div class="art-thumb" data-i="4"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3768760/library_hero.jpg" alt="007 First Light" loading="lazy"></div>
-          <div class="art-thumb" data-i="5"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3751950/09d7b766ce8a26bce32887ec7eaf00fc36552025/library_hero.jpg" alt="Assassin's Creed Black Flag Resynced" loading="lazy"></div>
-          <div class="art-thumb" data-i="6"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2523770/8323cc91de5f9da103ee259bc5cfc2cff70324f2/library_hero.jpg" alt="The Lord of the Rings: War in the North" loading="lazy"></div>
-          <div class="art-thumb" data-i="7"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1623730/library_hero.jpg" alt="Palworld" loading="lazy"></div>
-          <div class="art-thumb" data-i="8"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3321460/library_hero.jpg" alt="Crimson Desert" loading="lazy"></div>
-          <div class="art-thumb" data-i="9"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3764200/library_hero.jpg" alt="Resident Evil Requiem" loading="lazy"></div>
-          <div class="art-thumb" data-i="10"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/2358720/library_hero.jpg" alt="Black Myth: Wukong" loading="lazy"></div>
-          <div class="art-thumb" data-i="11"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/271590/library_hero.jpg" alt="Grand Theft Auto V" loading="lazy"></div>
-          <div class="art-thumb" data-i="12"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/library_hero.jpg" alt="Elden Ring" loading="lazy"></div>
+          <div class="art-thumb on" data-i="0"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3768760/library_hero.jpg" alt="007 First Light" loading="lazy"></div>
+          <div class="art-thumb" data-i="1"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3751950/09d7b766ce8a26bce32887ec7eaf00fc36552025/library_hero.jpg" alt="Assassin's Creed Black Flag Resynced" loading="lazy"></div>
+          <div class="art-thumb" data-i="2"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2523770/8323cc91de5f9da103ee259bc5cfc2cff70324f2/library_hero.jpg" alt="The Lord of the Rings: War in the North" loading="lazy"></div>
+          <div class="art-thumb" data-i="3"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1623730/library_hero.jpg" alt="Palworld" loading="lazy"></div>
+          <div class="art-thumb" data-i="4"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3321460/library_hero.jpg" alt="Crimson Desert" loading="lazy"></div>
+          <div class="art-thumb" data-i="5"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/3764200/library_hero.jpg" alt="Resident Evil Requiem" loading="lazy"></div>
+          <div class="art-thumb" data-i="6"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/2358720/library_hero.jpg" alt="Black Myth: Wukong" loading="lazy"></div>
+          <div class="art-thumb" data-i="7"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/271590/library_hero.jpg" alt="Grand Theft Auto V" loading="lazy"></div>
+          <div class="art-thumb" data-i="8"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/library_hero.jpg" alt="Elden Ring" loading="lazy"></div>
         </div>
       </div>
 
@@ -1702,21 +1694,21 @@ var io = (function(){
 
         <div class="buybox">
           <div class="buybox-top">
-            <!-- Passou a abrir pelo MENOR preco em 20/08/2026. O R$ 49,97 sozinho era uma
-                 porta cara pra primeira tela; "a partir de R$ 9,97" da o gancho pra pessoa
+            <!-- Passou a abrir pelo MENOR preco em 20/08/2026. O .99 sozinho era uma
+                 porta cara pra primeira tela; "a partir de .99" da o gancho pra pessoa
                  descer ate os planos, que e o que o botao logo abaixo faz.
-                 DECISAO DO USER, mesma data: o R$ 49,97 fica FORA desta caixa de proposito,
+                 DECISAO DO USER, mesma data: o .99 fica FORA desta caixa de proposito,
                  pra ninguem levar susto de preco na primeira tela. Ele aparece na secao de
                  planos, depois que a pessoa ja leu a oferta inteira. Nao "conserte" isso
                  achando que faltou o preco cheio: e escolha, nao esquecimento.
                  O que fica de olho: a ficha tecnica logo acima anuncia "+40.000 jogos" e
                  "jogos novos toda semana", que sao specs do Vitalicio, e agora o unico
-                 numero perto delas e o R$ 9,97 do Basico (1.000 jogos, biblioteca fechada).
+                 numero perto delas e o .99 do Basico (1.000 jogos, biblioteca fechada).
                  Se aparecer reembolso de gente que comprou o Basico achando que levava os
                  40.000, e daqui que vem, e o conserto e na ficha, nao neste preco. -->
             <span class="buybox-prices">
               <span class="buybox-from">a partir de</span>
-              <span class="buybox-new num">R$ 9,97</span>
+              <span class="buybox-new num">.99</span>
               <span class="buybox-once">pagamento único</span>
             </span>
           </div>
@@ -1799,9 +1791,7 @@ var io = (function(){
       </div>
 
       <!-- 21/08/2026: apontava pra #passos. Com os passos movidos pra depois da oferta,
-           o degrau seguinte a biblioteca virou a ancora de preco (#conta).
-           21/09/2026: continua #conta. Chegou a apontar pros planos num corte
-           desse dia e voltou: e degrau do funil, nao atalho. -->
+           o degrau seguinte a biblioteca virou a ancora de preco (#conta). -->
       <div class="flow reveal"><a href="#conta" class="btn-ghost">Quanto custa na Steam</a></div>
     </div>
   </div>
@@ -1812,7 +1802,7 @@ var io = (function(){
   <div class="wrap">
     <div class="sec-head reveal">
       <h2>A conta que volta todo ano</h2>
-      <p>Seis jogos, com o preço que a Steam brasileira cobrava em 25/09/2026.</p>
+      <p>Seis jogos, com o preço que a Steam brasileira cobrava em 13/08/2026.</p>
     </div>
 
     <div class="conta reveal">
@@ -1821,40 +1811,30 @@ var io = (function(){
         <div class="conta-cart-hd">Carrinho na Steam</div>
 
         <!-- As capas usam a URL com hash que a propria Steam devolve no
-             appdetails. FC 27, Silent Hill, Crimson Desert e Resident Evil
-             Requiem NAO respondem no formato curto /steam/apps/<id>/header.jpg
-             (da 404), por isso essas linhas tem URL comprida e as outras nao.
-             Mesma pegadinha do catalogo.
-
-             Precos conferidos na Steam BR em 25/09/2026. Trocas deste dia:
-             FC 26 (R$ 125,00) saiu porque virou o Fifa do ano PASSADO, e o
-             carrinho perde a graca com o jogo velho e barato na primeira linha;
-             entrou o FC 27, que custa R$ 299,00. Assassin's Creed Shadows saiu
-             porque caiu de R$ 349,99 pra R$ 139,99 e ja nao ajudava a conta;
-             entrou Silent Hill: Townfall, que saiu ontem. Saiu tambem a
-             etiqueta "lancamento" de Crimson Desert (marco/2026) e de Resident
-             Evil Requiem (fevereiro/2026): nao sao mais. -->
+             appdetails. FC 26 e Resident Evil Requiem NAO respondem no formato
+             curto /steam/apps/<id>/header.jpg (da 404), por isso as duas linhas
+             tem URL comprida e as outras nao. Mesma pegadinha do catalogo. -->
         <div class="conta-row">
-          <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4080220/ff6a3779f1ca83aae8ad3878454f6c11008ea24d/header.jpg" alt="EA Sports FC 27" loading="lazy" decoding="async">
-          <span class="conta-nome">EA Sports FC 27<small>o Fifa deste ano</small></span>
-          <span class="conta-preco num">R$ 299,00</span>
+          <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3405690/2d96aa1b06e453cd62dae9029d412f19e61932c3/header.jpg" alt="EA Sports FC 26" loading="lazy" decoding="async">
+          <span class="conta-nome">EA Sports FC 26<small>o Fifa deste ano</small></span>
+          <span class="conta-preco num">R$ 125,00</span>
         </div>
 
         <div class="conta-row">
-          <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1636440/0ed1cb4bc30631f95b92f7f13bb06c15d49b4afa/header.jpg" alt="Silent Hill: Townfall" loading="lazy" decoding="async">
-          <span class="conta-nome">Silent Hill: Townfall<small>lançou esta semana</small></span>
-          <span class="conta-preco num">R$ 284,90</span>
+          <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3321460/abd7dbdeaede8b6c9a6d40bf116ff2b883f2dd45/header.jpg" alt="Crimson Desert" loading="lazy" decoding="async">
+          <span class="conta-nome">Crimson Desert<small>lançamento</small></span>
+          <span class="conta-preco num">R$ 349,99</span>
         </div>
 
         <div class="conta-row">
-          <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3321460/236f3814be7a97d86831800691b6096d449222a8/header.jpg" alt="Crimson Desert" loading="lazy" decoding="async">
-          <span class="conta-nome">Crimson Desert</span>
+          <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3159330/header.jpg" alt="Assassin's Creed Shadows" loading="lazy" decoding="async">
+          <span class="conta-nome">Assassin's Creed Shadows</span>
           <span class="conta-preco num">R$ 349,99</span>
         </div>
 
         <div class="conta-row">
           <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3764200/ce5437442768e38eb575f205ab9397d0264017b0/header.jpg" alt="Resident Evil Requiem" loading="lazy" decoding="async">
-          <span class="conta-nome">Resident Evil Requiem</span>
+          <span class="conta-nome">Resident Evil Requiem<small>lançamento</small></span>
           <span class="conta-preco num">R$ 299,00</span>
         </div>
 
@@ -1872,11 +1852,11 @@ var io = (function(){
 
         <div class="conta-total">
           <span>Total do carrinho</span>
-          <b class="num">R$ 1.682,69</b>
+          <b class="num">R$ 1.573,78</b>
         </div>
 
         <div class="conta-anos">
-          <div class="conta-ano now"><span>2026</span><b class="num">R$ 1.682,69</b></div>
+          <div class="conta-ano now"><span>2026</span><b class="num">R$ 1.573,78</b></div>
           <div class="conta-ano next"><span>2027</span>Fifa novo, Call of Duty novo, e a conta começa do zero</div>
           <div class="conta-ano next"><span>2028</span>de novo, e assim todo ano que você continuar jogando</div>
         </div>
@@ -1885,7 +1865,7 @@ var io = (function(){
       <div class="conta-vs">
         <div class="conta-vs-lbl">Na Almaz Store, uma vez só</div>
         <div class="conta-vs-price">
-          <b class="num">R$ 49,97</b>
+          <b class="num">.99</b>
           <span>e acabou</span>
         </div>
         <p class="conta-vs-sub">
@@ -1911,45 +1891,30 @@ var io = (function(){
   <div class="wrap">
     <div class="sec-head reveal">
       <h2>Os jogos que ainda nem saíram já são seus</h2>
-      <p>EA FC 27, Silent Hill: Townfall e CONTROL Resonant acabaram de sair e já estão no catálogo. Os outros ainda nem existem na Steam: quando chegarem, aparecem na sua biblioteca e você não paga nada por isso.</p>
+      <p>Nenhum destes existe na Steam ainda. Quando chegarem, eles aparecem na sua biblioteca e você não paga nada por isso.</p>
     </div>
 
     <div class="cresce reveal">
 
-      <!-- Atualizado em 25/09/2026. Os TRES primeiros cards sao prova: lancamentos que
-           ja sairam com "Ja disponivel no catalogo". Silent Hill: Townfall e CONTROL
-           Resonant sairam em 24/09 e entraram no curados.zip do socio no mesmo dia,
-           entao a frase "ja disponivel" neles e verdade conferida, nao promessa.
-           NBA 2K27 saiu daqui (3/09 ja nao e novidade) e continua no banner do topo.
-           Os outros tres ainda vao sair (datas da Steam, horario de Brasilia).
-           Quando um destes lancar, troque por outro da lista "mais desejados" da
-           Steam que ainda nao saiu, e mantenha SEIS cards: sao 3 colunas no desktop
-           e 2 no celular, entao numero que nao e multiplo de 6 deixa buraco. -->
+      <!-- Atualizado em 16/09/2026 com as datas da Steam (horario de Brasilia).
+           NBA 2K27 saiu daqui: lancou em 3/09. Quando um destes lancar, troque por
+           outro da lista "mais desejados" da Steam que ainda nao saiu. -->
 
       <div class="cresce-card">
         <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4080220/05d419a45653a1299ce46d13dbff4533fa076c1c/header.jpg?t=1788235145" alt="EA Sports FC 27" loading="lazy" decoding="async">
         <div class="cresce-txt">
           <span class="cresce-nome">EA Sports FC 27</span>
-          <span class="cresce-dt">Lançado, já pode jogar</span>
-          <span class="cresce-ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Já disponível no catálogo</span>
+          <span class="cresce-dt">Chega em 24 set 2026</span>
+          <span class="cresce-ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Já incluso no seu acesso</span>
         </div>
       </div>
 
       <div class="cresce-card">
-        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1636440/0ed1cb4bc30631f95b92f7f13bb06c15d49b4afa/header.jpg?t=1790222467" alt="Silent Hill: Townfall" loading="lazy" decoding="async">
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1636440/0ed1cb4bc30631f95b92f7f13bb06c15d49b4afa/header.jpg?t=1787716129" alt="Silent Hill: Townfall" loading="lazy" decoding="async">
         <div class="cresce-txt">
           <span class="cresce-nome">Silent Hill: Townfall</span>
-          <span class="cresce-dt">Lançado, já pode jogar</span>
-          <span class="cresce-ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Já disponível no catálogo</span>
-        </div>
-      </div>
-
-      <div class="cresce-card">
-        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3669870/1e0c76e4253d347bb1304c3f213570251d924edf/header.jpg?t=1790259464" alt="CONTROL Resonant" loading="lazy" decoding="async">
-        <div class="cresce-txt">
-          <span class="cresce-nome">CONTROL Resonant</span>
-          <span class="cresce-dt">Lançado, já pode jogar</span>
-          <span class="cresce-ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Já disponível no catálogo</span>
+          <span class="cresce-dt">Chega em 24 set 2026</span>
+          <span class="cresce-ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Já incluso no seu acesso</span>
         </div>
       </div>
 
@@ -1976,6 +1941,15 @@ var io = (function(){
         <div class="cresce-txt">
           <span class="cresce-nome">Metro 2039</span>
           <span class="cresce-dt">Chega em 4 fev 2027</span>
+          <span class="cresce-ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Já incluso no seu acesso</span>
+        </div>
+      </div>
+
+      <div class="cresce-card">
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2769570/d2ffd7e15a91f3e5485601d3d876988ba3a859d7/header.jpg?t=1788984944" alt="Fable" loading="lazy" decoding="async">
+        <div class="cresce-txt">
+          <span class="cresce-nome">Fable</span>
+          <span class="cresce-dt">Chega em 23 fev 2027</span>
           <span class="cresce-ok"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Já incluso no seu acesso</span>
         </div>
       </div>
@@ -2022,7 +1996,7 @@ var io = (function(){
         <div class="ed-buy">
           <div class="ed-price-row">
             <span class="ed-price">
-              <span class="ed-new num">R$ 9,97</span>
+              <span class="ed-new num">.99</span>
             </span>
           </div>
           <a role="button" tabindex="0" href="#pricing" onclick="almazUpsell('basico');return false" class="offer-btn">Quero garantir</a>
@@ -2049,7 +2023,7 @@ var io = (function(){
         <div class="ed-buy">
           <div class="ed-price-row">
             <span class="ed-price">
-              <span class="ed-new num">R$ 19,97</span>
+              <span class="ed-new num">.99</span>
             </span>
           </div>
           <a role="button" tabindex="0" href="#pricing" onclick="almazUpsell('avancado');return false" class="offer-btn">Quero garantir</a>
@@ -2084,7 +2058,7 @@ var io = (function(){
           </div>
           <div class="ed-price-row">
             <span class="ed-price">
-              <span class="ed-new num">R$ 49,97</span>
+              <span class="ed-new num">.99</span>
             </span>
           </div>
           <a href="https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm"
@@ -2122,65 +2096,6 @@ var io = (function(){
   </div>
 </section>
 
-<!-- 21/09/2026: corte depois do Clarity de 19 a 21/09 (tudo que vinha depois do
-     #pricing era visto por menos de 10%). Sairam os 3 passos e as caixinhas, que
-     repetiam o FAQ, e o "isso nao e pirata" (o medo numero 1) veio pra colado nos
-     planos.
-     ACIMA DOS PLANOS NADA MUDOU, DE PROPOSITO (decisao do Almaz, 21/09/2026):
-     biblioteca -> conta -> cresce -> planos e o funil. A conta e a ancora de preco
-     (sem ela o R$ 49,97 aparece sem comparacao) e o cresce e o diferencial da loja
-     ("todo jogo que sair entra sem pagar de novo"). Um corte desse mesmo dia subiu
-     os planos pra cima dos dois e foi desfeito. Pra encurtar o caminho ate o preco,
-     encurte as secoes por dentro, nao troque a ordem.
-     A ordem agora e topo -> biblioteca -> conta -> cresce -> #pricing -> pirata ->
-     feedbacks -> launcher -> faq. Pra desfazer: git revert do commit desta mudanca. -->
-<!-- ===================== NAO E JOGO PIRATA ===================== -->
-<section class="sec" id="pirata">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <h2>Isso não é jogo pirata</h2>
-      <p>A diferença está em de onde vem o arquivo.</p>
-    </div>
-
-    <div class="vs reveal">
-      <div class="vs-col bad">
-        <div class="vs-hd">
-          <svg viewBox="0 0 24 24"><path d="M12 3l9 16H3l9-16z"/><path d="M12 10v4M12 17.5v.01"/></svg>
-          Baixando de site pirata
-        </div>
-        <ul class="vs-list">
-          <li>Arquivo de origem desconhecida, com risco de vírus</li>
-          <li>Pede pra desligar o antivírus</li>
-          <li>Não atualiza sozinho</li>
-          <li>Multiplayer não funciona</li>
-          <li>Sem suporte se der problema</li>
-        </ul>
-      </div>
-
-      <div class="vs-col good">
-        <div class="vs-hd">
-          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
-          Com a Almaz Store
-        </div>
-        <ul class="vs-list">
-          <li>Jogo original, baixado pela própria Steam</li>
-          <li>Sem arquivo suspeito no seu PC</li>
-          <li>Atualização oficial pela Steam</li>
-          <li>Multiplayer funcionando</li>
-          <li>Roda na sua conta, sem compartilhar</li>
-          <li>Suporte e 7 dias de garantia</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- O fecho "voce abre a sua Steam, o jogo esta la..." saiu em 13/08/2026.
-         As duas colunas ja dizem isso item por item; o paragrafo por baixo so
-         repetia em prosa e alongava a secao no celular. -->
-
-    <div class="flow reveal"><a href="#pricing" class="btn-ghost">Voltar pros planos</a></div>
-  </div>
-</section>
-
 <!-- ===================== FEEDBACKS DE CLIENTES ===================== -->
 <!-- 16/09/2026: logo DEPOIS da oferta, primeiro tratamento de objecao ("sera que
      funciona?"). Nao entra antes do #pricing pra nao empurrar o preco pra baixo
@@ -2204,6 +2119,40 @@ var io = (function(){
       <button class="fbk-seta" id="fbk-next" type="button" aria-label="Próximo feedback">&#8250;</button>
     </div>
     <div class="flow reveal"><a href="#pricing" class="btn-ghost">Ver os planos</a></div>
+  </div>
+</section>
+
+<!-- 21/08/2026: este bloco (passos, launcher, pirata, caixinhas) ficava ENTRE a
+     biblioteca e o preco. Media 2.903px, mais de 3 telas e meia de celular, e empurrava
+     o #pricing pra 69,6% da pagina (9a tela) enquanto a rolagem media do Clarity era 38%.
+     Ou seja: o visitante medio parava antes de ver qualquer preco. Desceu pra depois da
+     oferta, onde vira tratamento de objecao. A ordem agora e
+     topo -> biblioteca -> conta (ancora) -> cresce -> #pricing -> passos -> launcher ->
+     pirata -> caixinhas -> faq. Pra desfazer: git revert do commit desta mudanca. -->
+<!-- ===================== COMO FUNCIONA (3 PASSOS) ===================== -->
+<!-- Ganhou id="passos" em 20/08/2026 so pra ser alvo do degrau anterior do funil. -->
+<section class="sec" id="passos">
+  <div class="wrap">
+    <div class="sec-head reveal"><h2>Do pagamento ao jogo rodando</h2></div>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-n num">1</div>
+        <h3>Escolhe o plano e paga</h3>
+        <p>Pagamento no PIX. A aprovação sai na hora que o pagamento confirma.</p>
+      </div>
+      <div class="step">
+        <div class="step-n num">2</div>
+        <h3>Recebe o acesso no e-mail</h3>
+        <p>Chega em poucos minutos, com o launcher e o passo a passo da ativação.</p>
+      </div>
+      <div class="step">
+        <div class="step-n num">3</div>
+        <h3>Baixa direto na sua Steam</h3>
+        <p>Os jogos aparecem na sua biblioteca e o download vem dos servidores da Steam.</p>
+      </div>
+    </div>
+
+    <div class="flow reveal"><a href="#launcher" class="btn-ghost">Conhecer o programa</a></div>
   </div>
 </section>
 
@@ -2279,6 +2228,119 @@ var io = (function(){
            ja aparecem na lista da secao de baixo, e a janela do launcher vende
            sozinha. Menos texto, a pessoa desce mais rapido. -->
 
+      <div class="flow reveal"><a href="#pirata" class="btn-ghost">Isso é pirataria?</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== NAO E JOGO PIRATA ===================== -->
+<section class="sec" id="pirata">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Isso não é jogo pirata</h2>
+      <p>A diferença está em de onde vem o arquivo.</p>
+    </div>
+
+    <div class="vs reveal">
+      <div class="vs-col bad">
+        <div class="vs-hd">
+          <svg viewBox="0 0 24 24"><path d="M12 3l9 16H3l9-16z"/><path d="M12 10v4M12 17.5v.01"/></svg>
+          Baixando de site pirata
+        </div>
+        <ul class="vs-list">
+          <li>Arquivo de origem desconhecida, com risco de vírus</li>
+          <li>Pede pra desligar o antivírus</li>
+          <li>Não atualiza sozinho</li>
+          <li>Multiplayer não funciona</li>
+          <li>Sem suporte se der problema</li>
+        </ul>
+      </div>
+
+      <div class="vs-col good">
+        <div class="vs-hd">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          Com a Almaz Store
+        </div>
+        <ul class="vs-list">
+          <li>Jogo original, baixado pela própria Steam</li>
+          <li>Sem arquivo suspeito no seu PC</li>
+          <li>Atualização oficial pela Steam</li>
+          <li>Multiplayer funcionando</li>
+          <li>Roda na sua conta, sem compartilhar</li>
+          <li>Suporte e 7 dias de garantia</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- O fecho "voce abre a sua Steam, o jogo esta la..." saiu em 13/08/2026.
+         As duas colunas ja dizem isso item por item; o paragrafo por baixo so
+         repetia em prosa e alongava a secao no celular. -->
+
+    <div class="flow reveal"><a href="#caixinhas" class="btn-ghost">Dúvidas que mais chegam</a></div>
+  </div>
+</section>
+
+<!-- ===================== CAIXINHAS DO INSTAGRAM ===================== -->
+<section class="sec" id="caixinhas">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>As dúvidas que mais chegam pra gente</h2>
+      <p>Prints das caixinhas de pergunta do nosso Instagram, respondidas na hora. Toque em qualquer uma pra ver o print inteiro.</p>
+    </div>
+    <div class="qbx-rail reveal">
+      <button class="qbx-arrow prev off" id="qbx-prev" type="button" aria-label="Anterior">&#8249;</button>
+      <button class="qbx-arrow next off" id="qbx-next" type="button" aria-label="Próximo">&#8250;</button>
+      <div class="qbx-track" id="qbx-track">
+
+      <button class="qbx-card" type="button" data-qbx="https://i.imgur.com/ewk6txM.jpeg">
+        <span class="qbx-shot">
+          <img src="https://i.imgur.com/ewk6txM.jpeg" alt="Print da caixinha: da pra jogar jogos com Denuvo?" loading="lazy" decoding="async">
+          <span class="qbx-zoom"><svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
+        </span>
+        <span class="qbx-txt">
+          <span class="qbx-q">Dá pra jogar jogos com Denuvo?</span>
+          <span class="qbx-a">Dá. Os jogos com Denuvo estão inclusos nos pacotes de <span data-almaz-games="avancado">20.000</span> e <span data-almaz-games="vitalicio">40.000</span> jogos.</span>
+        </span>
+      </button>
+
+      <button class="qbx-card" type="button" data-qbx="https://i.imgur.com/Ip8UDar.jpeg">
+        <span class="qbx-shot">
+          <img src="https://i.imgur.com/Ip8UDar.jpeg" alt="Print da caixinha: jogo online também funciona?" loading="lazy" decoding="async">
+          <span class="qbx-zoom"><svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
+        </span>
+        <span class="qbx-txt">
+          <span class="qbx-q">Jogo online também funciona?</span>
+          <span class="qbx-a">Funciona normalmente, e com qualquer pessoa que tenha o jogo. Não fica limitado a quem desbloqueou pelo launcher.</span>
+        </span>
+      </button>
+
+      <button class="qbx-card" type="button" data-qbx="https://i.imgur.com/xMJJVnd.jpeg">
+        <span class="qbx-shot">
+          <img src="https://i.imgur.com/xMJJVnd.jpeg" alt="Print da caixinha: e os lançamentos que ainda vão sair?" loading="lazy" decoding="async">
+          <span class="qbx-zoom"><svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
+        </span>
+        <span class="qbx-txt">
+          <span class="qbx-q">Vou ter que pagar de novo pelos lançamentos?</span>
+          <span class="qbx-a">Não. O acesso é vitalício e as atualizações entram sem nenhum valor adicional.</span>
+        </span>
+      </button>
+
+      <button class="qbx-card" type="button" data-qbx="https://i.imgur.com/TKdP0JC.jpeg">
+        <span class="qbx-shot">
+          <img src="https://i.imgur.com/TKdP0JC.jpeg" alt="Print da caixinha: tem suporte caso precise?" loading="lazy" decoding="async">
+          <span class="qbx-zoom"><svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
+        </span>
+        <span class="qbx-txt">
+          <span class="qbx-q">Tem suporte caso eu precise?</span>
+          <span class="qbx-a">Tem. Suporte no WhatsApp e o Discord da comunidade, que abre direto pelo launcher.</span>
+        </span>
+      </button>
+
+      </div>
+
+      <!-- 21/08/2026: as caixinhas viraram a ULTIMA secao antes do FAQ. O degrau deixou
+           de apontar pra #conta (que agora vem ANTES da oferta) e fecha a corrente de
+           volta no preco, senao quem desce ate aqui fica sem saida. -->
       <div class="flow reveal"><a href="#pricing" class="btn-ghost">Ver os planos</a></div>
     </div>
   </div>
@@ -2386,7 +2448,7 @@ var io = (function(){
 
       <!-- 21/08/2026: o popup voltou a ser uma ponte pra secao de planos.
            Entre 13/08 e hoje ele trazia a propria oferta aqui dentro (titulo
-           "Acesso Vitalicio", R$ 49,97, lista de beneficios e link direto de
+           "Acesso Vitalicio", .99, lista de beneficios e link direto de
            checkout). Dois problemas com aquilo: virava um SEGUNDO texto de
            oferta na pagina, que envelhecia sozinho toda vez que #pricing mudava
            de preco ou de lista, e a pessoa comprava sem nunca ver os 3 planos.
@@ -2454,7 +2516,7 @@ var io = (function(){
     <h3 class="ups-title"><span>Nunca mais gaste com jogo</span> por metade do preço</h3>
     <p class="ups-sub">O plano menor é uma biblioteca fechada. Com o <strong style="color:#fff">Vitalício</strong> você leva os 40.000 jogos e todo lançamento que sair depois, sem pagar de novo.</p>
     <div class="ups-price">
-      <span class="ups-old">de R$ 49,97</span>
+      <span class="ups-old">de .99</span>
       <span class="ups-new">R$ <b>24</b>,98</span>
     </div>
     <ul class="ups-feat">
@@ -3216,8 +3278,8 @@ var io = (function(){
   var UPSELL_VAL = 24.98;
   /* ============================================================ */
   var PLANOS = {
-    basico:   { url:'https://pay.almazstore.com.br/checkout/v5/3SZQGWf2lurzA7Sb3M26', val:9.97,  nome:'Básico',   preco:'R$ 9,97'  },
-    avancado: { url:'https://pay.almazstore.com.br/checkout/v5/EBQq9V24j7dAljWU9EUd', val:19.97, nome:'Avançado', preco:'R$ 19,97' }
+    basico:   { url:'https://pay.almazstore.com.br/checkout/v5/3SZQGWf2lurzA7Sb3M26', val:9.97,  nome:'Básico',   preco:'.99'  },
+    avancado: { url:'https://pay.almazstore.com.br/checkout/v5/EBQq9V24j7dAljWU9EUd', val:19.97, nome:'Avançado', preco:'.99' }
   };
   var ov = document.getElementById('upsell-ov');
   var accept = document.getElementById('upsell-accept');
@@ -3254,7 +3316,6 @@ var io = (function(){
   var slides=[].slice.call(document.querySelectorAll('.art-slide'));
   var thumbs=[].slice.call(document.querySelectorAll('.art-thumb'));
   var nameEl=document.getElementById('art-name');
-  var tagEl=document.getElementById('art-tag');
   if(!slides.length) return;
   var i=0, timer=null;
   function show(n){
@@ -3263,7 +3324,6 @@ var io = (function(){
     thumbs.forEach(function(t,k){ t.classList.toggle('on',k===i); });
     var img=slides[i].querySelector('img');
     if(nameEl && img) nameEl.textContent=img.getAttribute('alt')||'';
-    if(tagEl) tagEl.textContent=slides[i].getAttribute('data-tag')||'Incluso no plano';
   }
   function play(){ stop(); timer=setInterval(function(){ show(i+1); },5000); }
   function stop(){ if(timer) clearInterval(timer); timer=null; }
@@ -3277,7 +3337,7 @@ var io = (function(){
      mortos do Clarity pularam de 0,67% (27/07, design antigo) pra 10,19% em 7 dias,
      e o design com esta arte entrou em 29/07. Agora ela abre a MESMA confirmação que
      um card de jogo abre, com o jogo que está aparecendo no momento.
-     Nenhum dos jogos do banner tem soon:1 no assets/catalogo.js, então a confirmação
+     Nenhum dos 9 jogos do banner tem soon:1 no assets/catalogo.js, então a confirmação
      diz "Disponível agora" pros nove, igualzinho ao que o catálogo já diz quando a
      pessoa toca neles lá embaixo. Se entrar um lançamento aqui, passe soon/dt. */
   var stage=document.getElementById('art-stage');
@@ -3392,10 +3452,9 @@ var io = (function(){
   var ov=document.getElementById('qbx-ov'), img=document.getElementById('qbx-ov-img'),
       x=document.getElementById('qbx-x'), tr=document.getElementById('qbx-track'),
       prev=document.getElementById('qbx-prev'), next=document.getElementById('qbx-next');
-  /* 21/09/2026: a secao #caixinhas saiu da pagina, mas o visor (#qbx-ov) fica,
-     porque os feedbacks abrem os prints nele. Por isso o visor so exige ov e img;
-     o carrossel das caixinhas e que depende de tr/prev/next, mais abaixo. */
-  if(!ov||!img) return;
+  if(!ov||!img||!tr||!prev||!next) return;
+  var cards=[].slice.call(tr.querySelectorAll('[data-qbx]'));
+  if(!cards.length) return;
 
   /* ---- visor ---- */
   function close(){ ov.classList.remove('on'); document.body.style.overflow=''; }
@@ -3423,10 +3482,6 @@ var io = (function(){
     var p=document.getElementById('pricing');
     if(window.almazScrollTo){window.almazScrollTo(p);} else if(p){p.scrollIntoView({behavior:'smooth'});}
   });
-
-  if(!tr||!prev||!next) return;
-  var cards=[].slice.call(tr.querySelectorAll('[data-qbx]'));
-  if(!cards.length) return;
 
   /* ---- spotlight ---- */
   var current=null;
@@ -3994,7 +4049,7 @@ var io = (function(){
 
         value: 49.97,
 
-        currency: 'BRL'
+        currency: 'USD'
 
       });
 
@@ -4086,7 +4141,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
           value: val,
 
-          currency: 'BRL',
+          currency: 'USD',
 
           content_name: planName,
 
@@ -4200,7 +4255,7 @@ function checkout(url,val){
 
       value: val,
 
-      currency: 'BRL',
+      currency: 'USD',
 
       content_name: planName,
 
@@ -4664,7 +4719,7 @@ else{el.scrollIntoView({behavior:'smooth'});}
 
     {
 
-      q: "Isso é legal? Vou tomar ban?",
+      q: "Isso é legal? Will I get banned?",
 
       a: [
 

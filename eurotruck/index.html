@@ -549,6 +549,8 @@ body.zoom-open{overflow:hidden}
   body{padding-bottom:78px}
 }
 </style>
+
+<script src="https://tracker.almazstore.com.br/t.js" data-id="default" defer></script>
 </head>
 
 <body>
@@ -1114,6 +1116,15 @@ window.ETM = {
       }
       if (eventId) {
         urlObj.searchParams.set('event_id', eventId);
+      }
+            var visitorId = (window.Tracker && window.Tracker.visitorId) || (function () {
+        var m = document.cookie.match(/(?:^|;\s*)_rt_vid=([^;]+)/);
+        return m ? decodeURIComponent(m[1]) : '';
+      })();
+      var source = urlObj.searchParams.get('src') || '';
+      // src pode conter lead stitching da Utmify; so usamos vazio ou AssistenteIA.
+      if (visitorId && (!source || source === 'AssistenteIA')) {
+        urlObj.searchParams.set('src', (source ? source + '.' : '') + 'rtv_' + visitorId);
       }
       return urlObj.toString();
     } catch (e) {

@@ -253,6 +253,8 @@ b,strong{color:#fff}
   font-weight:700;font-size:14px;padding:11px 16px;border-radius:var(--r);
 }
 </style>
+
+<script src="https://tracker.almazstore.com.br/t.js" data-id="default" defer></script>
 </head>
 <body>
 
@@ -462,6 +464,21 @@ b,strong{color:#fff}
 
   // Todo checkout sai marcado como venda do X1. UTM que ja veio no link (se o
   // vendedor usar um link de campanha) tem prioridade.
+  function decorateVisitorForCheckout(raw) {
+    try {
+      var id = (window.Tracker && window.Tracker.visitorId) || (function () {
+        var m = document.cookie.match(/(?:^|;\s*)_rt_vid=([^;]+)/);
+        return m ? decodeURIComponent(m[1]) : '';
+      })();
+      if (!id) return raw;
+      var u = new URL(raw, location.href);
+      var src = u.searchParams.get('src') || '';
+      // Preserva src de afiliado/UTMify; usa o campo apenas quando vazio ou AssistenteIA.
+      if (!src || src === 'AssistenteIA') u.searchParams.set('src', (src ? src + '.' : '') + 'rtv_' + id);
+      return u.toString();
+    } catch (_) { return raw; }
+  }
+
   function linkCheckout(base) {
     var u = new URL(base);
     var fixos = { utm_source: 'whatsapp', utm_medium: 'x1', utm_campaign: 'x1' };
@@ -476,6 +493,7 @@ b,strong{color:#fff}
   document.querySelectorAll('[data-checkout]').forEach(function (a) {
     a.href = linkCheckout(a.getAttribute('href'));
     a.addEventListener('click', function () {
+      a.href = decorateVisitorForCheckout(a.href);
       a.classList.add('carregando');
       a.textContent = 'Abrindo o pagamento...';
       try { if (window.clarity) window.clarity('event', 'x1_checkout_' + a.dataset.checkout); } catch (e) {}

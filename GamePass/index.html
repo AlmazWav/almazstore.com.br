@@ -1,0 +1,1250 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Game Pass Ultimate no seu Xbox | Almaz Store</title>
+<meta name="description" content="Game Pass Ultimate no seu proprio perfil do Xbox. Mais de 400 jogos, jogar online no console, EA Play e Ubisoft+ Classics inclusos, e nuvem pra jogar no computador, no celular e na TV. Planos de 2 a 12 meses.">
+
+<link rel="icon" type="image/png" href="../assets/logo-128.png">
+<link rel="apple-touch-icon" href="../assets/logo-180.png">
+<meta name="theme-color" content="#0d0d10">
+
+<link rel="canonical" href="https://almazstore.com.br/GamePass/">
+
+<meta property="og:title" content="Game Pass Ultimate no seu Xbox | Almaz Store">
+<meta property="og:description" content="Mais de 400 jogos no seu Xbox sem comprar um por um. E joga tambem na nuvem, no computador, no celular e na TV.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://almazstore.com.br/GamePass/">
+
+<!-- A miniatura do link. Sem ela o link desta pagina sai SEM IMAGEM no WhatsApp,
+     que e por onde ela mais circula. A arte e gerada por
+     4-BANNERS/gamepass/render.html (mesma paleta Xbox da pagina) — se mudar o
+     preco "a partir de", regere ela junto, o valor esta desenhado na imagem.
+     URL absoluta de proposito: WhatsApp e Facebook nao resolvem caminho relativo. -->
+<meta property="og:image" content="https://almazstore.com.br/GamePass/images/og-gamepass-1200x630.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Xbox Game Pass Ultimate na Almaz Store, a partir de R$ 49,90">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- Microsoft Clarity: mesmo projeto do site principal, pra esta pagina aparecer
+     no mesmo funil. Se um dia ela virar projeto separado, troque so o id. -->
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "xeud5hnipq");
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
+
+<!-- Utmify Pixel (mesmo pixelId do index.html) -->
+<script>
+  window.pixelId = "6a8331f816fe7033bc1acbf7";
+  var a = document.createElement("script");
+  a.setAttribute("async", "");
+  a.setAttribute("defer", "");
+  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+  document.head.appendChild(a);
+</script>
+<script src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+  data-utmify-prevent-xcod-sck data-utmify-prevent-subids async defer></script>
+
+<!-- Utmify Lead Stitching (script do suporte UTMify) — MESMO CODIGO DO index.html.
+     Costura o _id do lead da UTMify dentro do utm_source (ex: FBjLj<id>) para que a
+     venda no checkout seja casada com a visita/pixel (fbp/fbc). SEM isso, a UTMify
+     recebe a venda mas NAO dispara o Purchase/InitiateCheckout pra Meta, e o anuncio
+     otimiza no escuro. Se mudar aqui, mude no index.html junto: e o mesmo script. -->
+<script>
+(function () {
+  const POLL_MS = 500;
+  const MAX_ATTEMPTS = 40; // ~20s; evita timer infinito apos a costura
+
+  function getStorageKey() {
+    const url = new URL(window.location.href);
+    const current = url.searchParams.get("utm_source");
+    if (current === "FB") return "lead";
+    if (current === "google") return "lead-google";
+    return null;
+  }
+
+  function getLeadId(storageKey) {
+    if (!storageKey) return null;
+    const raw = localStorage.getItem(storageKey);
+    if (!raw) return null;
+    try {
+      const obj = JSON.parse(raw);
+      return obj && obj._id ? String(obj._id) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function applyUtmIfNeeded() {
+    const url = new URL(window.location.href);
+    const current = url.searchParams.get("utm_source");
+    const storageKey = getStorageKey();
+    const id = getLeadId(storageKey);
+    if (!id) return false;
+
+    let desired = null;
+    if (current === "FB") {
+      desired = "FBjLj" + id;
+    } else if (current === "google") {
+      desired = "googlejLj" + id;
+    }
+
+    if (!desired) return false;
+
+    url.searchParams.set("utm_source", desired);
+    window.location.replace(url.toString());
+    return true;
+  }
+
+  if (applyUtmIfNeeded()) return;
+
+  let attempts = 0;
+  const interval = setInterval(() => {
+    attempts++;
+    if (applyUtmIfNeeded() || getStorageKey() === null || attempts >= MAX_ATTEMPTS) {
+      clearInterval(interval);
+    }
+  }, POLL_MS);
+})();
+</script>
+
+<style>
+/* ============================================================================
+   Mesmas variaveis do index.html e do /catalogo. Se o site mudar de cor,
+   mude aqui junto. Nao ha CSS de framework nesta pagina de proposito: ela
+   substituiu um build React de 292 KB de CSS + 1,2 MB de JS que so servia
+   pra desenhar texto e imagem parados.
+   ========================================================================== */
+/* PALETA XBOX, NAO A DA LOJA.
+   O resto do site vende Steam e e azul. Esta pagina vende Xbox, entao ela usa o
+   preto e o verde da Microsoft. A ESTRUTURA nao muda: espacamento, componentes e
+   nomes de classe continuam iguais aos do index.html, o que muda sao os VALORES
+   das variaveis. Se um dia a loja mudar de cor, esta pagina nao acompanha de
+   proposito, ela acompanha o Xbox.
+     #107c10  verde oficial do Xbox. E a cor de botao, nunca de texto pequeno.
+     #5fd75f  verde claro. Existe so pra texto e icone pequeno, onde o #107c10
+              nao tem contraste suficiente em cima do preto.
+   O gradiente --ultimate (verde -> teal) e o da marca Game Pass Ultimate e
+   aparece num lugar so, a faixa do plano recomendado. */
+:root{
+  --bg:#0d0d10; --bg2:#131317; --panel:#1b1b20; --panel2:#232329; --panel3:#2d2d34;
+  --line:rgba(255,255,255,.08); --line2:rgba(255,255,255,.16);
+  --txt:#f2f2f4; --txt2:#b6b6bf; --dim:#8b8b95;
+  --acc:#5fd75f; --acc-dim:rgba(16,124,16,.16);
+  --buy:#107c10; --buy2:#16991a; --ok:#5fd75f;
+  --ultimate:linear-gradient(90deg,#107c10,#0f8a4a 55%,#0e7f6e);
+  --f:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --r:8px; --r2:12px;
+  --shadow:0 1px 2px rgba(0,0,0,.5),0 8px 24px rgba(0,0,0,.45);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:auto;scroll-padding-top:70px;-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--f);background:var(--bg);color:var(--txt);line-height:1.6;
+  font-size:15px;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;border:none;cursor:pointer;color:inherit;background:none}
+img{display:block;max-width:100%}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+.num{font-variant-numeric:tabular-nums}
+
+h1,h2,h3{font-weight:700;line-height:1.15;letter-spacing:-.02em}
+h2{font-size:clamp(21px,3.1vw,27px);margin-bottom:6px}
+.sec{padding:52px 0;border-top:1px solid var(--line)}
+.sec-head{margin-bottom:22px;max-width:640px}
+.sec-head p{color:var(--dim);font-size:14.5px;margin-top:4px}
+
+.reveal{opacity:0;transform:translateY(8px);transition:opacity .4s ease,transform .4s ease}
+.reveal.visible{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+/* ---------- botoes ---------- */
+.offer-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  background:linear-gradient(180deg,var(--buy2),var(--buy));
+  color:#fff;font-weight:700;font-size:15px;
+  padding:13px 26px;border-radius:var(--r);border:1px solid rgba(0,0,0,.25);
+  box-shadow:0 1px 0 rgba(255,255,255,.14) inset,0 4px 14px rgba(0,0,0,.35);
+  transition:filter .15s,transform .1s;width:100%;text-align:center;
+}
+.offer-btn:hover{filter:brightness(1.1)}
+.offer-btn:active{transform:translateY(1px)}
+.btn-ghost{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  background:var(--panel2);color:var(--txt);font-weight:600;font-size:14px;
+  padding:11px 20px;border-radius:var(--r);border:1px solid var(--line2);
+  transition:background .15s,border-color .15s;
+}
+.btn-ghost:hover{background:var(--panel3);border-color:var(--acc)}
+
+/* ---------- barra superior ---------- */
+.topbar{
+  position:sticky;top:0;z-index:600;background:rgba(13,13,16,.92);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+}
+.topbar-in{max-width:1180px;margin:0 auto;padding:0 20px;height:58px;display:flex;align-items:center;justify-content:center}
+.tb-brand{display:flex;align-items:center;gap:9px}
+.tb-brand img{width:26px;height:26px;border-radius:5px}
+.tb-brand span{font-weight:700;font-size:15px;letter-spacing:-.01em}
+@media(max-width:720px){.topbar-in{height:52px}}
+
+/* ---------- topo da pagina de produto ---------- */
+.ph{padding:26px 0 0}
+.ph-crumb{font-size:12.5px;color:var(--dim);margin-bottom:12px}
+.ph-crumb b{color:var(--txt2);font-weight:500}
+.ph h1{font-size:clamp(25px,4.2vw,38px);max-width:780px}
+.ph-sub{color:var(--txt2);font-size:15.5px;margin-top:8px;max-width:620px}
+
+.pg{display:grid;grid-template-columns:minmax(0,1fr) 336px;gap:22px;margin-top:22px;align-items:start}
+@media(max-width:900px){.pg{grid-template-columns:1fr;gap:16px}}
+
+.art{background:#000;border:1px solid var(--line);border-radius:var(--r2);overflow:hidden;box-shadow:var(--shadow)}
+.art-stage{position:relative;aspect-ratio:16/9;background:#0a0a0c}
+.art-stage img{width:100%;height:100%;object-fit:cover}
+.art-cap{
+  position:absolute;left:0;right:0;bottom:0;padding:34px 16px 12px;
+  background:linear-gradient(to top,rgba(0,0,0,.92),transparent);
+  display:flex;align-items:flex-end;justify-content:space-between;gap:12px;
+}
+.art-cap-name{font-size:14px;font-weight:600;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.8)}
+.art-cap-tag{font-size:11.5px;color:#fff;background:rgba(16,124,16,.92);padding:3px 9px;border-radius:4px;font-weight:600;flex-shrink:0}
+
+/* coluna da direita */
+.side{display:flex;flex-direction:column;gap:14px}
+.side-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);padding:16px}
+.side-desc{font-size:14px;color:var(--txt2);line-height:1.65}
+.spec{margin-top:14px;border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:7px}
+.spec-row{display:flex;justify-content:space-between;gap:12px;font-size:13.5px}
+.spec-row dt{color:var(--dim)}
+.spec-row dd{color:var(--txt);font-weight:600;text-align:right}
+.spec-row dd.ok{color:var(--ok)}
+
+.buybox{background:var(--panel2);border:1px solid var(--line2);border-radius:var(--r2);padding:14px}
+.buybox-prices{display:flex;flex-direction:column;line-height:1.15;margin-bottom:12px}
+.buybox-from{font-size:12.5px;color:var(--dim);margin-bottom:1px}
+.buybox-new{font-size:23px;font-weight:700;color:#fff;letter-spacing:-.02em}
+.buybox-once{font-size:12.5px;color:var(--dim);margin-top:4px}
+.buybox-pay{font-size:12.5px;color:var(--txt2);margin-top:9px;text-align:center}
+.buybox-pay b{color:var(--txt);font-weight:600}
+
+/* as 3 duvidas que travam a compra, ja abertas embaixo do botao */
+.medos{margin-top:12px;border-top:1px solid var(--line);padding-top:12px;display:grid;gap:11px}
+.medo{display:flex;gap:9px;align-items:flex-start}
+.medo>svg{
+  width:15px;height:15px;flex-shrink:0;margin-top:2px;
+  stroke:var(--ok);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;
+}
+.medo-txt{min-width:0}
+.medo-q{display:block;font-size:13px;font-weight:600;color:var(--txt);line-height:1.3}
+.medo-a{display:block;font-size:12.5px;color:var(--txt2);line-height:1.45;margin-top:2px}
+
+/* ---------- fileira de jogos ---------- */
+.track{
+  display:flex;gap:12px;overflow-x:auto;padding:2px 2px 12px;
+  scrollbar-width:thin;scrollbar-color:var(--panel3) transparent;
+}
+.track::-webkit-scrollbar{height:6px}
+.track::-webkit-scrollbar-track{background:transparent}
+.track::-webkit-scrollbar-thumb{background:var(--panel3);border-radius:3px}
+.gcard{
+  flex:0 0 auto;width:156px;background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--r);overflow:hidden;transition:border-color .15s,transform .15s;
+}
+.gcard:hover{border-color:var(--line2);transform:translateY(-2px)}
+.gcard img{width:100%;aspect-ratio:1/1;object-fit:cover;background:#0a0a0c}
+.gcard span{
+  display:block;padding:8px 10px 10px;font-size:12.5px;font-weight:600;color:var(--txt2);
+  line-height:1.35;
+}
+.nota{font-size:12.5px;color:var(--dim);margin-top:6px}
+
+/* ---------- planos ---------- */
+.eds{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:stretch}
+.offer-card{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);
+  overflow:hidden;display:flex;flex-direction:column;transition:border-color .15s;
+}
+.offer-card:hover{border-color:var(--line2)}
+.offer-card:not(.featured) .ed-new{font-size:20px;color:var(--txt2)}
+.offer-card:not(.featured) .offer-btn{
+  background:var(--panel3);border-color:var(--line2);color:var(--txt);
+  box-shadow:none;font-size:14px;padding:11px 20px;font-weight:600;
+}
+.offer-card:not(.featured) .offer-btn:hover{background:#34343d;filter:none}
+.offer-card.featured{
+  border-width:2px;border-color:var(--buy);
+  background:linear-gradient(180deg,rgba(16,124,16,.14) 0%,var(--panel) 26%);
+  box-shadow:0 0 0 1px rgba(16,124,16,.3),0 18px 44px rgba(0,0,0,.55);
+}
+.ed-ribbon{display:none}
+.featured .ed-ribbon{
+  display:block;background:var(--ultimate);color:#fff;text-align:center;
+  font-size:11.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:8px 10px;
+}
+.featured .ed-new{font-size:28px}
+.ed-top{padding:14px 16px;border-bottom:1px solid var(--line)}
+.ed-name{font-size:16px;font-weight:700}
+.ed-body{padding:14px 16px;flex:1}
+.ed-buy{padding:14px 16px;border-top:1px solid var(--line);background:var(--panel2)}
+.ed-price{display:flex;flex-direction:column;line-height:1.15;margin-bottom:12px}
+.ed-new{font-size:22px;font-weight:700;color:#fff;letter-spacing:-.02em}
+.ed-mes{font-size:12.5px;color:var(--dim);margin-top:3px}
+.ed-gain{
+  display:none;background:rgba(16,124,16,.12);border:1px solid rgba(16,124,16,.35);
+  border-radius:var(--r);padding:9px 12px;margin-bottom:12px;
+  font-size:12.5px;color:var(--txt2);line-height:1.5;text-align:center;
+}
+.featured .ed-gain{display:block}
+.ed-gain b{color:var(--ok);font-weight:700}
+.offer-methods{font-size:12px;color:var(--dim);text-align:center;margin-top:9px}
+
+.offer-features{list-style:none;display:flex;flex-direction:column;gap:8px}
+/* ::before ABSOLUTO, nao flex item. Com o li em display:flex, o espaco entre
+   um <strong> e o texto seguinte vira espaco entre flex items e o navegador come
+   ele: "<strong>EA Play</strong> incluso" saia como "EA Playincluso". Fora do
+   flex o texto flui normal e o icone continua alinhado no topo da primeira linha. */
+.offer-features li{position:relative;padding-left:23px;font-size:13px;color:var(--txt2);line-height:1.5}
+.offer-features li::before{
+  content:'';position:absolute;left:0;top:3px;width:15px;height:15px;border-radius:3px;
+  background:rgba(16,124,16,.28) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%235fd75f' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/11px no-repeat;
+}
+.offer-features li strong{color:var(--txt);font-weight:600}
+
+@media(max-width:1000px){
+  .eds{grid-template-columns:repeat(2,1fr);gap:16px}
+  .offer-card.featured{order:-1}
+}
+@media(max-width:600px){
+  .eds{grid-template-columns:1fr;max-width:430px;margin:0 auto}
+}
+
+/* selo de pagamento */
+.selo{
+  margin-top:24px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);
+  padding:18px 22px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;
+}
+.selo-hd{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;font-size:14.5px;font-weight:600;color:var(--txt)}
+.selo-hd svg{width:15px;height:15px;flex-shrink:0;fill:none;stroke:var(--ok);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.selo-list{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:8px 20px}
+.selo-list li{font-size:12.5px;color:var(--txt2);line-height:1.5;display:flex;gap:7px;align-items:center}
+.selo-list li::before{content:'\2713';color:var(--ok);font-weight:700;flex-shrink:0}
+
+/* ---------- nuvem ----------
+   O fundo tem um verde de 6% que morre nos primeiros 40% da secao. E o unico
+   lugar da pagina com fundo tingido: serve pra esta secao pesar mais que as
+   vizinhas sem precisar de plaquinha, borda colorida nem caixa alta. */
+#nuvem{background:linear-gradient(180deg,rgba(16,124,16,.06),transparent 42%)}
+.nuv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:820px){.nuv-grid{grid-template-columns:1fr}}
+.nuv{background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);padding:18px 20px}
+.nuv h3{font-size:15.5px;margin-bottom:6px}
+.nuv p{font-size:13.5px;color:var(--txt2);line-height:1.6}
+.nuv-req{margin-top:14px;background:var(--panel2);border:1px solid var(--line);border-radius:var(--r2);padding:18px 20px}
+.nuv-req-hd{font-size:13.5px;font-weight:700;color:var(--txt);margin-bottom:13px}
+.nuv-req ul{list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:10px 24px}
+@media(max-width:700px){.nuv-req ul{grid-template-columns:1fr}}
+.nuv-req li{position:relative;padding-left:23px;font-size:13.5px;color:var(--txt2);line-height:1.5}
+.nuv-req li::before{
+  content:'';position:absolute;left:0;top:3px;width:15px;height:15px;border-radius:3px;
+  background:rgba(16,124,16,.28) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%235fd75f' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/11px no-repeat;
+}
+.nuv-req li b{color:var(--txt);font-weight:600}
+/* A ressalva fica DENTRO do bloco de requisitos, nao escondida no FAQ: quem
+   compra achando que roda liso em 4 Mbps pede reembolso depois. */
+.nuv-honesto{margin-top:14px;padding-top:13px;border-top:1px solid var(--line);font-size:12.5px;color:var(--dim);line-height:1.6}
+
+/* ---------- prova social ---------- */
+.provas{display:flex;gap:12px;overflow-x:auto;padding:2px 2px 12px;scrollbar-width:thin;scrollbar-color:var(--panel3) transparent}
+.provas::-webkit-scrollbar{height:6px}
+.provas::-webkit-scrollbar-thumb{background:var(--panel3);border-radius:3px}
+.prova{
+  flex:0 0 auto;width:236px;height:392px;border-radius:var(--r2);overflow:hidden;
+  border:1px solid var(--line);background:var(--panel);
+}
+.prova img{width:100%;height:100%;object-fit:cover;object-position:top}
+
+.deps{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:18px}
+.dep{background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);padding:15px 16px}
+.dep p{font-size:13.5px;color:var(--txt2);line-height:1.6}
+.dep footer{margin-top:10px;font-size:12.5px;color:var(--dim)}
+.dep footer b{color:var(--txt);font-weight:600;display:block}
+
+/* ---------- passos ---------- */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:760px){.steps{grid-template-columns:1fr}}
+.step{background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);padding:16px 18px}
+.step-n{
+  width:26px;height:26px;border-radius:50%;background:var(--acc-dim);color:var(--acc);
+  display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin-bottom:10px;
+}
+.step h3{font-size:15px;margin-bottom:4px}
+.step p{font-size:13.5px;color:var(--dim);line-height:1.6}
+
+/* ---------- faq ---------- */
+.faq-list{max-width:820px;display:flex;flex-direction:column;gap:8px}
+.faq-item{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.faq-q{
+  width:100%;text-align:left;font-size:14.5px;font-weight:600;color:var(--txt);
+  padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.faq-q:hover{background:var(--panel2)}
+.faq-chev{font-size:10px;color:var(--dim);transition:transform .2s;flex-shrink:0}
+.faq-q.open .faq-chev{transform:rotate(180deg);color:var(--acc)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .28s ease,padding .28s ease;font-size:14px;color:var(--txt2);line-height:1.7;padding:0 16px}
+.faq-a.open{max-height:460px;padding:0 16px 15px}
+
+/* ---------- fechamento + rodape ---------- */
+.fim{text-align:center;max-width:520px;margin:0 auto}
+.fim h2{margin-bottom:10px}
+.fim p{color:var(--dim);font-size:14.5px;margin-bottom:20px}
+.fim .offer-btn{max-width:340px;margin:0 auto}
+
+.foot{border-top:1px solid var(--line);padding:26px 0 34px;background:var(--bg2)}
+.foot-in{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.foot-brand{display:flex;align-items:center;gap:9px;font-weight:600;font-size:14px}
+.foot-brand img{width:24px;height:24px;border-radius:5px}
+.foot p{font-size:12.5px;color:var(--dim);line-height:1.6}
+.foot a{color:var(--acc)}
+.foot-links{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;margin-top:8px}
+
+/* ---------- CTA fixo no celular ---------- */
+#sticky-cta{
+  position:fixed;left:12px;right:12px;bottom:12px;z-index:700;display:none;
+  align-items:center;justify-content:center;gap:8px;
+  background:linear-gradient(180deg,var(--buy2),var(--buy));color:#fff;font-weight:700;font-size:15px;
+  padding:14px;border-radius:var(--r);box-shadow:0 6px 22px rgba(0,0,0,.5);
+}
+@media(max-width:820px){#sticky-cta.on{display:flex}.foot{padding-bottom:86px}}
+</style>
+
+<script src="https://tracker.almazstore.com.br/t.js" data-id="default" defer></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a href="#top" class="tb-brand">
+      <img src="../assets/logo-128.png" alt="Almaz Store">
+      <span>Almaz Store</span>
+    </a>
+  </div>
+</header>
+
+<!-- ===================== TOPO: FICHA DO PRODUTO =====================
+     SOBRE CONTA E PERFIL, cuidado aqui. A pagina promete UMA coisa so: depois da
+     ativacao a pessoa joga pelo PROPRIO PERFIL do Xbox. E a mesma promessa que a
+     pagina antiga ja fazia. Ela NAO promete que nenhuma outra conta entra no
+     console, e nao deve prometer: em 02/09/2026 o user decidiu nao especificar
+     o metodo de ativacao na pagina.
+     Ja existiu aqui um "Preciso criar outra conta? Nao." que foi escrito por
+     engano e removido: era promessa maior do que a loja faz, e promessa de conta
+     e a que mais vira reembolso nesse mercado. Se for mexer neste bloco, nao
+     reintroduza nada que afirme o que acontece ou nao acontece com contas. O que
+     a pagina pode dizer e o que a pessoa GANHA (joga no perfil dela) e que existe
+     uma ativacao curta feita por ela, com suporte no WhatsApp se travar. -->
+<main id="top">
+<section class="ph">
+  <div class="wrap">
+
+    <div class="ph-crumb">Almaz Store &nbsp;&rsaquo;&nbsp; <b>Game Pass Ultimate</b></div>
+
+    <h1>Mais de 400 jogos no seu Xbox sem comprar um por um</h1>
+    <p class="ph-sub">
+      Game Pass Ultimate no seu próprio perfil. E joga também na nuvem: computador,
+      celular e Smart TV, sem precisar de máquina forte.
+    </p>
+
+    <div class="pg">
+
+      <div class="art reveal">
+        <div class="art-stage">
+          <img src="images/gamepass-hero.webp" alt="Xbox Game Pass Ultimate" width="1200" height="675" fetchpriority="high" decoding="async">
+          <div class="art-cap">
+            <span class="art-cap-name">Xbox Game Pass Ultimate</span>
+            <span class="art-cap-tag">Xbox One, Series S e X</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="side">
+
+        <div class="side-card">
+          <p class="side-desc">
+            Você paga no PIX e recebe o acesso e o passo a passo por e-mail. A ativação você
+            faz no console, leva alguns minutos, e depois dela o catálogo inteiro fica
+            disponível no seu perfil de sempre.
+          </p>
+          <dl class="spec">
+            <div class="spec-row"><dt>Consoles</dt><dd>Xbox One, Series S e X</dd></div>
+            <div class="spec-row"><dt>Catálogo</dt><dd>Mais de 400 jogos</dd></div>
+            <div class="spec-row"><dt>EA Play e Ubisoft+</dt><dd class="ok">Inclusos</dd></div>
+            <div class="spec-row"><dt>Jogos novos</dt><dd class="ok">No dia em que saem</dd></div>
+            <div class="spec-row"><dt>Jogar online no console</dt><dd class="ok">Incluso</dd></div>
+            <div class="spec-row"><dt>Jogar na nuvem</dt><dd class="ok">Incluso</dd></div>
+            <div class="spec-row"><dt>Entrega</dt><dd>Automática por e-mail</dd></div>
+            <div class="spec-row"><dt>Ativação</dt><dd>Em até 30 min</dd></div>
+          </dl>
+        </div>
+
+        <div class="buybox">
+          <div class="buybox-prices">
+            <span class="buybox-from">A partir de</span>
+            <span class="buybox-new num">R$ 49,90</span>
+            <span class="buybox-once">Ou R$ 15,98 por mês no plano de 5 meses</span>
+          </div>
+          <a href="#planos" class="offer-btn">Ver os planos</a>
+          <div class="buybox-pay"><b>PIX</b> com 5% de desconto e aprovação na hora</div>
+
+          <div class="medos">
+            <div class="medo">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              <span class="medo-txt">
+                <span class="medo-q">Vou jogar na minha conta?</span>
+                <span class="medo-a">Sim. Depois da ativação você joga pelo seu próprio perfil do Xbox.</span>
+              </span>
+            </div>
+            <div class="medo">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              <span class="medo-txt">
+                <span class="medo-q">Quando chega o acesso?</span>
+                <span class="medo-a">Vai automático pro e-mail da compra assim que o pagamento confirma.</span>
+              </span>
+            </div>
+            <div class="medo">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              <span class="medo-txt">
+                <span class="medo-q">Funciona no meu Xbox One?</span>
+                <span class="medo-a">Funciona no Xbox One, no Series S e no Series X.</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== UM PEDAÇO DO CATÁLOGO ===================== -->
+<section class="sec" id="jogos">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Um pedaço do catálogo</h2>
+      <p>Alguns dos títulos que estão no Game Pass. Arraste pro lado pra ver o resto.</p>
+    </div>
+    <div class="track reveal">
+      <div class="gcard"><img src="images/capa-fc26.webp" alt="EA SPORTS FC 26" loading="lazy" decoding="async"><span>EA SPORTS FC 26</span></div>
+      <div class="gcard"><img src="images/capa-fh6.webp" alt="Forza Horizon 6" loading="lazy" decoding="async"><span>Forza Horizon 6</span></div>
+      <div class="gcard"><img src="images/capa-bo7.webp" alt="Call of Duty: Black Ops 7" loading="lazy" decoding="async"><span>Call of Duty: Black Ops 7</span></div>
+      <div class="gcard"><img src="images/capa-diablo4.webp" alt="Diablo IV" loading="lazy" decoding="async"><span>Diablo IV</span></div>
+      <div class="gcard"><img src="images/capa-hogwarts.webp" alt="Hogwarts Legacy" loading="lazy" decoding="async"><span>Hogwarts Legacy</span></div>
+      <div class="gcard"><img src="images/capa-starfield.webp" alt="Starfield" loading="lazy" decoding="async"><span>Starfield</span></div>
+      <div class="gcard"><img src="images/capa-mk1.webp" alt="Mortal Kombat 1" loading="lazy" decoding="async"><span>Mortal Kombat 1</span></div>
+      <div class="gcard"><img src="images/capa-spacemarine2.webp" alt="Warhammer 40.000: Space Marine II" loading="lazy" decoding="async"><span>Space Marine II</span></div>
+      <div class="gcard"><img src="images/capa-minecraft.webp" alt="Minecraft" loading="lazy" decoding="async"><span>Minecraft</span></div>
+      <div class="gcard"><img src="images/capa-valhalla.webp" alt="Assassin's Creed Valhalla" loading="lazy" decoding="async"><span>Assassin's Creed Valhalla</span></div>
+      <div class="gcard"><img src="images/capa-bf2042.webp" alt="Battlefield 2042" loading="lazy" decoding="async"><span>Battlefield 2042</span></div>
+      <div class="gcard"><img src="images/capa-fc6.webp" alt="Far Cry 6" loading="lazy" decoding="async"><span>Far Cry 6</span></div>
+      <div class="gcard"><img src="images/capa-ghost2.webp" alt="Ghost Recon Wildlands" loading="lazy" decoding="async"><span>Ghost Recon Wildlands</span></div>
+      <div class="gcard"><img src="images/capa-resident_evil_village.webp" alt="Resident Evil Village" loading="lazy" decoding="async"><span>Resident Evil Village</span></div>
+      <div class="gcard"><img src="images/capa-ufc5.webp" alt="UFC 5" loading="lazy" decoding="async"><span>UFC 5</span></div>
+      <div class="gcard"><img src="images/capa-subnautica-2-cover.webp" alt="Subnautica 2" loading="lazy" decoding="async"><span>Subnautica 2</span></div>
+    </div>
+    <p class="nota">O catálogo muda com o tempo: entra jogo novo e sai jogo antigo. A lista acima é uma amostra, não uma garantia.</p>
+  </div>
+</section>
+
+<!-- ===================== NUVEM =====================
+     Xbox Cloud Gaming faz parte do Ultimate, entao ele ja esta dentro dos 4
+     planos desta pagina. Ele NAO e a oferta principal: a oferta principal continua
+     sendo o preco por jogo, la em cima. A nuvem e a segunda promessa, e ela vende
+     uma coisa so: o jogo pesado nao depende da maquina da pessoa, porque quem
+     renderiza e o servidor. Isso amplia o publico pra quem nao tem PC forte, pra
+     quem nao tem console e pra quem so tem celular ou TV.
+     DUAS REGRAS DE TEXTO AQUI, as duas dadas pelo user em 02/09/2026:
+     1. Nao estreite com exemplo de maquina especifica ("notebook de escritorio",
+        "PC de 2015"). Cada exemplo desses tira da conversa todo mundo que nao se
+        reconhece nele. O certo e a negativa ampla: nao precisa de computador forte.
+     2. Nada de palavra que o cliente nao usa. Sairam daqui: renderizar, placa de
+        video, streaming, Mbps, Wi-Fi 5 GHz, webOS 24, "130 GB", Day One. Entraram
+        as mesmas coisas ditas do jeito dele: "faz o jogo rodar", "10 mega", "o
+        Wi-Fi que aparece com 5G no nome da rede", "jogo gigante", "no dia em que
+        saem". Os requisitos continuam sendo os oficiais da Microsoft, so mudou a
+        lingua: nao invente numero novo pra soar mais simples.
+     Os numeros abaixo sao os oficiais da Microsoft (xbox.com/cloud-gaming,
+     conferidos em 02/09/2026): 10 Mbps no celular, 20 Mbps em PC/console/tablet,
+     Wi-Fi de 5 GHz, Edge/Chrome/Safari, controle por Bluetooth ou USB com alguns
+     jogos aceitando toque na tela. NAO invente numero aqui: se a Microsoft mudar
+     o requisito, a promessa da pagina para de bater e vira reembolso. -->
+<section class="sec" id="nuvem">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Não precisa de computador forte nem de console caro</h2>
+      <p>O Ultimate inclui o Xbox Cloud Gaming. O jogo não roda no seu aparelho: roda num
+         computador da Microsoft e chega na sua tela igual a um vídeo. Quem aguenta o jogo é
+         o computador deles, então jogo pesado abre na sua máquina do mesmo jeito.</p>
+    </div>
+
+    <div class="nuv-grid reveal">
+      <div class="nuv">
+        <h3>Sem computador forte</h3>
+        <p>Aquele jogo que só abre em computador caro abre no seu pelo navegador, igual
+           você abre um vídeo.</p>
+      </div>
+      <div class="nuv">
+        <h3>Sem console caro</h3>
+        <p>Dá pra jogar sem ter um Xbox em casa. Basta internet, um navegador e um controle.</p>
+      </div>
+      <div class="nuv">
+        <h3>De onde você quiser</h3>
+        <p>Computador, celular ou Smart TV das mais novas. E não precisa baixar nada: até
+           jogo gigante abre em segundos.</p>
+      </div>
+    </div>
+
+    <div class="nuv-req reveal">
+      <div class="nuv-req-hd">O que você precisa pra jogar na nuvem</div>
+      <ul>
+        <li><b>Internet boa:</b> 10 mega no celular, 20 mega no computador e na TV</li>
+        <li><b>O Wi-Fi mais rápido da casa,</b> o que tem 5G no nome da rede</li>
+        <li><b>Chrome, Edge ou Safari,</b> que é por onde o jogo abre</li>
+        <li><b>Um controle</b> por cabo ou Bluetooth. Em alguns jogos dá pra tocar na tela</li>
+      </ul>
+      <p class="nuv-honesto">A imagem depende da sua internet, igual a qualquer vídeo: internet
+         ruim deixa a imagem mais fraca.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PLANOS =====================
+     A LISTA DE BENEFICIOS E A OFICIAL DA MICROSOFT, nao e invencao nossa. Fonte:
+     xbox.com/pt-br/xbox-game-pass, o quadro do plano Ultimate, conferido em
+     02/09/2026. De la vieram "mais de 400 jogos", "novos jogos no primeiro dia",
+     "multijogador online no console", "EA Play" e "Ubisoft+ Classics" e a nuvem.
+     O "mais de 400" e numero que a Microsoft mexe: se ela mudar, mude aqui, no H1
+     e na ficha tecnica junto, senao a pagina promete o que a assinatura nao da.
+
+     TRES BENEFICIOS OFICIAIS FICARAM DE FORA DE PROPOSITO, ate o user confirmar:
+     Clube Fortnite, os beneficios de League of Legends e Warzone, e os 4x pontos
+     do Rewards. Os tres sao entregues na CONTA que assina, ligados a uma conta
+     Epic/Riot/Microsoft especifica, entao nao e obvio que chegam no cliente do
+     jeito que a nossa ativacao funciona. Anunciar beneficio que nao chega e o
+     caminho mais curto pro reembolso. So entram aqui depois de teste. -->
+<!-- ===================== PLANOS ===================== -->
+<!--
+  OS 4 LINKS DE CHECKOUT ESTÃO NO OBJETO `PLANOS`, LÁ NO SCRIPT DO FIM DA PÁGINA.
+  Enquanto a `url` de um plano estiver vazia, o botão dele abre o WhatsApp com a
+  mensagem do plano em vez de morrer no clique. Preencha as 4 e o botão passa a
+  ir direto pro checkout.
+-->
+<section class="sec" id="planos">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Escolha por quanto tempo</h2>
+      <p>Todos são o Game Pass Ultimate, o plano mais completo do Xbox. O que muda é só a
+         duração e quanto sai por mês.</p>
+    </div>
+
+    <div class="eds reveal">
+
+      <div class="offer-card">
+        <div class="ed-top">
+          <div class="ed-name">2 meses de Ultimate</div>
+        </div>
+        <div class="ed-body">
+          <ul class="offer-features">
+            <li><strong>Mais de 400 jogos</strong></li>
+            <li>Jogos novos no dia em que saem</li>
+            <li><strong>Jogar online</strong> no console</li>
+            <li><strong>EA Play</strong> e <strong>Ubisoft+ Classics</strong> inclusos</li>
+            <li><strong>Nuvem</strong> inclusa: computador, celular e TV</li>
+            <li>Joga no seu próprio perfil</li>
+          </ul>
+        </div>
+        <div class="ed-buy">
+          <div class="ed-price">
+            <span class="ed-new num">R$ 49,90</span>
+            <span class="ed-mes num">R$ 24,95 / mês</span>
+          </div>
+          <a href="#planos" onclick="checkoutPlano('m2');return false" class="offer-btn">Quero garantir</a>
+          <div class="offer-methods">PIX com 5% de desconto</div>
+        </div>
+      </div>
+
+      <div class="offer-card">
+        <div class="ed-top">
+          <div class="ed-name">3 meses de Ultimate</div>
+        </div>
+        <div class="ed-body">
+          <ul class="offer-features">
+            <li><strong>Mais de 400 jogos</strong></li>
+            <li>Jogos novos no dia em que saem</li>
+            <li><strong>Jogar online</strong> no console</li>
+            <li><strong>EA Play</strong> e <strong>Ubisoft+ Classics</strong> inclusos</li>
+            <li><strong>Nuvem</strong> inclusa: computador, celular e TV</li>
+            <li>Joga no seu próprio perfil</li>
+          </ul>
+        </div>
+        <div class="ed-buy">
+          <div class="ed-price">
+            <span class="ed-new num">R$ 59,90</span>
+            <span class="ed-mes num">R$ 19,97 / mês</span>
+          </div>
+          <a href="#planos" onclick="checkoutPlano('m3');return false" class="offer-btn">Quero garantir</a>
+          <div class="offer-methods">PIX com 5% de desconto</div>
+        </div>
+      </div>
+
+      <div class="offer-card featured">
+        <div class="ed-ribbon">Mais escolhido</div>
+        <div class="ed-top">
+          <div class="ed-name">5 meses de Ultimate</div>
+        </div>
+        <div class="ed-body">
+          <ul class="offer-features">
+            <li><strong>Mais de 400 jogos</strong></li>
+            <li>Jogos novos no dia em que saem</li>
+            <li><strong>Jogar online</strong> no console</li>
+            <li><strong>EA Play</strong> e <strong>Ubisoft+ Classics</strong> inclusos</li>
+            <li><strong>Nuvem</strong> inclusa: computador, celular e TV</li>
+            <li>Joga no seu próprio perfil</li>
+          </ul>
+        </div>
+        <div class="ed-buy">
+          <div class="ed-gain">
+            São <b>R$ 30,00</b> a mais que o de 2 meses, e você joga <b>3 meses a mais</b>.
+          </div>
+          <div class="ed-price">
+            <span class="ed-new num">R$ 79,90</span>
+            <span class="ed-mes num">R$ 15,98 / mês</span>
+          </div>
+          <a href="#planos" onclick="checkoutPlano('m5');return false" class="offer-btn">Quero garantir</a>
+          <div class="offer-methods">PIX com 5% de desconto</div>
+        </div>
+      </div>
+
+      <div class="offer-card">
+        <div class="ed-top">
+          <div class="ed-name">12 meses de Ultimate</div>
+        </div>
+        <div class="ed-body">
+          <ul class="offer-features">
+            <li><strong>Mais de 400 jogos</strong></li>
+            <li>Jogos novos no dia em que saem</li>
+            <li><strong>Jogar online</strong> no console</li>
+            <li><strong>EA Play</strong> e <strong>Ubisoft+ Classics</strong> inclusos</li>
+            <li><strong>Nuvem</strong> inclusa: computador, celular e TV</li>
+            <li>Joga no seu próprio perfil</li>
+          </ul>
+        </div>
+        <div class="ed-buy">
+          <div class="ed-price">
+            <span class="ed-new num">R$ 129,90</span>
+            <span class="ed-mes num">R$ 10,83 / mês</span>
+          </div>
+          <a href="#planos" onclick="checkoutPlano('m12');return false" class="offer-btn">Quero garantir</a>
+          <div class="offer-methods">PIX com 5% de desconto</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="selo reveal">
+      <div class="selo-hd">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        <span>Pagamento em ambiente seguro</span>
+      </div>
+      <ul class="selo-list">
+        <li>PIX com aprovação na hora</li>
+        <li>Entrega automática por e-mail</li>
+        <li>Suporte no WhatsApp</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== PROVA SOCIAL ===================== -->
+<!-- As 3 seções separadas de prova social do build antigo (depoimentos + vídeo +
+     carrossel de prints) viraram esta. Os prints foram recortados no arquivo, não
+     no CSS: o topo do WhatsApp saiu de vez, então o número e a foto do cliente não
+     vão junto no download da imagem. -->
+<section class="sec" id="prova">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Quem já está jogando</h2>
+      <p>Conversas reais de clientes logo depois de receber o acesso. Mais de 3.000 pedidos atendidos.</p>
+    </div>
+
+    <div class="provas reveal">
+      <div class="prova"><img src="images/prova-1.webp" alt="Cliente jogando depois de receber o acesso" loading="lazy" decoding="async"></div>
+      <div class="prova"><img src="images/prova-2.webp" alt="Cliente confirmando que o procedimento deu certo" loading="lazy" decoding="async"></div>
+      <div class="prova"><img src="images/prova-3.webp" alt="Cliente confirmando que o jogo abriu no console" loading="lazy" decoding="async"></div>
+    </div>
+
+    <div class="deps reveal">
+      <div class="dep">
+        <p>“Melhor preço e suporte que já encontrei. O acesso foi enviado em minutos e a configuração no Xbox é muito simples. Recomendo 100%.”</p>
+        <footer><b>Guilherme Santos</b>Avaliação no Google</footer>
+      </div>
+      <div class="dep">
+        <p>“Fiquei com receio no começo, mas o suporte me explicou tudo. Agora jogo qualquer título do catálogo no meu Series S sem gastar fortunas.”</p>
+        <footer><b>Rodrigo Melo</b>Avaliação no Google</footer>
+      </div>
+      <div class="dep">
+        <p>“Entrega automática sensacional. Paguei no Pix e em 2 minutos o e-mail com as instruções já estava na caixa de entrada.”</p>
+        <footer><b>André Luiz</b>Avaliação no Google</footer>
+      </div>
+      <div class="dep">
+        <p>“Economizei muito com essa assinatura de 12 meses. O catálogo da EA Play que vem junto é o diferencial. Vale muito a pena.”</p>
+        <footer><b>Júlio César</b>Avaliação no Google</footer>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== COMO FUNCIONA ===================== -->
+<section class="sec" id="passos">
+  <div class="wrap">
+    <div class="sec-head reveal"><h2>Do pagamento ao jogo rodando</h2></div>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-n num">1</div>
+        <h3>Escolhe o plano e paga</h3>
+        <p>Pagamento no PIX. A aprovação sai na hora que o pagamento confirma.</p>
+      </div>
+      <div class="step">
+        <div class="step-n num">2</div>
+        <h3>Recebe o acesso no e-mail</h3>
+        <p>Chega automático no e-mail da compra, com o passo a passo da ativação.</p>
+      </div>
+      <div class="step">
+        <div class="step-n num">3</div>
+        <h3>Ativa e joga no seu perfil</h3>
+        <p>Você segue as instruções no console e baixa o que quiser do catálogo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FAQ ===================== -->
+<!-- Eram 12 perguntas. Viraram 6: "como recebo" e "a entrega é automática" eram a
+     mesma pergunta, "quais jogos" e "os jogos do carrossel" também, "funciona no One"
+     e "funciona no Series" idem. As de suporte e segurança saíram porque já estão
+     respondidas na prova social e no selo. A da nuvem virou a secao #nuvem inteira, mais
+     uma pergunta nova: "da pra jogar sem ter um Xbox?". -->
+<section class="sec" id="faq">
+  <div class="wrap">
+    <div class="sec-head reveal"><h2>Perguntas frequentes</h2></div>
+    <div class="faq-list reveal">
+
+      <div class="faq-item">
+        <button class="faq-q" type="button" onclick="tFaq(this)">O que é o Game Pass Ultimate?<span class="faq-chev">&#9660;</span></button>
+        <div class="faq-a">É a assinatura mais completa do Xbox: mais de 400 jogos, jogos novos entrando no mesmo dia em que saem, multijogador online no console, os catálogos do EA Play e do Ubisoft+ Classics, e o Xbox Cloud Gaming pra jogar na nuvem.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" type="button" onclick="tFaq(this)">Funciona no meu console?<span class="faq-chev">&#9660;</span></button>
+        <div class="faq-a">Funciona no Xbox One, no Series S e no Series X.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" type="button" onclick="tFaq(this)">Posso jogar no meu próprio perfil?<span class="faq-chev">&#9660;</span></button>
+        <div class="faq-a">Pode. Depois que você fizer a ativação, joga normalmente pelo seu próprio perfil do Xbox.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" type="button" onclick="tFaq(this)">Como e quando eu recebo?<span class="faq-chev">&#9660;</span></button>
+        <div class="faq-a">Assim que o pagamento confirma, o acesso e as instruções vão automáticos pro e-mail do pedido. É só seguir o passo a passo.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" type="button" onclick="tFaq(this)">Preciso fazer alguma coisa no console?<span class="faq-chev">&#9660;</span></button>
+        <div class="faq-a">Precisa, sim. Depois do pagamento você recebe um passo a passo curto por e-mail e faz a ativação no seu Xbox. Leva alguns minutos. Se travar em qualquer parte, a gente vai junto com você pelo WhatsApp.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" type="button" onclick="tFaq(this)">Dá pra jogar sem ter um Xbox?<span class="faq-chev">&#9660;</span></button>
+        <div class="faq-a">Dá. O Ultimate inclui o Xbox Cloud Gaming: o jogo roda num computador da Microsoft e você joga pelo navegador, no computador, no celular ou numa Smart TV das mais novas. Precisa de internet boa (10 mega no celular, 20 no computador e na TV) e de um controle. Se não souber se a sua TV aceita, chama a gente no WhatsApp antes de comprar.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" type="button" onclick="tFaq(this)">Quais jogos estão disponíveis?<span class="faq-chev">&#9660;</span></button>
+        <div class="faq-a">Todos os que estiverem no catálogo enquanto a sua assinatura estiver ativa. Os jogos desta página são uma amostra: quem atualiza o catálogo é a Microsoft, e ele muda com o tempo.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" type="button" onclick="tFaq(this)">Por quanto tempo tenho acesso?<span class="faq-chev">&#9660;</span></button>
+        <div class="faq-a">Pelo período do plano que você escolher na compra: 2, 3, 5 ou 12 meses.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FECHAMENTO ===================== -->
+<section class="sec">
+  <div class="wrap fim reveal">
+    <h2>Pronto pra escolher o seu plano?</h2>
+    <p>PIX com aprovação na hora e o acesso no seu e-mail logo em seguida.</p>
+    <a href="#planos" class="offer-btn">Ver os planos</a>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div>
+      <div class="foot-brand"><img src="../assets/logo-128.png" alt="Almaz Store"> Almaz Store</div>
+      <div class="foot-links">
+        <a href="#faq">Dúvidas frequentes</a>
+        <a href="/reembolso">Reembolso</a>
+        <a href="#" data-link="whatsapp">Suporte no WhatsApp</a>
+      </div>
+    </div>
+    <p style="max-width:430px">
+      Não somos afiliados nem representantes da Microsoft. Xbox e Game Pass são marcas
+      registradas da Microsoft Corporation.
+    </p>
+  </div>
+</footer>
+
+<a id="sticky-cta" href="#planos" role="button" aria-label="Ver os planos">Ver os planos</a>
+
+<script>
+/* ============================================================================
+   PREENCHER AQUI: os 4 links de checkout do Game Pass.
+   Enquanto a url estiver vazia, o botão do plano abre o WhatsApp com a mensagem
+   do plano — ninguém clica e fica sem resposta. Assim que colar o link do
+   checkout, o botão passa a ir direto pra lá, com UTMs e event_id anexados.
+   ========================================================================== */
+var WHATSAPP = '5545999515463';   /* confira se é o número que atende Game Pass */
+
+var PLANOS = {
+  m2 : { url:'', valor:49.90,  nome:'Game Pass Ultimate 2 meses'  },
+  m3 : { url:'', valor:59.90,  nome:'Game Pass Ultimate 3 meses'  },
+  m5 : { url:'', valor:79.90,  nome:'Game Pass Ultimate 5 meses'  },
+  m12: { url:'', valor:129.90, nome:'Game Pass Ultimate 12 meses' }
+};
+
+/* ============================================================================
+   SISTEMA DE TRACKING AVANCADO FOCADO EM META ADS
+   Portado do index.html (pagina da Steam) em 02/09/2026, IGUAL ao de la, de
+   proposito. O tracking caseiro que existia nesta pagina (gerarEventId +
+   decorarUrl + chamada manual de window.utmify.track) foi REMOVIDO: ele
+   gerava event_id em formato diferente do resto da loja e, pior, disparava o
+   InitiateCheckout na mao. O Pixel da UTMify JA dispara o IC sozinho (browser
+   + CAPI, com deduplicacao), entao a chamada manual contava o evento duas
+   vezes. Nao reintroduza fbq(), utmify.track() nem outro pixel aqui.
+
+   O que roda de verdade nesta pagina: Microsoft Clarity + Pixel da UTMify +
+   UTMs da UTMify + costura de lead. O Pixel da Meta fica conectado no PAINEL
+   da UTMify, nao no HTML.
+
+   MESMA CHAVE de storage do index.html ('almaz_utm_tracker') de proposito: se
+   a pessoa entrar pelo anuncio da Steam e navegar ate aqui, as UTMs da visita
+   original seguem junto e a venda nao vira "organico".
+   ========================================================================== */
+(function() {
+  var trackingKeys = [
+    'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term',
+    'src', 'sck', 'xcod', 'fbclid', 'gclid', 'ttclid', 'msclkid', 'irclickid', 'utm_id'
+  ];
+
+  // 1. Extrair parametros da URL
+  var urlParams = new URLSearchParams(window.location.search);
+  var currentTracking = {};
+  var hasParamsInUrl = false;
+
+  trackingKeys.forEach(function(key) {
+    var val = urlParams.get(key);
+    if (val) {
+      currentTracking[key] = val;
+      hasParamsInUrl = true;
+    }
+  });
+
+  // 2. Armazenamento (localStorage & sessionStorage)
+  var storageKey = 'almaz_utm_tracker';
+  var storedTracking = {};
+
+  try {
+    var rawStored = localStorage.getItem(storageKey) || sessionStorage.getItem(storageKey);
+    if (rawStored) {
+      storedTracking = JSON.parse(rawStored);
+    }
+  } catch (e) {
+    console.error('Erro ao ler UTMs do cache:', e);
+  }
+
+  // Mescla: URL nova atualiza o cache; sem parametro na URL, mantem o salvo.
+  var mergedTracking = {};
+  if (hasParamsInUrl) {
+    mergedTracking = Object.assign({}, storedTracking, currentTracking);
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(mergedTracking));
+      sessionStorage.setItem(storageKey, JSON.stringify(mergedTracking));
+    } catch (e) {
+      console.error('Erro ao salvar UTMs no cache:', e);
+    }
+  } else {
+    mergedTracking = storedTracking;
+  }
+
+  // 3. Fallback pra trafego organico quando nenhum canal foi detectado
+  if (!mergedTracking['utm_source'] && !mergedTracking['src']) {
+    var referrer = document.referrer;
+    if (referrer) {
+      var referrerHost = '';
+      try { referrerHost = new URL(referrer).hostname; } catch (err) {}
+
+      if (referrerHost) {
+        if (referrerHost.indexOf('google') !== -1) {
+          mergedTracking['utm_source'] = 'organic_google';
+        } else if (referrerHost.indexOf('facebook') !== -1) {
+          mergedTracking['utm_source'] = 'organic_facebook';
+        } else if (referrerHost.indexOf('instagram') !== -1) {
+          mergedTracking['utm_source'] = 'organic_instagram';
+        } else if (referrerHost.indexOf('tiktok') !== -1) {
+          mergedTracking['utm_source'] = 'organic_tiktok';
+        } else {
+          mergedTracking['utm_source'] = 'referrer_' + referrerHost.replace(/\./g, '_');
+        }
+        mergedTracking['utm_medium'] = 'organic';
+      }
+    }
+  }
+
+  window.getMergedTrackingParams = function() {
+    return mergedTracking;
+  };
+
+  // event_id unico por clique, anexado na URL do checkout. O checkout pode
+  // repassa-lo no Purchase server-side (CAPI/Utmify) pra identificar/deduplicar
+  // a venda. crypto.randomUUID com fallback pra navegador antigo.
+  window.generateEventId = function() {
+    try {
+      if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+        return window.crypto.randomUUID();
+      }
+    } catch (e) {}
+    return 'evt-' + Date.now() + '-' + Math.random().toString(16).slice(2);
+  };
+
+  window.decorateUrlWithTracking = function(rawUrl, eventId) {
+    try {
+      var urlObj = new URL(rawUrl, window.location.href);
+      var params = window.getMergedTrackingParams();
+
+      for (var key in params) {
+        if (params.hasOwnProperty(key) && params[key]) {
+          urlObj.searchParams.set(key, params[key]);
+        }
+      }
+
+      if (eventId) {
+        urlObj.searchParams.set('event_id', eventId);
+      }
+
+            var visitorId = (window.Tracker && window.Tracker.visitorId) || (function () {
+        var m = document.cookie.match(/(?:^|;\s*)_rt_vid=([^;]+)/);
+        return m ? decodeURIComponent(m[1]) : '';
+      })();
+      var source = urlObj.searchParams.get('src') || '';
+      // src pode conter lead stitching da Utmify; so usamos vazio ou AssistenteIA.
+      if (visitorId && (!source || source === 'AssistenteIA')) {
+        urlObj.searchParams.set('src', (source ? source + '.' : '') + 'rtv_' + visitorId);
+      }
+      return urlObj.toString();
+    } catch (e) {
+      return rawUrl;
+    }
+  };
+
+  window.trackEvent = function(eventName, params, eventID) {
+    // Meta / Facebook: NAO disparamos fbq aqui. O Pixel da UTMify injeta e
+    // dispara o fbq sozinho (browser) + CAPI (server-side) com deduplicacao
+    // automatica, desde que o Pixel da Meta esteja conectado no PAINEL da
+    // UTMify. Chamar fbq na mao aqui contaria o evento em dobro.
+    // TikTok Pixel (so dispara se um dia existir)
+    if (typeof window.ttq === 'object' && typeof window.ttq.track === 'function') {
+      window.ttq.track(eventName, params);
+    }
+    // Google Analytics (gtag)
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', eventName, params);
+    }
+    console.log('[TRACKING EVENT]:', eventName, params, eventID ? '(eventID: ' + eventID + ')' : '');
+  };
+})();
+
+// ViewContent (visualizacao da pagina de produto) — evento interno de tracking.
+// InitiateCheckout e disparado no clique (checkoutPlano + interceptador global).
+(function() {
+  function fireViewContent() {
+    if (typeof window.trackEvent === 'function') {
+      window.trackEvent('ViewContent', {
+        content_name: 'Almaz Store — Game Pass Ultimate',
+        content_type: 'product',
+        content_category: 'Landing Page',
+        value: 79.90,
+        currency: 'BRL'
+      });
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fireViewContent);
+  } else {
+    fireViewContent();
+  }
+})();
+
+/* Purchase NAO sai daqui: a venda so existe depois do PIX pago, e quem registra
+   isso e o webhook do checkout, server-side, reusando este mesmo event_id. */
+function checkoutPlano(id){
+  var p = PLANOS[id];
+  if(!p) return;
+
+  var eventId = window.generateEventId ? window.generateEventId() : null;
+
+  if (window.trackEvent) {
+    window.trackEvent('InitiateCheckout', {
+      value: p.valor,
+      currency: 'BRL',
+      content_name: p.nome,
+      content_type: 'product',
+      contents: [{ id: id, quantity: 1 }]
+    }, eventId);
+  }
+  if (typeof window.clarity === 'function') {
+    window.clarity('event', 'checkout_' + id);
+  }
+
+  /* Sem link de checkout ainda: manda pro WhatsApp já dizendo qual plano. */
+  if(!p.url){
+    var msg = encodeURIComponent('Olá! Quero o ' + p.nome + ' (R$ ' + p.valor.toFixed(2).replace('.',',') + ').');
+    window.location.href = 'https://wa.me/' + WHATSAPP + '?text=' + msg;
+    return;
+  }
+
+  var destino = window.decorateUrlWithTracking
+    ? window.decorateUrlWithTracking(p.url, eventId)
+    : p.url;
+
+  /* 800ms pro pixel sair antes da navegação. Nada de trocar o texto do botão
+     aqui: a Utmify identifica o InitiateCheckout pelo texto do botão, e mexer
+     nele durante o clique já matou o evento uma vez. */
+  setTimeout(function(){ window.location.href = destino; }, 800);
+}
+
+/* Interceptador global de cliques, igual ao do index.html. Existe pra cobrir o
+   dia em que alguem colar um link de checkout direto num <a href> desta pagina
+   sem passar pelo checkoutPlano: o clique continua saindo com IC + UTMs +
+   event_id. Se o link ja tem onclick com checkoutPlano, ele nao mexe. */
+document.addEventListener('DOMContentLoaded', function() {
+  document.body.addEventListener('click', function(e) {
+    var target = e.target.closest('a');
+    if (!target || !target.href) return;
+    var href = target.href;
+
+    if (href.indexOf('pay.almazstore.com.br') !== -1) {
+      var onclickAttr = target.getAttribute('onclick');
+      if (onclickAttr && onclickAttr.indexOf('checkout') !== -1) return;
+
+      e.preventDefault();
+
+      // Descobre o plano pelo link, comparando com o objeto PLANOS.
+      var val = 79.90, planName = 'Game Pass Ultimate', planId = 'gamepass';
+      for (var k in PLANOS) {
+        if (PLANOS[k].url && href.indexOf(PLANOS[k].url) !== -1) {
+          val = PLANOS[k].valor; planName = PLANOS[k].nome; planId = k;
+          break;
+        }
+      }
+
+      var eventId = window.generateEventId ? window.generateEventId() : null;
+
+      window.trackEvent('InitiateCheckout', {
+        value: val,
+        currency: 'BRL',
+        content_name: planName,
+        content_type: 'product',
+        contents: [{ id: planId, quantity: 1 }]
+      }, eventId);
+
+      var decoratedUrl = window.decorateUrlWithTracking
+        ? window.decorateUrlWithTracking(href, eventId)
+        : href;
+
+      setTimeout(function() { window.location.href = decoratedUrl; }, 800);
+    }
+
+    // Cliques no WhatsApp (suporte)
+    if (href.indexOf('wa.me') !== -1 || href.indexOf('whatsapp.com') !== -1) {
+      window.trackEvent('Contact', {
+        content_name: 'WhatsApp Support',
+        link: href
+      });
+    }
+  });
+});
+
+/* ---------- link do WhatsApp ---------- */
+document.querySelectorAll('[data-link="whatsapp"]').forEach(function(a){
+  a.href = 'https://wa.me/' + WHATSAPP;
+});
+
+/* ---------- sanfona do FAQ ---------- */
+function tFaq(b){
+  var a = b.nextElementSibling, aberto = b.classList.contains('open');
+  document.querySelectorAll('.faq-q.open').forEach(function(q){
+    q.classList.remove('open');
+    q.nextElementSibling.classList.remove('open');
+  });
+  if(!aberto){ b.classList.add('open'); a.classList.add('open'); }
+}
+
+/* ---------- reveal ---------- */
+(function(){
+  var alvos = document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){
+    alvos.forEach(function(e){ e.classList.add('visible'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entradas){
+    entradas.forEach(function(en){
+      if(en.isIntersecting){ en.target.classList.add('visible'); io.unobserve(en.target); }
+    });
+  }, {rootMargin:'0px 0px -8% 0px'});
+  alvos.forEach(function(e){ io.observe(e); });
+})();
+
+/* ---------- CTA fixo: só aparece depois que o topo sai da tela e some quando
+              os planos já estão à vista, pra não cobrir o próprio botão ---------- */
+(function(){
+  var cta = document.getElementById('sticky-cta');
+  var planos = document.getElementById('planos');
+  if(!cta || !planos) return;
+  window.addEventListener('scroll', function(){
+    var r = planos.getBoundingClientRect();
+    var passouODobra = window.scrollY > 520;
+    var planosNaTela = r.top < window.innerHeight && r.bottom > 0;
+    cta.classList.toggle('on', passouODobra && !planosNaTela);
+  }, {passive:true});
+})();
+</script>
+</body>
+</html>
