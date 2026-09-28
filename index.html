@@ -231,14 +231,15 @@ h2{font-size:clamp(21px,3.1vw,27px);margin-bottom:6px}
 /* ---------- botao de compra (verde de loja) ---------- */
 .offer-btn{
   display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  background:linear-gradient(180deg,var(--buy2),var(--buy));
-  color:#fff;font-weight:700;font-size:15px;letter-spacing:.01em;
+  background:linear-gradient(180deg,#64d541,#56b938);
+  color:#08110a;font-weight:700;font-size:15px;letter-spacing:.01em;
   padding:13px 26px;border-radius:var(--r);border:1px solid rgba(0,0,0,.25);
   box-shadow:0 1px 0 rgba(255,255,255,.14) inset,0 4px 14px rgba(0,0,0,.35);
   transition:filter .15s,transform .1s;width:100%;text-align:center;
 }
 .offer-btn:hover{filter:brightness(1.1)}
 .offer-btn:active{transform:translateY(1px)}
+.offer-btn:focus-visible{outline:3px solid #d1ffad;outline-offset:3px}
 .btn-ghost{
   display:inline-flex;align-items:center;justify-content:center;gap:8px;
   background:var(--panel2);color:var(--txt);font-weight:600;font-size:14px;
@@ -264,30 +265,6 @@ h2{font-size:clamp(21px,3.1vw,27px);margin-bottom:6px}
 .tb-brand img{width:26px;height:26px;border-radius:5px}
 .tb-brand span{font-weight:700;font-size:15px;letter-spacing:-.01em}
 @media(max-width:720px){.topbar-in{height:52px}}
-
-/* ---------- semana de aniversario ----------
-   Camada extra por cima da oferta, nao no lugar dela: os precos sao os mesmos,
-   o que muda e o motivo declarado e o prazo. Tudo marcado com [data-aniv] nasce
-   escondido; so aparece se o script de baixo confirmar que a data ainda esta
-   dentro da semana. Se o JS falhar, nada de promo aparece (falha pro lado seguro)
-   e a pagina fica identica ao que era antes. */
-[data-aniv]{display:none}
-.aniv-on [data-aniv]{display:block}
-.aniv-on span[data-aniv]{display:inline}
-
-/* ORFAS desde 20/08/2026: .aniv-bar e .aniv-note. O aniversario ficou com uma unica
-   aparicao, a .buybox-aniv da caixa de compra. Regras mantidas de proposito pra que
-   repor a faixa ou a linha dos planos seja so devolver o HTML. */
-.aniv-bar{
-  background:var(--deal-bg);border-bottom:1px solid rgba(188,227,55,.22);
-  text-align:center;padding:7px 20px;font-size:13px;line-height:1.35;color:#e6f3c4;
-}
-.aniv-bar b{color:#fff;font-weight:700}
-.aniv-bar .aniv-when{color:var(--deal-tx);font-weight:600;white-space:nowrap}
-@media(max-width:720px){.aniv-bar{font-size:12px;padding:6px 14px}}
-
-.buybox-aniv{font-size:12.5px;color:var(--deal-tx);text-align:center;margin-top:8px;font-weight:600}
-.aniv-note{font-size:14px;color:var(--deal-tx);margin-top:6px;font-weight:600}
 
 /* ---------- topo da pagina de produto ---------- */
 .ph{padding:26px 0 0}
@@ -353,6 +330,14 @@ h2{font-size:clamp(21px,3.1vw,27px);margin-bottom:6px}
 .buybox-new{font-size:23px;font-weight:700;color:#fff;letter-spacing:-.02em}
 .buybox-pay{font-size:12.5px;color:var(--txt2);margin-top:9px;text-align:center}
 .buybox-pay b{color:var(--txt);font-weight:600}
+.buybox-terms{font-size:12.5px;color:var(--txt2);text-align:center;margin-top:5px}
+.hero-proof-link{
+  display:flex;align-items:center;justify-content:center;gap:6px;margin-top:9px;
+  color:var(--txt2);font-size:12.5px;font-weight:600;text-align:center;
+  text-decoration:underline;text-decoration-color:rgba(174,191,208,.45);text-underline-offset:3px;
+}
+.hero-proof-link:hover{color:#fff;text-decoration-color:currentColor}
+.hero-proof-link:focus-visible{outline:2px solid #d1ffad;outline-offset:3px;border-radius:3px}
 .side-note{font-size:12.5px;color:var(--dim);text-align:center;line-height:1.5}
 
 /* ---------- as 3 duvidas que mais travam a compra, respondidas na dobra ----------
@@ -580,16 +565,13 @@ body.gm-open{overflow:hidden}
 .step p{font-size:13.5px;color:var(--dim);line-height:1.6}
 
 /* =========================================================================
-   PLANOS: podio. O recomendado (R$ 49,97) fica no MEIO no desktop e em
-   PRIMEIRO no celular, maior e com o unico botao verde da secao. Os outros
-   dois viram secundarios (preco menor, botao cinza) pra nao disputar o olho.
-   A ordem visual e feita por `order`, sem mexer na marcacao dos cards, pra
-   nao tocar em nada que o tracking use.
+   PLANOS: cards alinhados, com o Avançado destacado como mais vendido.
+   A ordem visual usa `order` sem alterar a marcação que o tracking utiliza.
    ========================================================================= */
-.eds{display:grid;grid-template-columns:1fr 1.28fr 1fr;gap:20px;align-items:center}
-.offer-card[data-plan-id="basico"]{order:1}
-.offer-card.featured{order:2}
-.offer-card[data-plan-id="avancado"]{order:3}
+.eds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch}
+ .offer-card[data-plan-id="basico"]{order:1}
+ .offer-card[data-plan-id="avancado"]{order:2}
+ .offer-card[data-plan-id="vitalicio"]{order:3}
 
 .offer-card{
   background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);
@@ -599,10 +581,10 @@ body.gm-open{overflow:hidden}
 .offer-card.focus-pulse{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-dim)}
 
 /* --- os dois secundarios --- */
-.offer-card:not(.featured) .ed-new{font-size:19px;color:var(--txt2)}
+.offer-card:not(.featured) .ed-new{font-size:24px;color:#fff}
 .offer-card:not(.featured) .deal{font-size:14px;padding:4px 8px}
-.offer-card:not(.featured) .ed-name{font-size:14.5px}
-.offer-card:not(.featured) .offer-features li{font-size:13px}
+.offer-card:not(.featured) .ed-name{font-size:16px}
+.offer-card:not(.featured) .offer-features li{font-size:14px}
 .offer-card:not(.featured) .offer-btn{
   background:var(--panel3);border-color:var(--line2);color:var(--txt);
   box-shadow:none;font-size:14px;padding:11px 20px;font-weight:600;
@@ -611,33 +593,40 @@ body.gm-open{overflow:hidden}
 
 /* --- o destacado --- */
 .offer-card.featured{
-  border-width:2px;border-color:var(--buy);
-  background:linear-gradient(180deg,rgba(74,157,42,.12) 0%,var(--panel) 26%);
-  box-shadow:0 0 0 1px rgba(74,157,42,.22),0 18px 44px rgba(0,0,0,.5),0 0 70px rgba(74,157,42,.09);
+  position:relative;
+  border-width:1px;border-color:var(--buy);
+  background:linear-gradient(180deg,rgba(74,157,42,.07) 0%,var(--panel) 34%);
+  box-shadow:0 8px 24px rgba(0,0,0,.22);
 }
 .ed-ribbon{display:none}
 .featured .ed-ribbon{
-  display:block;background:var(--buy);color:#fff;text-align:center;
-  font-size:11.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:8px 10px;
+  position:absolute;top:12px;right:12px;z-index:1;
+  display:inline-flex;align-items:center;justify-content:center;height:22px;
+  background:rgba(74,157,42,.15);border:1px solid rgba(74,157,42,.38);
+  border-radius:999px;color:var(--buy2);font-size:9.5px;font-weight:700;
+  letter-spacing:.02em;text-transform:uppercase;padding:0 8px;
 }
-.featured .ed-top{padding:16px 18px}
-.featured .ed-name{font-size:18px}
-.featured .ed-name small{font-size:13px}
-.featured .ed-body{padding:16px 18px}
+.ed-plan-tag{
+  display:inline-block;align-self:flex-start;background:var(--deal-bg);color:var(--deal-tx);
+  border:1px solid rgba(188,227,55,.24);border-radius:999px;padding:5px 9px;
+  font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+}
+.featured .ed-top{padding:14px 112px 14px 16px}
+.featured .ed-name{font-size:16px}
+.featured .ed-name small{font-size:12.5px}
+.featured .ed-body{padding:14px 16px}
 .featured .offer-features li{font-size:14px}
-.featured .ed-buy{padding:16px 18px}
-.featured .ed-new{font-size:34px}
-.featured .deal{font-size:19px;padding:7px 11px}
-.featured .offer-btn{padding:16px 26px;font-size:16.5px}
-.featured .offer-methods{font-size:12.5px}
+.featured .ed-buy{padding:14px 16px}
+.featured .ed-new{font-size:27px}
+.featured .offer-btn{padding:13px 20px;font-size:15px}
+.featured .offer-methods{font-size:12px}
 
 /* linha de valor: aritmetica em cima dos proprios numeros dos planos */
 .ed-gain{
-  display:none;background:rgba(74,157,42,.1);border:1px solid rgba(74,157,42,.28);
-  border-radius:var(--r);padding:9px 12px;margin-bottom:12px;
-  font-size:12.5px;color:var(--txt2);line-height:1.5;text-align:center;
+  display:none;border-left:2px solid var(--buy);padding:2px 0 2px 10px;margin-bottom:12px;
+  font-size:12.5px;color:var(--txt2);line-height:1.45;text-align:left;
 }
-.featured .ed-gain{display:block}
+.featured .ed-gain,.offer-card[data-plan-id="vitalicio"] .ed-gain{display:block}
 .ed-gain b{color:var(--buy2);font-weight:700}
 
 .ed-top{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}
@@ -697,7 +686,7 @@ body.gm-open{overflow:hidden}
   .offer-card.featured{order:-1}
   .eds-alt{display:block;order:0}
   .offer-card[data-plan-id="basico"]{order:1}
-  .offer-card[data-plan-id="avancado"]{order:2}
+  .offer-card[data-plan-id="vitalicio"]{order:2}
 }
 .offer-features{list-style:none;display:flex;flex-direction:column;gap:8px}
 /* gap:0 + margin no ::before, em vez de gap:8px no li. Com gap, CADA pedaco de texto
@@ -1414,6 +1403,7 @@ body.gm-open{overflow:hidden}
 
   /* planos: nome e preco centralizados, lista de itens segue a esquerda */
   .ed-top{flex-direction:column;align-items:center;text-align:center;gap:8px}
+  .featured .ed-top{padding-right:16px}
   .ed-price-row{justify-content:center}
   .ed-new{font-size:24px}
 
@@ -1483,94 +1473,6 @@ var io = (function(){
   return obs;
 })();
 </script>
-
-<!-- ===================== SEMANA DE ANIVERSARIO =====================
-     O prazo anda sozinho: por padrao termina SEMPRE amanha, e o inicio e o
-     comeco da janela de 7 dias que fecha amanha. Quem abre o site hoje le
-     "Termina 15/08", quem abrir amanha le "Termina 16/08". Ninguem precisa
-     editar nada dia a dia e a promo nunca amanhece vencida.
-
-     PRA FIXAR UMA DATA REAL (Black Friday, natal, o que for): ponha a data em
-     ALMAZ_ANIV_FIM no formato ano-mes-dia. Ai ela para de rolar, vale ate
-     23:59:59 daquele dia e depois a faixa e as linhas de prazo somem sozinhas,
-     com o site voltando a ser exatamente o que era. Deixe '' pra voltar a rolar.
-
-     Os precos nao mudam em nenhum momento: o aniversario e o motivo do
-     desconto, nao um desconto novo.
-
-     O prazo aparece SEMPRE como data ("Termina 15/08"), nunca como "hoje" ou
-     "amanha": data informa, palavra relativa soa como empurrao. As datas na
-     tela saem daqui, entao trocar a config troca tudo de uma vez.
-
-     O script roda antes do <body> pintar, entao nao tem pulo de layout. -->
-<script>
-(function(){
-  var ALMAZ_ANIV_FIM  = '';   // '' = rola sozinho. Ou 'ano-mes-dia' pra fixar.
-  var ALMAZ_ANIV_DIAS = 7;    // tamanho da semana, usado no modo que rola
-
-  function dia(s){ var p = String(s).split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
-  function ddmm(d){ return ('0' + d.getDate()).slice(-2) + '/' + ('0' + (d.getMonth() + 1)).slice(-2); }
-
-  /* Datas do dia de hoje. No modo que rola, fim = amanha e inicio = 7 dias
-     antes do fim, que e a mesma distancia da semana original (07/08 -> 14/08). */
-  function janela(){
-    var hoje = new Date(); hoje = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
-    if (ALMAZ_ANIV_FIM) {
-      var f = dia(ALMAZ_ANIV_FIM);
-      return isNaN(f) ? null : { ini: new Date(f.getFullYear(), f.getMonth(), f.getDate() - ALMAZ_ANIV_DIAS), fim: f };
-    }
-    var fim = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate() + 1);
-    return { ini: new Date(fim.getFullYear(), fim.getMonth(), fim.getDate() - ALMAZ_ANIV_DIAS), fim: fim };
-  }
-
-  var j = janela();
-  if (!j) return;
-
-  /* vale ate 23:59:59 do ultimo dia. So morde no modo de data fixa, porque no
-     modo que rola o fim esta sempre no futuro. */
-  if (Date.now() > j.fim.getTime() + 86399000) return;
-
-  document.documentElement.classList.add('aniv-on');
-
-  /* Preenche todo mundo marcado com data-aniv-<chave>. Fica exposto no window
-     porque um <script> logo depois dos textos chama isso na hora, sem esperar o
-     DOMContentLoaded: assim ninguem chega a ver a data velha escrita no HTML. */
-  window.almazAnivPintar = function(){
-    var w = janela(); if (!w) return;
-    var t = {
-      prazo:  'Termina ' + ddmm(w.fim),
-      curto:  'até ' + ddmm(w.fim),
-      inicio: ddmm(w.ini),
-      fim:    ddmm(w.fim)
-    };
-    Object.keys(t).forEach(function (k) {
-      document.querySelectorAll('[data-aniv-' + k + ']').forEach(function (el) { el.textContent = t[k]; });
-    });
-  };
-
-  document.addEventListener('DOMContentLoaded', window.almazAnivPintar);
-
-  /* Aba aberta atravessando a meia-noite: repinta sozinha quando o dia vira,
-     senao a pessoa acordaria com o prazo de ontem na tela. */
-  if (!ALMAZ_ANIV_FIM) {
-    var diaAtual = new Date().getDate();
-    setInterval(function(){
-      var d = new Date().getDate();
-      if (d !== diaAtual) { diaAtual = d; window.almazAnivPintar(); }
-    }, 60000);
-  }
-})();
-</script>
-
-<!-- A faixa .aniv-bar que ficava aqui saiu em 20/08/2026, junto com a .aniv-note da
-     secao de planos. O aniversario aparecia 3 vezes (faixa, caixa de compra e planos),
-     sempre com prazo terminando amanha, e as 3 diziam a mesma coisa. Com o preco falso
-     fora, esse virou o unico gatilho de urgencia da pagina, e repetir 3x um gatilho so
-     le como golpe, ainda mais pro publico mais velho. Sobrou UMA aparicao, a da caixa
-     de compra: e a mais curta, fica colada no preco e esta na primeira tela, que e a
-     unica que 59% dos visitantes veem. Como bonus, a faixa devolveu ~30px acima da
-     dobra. O motor de datas continua inteiro: pra ter a faixa de volta e so repor esta
-     div com data-aniv e data-aniv-prazo. -->
 
 <!-- ===================== BARRA SUPERIOR ===================== -->
 <header class="topbar">
@@ -1684,18 +1586,14 @@ var io = (function(){
 
         <div class="side-card">
           <p class="side-desc">
-            Você instala o nosso launcher, entra com o e-mail da compra e mais de 40.000 jogos
-            originais aparecem na sua Steam prontos pra baixar. Sem conta compartilhada e sem
-            login de terceiros.
+            Mais de 40.000 jogos no Vitalício. Lançamentos futuros também entram no Avançado.
+            Você baixa pela própria Steam, sem compartilhar conta.
           </p>
           <dl class="spec">
-            <div class="spec-row"><dt>Jogos liberados</dt><dd class="num">+<span data-almaz-games="vitalicio">40.000</span></dd></div>
-            <!-- Linha nova em 20/08/2026: e ela que sustenta o H1. Sem isso, "nunca mais
-                 gaste" fica sendo so promessa de manchete. -->
-            <div class="spec-row"><dt>Jogos novos</dt><dd class="ok">Toda semana, sem custo</dd></div>
-            <div class="spec-row"><dt>Ativação</dt><dd class="ok">Na hora do pagamento</dd></div>
-            <div class="spec-row"><dt>Licença</dt><dd>Vitalícia, taxa única</dd></div>
-            <div class="spec-row"><dt>Multiplayer</dt><dd class="ok">Funcionando</dd></div>
+            <div class="spec-row"><dt>Jogos no Vitalício</dt><dd class="num">+<span data-almaz-games="vitalicio">40.000</span></dd></div>
+            <div class="spec-row"><dt>Lançamentos futuros</dt><dd class="ok">Avançado e Vitalício</dd></div>
+            <div class="spec-row"><dt>Download</dt><dd>Pela própria Steam</dd></div>
+            <div class="spec-row"><dt>Multiplayer</dt><dd class="ok">Nos jogos compatíveis</dd></div>
             <div class="spec-row"><dt>Garantia</dt><dd>7 dias</dd></div>
           </dl>
         </div>
@@ -1703,39 +1601,26 @@ var io = (function(){
         <div class="buybox">
           <div class="buybox-top">
             <!-- Passou a abrir pelo MENOR preco em 20/08/2026. O R$ 49,97 sozinho era uma
-                 porta cara pra primeira tela; "a partir de R$ 9,97" da o gancho pra pessoa
-                 descer ate os planos, que e o que o botao logo abaixo faz.
+                  porta cara pra primeira tela; "a partir de R$ 9,97" mostra a entrada da oferta.
                  DECISAO DO USER, mesma data: o R$ 49,97 fica FORA desta caixa de proposito,
                  pra ninguem levar susto de preco na primeira tela. Ele aparece na secao de
                  planos, depois que a pessoa ja leu a oferta inteira. Nao "conserte" isso
                  achando que faltou o preco cheio: e escolha, nao esquecimento.
-                 O que fica de olho: a ficha tecnica logo acima anuncia "+40.000 jogos" e
-                 "jogos novos toda semana", que sao specs do Vitalicio, e agora o unico
-                 numero perto delas e o R$ 9,97 do Basico (1.000 jogos, biblioteca fechada).
-                 Se aparecer reembolso de gente que comprou o Basico achando que levava os
-                 40.000, e daqui que vem, e o conserto e na ficha, nao neste preco. -->
+                  A ficha tecnica identifica os 40.000 jogos e os lancamentos semanais como
+                  beneficios do Vitalicio; o preco de entrada identifica o Basico com 1.000 jogos. -->
             <span class="buybox-prices">
               <span class="buybox-from">a partir de</span>
               <span class="buybox-new num">R$ 9,97</span>
-              <span class="buybox-once">pagamento único</span>
+              <span class="buybox-once">Plano Básico · 1.000 jogos · pagamento único</span>
             </span>
           </div>
-          <!-- Degrau 1 do funil. Ia direto pra #pricing ate 20/08/2026, o que fazia a
-               pessoa pular a pagina inteira e cair na oferta sem ter lido nada. Agora
-               abre a leitura pela biblioteca. Quem ja esta decidido tem duas saidas
-               rapidas pros planos: o "Compare os 3 planos" logo abaixo e o botao fixo
-               do rodape no celular. -->
-          <a href="#biblioteca" class="offer-btn">Ver os jogos inclusos</a>
+          <!-- CTA principal da primeira tela: leva diretamente aos planos. A biblioteca
+               continua disponivel como alternativa para quem quer conferir um jogo. -->
+          <a href="#pricing" class="offer-btn">Ver planos e preços</a>
+          <a href="#feedbacks" class="hero-proof-link">Veja o que nossos clientes estão falando <span aria-hidden="true">↓</span></a>
           <div class="buybox-pay">Pagamento no <b>PIX</b>, aprovação na hora</div>
-          <div class="buybox-aniv" data-aniv>Promoção de aniversário, <span data-aniv-curto>até 15/08</span></div>
-          <!-- Unico texto de data que sobrou na pagina, e ele esta na primeira tela.
-               Este <script> pinta a data certa AQUI, na hora, antes do primeiro paint,
-               senao a pessoa chega a ler o "15/08" chumbado no HTML acima. Ele morava
-               na secao de planos ate 20/08/2026, o que era tarde demais pra esta linha.
-               O DOMContentLoaded la de cima continua valendo como rede de seguranca. -->
-          <script>window.almazAnivPintar && window.almazAnivPintar();</script>
-
-          <div class="medos">
+          <div class="buybox-terms">Pagamento único · sem mensalidade · sem renovação</div>
+<div class="medos">
             <div class="medo">
               <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
               <span class="medo-txt">
@@ -1747,7 +1632,7 @@ var io = (function(){
               <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9"/></svg>
               <span class="medo-txt">
                 <span class="medo-q">Vou ter que pagar de novo algum dia?</span>
-                <span class="medo-a">Não. Você paga uma vez só. Os lançamentos que saírem depois entram na sua biblioteca sem custo nenhum.</span>
+                <span class="medo-a">Não há mensalidade nem renovação. No Vitalício, os lançamentos futuros entram sem custo adicional.</span>
               </span>
             </div>
             <div class="medo">
@@ -1760,7 +1645,7 @@ var io = (function(){
           </div>
         </div>
 
-        <div class="side-note">Não é o plano certo pra você? <a href="#pricing" style="color:var(--blue)">Compare os 3 planos</a></div>
+        <div class="side-note">Quer conferir se seu jogo está incluso? <a href="#biblioteca" style="color:var(--blue)">Veja o catálogo</a></div>
 
       </aside>
     </div>
@@ -1776,43 +1661,12 @@ var io = (function(){
   </div>
 </section>
 
-<!-- ===================== BIBLIOTECA ===================== -->
-<section class="sec" id="biblioteca">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <h2>Um pedaço da biblioteca</h2>
-      <p>A biblioteca completa tem mais de <span data-almaz-games="vitalicio">40.000</span> jogos e cresce toda semana. Abaixo estão os mais procurados pelos nossos clientes. Toque em qualquer jogo pra ver se ele está incluso.</p>
-    </div>
-
-    <div id="disponibilidade">
-      <div class="av-chips reveal" id="av-chips"></div>
-      <div class="av-body reveal">
-        <div class="av-results">
-          <button class="av-arrow prev" id="av-prev" type="button" aria-label="Anterior">&#8249;</button>
-          <div class="av-track" id="av-track"></div>
-          <button class="av-arrow next" id="av-next" type="button" aria-label="Próximo">&#8250;</button>
-        </div>
-      </div>
-      <div class="av-catalog reveal">
-        <button class="btn-ghost" id="av-catalog-open" type="button">Abrir catálogo completo</button>
-        <span class="av-catalog-note">Busque por nome ou filtre por categoria</span>
-      </div>
-
-      <!-- 21/08/2026: apontava pra #passos. Com os passos movidos pra depois da oferta,
-           o degrau seguinte a biblioteca virou a ancora de preco (#conta).
-           21/09/2026: continua #conta. Chegou a apontar pros planos num corte
-           desse dia e voltou: e degrau do funil, nao atalho. -->
-      <div class="flow reveal"><a href="#conta" class="btn-ghost">Quanto custa na Steam</a></div>
-    </div>
-  </div>
-</section>
-
 <!-- ===================== QUANTO CUSTA COMPRAR NA STEAM ===================== -->
 <section class="sec" id="conta">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>A conta que volta todo ano</h2>
-      <p>Seis jogos, com o preço que a Steam brasileira cobrava em 25/09/2026.</p>
+      <h2>Quanto custam alguns jogos na Steam?</h2>
+      <p>Preços da Steam Brasil em 25/09/2026.</p>
     </div>
 
     <div class="conta reveal">
@@ -1883,15 +1737,13 @@ var io = (function(){
       </div>
 
       <div class="conta-vs">
-        <div class="conta-vs-lbl">Na Almaz Store, uma vez só</div>
+        <div class="conta-vs-lbl">No Vitalício, uma vez só</div>
         <div class="conta-vs-price">
           <b class="num">R$ 49,97</b>
           <span>e acabou</span>
         </div>
         <p class="conta-vs-sub">
-          Esses seis, mais de <strong><span data-almaz-games="vitalicio">40.000</span> jogos</strong>
-          e tudo que for lançado depois. Não tem 2027, não tem 2028: você paga hoje e nunca mais
-          gasta com jogo.
+          Esses jogos e mais de <strong><span data-almaz-games="vitalicio">40.000</span> títulos</strong> por pagamento único. O Avançado também inclui lançamentos futuros.
         </p>
         <!-- Este botao ia DIRETO pro checkout ate 20/08/2026. Virou degrau do funil:
              a caixa continua fazendo a comparacao de preco, que e o trabalho dela, mas
@@ -1899,7 +1751,7 @@ var io = (function(){
              "Pagamento no PIX" e "Aprovacao na hora e 7 dias de garantia": elas so
              fazem sentido embaixo de um botao que cobra, e embaixo de um botao que
              rola viravam promessa solta. As duas continuam na secao de planos. -->
-        <a href="#cresce" class="btn-ghost">O que ainda vai sair</a>
+        <a href="#cresce" class="btn-ghost">Ver lançamentos futuros</a>
       </div>
 
     </div>
@@ -1910,8 +1762,8 @@ var io = (function(){
 <section class="sec" id="cresce">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>Os jogos que ainda nem saíram já são seus</h2>
-      <p>EA FC 27, Silent Hill: Townfall e CONTROL Resonant acabaram de sair e já estão no catálogo. Os outros ainda nem existem na Steam: quando chegarem, aparecem na sua biblioteca e você não paga nada por isso.</p>
+      <h2>Lançamentos futuros também entram</h2>
+      <p>No Avançado e no Vitalício, os próximos lançamentos entram sem custo extra.</p>
     </div>
 
     <div class="cresce reveal">
@@ -1984,8 +1836,7 @@ var io = (function(){
 
     <div class="cresce-cta reveal">
       <p>
-        A biblioteca não fica parada. Toda semana entram jogos novos, e <strong>todo lançamento
-        que chegar já está pago</strong>. É por isso que a sua última compra de jogo é hoje.
+        No Avançado e no Vitalício, os próximos lançamentos entram sem custo extra.
       </p>
       <!-- Ultimo degrau do funil: daqui a pessoa cai na oferta. Ia DIRETO pro checkout
            ate 20/08/2026, o que deixava ela comprar sem nunca ter visto os 3 planos. -->
@@ -1994,224 +1845,11 @@ var io = (function(){
   </div>
 </section>
 
-<!-- ===================== PLANOS ===================== -->
-<section class="sec" id="pricing">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <h2>Escolha o tamanho da sua biblioteca</h2>
-      <p>Taxa única em todos os planos. Sem mensalidade e sem renovação. Só o Vitalício recebe os lançamentos que ainda vão sair.</p>
-    </div>
-
-    <div class="eds reveal">
-
-      <!-- Básico -->
-      <div class="offer-card" data-plan-id="basico">
-        <div class="ed-top">
-          <div class="ed-name">Básico<small><span data-almaz-games="basico">1.000</span> jogos</small></div>
-        </div>
-        <div class="ed-body">
-          <ul class="offer-features">
-            <li><strong><span data-almaz-games="basico">1.000</span> jogos</strong> inclusos</li>
-            <li>Download pela Steam</li>
-            <li>Modo história liberado</li>
-            <li>Entrega automática</li>
-            <li class="no">Biblioteca fechada, sem jogos novos</li>
-            <li class="no">Lançamentos futuros não entram</li>
-          </ul>
-        </div>
-        <div class="ed-buy">
-          <div class="ed-price-row">
-            <span class="ed-price">
-              <span class="ed-new num">R$ 9,97</span>
-            </span>
-          </div>
-          <a role="button" tabindex="0" href="#pricing" onclick="almazUpsell('basico');return false" class="offer-btn">Quero garantir</a>
-          <div class="offer-methods">Pagamento no PIX</div>
-          <div class="offer-trust"><strong>Aprovação na hora</strong> e 7 dias de garantia</div>
-        </div>
-      </div>
-
-      <!-- Avançado -->
-      <div class="offer-card" data-plan-id="avancado">
-        <div class="ed-top">
-          <div class="ed-name">Avançado<small><span data-almaz-games="avancado">20.000</span> jogos</small></div>
-        </div>
-        <div class="ed-body">
-          <ul class="offer-features">
-            <li><strong><span data-almaz-games="avancado">20.000</span> jogos</strong> inclusos</li>
-            <li>Licença vitalícia, não expira</li>
-            <li>Online funcionando</li>
-            <li>Entrega automática</li>
-            <li>Suporte prioritário no WhatsApp e Discord</li>
-            <li class="no">Lançamentos futuros não entram</li>
-          </ul>
-        </div>
-        <div class="ed-buy">
-          <div class="ed-price-row">
-            <span class="ed-price">
-              <span class="ed-new num">R$ 19,97</span>
-            </span>
-          </div>
-          <a role="button" tabindex="0" href="#pricing" onclick="almazUpsell('avancado');return false" class="offer-btn">Quero garantir</a>
-          <div class="offer-methods">Pagamento no PIX</div>
-          <div class="offer-trust"><strong>Aprovação na hora</strong> e 7 dias de garantia</div>
-        </div>
-      </div>
-
-      <!-- Vitalício -->
-      <div class="offer-card featured" data-plan-id="vitalicio">
-        <div class="ed-ribbon">Mais escolhido</div>
-        <div class="ed-top">
-          <div class="ed-name">Lifetime<small><span data-almaz-games="vitalicio">40.000</span> jogos</small></div>
-        </div>
-        <div class="ed-body">
-          <ul class="offer-features">
-            <li><strong><span data-almaz-games="vitalicio">40.000</span> jogos</strong> liberados</li>
-            <li><strong>Todo lançamento futuro incluso</strong>, sem pagar de novo</li>
-            <li>Jogos novos entrando toda semana</li>
-            <li>Acesso vitalício</li>
-            <li>Jogos com Denuvo funcionando</li>
-            <li>Online funcionando</li>
-            <li>Pede qualquer jogo que a gente adiciona</li>
-            <li>Entrega automática</li>
-            <li>Suporte prioritário no WhatsApp e Discord</li>
-            <li>Seu pra sempre</li>
-          </ul>
-        </div>
-        <div class="ed-buy">
-          <div class="ed-gain">
-            São <b>R$ 40,00</b> a mais que o Básico, e é a diferença entre <b>comprar jogo de novo</b> ou nunca mais.
-          </div>
-          <div class="ed-price-row">
-            <span class="ed-price">
-              <span class="ed-new num">R$ 49,97</span>
-            </span>
-          </div>
-          <a href="https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm"
-             onclick="checkout('https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm',49.97);return false"
-             class="offer-btn">Quero garantir</a>
-          <div class="offer-methods">Pagamento no PIX</div>
-          <div class="offer-trust"><strong>Aprovação na hora</strong> e 7 dias de garantia</div>
-        </div>
-      </div>
-
-      <div class="eds-alt">Ou comece com um plano menor</div>
-
-    </div>
-
-    <div class="selo reveal">
-      <!-- O logo faz parte da frase, nao e um bloco separado: le-se "Pagamento seguro
-           por [mercado pago]". Por isso o alt do <img> e so a marca. -->
-      <div class="selo-hd">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-        <span>Pagamento seguro por</span>
-        <img src="assets/mercado-pago-branco.svg" alt="Mercado Pago" width="84" height="34" loading="lazy" decoding="async">
-      </div>
-      <!-- Linhas CURTAS de proposito. A primeira versao explicava cada item ("os seus
-           dados nao passam pela gente", "devolvemos o dinheiro se voce nao curtir") e
-           cada uma quebrava em 2 linhas no celular: o selo ia a 276px de altura. Selo
-           e pra ser escaneado de relance, nao lido. Quem quiser o detalhe da garantia
-           tem o card dela e o FAQ logo abaixo. -->
-      <ul class="selo-list">
-        <li>Ambiente criptografado</li>
-        <li>PIX com liberação na hora</li>
-        <li>7 dias de garantia</li>
-      </ul>
-    </div>
-
-  </div>
-</section>
-
-<!-- 21/09/2026: corte depois do Clarity de 19 a 21/09 (tudo que vinha depois do
-     #pricing era visto por menos de 10%). Sairam os 3 passos e as caixinhas, que
-     repetiam o FAQ, e o "isso nao e pirata" (o medo numero 1) veio pra colado nos
-     planos.
-     ACIMA DOS PLANOS NADA MUDOU, DE PROPOSITO (decisao do Almaz, 21/09/2026):
-     biblioteca -> conta -> cresce -> planos e o funil. A conta e a ancora de preco
-     (sem ela o R$ 49,97 aparece sem comparacao) e o cresce e o diferencial da loja
-     ("todo jogo que sair entra sem pagar de novo"). Um corte desse mesmo dia subiu
-     os planos pra cima dos dois e foi desfeito. Pra encurtar o caminho ate o preco,
-     encurte as secoes por dentro, nao troque a ordem.
-     A ordem agora e topo -> biblioteca -> conta -> cresce -> #pricing -> pirata ->
-     feedbacks -> launcher -> faq. Pra desfazer: git revert do commit desta mudanca. -->
-<!-- ===================== NAO E JOGO PIRATA ===================== -->
-<section class="sec" id="pirata">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <h2>Isso não é jogo pirata</h2>
-      <p>A diferença está em de onde vem o arquivo.</p>
-    </div>
-
-    <div class="vs reveal">
-      <div class="vs-col bad">
-        <div class="vs-hd">
-          <svg viewBox="0 0 24 24"><path d="M12 3l9 16H3l9-16z"/><path d="M12 10v4M12 17.5v.01"/></svg>
-          Baixando de site pirata
-        </div>
-        <ul class="vs-list">
-          <li>Arquivo de origem desconhecida, com risco de vírus</li>
-          <li>Pede pra desligar o antivírus</li>
-          <li>Não atualiza sozinho</li>
-          <li>Multiplayer não funciona</li>
-          <li>Sem suporte se der problema</li>
-        </ul>
-      </div>
-
-      <div class="vs-col good">
-        <div class="vs-hd">
-          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
-          Com a Almaz Store
-        </div>
-        <ul class="vs-list">
-          <li>Jogo original, baixado pela própria Steam</li>
-          <li>Sem arquivo suspeito no seu PC</li>
-          <li>Atualização oficial pela Steam</li>
-          <li>Multiplayer funcionando</li>
-          <li>Roda na sua conta, sem compartilhar</li>
-          <li>Suporte e 7 dias de garantia</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- O fecho "voce abre a sua Steam, o jogo esta la..." saiu em 13/08/2026.
-         As duas colunas ja dizem isso item por item; o paragrafo por baixo so
-         repetia em prosa e alongava a secao no celular. -->
-
-    <div class="flow reveal"><a href="#pricing" class="btn-ghost">Voltar pros planos</a></div>
-  </div>
-</section>
-
-<!-- ===================== FEEDBACKS DE CLIENTES ===================== -->
-<!-- 16/09/2026: logo DEPOIS da oferta, primeiro tratamento de objecao ("sera que
-     funciona?"). Nao entra antes do #pricing pra nao empurrar o preco pra baixo
-     (ver o comentario de 21/08 logo abaixo). Sao os stories de feedback recortados
-     antes do botao "Link na bio"; arquivos em assets/feedbacks (fb-NN.webp no
-     cartao, fb-NN-g.webp no visor). Reusa o visual do carrossel das caixinhas. -->
-<section class="sec" id="feedbacks">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <h2>Quem já comprou</h2>
-      <p>Mensagens que chegaram no nosso WhatsApp, de clientes que já estão jogando. Toque em qualquer uma pra ver inteira.</p>
-    </div>
-    <div class="qbx-rail reveal">
-      <div class="qbx-track" id="fbk-track"></div>
-    </div>
-    <!-- Setas + contador EMBAIXO (pedido do Almaz em 16/09/2026): com as setas so
-         nas laterais o cliente nao percebia que havia mais feedbacks pro lado. -->
-    <div class="fbk-ctl reveal">
-      <button class="fbk-seta" id="fbk-prev" type="button" aria-label="Feedback anterior">&#8249;</button>
-      <span class="fbk-cont" id="fbk-cont" aria-live="polite">1 de 12 feedbacks</span>
-      <button class="fbk-seta" id="fbk-next" type="button" aria-label="Próximo feedback">&#8250;</button>
-    </div>
-    <div class="flow reveal"><a href="#pricing" class="btn-ghost">Ver os planos</a></div>
-  </div>
-</section>
-
 <!-- ===================== O PROGRAMA ===================== -->
 <section class="sec" id="launcher">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>É este o programa que você recebe</h2>
+      <h2>Veja como é o programa</h2>
       <p>Chega no seu e-mail depois do pagamento.</p>
     </div>
 
@@ -2284,6 +1922,238 @@ var io = (function(){
   </div>
 </section>
 
+<!-- ===================== BIBLIOTECA ===================== -->
+<section class="sec" id="biblioteca">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Um pedaço da biblioteca</h2>
+      <p>Pesquise seu jogo ou abra o catálogo completo para conferir se ele está incluso.</p>
+    </div>
+
+    <div id="disponibilidade">
+      <div class="av-chips reveal" id="av-chips"></div>
+      <div class="av-body reveal">
+        <div class="av-results">
+          <button class="av-arrow prev" id="av-prev" type="button" aria-label="Anterior">&#8249;</button>
+          <div class="av-track" id="av-track"></div>
+          <button class="av-arrow next" id="av-next" type="button" aria-label="Próximo">&#8250;</button>
+        </div>
+      </div>
+      <div class="av-catalog reveal">
+        <button class="btn-ghost" id="av-catalog-open" type="button">Abrir catálogo completo</button>
+        <span class="av-catalog-note">Busque por nome ou filtre por categoria</span>
+      </div>
+
+      <!-- 21/08/2026: apontava pra #passos. Com os passos movidos pra depois da oferta,
+           o degrau seguinte a biblioteca virou a ancora de preco (#conta).
+           21/09/2026: continua #conta. Chegou a apontar pros planos num corte
+           desse dia e voltou: e degrau do funil, nao atalho. -->
+      <div class="flow reveal"><a href="#pricing" class="btn-ghost">Ver planos e preços</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== NAO E JOGO PIRATA ===================== -->
+<section class="sec" id="pirata">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Isso não é jogo pirata</h2>
+      <p>Os jogos são originais e baixados pela própria Steam.</p>
+    </div>
+
+    <div class="vs reveal">
+      <div class="vs-col bad">
+        <div class="vs-hd">
+          <svg viewBox="0 0 24 24"><path d="M12 3l9 16H3l9-16z"/><path d="M12 10v4M12 17.5v.01"/></svg>
+          Baixando de site pirata
+        </div>
+        <ul class="vs-list">
+          <li>Arquivo de origem desconhecida, com risco de vírus</li>
+          <li>Pede pra desligar o antivírus</li>
+          <li>Não atualiza sozinho</li>
+          <li>Multiplayer não funciona</li>
+          <li>Sem suporte se der problema</li>
+        </ul>
+      </div>
+
+      <div class="vs-col good">
+        <div class="vs-hd">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          Com a Almaz Store
+        </div>
+        <ul class="vs-list">
+          <li>Jogo original, baixado pela própria Steam</li>
+          <li>Sem arquivo suspeito no seu PC</li>
+          <li>Atualização oficial pela Steam</li>
+          <li>Multiplayer funcionando</li>
+          <li>Roda na sua conta, sem compartilhar</li>
+          <li>Suporte e 7 dias de garantia</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- O fecho "voce abre a sua Steam, o jogo esta la..." saiu em 13/08/2026.
+         As duas colunas ja dizem isso item por item; o paragrafo por baixo so
+         repetia em prosa e alongava a secao no celular. -->
+
+    <div class="flow reveal"><a href="#pricing" class="btn-ghost">Ver planos e preços</a></div>
+  </div>
+</section>
+
+<!-- ===================== FEEDBACKS DE CLIENTES ===================== -->
+<!-- 16/09/2026: logo DEPOIS da oferta, primeiro tratamento de objecao ("sera que
+     funciona?"). Nao entra antes do #pricing pra nao empurrar o preco pra baixo
+     (ver o comentario de 21/08 logo abaixo). Sao os stories de feedback recortados
+     antes do botao "Link na bio"; arquivos em assets/feedbacks (fb-NN.webp no
+     cartao, fb-NN-g.webp no visor). Reusa o visual do carrossel das caixinhas. -->
+<section class="sec" id="feedbacks">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>O que nossos clientes estão falando</h2>
+      <p>Veja mensagens de clientes que já estão jogando. Toque em uma para ampliar.</p>
+    </div>
+    <div class="qbx-rail reveal">
+      <div class="qbx-track" id="fbk-track"></div>
+    </div>
+    <!-- Setas + contador EMBAIXO (pedido do Almaz em 16/09/2026): com as setas so
+         nas laterais o cliente nao percebia que havia mais feedbacks pro lado. -->
+    <div class="fbk-ctl reveal">
+      <button class="fbk-seta" id="fbk-prev" type="button" aria-label="Mensagem anterior">&#8249;</button>
+      <span class="fbk-cont" id="fbk-cont" aria-live="polite">1 de 12 mensagens</span>
+      <button class="fbk-seta" id="fbk-next" type="button" aria-label="Próxima mensagem">&#8250;</button>
+    </div>
+    <div class="flow reveal"><a href="#pricing" class="btn-ghost">Ver os planos</a></div>
+  </div>
+</section>
+
+<!-- ===================== PLANOS ===================== -->
+<section class="sec" id="pricing">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Escolha seu plano</h2>
+      <p>Pagamento único. Sem mensalidade nem renovação. Lançamentos futuros no Avançado e no Vitalício.</p>
+    </div>
+
+    <div class="eds reveal">
+
+      <!-- Básico -->
+      <div class="offer-card" data-plan-id="basico">
+        <div class="ed-top">
+          <div class="ed-name">Básico<small><span data-almaz-games="basico">1.000</span> jogos</small></div>
+        </div>
+        <div class="ed-body">
+          <ul class="offer-features">
+            <li><strong><span data-almaz-games="basico">1.000</span> jogos</strong> inclusos</li>
+            <li>Download pela Steam</li>
+            <li>Modo história liberado</li>
+            <li>Entrega automática</li>
+            <li class="no">Biblioteca fechada, sem jogos novos</li>
+            <li class="no">Lançamentos futuros não entram</li>
+          </ul>
+        </div>
+        <div class="ed-buy">
+          <div class="ed-price-row">
+            <span class="ed-price">
+              <span class="ed-new num">R$ 9,97</span>
+            </span>
+          </div>
+          <a role="button" tabindex="0" href="#pricing" onclick="almazUpsell('basico');return false" class="offer-btn">Quero garantir</a>
+          <div class="offer-methods">Pagamento no PIX</div>
+          <div class="offer-trust"><strong>Aprovação na hora</strong> e 7 dias de garantia</div>
+        </div>
+      </div>
+
+      <!-- Avançado -->
+      <div class="offer-card featured" data-plan-id="avancado">
+        <div class="ed-ribbon">Mais vendido</div>
+        <div class="ed-top">
+          <div class="ed-name">Avançado<small><span data-almaz-games="avancado">20.000</span> jogos</small></div>
+        </div>
+        <div class="ed-body">
+          <ul class="offer-features">
+            <li><strong><span data-almaz-games="avancado">20.000</span> jogos</strong> inclusos</li>
+            <li>Acesso para sempre</li>
+            <li>Multiplayer nos jogos compatíveis</li>
+            <li>Entrega automática</li>
+            <li>Suporte prioritário por WhatsApp e Discord</li>
+            <li>Lançamentos futuros inclusos, sem pagar mais</li>
+          </ul>
+        </div>
+        <div class="ed-buy">
+          <div class="ed-price-row">
+            <span class="ed-price">
+              <span class="ed-new num">R$ 19,97</span>
+            </span>
+          </div>
+          <a role="button" tabindex="0" href="#pricing" onclick="almazUpsell('avancado');return false" class="offer-btn">Quero garantir</a>
+          <div class="offer-methods">Pagamento no PIX</div>
+          <div class="offer-trust"><strong>Aprovação na hora</strong> e 7 dias de garantia</div>
+        </div>
+      </div>
+
+      <!-- Vitalício -->
+      <div class="offer-card" data-plan-id="vitalicio">
+        <div class="ed-top">
+          <div class="ed-name">Vitalício<small><span data-almaz-games="vitalicio">40.000</span> jogos</small></div>
+          <span class="ed-plan-tag">Melhor custo-benefício</span>
+        </div>
+        <div class="ed-body">
+          <ul class="offer-features">
+            <li><strong><span data-almaz-games="vitalicio">40.000</span> jogos</strong> liberados</li>
+            <li>Lançamentos futuros inclusos</li>
+            <li>Jogos novos toda semana</li>
+            <li>Acesso vitalício</li>
+            <li>Jogos com Denuvo funcionando</li>
+            <li>Multiplayer nos jogos compatíveis</li>
+            <li>Peça um jogo para adicionar</li>
+            <li>Entrega automática</li>
+            <li>Suporte prioritário por WhatsApp e Discord</li>
+          </ul>
+        </div>
+        <div class="ed-buy">
+          <div class="ed-gain">
+            Por <b>R$ 30,00</b> a mais que o Avançado, você leva mais <b>20.000 jogos</b> e jogos com Denuvo funcionando.
+          </div>
+          <div class="ed-price-row">
+            <span class="ed-price">
+              <span class="ed-new num">R$ 49,97</span>
+            </span>
+          </div>
+          <a href="https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm"
+             onclick="checkout('https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm',49.97);return false"
+             class="offer-btn">Quero garantir</a>
+          <div class="offer-methods">Pagamento no PIX</div>
+          <div class="offer-trust"><strong>Aprovação na hora</strong> e 7 dias de garantia</div>
+        </div>
+      </div>
+
+      <div class="eds-alt">Ou veja os outros planos</div>
+
+    </div>
+
+    <div class="selo reveal">
+      <!-- O logo faz parte da frase, nao e um bloco separado: le-se "Pagamento seguro
+           por [mercado pago]". Por isso o alt do <img> e so a marca. -->
+      <div class="selo-hd">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        <span>Pagamento seguro por</span>
+        <img src="assets/mercado-pago-branco.svg" alt="Mercado Pago" width="84" height="34" loading="lazy" decoding="async">
+      </div>
+      <!-- Linhas CURTAS de proposito. A primeira versao explicava cada item ("os seus
+           dados nao passam pela gente", "devolvemos o dinheiro se voce nao curtir") e
+           cada uma quebrava em 2 linhas no celular: o selo ia a 276px de altura. Selo
+           e pra ser escaneado de relance, nao lido. Quem quiser o detalhe da garantia
+           tem o card dela e o FAQ logo abaixo. -->
+      <ul class="selo-list">
+        <li>Ambiente criptografado</li>
+        <li>PIX com liberação na hora</li>
+        <li>7 dias de garantia</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
 <!-- ===================== GARANTIA + FAQ ===================== -->
 <!-- Eram duas secoes empilhadas ate 13/08/2026. A garantia era um card de 680px
      sozinho no meio de uma faixa, e o FAQ tinha o titulo com meia largura vazia
@@ -2301,8 +2171,7 @@ var io = (function(){
         </div>
         <h3>7 dias pra testar sem risco</h3>
         <p>
-          Compra, instala e testa. Se não curtir por qualquer motivo, você pede o
-          reembolso dentro de 7 dias e devolvemos o valor, sem enrolação.
+          Teste por 7 dias. Se não gostar, peça o reembolso dentro desse prazo.
         </p>
       </div>
     </div>
@@ -2312,6 +2181,23 @@ var io = (function(){
 
   </div>
 </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </main>
 
@@ -2397,7 +2283,7 @@ var io = (function(){
         <div class="gm-offer-hd">O que você leva</div>
         <ul class="gm-offer-list">
           <li>Paga <strong>uma vez</strong> e nunca mais gasta com jogo</li>
-          <li>Todo lançamento futuro incluso no Vitalício</li>
+          <li>Lançamentos futuros inclusos no Avançado e no Vitalício</li>
           <li>Online funcionando</li>
         </ul>
         <a href="#pricing" class="offer-btn" id="gm-go">Quero garantir</a>
@@ -2452,14 +2338,14 @@ var io = (function(){
     <button class="ups-x" id="upsell-x" type="button" aria-label="Fechar">×</button>
     <div class="ups-badge">🔥 Só agora, 50% OFF</div>
     <h3 class="ups-title"><span>Nunca mais gaste com jogo</span> por metade do preço</h3>
-    <p class="ups-sub">O plano menor é uma biblioteca fechada. Com o <strong style="color:#fff">Vitalício</strong> você leva os 40.000 jogos e todo lançamento que sair depois, sem pagar de novo.</p>
+    <p class="ups-sub">O Avançado inclui 20.000 jogos e lançamentos futuros. No Vitalício, são 40.000 jogos e títulos com Denuvo funcionando.</p>
     <div class="ups-price">
       <span class="ups-old">de R$ 49,97</span>
       <span class="ups-new">R$ <b>24</b>,98</span>
     </div>
     <ul class="ups-feat">
       <li>✅ 40.000 jogos liberados</li>
-      <li>✅ Recebe jogos novos pra sempre</li>
+      <li>✅ Lançamentos futuros inclusos</li>
       <li>✅ Multiplayer funcionando</li>
       <li>✅ Acesso vitalício, taxa única</li>
     </ul>
@@ -2970,14 +2856,13 @@ var io = (function(){
   // Como gotoNext() faz `if(!p)return`, o botão ficava mudo: a pessoa buscava um jogo,
   // não achava, clicava em "Desbloquear acesso" e não acontecia nada. Agora vai pros
   // 3 passos, que é o degrau seguinte à biblioteca na corrente do funil.
-  // 21/08/2026: os 3 passos desceram pra depois da oferta, então o degrau seguinte à
-  // biblioteca virou #conta. Manter este destino igual ao <a> do .flow da biblioteca.
+  // A seção seguinte à biblioteca na ordem atual é #pirata.
 
   document.addEventListener('click',function(e){
 
     var b=e.target.closest('.av-unlock'); if(!b)return;
 
-    gotoNext('conta');
+    gotoNext('pirata');
 
   });
 
@@ -3347,7 +3232,7 @@ var io = (function(){
     var max=tr.scrollWidth-tr.clientWidth, i=atual();
     prev.disabled = tr.scrollLeft<=4;
     next.disabled = tr.scrollLeft>=max-4;
-    if(cont) cont.innerHTML='<b>'+(i+1)+'</b> de '+L.length+' feedbacks';
+    if(cont) cont.innerHTML='<b>'+(i+1)+'</b> de '+L.length+' mensagens';
   }
   prev.addEventListener('click',function(){ tr.scrollBy({left:-passo(),behavior:'smooth'}); });
   next.addEventListener('click',function(){ tr.scrollBy({left:passo(),behavior:'smooth'}); });
@@ -3368,11 +3253,11 @@ var io = (function(){
     ids.forEach(function(id){
       /* button + data-print: clicar num print abre ele grande no visor, com CTA.
          Antes o clique nao fazia nada e o cliente ficava tentando. */
-      html+='<button type="button" class="fbs-card" data-print="https://i.imgur.com/'+id+'.jpeg" aria-label="Ver o feedback ampliado"'+(d===1?' tabindex="-1"':'')+'>'
+      html+='<button type="button" class="fbs-card" data-print="https://i.imgur.com/'+id+'.jpeg" aria-label="Ver a mensagem ampliada"'+(d===1?' tabindex="-1"':'')+'>'
           /* eager de proposito: os prints tem alturas diferentes e sem height
              definida uma imagem lazy fica com 0px, fazendo a faixa pular
              enquanto carrega. Sao 6 URLs unicas (a 2a volta vem do cache). */
-          + '<img src="https://i.imgur.com/'+id+'.jpeg" alt="Feedback de cliente no grupo" loading="eager" decoding="async">'
+          + '<img src="https://i.imgur.com/'+id+'.jpeg" alt="Mensagem de cliente no grupo" loading="eager" decoding="async">'
           + '</button>';
     });
   }
@@ -4146,7 +4031,7 @@ document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
 
 
 
-(function(){var F=[{q:'Vou tomar ban na minha conta Steam?',a:'O desbloqueio é feito pelo nosso launcher, na sua própria conta Steam, sem conta compartilhada, sem login de terceiros. E você tem 7 dias de garantia pra testar sem risco.'},{q:'Vou ter que pagar de novo algum dia?',a:'Não. É pagamento único e o acesso é vitalício: você não paga renovação, não paga mensalidade e não paga por lançamento nenhum.'},{q:'E os jogos que saírem em 2027, 2028?',a:'Entram na sua biblioteca sem custo nenhum. A gente adiciona os lançamentos toda semana, e quem tem o plano Vitalício recebe todos sem pagar de novo.'},{q:'Como recebo depois de pagar?',a:'Confirmou o PIX, o acesso chega no seu e-mail em poucos minutos, com o passo a passo da ativação. Aí é abrir a Steam, baixar e jogar.'},{q:'É seguro?',a:'Sim. Acesso seguro, sem arquivos suspeitos ou alterações no seu PC, e você ainda tem 7 dias de garantia: se não curtir, devolvemos o seu dinheiro.'},{q:'Como funciona?',a:'Após a compra, você recebe o acesso por e-mail, faz a ativação rápida e baixa os jogos direto na sua biblioteca Steam.'},{q:'Os jogos são originais?',a:'Sim. Downloads e atualizações oficiais realizados diretamente pelos servidores da Steam.'},{q:'Funciona online?',a:'Sim. Jogos com suporte a multiplayer funcionam online normalmente.'},{q:'Quais as formas de pagamento?',a:'No momento trabalhamos só com PIX, com liberação instantânea após a confirmação do pagamento.'},{q:'Como funciona o suporte?',a:'Oferecemos suporte humanizado via WhatsApp para auxiliar em todo o processo de ativação.'}];var fl=document.getElementById('fl');fl.innerHTML=F.map(function(f){return'<div class="faq-item reveal"><button class="faq-q" onclick="tFaq(this)">'+f.q+'<span class="faq-chev">▼</span></button><div class="faq-a">'+f.a+'</div></div>'}).join('');fl.querySelectorAll('.reveal').forEach(function(el){io.observe(el)})})();
+(function(){var F=[{q:'Vou tomar ban na minha conta Steam?',a:'Você usa sua própria conta Steam. Não compartilhamos contas. E tem 7 dias de garantia.'},{q:'Vou ter que pagar de novo algum dia?',a:'Todos os planos são pagamento único, sem renovação nem mensalidade. O Avançado e o Vitalício incluem lançamentos futuros.'},{q:'E os jogos que saírem em 2027, 2028?',a:'Entram na sua biblioteca sem custo nenhum. A gente adiciona os lançamentos toda semana, e os planos Avançado e Vitalício recebem todos sem pagar a mais.'},{q:'Como recebo depois de pagar?',a:'Depois que o PIX é aprovado, o acesso chega por e-mail com o passo a passo.'},{q:'É seguro?',a:'Os downloads são feitos pelos servidores oficiais da Steam. Você pode testar por 7 dias.'},{q:'Como funciona?',a:'Instale o launcher, entre com o e-mail da compra e baixe os jogos pela Steam.'},{q:'Os jogos são originais?',a:'Sim. Os jogos e as atualizações vêm da própria Steam.'},{q:'Funciona online?',a:'Sim, nos jogos que têm multiplayer.'},{q:'Quais as formas de pagamento?',a:'O pagamento é por PIX. O acesso é liberado após a aprovação.'},{q:'Como funciona o suporte?',a:'Nossa equipe ajuda pelo WhatsApp.'}];var fl=document.getElementById('fl');fl.innerHTML=F.map(function(f){return'<div class="faq-item reveal"><button class="faq-q" onclick="tFaq(this)">'+f.q+'<span class="faq-chev">▼</span></button><div class="faq-a">'+f.a+'</div></div>'}).join('');fl.querySelectorAll('.reveal').forEach(function(el){io.observe(el)})})();
 
 function tFaq(b){var a=b.nextElementSibling,o=b.classList.contains('open');document.querySelectorAll('.faq-q.open').forEach(function(q){q.classList.remove('open');q.nextElementSibling.classList.remove('open')});if(!o){b.classList.add('open');a.classList.add('open')}}
 
@@ -4738,7 +4623,7 @@ else{el.scrollIntoView({behavior:'smooth'});}
 
       a: [
 
-        "São 3 planos, todos pagamento único (nada de mensalidade): Básico R$9 com 1.000 jogos, Avançado R$19 com 20.000, e o Vitalício R$49, que é o mais escolhido: 40.000 jogos e todo lançamento que sair depois, sem pagar de novo. Com ele você não gasta mais com jogo.",
+        "Os 3 planos são pagamento único, sem mensalidade nem renovação: Básico, R$ 9,97, com 1.000 jogos; Avançado, R$ 19,97, com 20.000 jogos e lançamentos futuros (mais vendido); Vitalício, R$ 49,97, com 40.000 jogos e Denuvo funcionando.",
 
         "Dá uma olhada na seção de Planos e escolhe o que faz sentido pra você."
 
