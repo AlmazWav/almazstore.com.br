@@ -683,10 +683,11 @@ body.gm-open{overflow:hidden}
 
 @media(max-width:860px){
   .eds{grid-template-columns:1fr;max-width:430px;margin:0 auto;gap:18px;align-items:stretch}
-  .offer-card.featured{order:-1}
-  .eds-alt{display:block;order:0}
   .offer-card[data-plan-id="basico"]{order:1}
-  .offer-card[data-plan-id="vitalicio"]{order:2}
+  .offer-card[data-plan-id="avancado"]{order:2}
+  .offer-card[data-plan-id="vitalicio"]{order:3}
+  .eds-alt{display:none}
+  .featured .ed-ribbon{position:static;margin:12px auto 0;transform:none}
 }
 .offer-features{list-style:none;display:flex;flex-direction:column;gap:8px}
 /* gap:0 + margin no ::before, em vez de gap:8px no li. Com gap, CADA pedaco de texto
@@ -1404,6 +1405,7 @@ body.gm-open{overflow:hidden}
   /* planos: nome e preco centralizados, lista de itens segue a esquerda */
   .ed-top{flex-direction:column;align-items:center;text-align:center;gap:8px}
   .featured .ed-top{padding-right:16px}
+  .ed-plan-tag{align-self:center}
   .ed-price-row{justify-content:center}
   .ed-new{font-size:24px}
 
