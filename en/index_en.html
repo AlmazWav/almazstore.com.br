@@ -2061,8 +2061,8 @@ var io = (function(){
               <span class="ed-new num">.99</span>
             </span>
           </div>
-          <a href="https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm"
-             onclick="checkout('https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm',49.97);return false"
+          <a href="https://ggcheckout.app/checkout/v5/Tjjri534N4VrT34qfUTm"
+             onclick="checkout('https://ggcheckout.app/checkout/v5/Tjjri534N4VrT34qfUTm',49.97);return false"
              class="offer-btn">Quero garantir</a>
           <div class="offer-methods">Pagamento no PIX</div>
           <div class="offer-trust"><strong>Aprovação na hora</strong> e 7 dias de garantia</div>
@@ -3274,12 +3274,12 @@ var io = (function(){
   /* UPSELL_URL é o checkout do Vitalício com os 50% OFF já aplicados: cobra R$24,98
      (R$23,73 no PIX), o mesmo valor que o popup anuncia. Se trocar este link, confira
      o preço na página do checkout — o popup promete R$24,98 e precisa bater. */
-  var UPSELL_URL = 'https://pay.almazstore.com.br/checkout/v5/uDIPxkFgNZlX2eQzy1ua';
+  var UPSELL_URL = 'https://ggcheckout.app/checkout/v5/uDIPxkFgNZlX2eQzy1ua';
   var UPSELL_VAL = 24.98;
   /* ============================================================ */
   var PLANOS = {
-    basico:   { url:'https://pay.almazstore.com.br/checkout/v5/3SZQGWf2lurzA7Sb3M26', val:9.97,  nome:'Básico',   preco:'.99'  },
-    avancado: { url:'https://pay.almazstore.com.br/checkout/v5/EBQq9V24j7dAljWU9EUd', val:19.97, nome:'Avançado', preco:'.99' }
+    basico:   { url:'https://ggcheckout.app/checkout/v5/3SZQGWf2lurzA7Sb3M26', val:9.97,  nome:'Básico',   preco:'.99'  },
+    avancado: { url:'https://ggcheckout.app/checkout/v5/EBQq9V24j7dAljWU9EUd', val:19.97, nome:'Avançado', preco:'.99' }
   };
   var ov = document.getElementById('upsell-ov');
   var accept = document.getElementById('upsell-accept');
@@ -4085,9 +4085,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
       
 
-      // Links de checkout pay.almazstore.com.br
+      // Links de checkout ggcheckout.app
 
-      if (href.indexOf('pay.almazstore.com.br') !== -1) {
+      if (href.indexOf('ggcheckout.app') !== -1) {
 
         // Se já tem onclick com checkout(), deixa a própria função checkout tratar
 
@@ -4213,7 +4213,7 @@ function checkout(url,val){
 
     // Sem argumento: cai no Plano Vitalício (plano recomendado em destaque).
 
-    url='https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm';
+    url='https://ggcheckout.app/checkout/v5/Tjjri534N4VrT34qfUTm';
 
     val=49.97;
 
@@ -4299,7 +4299,7 @@ function checkout(url,val){
 
   // IMPORTANTE: NÃO disparamos Purchase aqui no front-end. A venda só existe
 
-  // depois que o PIX é pago no checkout externo (pay.almazstore.com.br). O Purchase
+  // depois que o PIX é pago no checkout externo (ggcheckout.app). O Purchase
 
   // REAL deve ser registrado SERVER-SIDE pelo ggcheckout (webhook "compra
 
@@ -4333,7 +4333,7 @@ function checkout(url,val){
     },6000);
   }
   document.addEventListener('click',function(e){
-    var el=e.target.closest('a[href*="pay.almazstore.com.br"], a[onclick*="checkout("], [onclick*="checkout("], #upsell-accept, #upsell-decline');
+    var el=e.target.closest('a[href*="ggcheckout.app"], a[onclick*="checkout("], [onclick*="checkout("], #upsell-accept, #upsell-decline');
     // setTimeout(0): a troca do visual só pode acontecer DEPOIS da propagação do
     // clique. O pixel da Utmify decide o InitiateCheckout pelo TEXTO do botão
     // ("Quero garantir"); trocar pra "Abrindo checkout…" durante a captura
@@ -4697,7 +4697,7 @@ else{el.scrollIntoView({behavior:'smooth'});}
 
   // Links do chatbot: SEM disparo de Purchase no front. O clique é capturado
 
-  // pelo interceptador global (pay.almazstore.com.br), que dispara o InitiateCheckout
+  // pelo interceptador global (ggcheckout.app), que dispara o InitiateCheckout
 
   // com event_id e decora a URL. O Purchase real é server-side (CAPI).
 
@@ -4705,11 +4705,11 @@ else{el.scrollIntoView({behavior:'smooth'});}
 
   var btns = '<div class="chat-btn-group">' +
 
-    '<a href="https://pay.almazstore.com.br/checkout/v5/Tjjri534N4VrT34qfUTm?utm_source=AssistenteIA" class="chat-btn chat-btn-v">ADQUIRIR VITALÍCIO</a>' +
+    '<a href="https://ggcheckout.app/checkout/v5/Tjjri534N4VrT34qfUTm?utm_source=AssistenteIA" class="chat-btn chat-btn-v">ADQUIRIR VITALÍCIO</a>' +
 
-    '<a href="https://pay.almazstore.com.br/checkout/v5/EBQq9V24j7dAljWU9EUd?utm_source=AssistenteIA" class="chat-btn chat-btn-o">PLANO AVANÇADO</a>' +
+    '<a href="https://ggcheckout.app/checkout/v5/EBQq9V24j7dAljWU9EUd?utm_source=AssistenteIA" class="chat-btn chat-btn-o">PLANO AVANÇADO</a>' +
 
-    '<a href="https://pay.almazstore.com.br/checkout/v5/3SZQGWf2lurzA7Sb3M26?utm_source=AssistenteIA" class="chat-btn chat-btn-o">PLANO BÁSICO</a>' +
+    '<a href="https://ggcheckout.app/checkout/v5/3SZQGWf2lurzA7Sb3M26?utm_source=AssistenteIA" class="chat-btn chat-btn-o">PLANO BÁSICO</a>' +
 
   '</div>';
 
