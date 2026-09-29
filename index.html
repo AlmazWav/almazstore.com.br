@@ -3760,6 +3760,26 @@ var io = (function(){
 
       }
 
+      // Encaminha os identificadores Meta já disponíveis no navegador para o
+      // checkout. A integração do checkout/UTMify pode então associá-los ao
+      // Purchase server-side; nunca inventamos valores quando o cookie não existe.
+      function readMetaCookie(name) {
+        var cookies = document.cookie ? document.cookie.split(';') : [];
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          if (cookie.indexOf(name + '=') === 0) {
+            try { return decodeURIComponent(cookie.slice(name.length + 1)); }
+            catch (e) { return cookie.slice(name.length + 1); }
+          }
+        }
+        return '';
+      }
+
+      var fbp = readMetaCookie('_fbp');
+      var fbc = readMetaCookie('_fbc');
+      if (fbp) urlObj.searchParams.set('fbp', fbp);
+      if (fbc) urlObj.searchParams.set('fbc', fbc);
+
 
 
       // Anexa o event_id na URL do checkout (ex: &event_id=XXX). O servidor do
