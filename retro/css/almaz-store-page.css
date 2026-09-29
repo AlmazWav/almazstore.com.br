@@ -50,3 +50,7 @@
 @media(max-width:900px){.calc-board{grid-template-columns:1fr}.calc-vs{position:static}.calc-vs{display:block}}
 @media(max-width:680px){.calc-cart-heading{padding:11px 12px}.calc-row{gap:8px;padding:9px 11px;min-height:61px}.calc-row img{width:70px;height:39px}.calc-row-name{font-size:11px}.calc-row-name small{font-size:9px}.calc-row-price{font-size:12px}.calc-total-row{padding:12px;font-size:11px}.calc-vs{padding:17px}.calc-vs .calc-saving strong{font-size:20px}}
 
+
+
+/* Ajustes da versão AlmazStore retrô */
+.hero-inner{grid-template-columns:1fr}.hero-copy{max-width:780px}@media(min-width:681px){.support-layout{grid-template-columns:1fr;gap:32px}.support-copy{max-width:670px}}.platform-card-text .platform-mark{min-width:58px;min-height:50px;display:grid;place-items:center;color:#f2f7fb;font-size:24px;font-weight:900;letter-spacing:-.08em}.platform-card-text:nth-child(17) .platform-mark{font-size:13px;letter-spacing:.04em}
