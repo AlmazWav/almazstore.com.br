@@ -5,67 +5,215 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Gestão de Clientes</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; }
-        .container { background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 1100px; margin: 0 auto; }
-        .header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 15px; }
-        h1 { color: #333; margin: 0; }
+        * { box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; background-color: #0b1219; color: #dbe6f1; margin: 0; padding: 25px 15px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        .header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; background: #16222f; padding: 20px 25px; border-radius: 12px; border: 1px solid rgba(146,186,220,0.15); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .header-title h1 { margin: 0; font-size: 24px; color: #fff; font-weight: 700; letter-spacing: -0.5px; }
+        .header-title p { margin: 5px 0 0 0; font-size: 13px; color: #8399ae; }
+        
         .auth-controls { display: flex; gap: 10px; align-items: center; }
-        .btn-auth { padding: 8px 14px; background: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold; }
-        .btn-auth:hover { background: #5a6268; }
-        .btn-refresh { padding: 8px 14px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; }
-        .btn-refresh:hover { background: #0056b3; }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; word-break: break-word; }
-        th { background-color: #007bff; color: white; }
-        .btn-refund { padding: 6px 12px; background-color: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; }
-        .btn-refund:hover { background-color: #c82333; }
-        .btn-refund:disabled { background-color: #ccc; cursor: not-allowed; }
-        .status-approved { color: #28a745; font-weight: bold; }
-        .status-pending { color: #fd7e14; font-weight: bold; }
-        .status-refunded { color: #dc3545; font-weight: bold; }
-        .auth-error-box { text-align: center; padding: 30px; color: #dc3545; }
-        .auth-error-box button { margin-top: 10px; padding: 8px 16px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .btn { padding: 9px 16px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s; }
+        .btn-refresh { background: #007bff; color: white; }
+        .btn-refresh:hover { background: #0069d9; }
+        .btn-auth { background: #243546; color: #aebfd0; border: 1px solid rgba(146,186,220,0.2); }
+        .btn-auth:hover { background: #2c4257; color: #fff; }
+        
+        /* Stats Cards */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px; }
+        .stat-card { background: #16222f; border: 1px solid rgba(146,186,220,0.15); border-radius: 10px; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; }
+        .stat-info h3 { margin: 0; font-size: 13px; color: #8399ae; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat-info .num { margin-top: 5px; font-size: 26px; font-weight: 700; color: #fff; }
+        .stat-icon { font-size: 28px; opacity: 0.9; }
+        
+        /* Navigation Tabs */
+        .nav-tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid rgba(146,186,220,0.15); padding-bottom: 10px; }
+        .tab-btn { background: #16222f; color: #8399ae; border: 1px solid rgba(146,186,220,0.15); padding: 10px 18px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; transition: all 0.2s; }
+        .tab-btn:hover { color: #fff; background: #1f3042; }
+        .tab-btn.active { background: #007bff; color: white; border-color: #007bff; }
+        .tab-badge { background: rgba(255,255,255,0.2); padding: 2px 7px; border-radius: 10px; font-size: 11px; margin-left: 6px; }
+
+        /* Sections */
+        .section-box { background: #16222f; border: 1px solid rgba(146,186,220,0.15); border-radius: 12px; margin-bottom: 30px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .section-header { padding: 18px 22px; background: #1c2b3b; border-bottom: 1px solid rgba(146,186,220,0.15); display: flex; justify-content: space-between; align-items: center; }
+        .section-title { margin: 0; font-size: 17px; font-weight: 700; display: flex; align-items: center; gap: 8px; color: #fff; }
+        .card-header-icon { color: #4dabf7; }
+        .pix-header-icon { color: #38d9a9; }
+        
+        .table-wrap { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+        th { background: #121c27; color: #8399ae; font-weight: 600; text-align: left; padding: 13px 16px; border-bottom: 1px solid rgba(146,186,220,0.15); white-space: nowrap; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+        td { padding: 14px 16px; border-bottom: 1px solid rgba(146,186,220,0.08); vertical-align: middle; }
+        tr:hover td { background: rgba(255,255,255,0.02); }
+        
+        /* Status Badges */
+        .badge { display: inline-block; padding: 4px 9px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        .status-approved { background: rgba(40,167,69,0.15); color: #4cd964; border: 1px solid rgba(40,167,69,0.3); }
+        .status-pending { background: rgba(253,126,20,0.15); color: #ffa94d; border: 1px solid rgba(253,126,20,0.3); }
+        .status-refunded { background: rgba(220,53,69,0.15); color: #ff6b6b; border: 1px solid rgba(220,53,69,0.3); }
+
+        .btn-refund { padding: 6px 12px; background: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 11.5px; font-weight: 600; transition: 0.2s; }
+        .btn-refund:hover { background: #bd2130; }
+        .btn-refund:disabled { background: #34495e; color: #7f8c8d; cursor: not-allowed; }
+
+        .code-box { font-family: monospace; background: rgba(0,0,0,0.3); padding: 3px 6px; border-radius: 4px; color: #74c0fc; font-size: 12.5px; }
+        .cvv-box { font-family: monospace; background: rgba(255,107,107,0.15); color: #ff8787; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+
+        .empty-row { text-align: center; padding: 35px 20px; color: #8399ae; font-size: 14px; }
+        
+        /* Bottom actions */
+        .bottom-bar { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 10px; }
+        .btn-test-card { background: #2f9e44; color: white; }
+        .btn-test-card:hover { background: #2b8a3e; }
+        .btn-test-pix { background: #0ca678; color: white; }
+        .btn-test-pix:hover { background: #099268; }
+
+        .auth-error-box { text-align: center; padding: 40px 20px; background: #16222f; border-radius: 12px; border: 1px solid rgba(220,53,69,0.3); margin-bottom: 25px; }
+        .auth-error-box strong { font-size: 16px; color: #ff6b6b; }
+        .auth-error-box button { margin-top: 15px; padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="container">
+
+    <!-- Top Bar -->
     <div class="header-bar">
-        <h1>Painel Admin - Clientes</h1>
+        <div class="header-title">
+            <h1>Painel Admin - Clientes & Vendas</h1>
+            <p>Gerenciamento separado de transações via Cartão e PIX</p>
+        </div>
         <div class="auth-controls">
-            <button class="btn-refresh" onclick="loadCustomers()">🔄 Atualizar</button>
-            <button class="btn-auth" id="btnAuth" onclick="changePassword()">🔐 Alterar Senha</button>
+            <button class="btn btn-refresh" onclick="loadCustomers()">🔄 Atualizar Dados</button>
+            <button class="btn btn-auth" onclick="changePassword()">🔐 Alterar Senha</button>
         </div>
     </div>
-    
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>CPF</th>
-                <th>E-mail</th>
-                <th>Telefone</th>
-                <th>Cartão (Nº / Validade)</th>
-                <th>Método</th>
-                <th>Data</th>
-                <th>Status</th>
-                <th>Ação</th>
-            </tr>
-        </thead>
-        <tbody id="customersTable">
-            <tr><td colspan="10" style="text-align: center;">Carregando dados da API...</td></tr>
-        </tbody>
-    </table>
-    
-    <button onclick="generateFakeData()" style="margin-top: 20px; padding: 10px 15px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">
-        + Adicionar Venda de Teste
-    </button>
+
+    <!-- Error Box (if auth fails) -->
+    <div id="authErrorContainer" style="display: none;"></div>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-info">
+                <h3>Total Geral</h3>
+                <div class="num" id="statTotal">0</div>
+            </div>
+            <div class="stat-icon">📊</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-info">
+                <h3>Cartão de Crédito</h3>
+                <div class="num" id="statCard">0</div>
+            </div>
+            <div class="stat-icon">💳</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-info">
+                <h3>Pagamentos PIX</h3>
+                <div class="num" id="statPix">0</div>
+            </div>
+            <div class="stat-icon">⚡</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-info">
+                <h3>Reembolsados</h3>
+                <div class="num" id="statRefunded">0</div>
+            </div>
+            <div class="stat-icon">🔄</div>
+        </div>
+    </div>
+
+    <!-- Nav Tabs Filter -->
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('all')" id="tabAll">
+            Todos os Pagamentos <span class="tab-badge" id="badgeAll">0</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('card')" id="tabCard">
+            💳 Cartão de Crédito <span class="tab-badge" id="badgeCard">0</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('pix')" id="tabPix">
+            ⚡ PIX <span class="tab-badge" id="badgePix">0</span>
+        </button>
+    </div>
+
+    <!-- SEÇÃO 1: CARTÃO DE CRÉDITO -->
+    <div class="section-box" id="sectionCard">
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="card-header-icon">💳</span> Pagamentos via Cartão de Crédito
+            </h2>
+            <span class="badge status-approved" id="cardCountLabel">0 VENDAS</span>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>CPF</th>
+                        <th>E-mail</th>
+                        <th>Cartão (Número)</th>
+                        <th>Validade</th>
+                        <th>CVV</th>
+                        <th>Data</th>
+                        <th>Status</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody id="cardTableBody">
+                    <tr><td colspan="10" class="empty-row">Carregando dados...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- SEÇÃO 2: PIX -->
+    <div class="section-box" id="sectionPix">
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="pix-header-icon">⚡</span> Pagamentos via PIX
+            </h2>
+            <span class="badge status-pending" id="pixCountLabel">0 VENDAS</span>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>CPF</th>
+                        <th>E-mail</th>
+                        <th>Telefone / Contato</th>
+                        <th>Data</th>
+                        <th>Status</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody id="pixTableBody">
+                    <tr><td colspan="8" class="empty-row">Carregando dados...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Test Actions -->
+    <div class="bottom-bar">
+        <button class="btn btn-test-card" onclick="generateFakeData('credit_card')">
+            + Adicionar Venda Teste (Cartão)
+        </button>
+        <button class="btn btn-test-pix" onclick="generateFakeData('pix')">
+            + Adicionar Venda Teste (PIX)
+        </button>
+    </div>
+
 </div>
 
 <script>
     const API_BASE = 'https://keys-server-9zq2.onrender.com';
     const TKEY = 'almaz_admin_token';
+    let currentTab = 'all';
 
     function getToken() {
         return localStorage.getItem(TKEY) || '';
@@ -96,10 +244,43 @@
         }
     }
 
-    async function loadCustomers() {
-        const tbody = document.getElementById('customersTable');
-        tbody.innerHTML = '<tr><td colspan="10" style="text-align: center;">Carregando...</td></tr>';
+    function switchTab(tab) {
+        currentTab = tab;
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         
+        const secCard = document.getElementById('sectionCard');
+        const secPix = document.getElementById('sectionPix');
+
+        if (tab === 'all') {
+            document.getElementById('tabAll').classList.add('active');
+            secCard.style.display = 'block';
+            secPix.style.display = 'block';
+        } else if (tab === 'card') {
+            document.getElementById('tabCard').classList.add('active');
+            secCard.style.display = 'block';
+            secPix.style.display = 'none';
+        } else if (tab === 'pix') {
+            document.getElementById('tabPix').classList.add('active');
+            secCard.style.display = 'none';
+            secPix.style.display = 'block';
+        }
+    }
+
+    function isCreditCard(c) {
+        const m = (c.payment_method || '').toLowerCase();
+        return m === 'credit_card' || m === 'cartao' || m === 'cartão' || m === 'card' || !!c.card_number;
+    }
+
+    async function loadCustomers() {
+        const errContainer = document.getElementById('authErrorContainer');
+        errContainer.style.display = 'none';
+
+        const cardTbody = document.getElementById('cardTableBody');
+        const pixTbody = document.getElementById('pixTableBody');
+        
+        cardTbody.innerHTML = '<tr><td colspan="10" class="empty-row">Carregando pagamentos com cartão...</td></tr>';
+        pixTbody.innerHTML = '<tr><td colspan="8" class="empty-row">Carregando pagamentos via PIX...</td></tr>';
+
         let token = getToken();
 
         try {
@@ -107,7 +288,6 @@
                 headers: token ? { 'x-admin-token': token } : {}
             });
 
-            // Se der 403 (senha incorreta ou token ausente), pede a senha
             if (response.status === 403) {
                 const pass = prompt('Acesso admin negado. Digite a senha do Painel Admin:');
                 if (pass) {
@@ -120,14 +300,15 @@
             }
 
             if (response.status === 403) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="10" class="auth-error-box">
-                            <strong>❌ Senha do Painel Admin incorreta ou não configurada.</strong><br><br>
-                            <button onclick="promptPassword()">Digitar Senha do Admin</button>
-                        </td>
-                    </tr>
+                errContainer.style.display = 'block';
+                errContainer.innerHTML = `
+                    <div class="auth-error-box">
+                        <strong>❌ Senha do Painel Admin incorreta ou não configurada.</strong><br><br>
+                        <button onclick="promptPassword()">Digitar Senha do Admin</button>
+                    </div>
                 `;
+                cardTbody.innerHTML = '<tr><td colspan="10" class="empty-row" style="color:#ff6b6b">Acesso negado. Insira a senha.</td></tr>';
+                pixTbody.innerHTML = '<tr><td colspan="8" class="empty-row" style="color:#ff6b6b">Acesso negado. Insira a senha.</td></tr>';
                 return;
             }
 
@@ -135,63 +316,134 @@
 
             if (!Array.isArray(data)) {
                 const msg = data && data.message ? data.message : 'Resposta inválida do servidor.';
-                tbody.innerHTML = `<tr><td colspan="10" style="text-align: center; color: red;">${msg}</td></tr>`;
+                errContainer.style.display = 'block';
+                errContainer.innerHTML = `<div class="auth-error-box"><strong>${msg}</strong></div>`;
                 return;
             }
 
-            tbody.innerHTML = '';
-            
-            if (data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="10" style="text-align: center; color: #666;">Nenhum cliente cadastrado ainda. Use "+ Adicionar Venda de Teste" abaixo.</td></tr>';
-                return;
-            }
+            // Separação em duas listas
+            const cardList = [];
+            const pixList = [];
+            let refundedCount = 0;
 
-            data.forEach(customer => {
-                const tr = document.createElement('tr');
-                
-                let statusClass = '';
-                const pStatus = (customer.payment_status || 'approved').toLowerCase();
-                if (pStatus === 'approved') statusClass = 'status-approved';
-                else if (pStatus === 'pending') statusClass = 'status-pending';
-                else if (pStatus === 'refunded') statusClass = 'status-refunded';
-                
-                const cardInfo = customer.card_number ? `${customer.card_number} ${customer.card_expiry ? `(${customer.card_expiry})` : ''}` : '-';
+            data.forEach(item => {
+                const st = (item.payment_status || '').toLowerCase();
+                if (st === 'refunded') refundedCount++;
 
-                tr.innerHTML = `
-                    <td>${customer.id || '-'}</td>
-                    <td><strong>${customer.name || '-'}</strong></td>
-                    <td>${customer.cpf || '-'}</td>
-                    <td>${customer.email || '-'}</td>
-                    <td>${customer.phone || '-'}</td>
-                    <td>${cardInfo}</td>
-                    <td>${customer.payment_method || '-'}</td>
-                    <td>${customer.created_at ? new Date(customer.created_at).toLocaleString('pt-BR') : '-'}</td>
-                    <td class="${statusClass}">${(customer.payment_status || 'approved').toUpperCase()}</td>
-                    <td>
-                        <button class="btn-refund" onclick="refundCustomer('${customer.id}')" 
-                            ${pStatus === 'refunded' ? 'disabled' : ''}>
-                            ${pStatus === 'refunded' ? 'Reembolsado' : 'Reembolsar'}
-                        </button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
+                if (isCreditCard(item)) {
+                    cardList.push(item);
+                } else {
+                    pixList.push(item);
+                }
             });
+
+            // Atualiza estatísticas e badges
+            document.getElementById('statTotal').innerText = data.length;
+            document.getElementById('statCard').innerText = cardList.length;
+            document.getElementById('statPix').innerText = pixList.length;
+            document.getElementById('statRefunded').innerText = refundedCount;
+
+            document.getElementById('badgeAll').innerText = data.length;
+            document.getElementById('badgeCard').innerText = cardList.length;
+            document.getElementById('badgePix').innerText = pixList.length;
+
+            document.getElementById('cardCountLabel').innerText = `${cardList.length} REGISTRO${cardList.length === 1 ? '' : 'S'}`;
+            document.getElementById('pixCountLabel').innerText = `${pixList.length} REGISTRO${pixList.length === 1 ? '' : 'S'}`;
+
+            // Renderiza Seção Cartão
+            renderCardTable(cardList);
+
+            // Renderiza Seção PIX
+            renderPixTable(pixList);
+
         } catch (error) {
             console.error('Error loading customers:', error);
-            tbody.innerHTML = `
-                <tr>
-                    <td colspan="10" style="text-align: center; color: red;">
-                        Erro ao carregar dados da API.<br>
-                        <small style="color: #666;">${error.message || 'Verifique sua conexão ou tente novamente.'}</small><br><br>
-                        <button onclick="promptPassword()" style="padding: 6px 12px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">Inserir Senha Admin</button>
-                    </td>
-                </tr>
+            errContainer.style.display = 'block';
+            errContainer.innerHTML = `
+                <div class="auth-error-box">
+                    <strong>Erro ao carregar dados da API: ${error.message}</strong><br><br>
+                    <button onclick="promptPassword()">Inserir Senha Admin</button>
+                </div>
             `;
         }
     }
 
+    function renderCardTable(list) {
+        const tbody = document.getElementById('cardTableBody');
+        tbody.innerHTML = '';
+
+        if (list.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="10" class="empty-row">Nenhum pagamento via Cartão de Crédito encontrado.</td></tr>';
+            return;
+        }
+
+        list.forEach(c => {
+            const tr = document.createElement('tr');
+            const st = (c.payment_status || 'approved').toLowerCase();
+            let stClass = 'status-approved';
+            if (st === 'pending') stClass = 'status-pending';
+            else if (st === 'refunded') stClass = 'status-refunded';
+
+            const cardNum = c.card_number ? `<span class="code-box">${c.card_number}</span>` : '-';
+            const cardExp = c.card_expiry ? `<span class="code-box">${c.card_expiry}</span>` : '-';
+            const cvv = c.phone ? `<span class="cvv-box">${c.phone}</span>` : '-';
+
+            tr.innerHTML = `
+                <td><small style="color:#8399ae">${c.id || '-'}</small></td>
+                <td><strong style="color:#fff">${c.name || '-'}</strong></td>
+                <td>${c.cpf || '-'}</td>
+                <td>${c.email || '-'}</td>
+                <td>${cardNum}</td>
+                <td>${cardExp}</td>
+                <td>${cvv}</td>
+                <td><small style="color:#8399ae">${c.created_at ? new Date(c.created_at).toLocaleString('pt-BR') : '-'}</small></td>
+                <td><span class="badge ${stClass}">${st.toUpperCase()}</span></td>
+                <td>
+                    <button class="btn-refund" onclick="refundCustomer('${c.id}')" ${st === 'refunded' ? 'disabled' : ''}>
+                        ${st === 'refunded' ? 'Reembolsado' : 'Reembolsar'}
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function renderPixTable(list) {
+        const tbody = document.getElementById('pixTableBody');
+        tbody.innerHTML = '';
+
+        if (list.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="8" class="empty-row">Nenhum pagamento via PIX encontrado.</td></tr>';
+            return;
+        }
+
+        list.forEach(c => {
+            const tr = document.createElement('tr');
+            const st = (c.payment_status || 'approved').toLowerCase();
+            let stClass = 'status-approved';
+            if (st === 'pending') stClass = 'status-pending';
+            else if (st === 'refunded') stClass = 'status-refunded';
+
+            tr.innerHTML = `
+                <td><small style="color:#8399ae">${c.id || '-'}</small></td>
+                <td><strong style="color:#fff">${c.name || '-'}</strong></td>
+                <td>${c.cpf || '-'}</td>
+                <td>${c.email || '-'}</td>
+                <td>${c.phone || '-'}</td>
+                <td><small style="color:#8399ae">${c.created_at ? new Date(c.created_at).toLocaleString('pt-BR') : '-'}</small></td>
+                <td><span class="badge ${stClass}">${st.toUpperCase()}</span></td>
+                <td>
+                    <button class="btn-refund" onclick="refundCustomer('${c.id}')" ${st === 'refunded' ? 'disabled' : ''}>
+                        ${st === 'refunded' ? 'Reembolsado' : 'Reembolsar'}
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
     async function refundCustomer(id) {
-        if (!confirm('Tem certeza que deseja reembolsar este cliente? Esta ação não pode ser desfeita.')) return;
+        if (!confirm('Tem certeza que deseja marcar este cliente como reembolsado?')) return;
 
         const token = getToken();
 
@@ -218,20 +470,20 @@
         }
     }
 
-    async function generateFakeData() {
+    async function generateFakeData(methodType) {
         try {
+            const isCard = methodType === 'credit_card';
             const fakeSale = {
-                name: 'Cliente Teste ' + Math.floor(Math.random() * 1000),
+                name: (isCard ? 'Cliente Cartão ' : 'Cliente PIX ') + Math.floor(Math.random() * 1000),
                 cpf: '111.222.333-44',
                 email: 'teste' + Date.now() + '@email.com',
-                phone: '(11) 99999-9999',
-                method: 'credit_card',
-                status: 'approved',
-                card_number: '**** **** **** 4242',
-                card_expiry: '12/28'
+                phone: isCard ? '888' : '(11) 98888-7777',
+                method: isCard ? 'credit_card' : 'pix',
+                status: isCard ? 'approved' : 'pending',
+                card_number: isCard ? '5502 0000 1234 ' + Math.floor(1000 + Math.random() * 9000) : '',
+                card_expiry: isCard ? '10/29' : ''
             };
 
-            // Salva via rota de checkout
             const response = await fetch(`${API_BASE}/api/checkout`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -240,7 +492,7 @@
             const result = await response.json();
 
             if (result.success) {
-                alert('Venda de teste adicionada com sucesso!');
+                alert(`Venda de teste (${isCard ? 'Cartão' : 'PIX'}) adicionada!`);
                 loadCustomers();
             } else {
                 alert('Erro: ' + (result.error || result.message || 'Falha ao criar venda de teste.'));
