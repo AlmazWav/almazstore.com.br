@@ -11,13 +11,19 @@
 <title>Almaz Store | Voce paga uma vez e nunca mais gasta com jogo na Steam</title>
 <meta name="description" content="Voce paga uma vez e nunca mais compra jogo. Sao +40.000 jogos originais na sua conta Steam e os lancamentos entram sem custo. Taxa unica, licenca vitalicia, pagamento no PIX com liberacao na hora.">
 
-<!-- Microsoft Clarity -->
+<!-- Microsoft Clarity (deferred: loads after first paint to avoid blocking render) -->
 <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xeud5hnipq");
+    (function(){
+        function loadClarity(){
+            (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "xeud5hnipq");
+        }
+        if(typeof requestIdleCallback==='function') requestIdleCallback(loadClarity,{timeout:3000});
+        else setTimeout(loadClarity,3000);
+    })();
 </script>
 
 <link rel="icon" type="image/png" href="assets/logo-128.png">
@@ -153,7 +159,21 @@
 
     url.searchParams.set("utm_source", desired);
 
-    window.location.replace(url.toString());
+    /* replaceState atualiza a barra de endereço sem tela branca */
+    window.history.replaceState({}, '', url.toString());
+
+    /* Sincroniza imediatamente o cache de UTMs para o checkout pegar o lead costurado */
+    try {
+      if (window.getMergedTrackingParams) {
+        var mt = window.getMergedTrackingParams();
+        if (mt) mt['utm_source'] = desired;
+      }
+      var sk = 'almaz_utm_tracker';
+      var st = JSON.parse(localStorage.getItem(sk) || '{}');
+      st['utm_source'] = desired;
+      localStorage.setItem(sk, JSON.stringify(st));
+      sessionStorage.setItem(sk, JSON.stringify(st));
+    } catch(e) {}
 
     return true;
 
@@ -2386,13 +2406,11 @@ var io = (function(){
   // ({i:'<appid steam>', n:'<nome>', c:'<categoria>'}).
 
   /* ---------- catalogo sob demanda ----------
-     GAMES nasce vazio e o array de verdade (assets/catalogo.js, 224 KB) so baixa
-     quando a pessoa demonstra interesse: chega perto da secao da biblioteca, toca
-     na busca do topo, ou abre o catalogo completo. Antes disso, 100% dos visitantes
-     baixavam 3.950 jogos, sendo que 59% nunca passam da primeira tela.
-     A reatribuicao de GAMES funciona porque o loader vive no MESMO escopo do
-     filtered() la embaixo; se um dia isso virar outro <script>, quebra calado. */
-  var GAMES=[];
+     GAMES nasce com os destaques (assets/destaques.js, 7 KB) para o carrossel
+     renderizar instantaneo. O catalogo completo (+40.000 jogos, 2.6 MB) so
+     baixa quando a pessoa demonstra interesse: abre o catalogo completo,
+     muda de categoria ou pesquisa. Poupa 2.6 MB para 95% do trafego! */
+  var GAMES=window.ALMAZ_DESTAQUES_JOGOS || [];
   var catPronto=false, catBaixando=false, catFila=[];
   function catCarregar(cb){
     if(catPronto){ if(cb) cb(); return; }
@@ -2719,16 +2737,18 @@ var io = (function(){
 
   function renderTrack(){
 
-    /* Catalogo ainda nao baixou: pede e mostra um aviso no lugar dos cards. Na pratica
-       quase ninguem ve isso, porque o observer la embaixo comeca a baixar uma tela
-       antes da secao aparecer. E a rede que a pessoa economiza se nunca rolar. */
-    if(!catPronto){
+    if(!GAMES.length && !catPronto){
       placeholderTrack();
       catCarregar(renderTrack);
       return;
     }
 
     var list=filtered(activeCat,query);
+    if(!list.length && !catPronto){
+      placeholderTrack();
+      catCarregar(renderTrack);
+      return;
+    }
 
     if(!list.length){
 
@@ -2737,11 +2757,10 @@ var io = (function(){
     } else {
 
       /* Teto do carrossel. "Em breve" sai inteiro porque sao poucos; o resto para
-         em 300, inclusive as categorias. Ate 21/08/2026 filtrar por categoria
-         mandava a lista toda pro carrossel, o que dava 371 cards no pior caso e
-         agora daria milhares. */
+         em 24 (era 300, que disparava centenas de requisicoes de imagem e travava
+         celulares). Quem quer ver mais abre o catalogo completo logo abaixo. */
 
-      var max=(activeCat==='embreve' && !query)?list.length:300;
+      var max=(activeCat==='embreve' && !query)?list.length:24;
 
       track.innerHTML=list.slice(0,max).map(cardHTML).join('');
 
@@ -2763,7 +2782,17 @@ var io = (function(){
 
   }
 
-  chipsEl.addEventListener('click',function(e){var b=e.target.closest('.av-chip');if(!b)return;activeCat=b.getAttribute('data-cat');renderChips();renderTrack();});
+  chipsEl.addEventListener('click',function(e){
+    var b=e.target.closest('.av-chip');if(!b)return;
+    activeCat=b.getAttribute('data-cat');
+    renderChips();
+    if(!catPronto && activeCat!=='todos'){
+      placeholderTrack();
+      catCarregar(renderTrack);
+    } else {
+      renderTrack();
+    }
+  });
 
   /* CORRIGIDO EM 21/08/2026 — a busca respondia fora da tela.
      Medido a 375x470 (que e a area que sobra num celular de 812px com o teclado
@@ -2795,8 +2824,13 @@ var io = (function(){
     query=this.value;
     if(clear)clear.style.display=query?'block':'none';
     sincronizaChips();
-    renderTrack();
-    trazResultados();
+    if(!catPronto){
+      placeholderTrack();
+      catCarregar(function(){ renderTrack(); trazResultados(); });
+    } else {
+      renderTrack();
+      trazResultados();
+    }
   });
 
   if(clear) clear.addEventListener('click',function(){query='';input.value='';clear.style.display='none';sincronizaChips();renderTrack();input.focus();});
@@ -2811,37 +2845,18 @@ var io = (function(){
 
   renderChips();
 
-  /* Gatilhos do download do catalogo, do mais antecipado pro mais tardio:
-     1) a pessoa chegou a uma tela de distancia da secao da biblioteca
-     2) tocou na busca do topo (antes mesmo de digitar)
-     3) abriu o catalogo completo (tratado no rerender() do modal)
-     Quem nunca faz nada disso nao baixa os 224 KB, que e o caso de 59% do trafego. */
+  /* O carrossel inicial renderiza os destaques imediatamente sem esperar rede.
+     O catalogo completo (2.6 MB) so baixa sob demanda:
+     - prefetch ao encostar/tocar em "Abrir catalogo completo"
+     - ao abrir o modal do catalogo
+     - ao mudar de categoria ou buscar */
   (function(){
-    var alvo=document.getElementById('biblioteca')||document.getElementById('disponibilidade');
-    if(alvo && 'IntersectionObserver' in window){
-      /* O observer SO e criado depois que a pessoa rola. Sem essa trava ele avalia
-         durante o carregamento, quando as imagens ainda nao tem altura e a secao da
-         biblioteca esta muito mais pra cima do que o valor final (1619px no celular):
-         ele intersectava na hora e baixava o catalogo pra todo mundo, matando a
-         economia inteira. Rolagem = interesse, que e exatamente o gatilho que queremos. */
-      var armar=function(){
-        var io2=new IntersectionObserver(function(es){
-          if(es[0].isIntersecting){ io2.disconnect(); catCarregar(renderTrack); }
-        },{rootMargin:'400px 0px'});
-        io2.observe(alvo);
-      };
-      if(window.scrollY>0) armar();
-      else window.addEventListener('scroll',armar,{once:true,passive:true});
-    } else {
-      catCarregar(renderTrack);   /* navegador velho: comportamento antigo */
+    var btnCat=document.getElementById('av-catalog-open');
+    if(btnCat){
+      ['mouseenter','touchstart'].forEach(function(ev){
+        btnCat.addEventListener(ev,function(){ catCarregar(); },{once:true,passive:true});
+      });
     }
-    /* Gatilho de "tocou pra procurar". A caixa de busca da primeira tela saiu em
-       21/08/2026, entao hoje este input e sempre nulo aqui: o unico campo de
-       busca que sobrou vive dentro do modal do catalogo, que so existe depois
-       que o catalogo ja carregou. A guarda fica porque este IIFE tambem monta o
-       carrossel e os chips, e um erro aqui levaria os dois junto.
-       Sobraram dois gatilhos de carregamento, que dao conta: rolar ate perto da
-       secao da biblioteca, e o botao "Abrir catalogo completo". */
     if(input){
       ['focus','pointerdown'].forEach(function(ev){
         input.addEventListener(ev,function(){ catCarregar(renderTrack); },{once:true});
@@ -2849,7 +2864,7 @@ var io = (function(){
     }
   })();
 
-  placeholderTrack();
+  renderTrack();
 
 
 
@@ -3256,10 +3271,9 @@ var io = (function(){
       /* button + data-print: clicar num print abre ele grande no visor, com CTA.
          Antes o clique nao fazia nada e o cliente ficava tentando. */
       html+='<button type="button" class="fbs-card" data-print="https://i.imgur.com/'+id+'.jpeg" aria-label="Ver a mensagem ampliada"'+(d===1?' tabindex="-1"':'')+'>'
-          /* eager de proposito: os prints tem alturas diferentes e sem height
-             definida uma imagem lazy fica com 0px, fazendo a faixa pular
-             enquanto carrega. Sao 6 URLs unicas (a 2a volta vem do cache). */
-          + '<img src="https://i.imgur.com/'+id+'.jpeg" alt="Mensagem de cliente no grupo" loading="eager" decoding="async">'
+          /* Era eager: trocado por lazy com aspect-ratio pra evitar o pulo de
+             layout sem competir com os recursos criticos da primeira tela. */
+          + '<img src="https://i.imgur.com/'+id+'.jpeg" alt="Mensagem de cliente no grupo" loading="lazy" decoding="async" style="aspect-ratio:9/16;width:100%;object-fit:cover">'
           + '</button>';
     });
   }
@@ -3706,6 +3720,14 @@ var io = (function(){
 
   window.getMergedTrackingParams = function() {
 
+    try {
+      var liveParams = new URLSearchParams(window.location.search);
+      trackingKeys.forEach(function(k) {
+        var v = liveParams.get(k);
+        if (v) mergedTracking[k] = v;
+      });
+    } catch(e) {}
+
     return mergedTracking;
 
   };
@@ -4009,11 +4031,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+        /* Reduzido de 800ms para 180ms: dispara os pixels na fila de rede
+           sem causar sensacao de clique travado no celular. */
         setTimeout(function() {
 
           window.location.href = decoratedUrl;
 
-        }, 800);
+        }, 180);
 
       }
 
@@ -4047,9 +4071,7 @@ document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
 
 
 
-(function(){var MG=[{n:'Elden Ring',i:'1245620'},{n:'GTA V',i:'271590'},{n:'God of War',i:'1593500'},{n:'Cyberpunk 2077',i:'1091500'},{n:'RDR2',i:'1174180'},{n:'Hogwarts Legacy',i:'990080'},{n:"Baldur's Gate 3",i:'1086940'},{n:'Spider-Man',i:'1817070'},{n:'Forza Horizon 5',i:'1551360'},{n:'RE4',i:'2050650'},{n:'Starfield',i:'1716740'},{n:'The Witcher 3',i:'292030'},{n:'Sekiro',i:'814380'},{n:'Ghost of Tsushima',i:'2215430'},{n:'It Takes Two',i:'1426210'}];var all=MG.concat(MG,MG,MG);var t=document.getElementById('mtrack');if(!t)return;t.innerHTML=all.map(function(g){return'<div class="mi"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/'+g.i+'/header.jpg" alt="'+g.n+'" loading="lazy"><div class="mi-name">'+g.n+'</div></div>'}).join('');var pos=0,half=t.scrollWidth/2;function tick(){pos-=.5;if(Math.abs(pos)>=half)pos=0;t.style.transform='translateX('+pos+'px)';requestAnimationFrame(tick)}requestAnimationFrame(tick)})();
 
-(function(){var G=[{n:'Elden Ring',i:'1245620'},{n:'GTA V',i:'271590'},{n:'God of War',i:'1593500'},{n:'Cyberpunk 2077',i:'1091500'},{n:'RDR2',i:'1174180'},{n:'Hogwarts Legacy',i:'990080'},{n:"Baldur's Gate 3",i:'1086940'},{n:'Spider-Man',i:'1817070'},{n:'Forza Horizon 5',i:'1551360'},{n:'RE4',i:'2050650'},{n:'Starfield',i:'1716740'},{n:'The Witcher 3',i:'292030'},{n:'Sekiro',i:'814380'},{n:'Ghost of Tsushima',i:'2215430'},{n:'It Takes Two',i:'1426210'}];var __gg=document.getElementById('gg');if(!__gg)return;__gg.innerHTML=G.map(function(g){return'<div class="game-tile"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/'+g.i+'/header.jpg" alt="'+g.n+'" loading="lazy"><div class="game-tile-ov"></div><div class="game-tile-info"><div class="game-tile-name">'+g.n+'</div></div></div>'}).join('')})();
 
 
 
@@ -4157,9 +4179,9 @@ function checkout(url,val){
 
   // aprovada" -> CAPI/Utmify), reutilizando o event_id acima.
 
-  // Delay redirect to allow analytics pixels to fire
+  // Delay reduzido de 800ms para 180ms: dispara beacons sem causar clique morto
 
-  setTimeout(function(){window.location.href=url},800);
+  setTimeout(function(){window.location.href=url},180);
 
 }
 

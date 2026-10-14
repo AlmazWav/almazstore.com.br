@@ -3,3 +3,7 @@ node_modules/
 # Bancos locais. Nunca vao pro GitHub: tem dado de cliente dentro.
 reembolso.sqlite
 database.sqlite
+
+# Backups e videos brutos locais
+*.backup*
+videos/
