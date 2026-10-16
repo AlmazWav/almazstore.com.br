@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Almaz Store — Links Oficiais</title>
+<meta name="description" content="Central oficial de links da Almaz Store. Conheça os planos, entre na comunidade gamer e fale com o suporte.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://almazstore.com.br/links/">
+<meta property="og:title" content="Almaz Store — Links Oficiais">
+<meta property="og:description" content="Jogos, comunidade e suporte em um só lugar.">
+<meta property="og:image" content="https://almazstore.com.br/assets/logo-180.png">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/png" href="../assets/logo-128.png">
+<link rel="apple-touch-icon" href="../assets/logo-180.png">
+<meta name="theme-color" content="#080c14">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   ALMAZ LINKS v2 — Fundo Dinâmico de Criativos + Banner em Loop
+   Destinos configuráveis:
+   - Vendas:     https://almazstore.com.br/?utm_source=links&utm_medium=bio
+   - Comunidade: https://almazstore.com.br/grupo/?utm_source=links&utm_medium=bio
+   - Suporte:    https://wa.me/5545999515463
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080c14;
+  --surface:#0e1620;
+  --card:rgba(19,29,42,.92);
+  --border:rgba(255,255,255,.07);
+  --border2:rgba(255,255,255,.14);
+  --txt:#e2ecf5;
+  --txt2:#a8bdd0;
+  --dim:#6b839b;
+  --green:#4a9d2a;
+  --green2:#5cc435;
+  --green-glow:rgba(74,157,42,.25);
+  --purple:#7c5cbf;
+  --purple2:#a07ee8;
+  --purple-glow:rgba(124,92,191,.20);
+  --f:'Inter',system-ui,-apple-system,sans-serif;
+}
+html{background:var(--bg);color:var(--txt);font-family:var(--f);-webkit-font-smoothing:antialiased}
+body{min-height:100dvh;overflow-x:hidden}
+
+/* ============ BACKGROUND WALL (CRIATIVOS EM LOOP) ============ */
+.bg-scene{
+  position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+  background:#080c14;
+}
+.bg-wall{
+  position:absolute;inset:-30% -25%;
+  transform:rotate(-7deg) scale(1.15);
+  display:flex;flex-direction:column;gap:14px;
+  filter:saturate(1.08) contrast(1.05);
+  opacity:.22;
+  will-change:transform;
+}
+.bg-row{
+  display:flex;gap:14px;flex:0 0 auto;
+  will-change:transform;
+}
+.bg-row--left{
+  animation:bgScrollLeft 60s linear infinite;
+}
+.bg-row--right{
+  animation:bgScrollRight 65s linear infinite;
+}
+.bg-row img{
+  width:240px;height:112px;object-fit:cover;border-radius:8px;
+  box-shadow:0 8px 24px rgba(0,0,0,.6);
+  flex-shrink:0;display:block;
+}
+@keyframes bgScrollLeft{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-50%)}
+}
+@keyframes bgScrollRight{
+  0%{transform:translateX(-50%)}
+  100%{transform:translateX(0)}
+}
+
+/* Ambient glow orbs */
+.bg-glow{
+  position:absolute;border-radius:50%;pointer-events:none;filter:blur(80px);
+}
+.bg-glow--purple{
+  top:10%;left:-120px;width:550px;height:550px;
+  background:radial-gradient(circle,rgba(124,92,191,.32) 0%,transparent 65%);
+}
+.bg-glow--green{
+  bottom:15%;right:-120px;width:500px;height:500px;
+  background:radial-gradient(circle,rgba(74,157,42,.24) 0%,transparent 65%);
+}
+
+/* Dark cinematic veil */
+.bg-veil{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(120% 85% at 50% 35%, rgba(8,12,20,.60) 0%, rgba(8,12,20,.88) 60%, rgba(8,12,20,.98) 100%),
+    linear-gradient(180deg, rgba(8,12,20,.92) 0%, rgba(8,12,20,.45) 25%, rgba(8,12,20,.72) 65%, rgba(8,12,20,.98) 100%);
+}
+
+/* Cyber grid overlay */
+.bg-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.015) 1px, transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 70%);
+  -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 70%);
+}
+
+/* ============ MAIN LAYOUT ============ */
+.page{
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;align-items:center;
+  min-height:100dvh;padding:20px 16px 36px;
+}
+.wrap{width:100%;max-width:440px;display:flex;flex-direction:column;align-items:center;gap:22px}
+
+/* ============ GAME BANNER ============ */
+.banner{
+  width:100%;border-radius:18px;overflow:hidden;
+  position:relative;height:160px;
+  border:1px solid var(--border2);
+  background:#0a0f18;
+  box-shadow:0 8px 32px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.04) inset;
+}
+.banner-track{
+  display:flex;height:100%;gap:10px;
+  animation:bannerScroll 45s linear infinite;
+  will-change:transform;
+}
+.banner-track img{
+  height:100%;width:auto;aspect-ratio:460/215;flex-shrink:0;
+  object-fit:cover;border-radius:10px;display:block;
+}
+@keyframes bannerScroll{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-50%)}
+}
+/* Gradient overlays for smooth edges */
+.banner::before,.banner::after{
+  content:'';position:absolute;top:0;bottom:0;width:50px;z-index:2;pointer-events:none;
+}
+.banner::before{left:0;background:linear-gradient(90deg,var(--bg) 0%,transparent 100%)}
+.banner::after{right:0;background:linear-gradient(270deg,var(--bg) 0%,transparent 100%)}
+
+/* Center badge */
+.banner-badge{
+  position:absolute;z-index:3;top:50%;left:50%;transform:translate(-50%,-50%);
+  background:rgba(8,12,20,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid var(--border2);border-radius:999px;
+  padding:8px 18px;
+  font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--txt2);
+  display:flex;align-items:center;gap:6px;
+  box-shadow:0 4px 20px rgba(0,0,0,.6);
+}
+.banner-badge .dot{
+  width:6px;height:6px;border-radius:50%;background:var(--green2);
+  box-shadow:0 0 6px var(--green);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* ============ HEADER / IDENTITY ============ */
+.identity{
+  display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;
+}
+.logo-ring{
+  width:88px;height:88px;border-radius:50%;padding:3px;
+  background:conic-gradient(from 180deg, var(--purple), var(--green), var(--purple));
+  box-shadow:0 0 32px var(--purple-glow),0 0 16px var(--green-glow);
+  animation:ringRotate 6s linear infinite;
+}
+@keyframes ringRotate{from{filter:hue-rotate(0deg)}to{filter:hue-rotate(360deg)}}
+.logo-ring img{
+  width:100%;height:100%;border-radius:50%;object-fit:contain;
+  background:var(--bg);border:3px solid var(--bg);
+}
+.brand{font-size:22px;font-weight:900;letter-spacing:.07em;text-transform:uppercase;color:#fff}
+.brand i{font-style:normal;color:var(--purple2)}
+.tagline{font-size:16px;font-weight:500;color:var(--txt);line-height:1.3}
+.subtitle{
+  font-size:12px;color:var(--dim);letter-spacing:.04em;text-transform:uppercase;
+  display:flex;align-items:center;gap:6px;
+}
+.subtitle::before,.subtitle::after{
+  content:'';width:20px;height:1px;background:var(--border2);
+}
+
+/* ============ STATS BAR ============ */
+.stats{
+  display:flex;gap:0;width:100%;
+  background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  overflow:hidden;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+.stat{
+  flex:1;padding:12px 8px;text-align:center;
+  border-right:1px solid var(--border);
+}
+.stat:last-child{border-right:none}
+.stat-num{font-size:16px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums}
+.stat-num .plus{color:var(--green2);font-weight:700}
+.stat-label{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.04em;margin-top:2px}
+
+/* ============ LINK BUTTONS ============ */
+.links{width:100%;display:flex;flex-direction:column;gap:12px}
+
+.lnk{
+  display:flex;align-items:center;gap:14px;
+  width:100%;padding:16px 18px;
+  border:1px solid var(--border);border-radius:16px;
+  background:var(--card);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  color:var(--txt);text-decoration:none;cursor:pointer;
+  position:relative;overflow:hidden;
+  transition:transform .18s ease,border-color .25s,box-shadow .25s;
+}
+/* Shimmer effect on hover */
+.lnk::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.04) 45%,rgba(255,255,255,.08) 50%,rgba(255,255,255,.04) 55%,transparent 60%);
+  transform:translateX(-100%);
+  transition:transform .6s ease;
+}
+.lnk:hover::before{transform:translateX(100%)}
+.lnk:hover{
+  transform:translateY(-3px);
+  border-color:var(--border2);
+  box-shadow:0 8px 28px rgba(0,0,0,.4);
+}
+.lnk:focus-visible{outline:2px solid var(--purple);outline-offset:3px}
+.lnk:active{transform:translateY(0)}
+
+/* Icon */
+.lnk-ico{
+  flex-shrink:0;width:46px;height:46px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:14px;
+}
+.lnk-ico svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* Text */
+.lnk-txt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.lnk-title{font-size:14.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#fff;line-height:1.2}
+.lnk-desc{font-size:12px;color:var(--dim);line-height:1.3}
+
+/* Arrow */
+.lnk-arr{
+  margin-left:auto;flex-shrink:0;width:20px;height:20px;
+  fill:none;stroke:var(--dim);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+  opacity:.4;transition:opacity .2s,transform .2s;
+}
+.lnk:hover .lnk-arr{opacity:.7;transform:translateX(3px)}
+
+/* === PRIMARY (vendas) === */
+.lnk--sales{
+  border-color:rgba(74,157,42,.35);
+  background:linear-gradient(135deg,rgba(74,157,42,.12) 0%,rgba(19,29,42,.92) 60%);
+  box-shadow:0 4px 20px rgba(74,157,42,.1);
+}
+.lnk--sales .lnk-ico{background:rgba(74,157,42,.15);color:var(--green2)}
+.lnk--sales:hover{
+  border-color:rgba(74,157,42,.55);
+  box-shadow:0 8px 32px rgba(74,157,42,.2),0 0 0 1px rgba(74,157,42,.15) inset;
+}
+
+/* === COMMUNITY === */
+.lnk--community .lnk-ico{background:rgba(124,92,191,.15);color:var(--purple2)}
+.lnk--community:hover{border-color:rgba(124,92,191,.4);box-shadow:0 8px 28px rgba(124,92,191,.12)}
+
+/* === SUPPORT === */
+.lnk--support .lnk-ico{background:rgba(89,166,224,.12);color:#59a6e0}
+.lnk--support:hover{border-color:rgba(89,166,224,.3);box-shadow:0 8px 28px rgba(89,166,224,.1)}
+
+/* ============ FOOTER ============ */
+.foot{
+  text-align:center;padding-top:6px;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+}
+.foot-brand{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.foot-link{font-size:11px;color:var(--dim);text-decoration:none;transition:color .15s}
+.foot-link:hover{color:var(--txt)}
+
+/* ============ ENTRANCE ANIMATIONS ============ */
+@keyframes fadeSlideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeScale{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+
+.banner{animation:fadeScale .5s .05s ease both}
+.identity{animation:fadeSlideUp .45s .15s ease both}
+.stats{animation:fadeSlideUp .4s .25s ease both}
+.links .lnk:nth-child(1){animation:fadeSlideUp .4s .32s ease both}
+.links .lnk:nth-child(2){animation:fadeSlideUp .4s .40s ease both}
+.links .lnk:nth-child(3){animation:fadeSlideUp .4s .48s ease both}
+.foot{animation:fadeSlideUp .4s .56s ease both}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0s!important;transition-duration:0s!important}
+}
+
+/* ============ DESKTOP ============ */
+@media(min-width:600px){
+  .page{padding:40px 24px 48px}
+  .banner{height:180px}
+  .logo-ring{width:96px;height:96px}
+  .brand{font-size:24px}
+  .lnk{padding:18px 22px}
+  .lnk-ico{width:50px;height:50px}
+  .lnk-title{font-size:15px}
+}
+</style>
+
+<!-- Microsoft Clarity -->
+<script>
+(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+})(window, document, "clarity", "script", "xeud5hnipq");
+</script>
+</head>
+<body>
+
+<!-- Background Wall (Criativos Almaz em loop) -->
+<div class="bg-scene" aria-hidden="true">
+  <div class="bg-wall">
+    <div class="bg-row bg-row--left"><img src="../assets/covers/fc27.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/gta5.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/wukong.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/eldenring.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/rdr2.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/cod.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/fc27.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/gta5.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/wukong.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/eldenring.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/rdr2.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/cod.jpg" alt="" loading="lazy" width="240" height="112"></div>
+    <div class="bg-row bg-row--right"><img src="../assets/covers/palworld.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/silenthill.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/forza6.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/starwars.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/phantom.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/re_requiem.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/palworld.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/silenthill.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/forza6.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/starwars.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/phantom.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/re_requiem.jpg" alt="" loading="lazy" width="240" height="112"></div>
+    <div class="bg-row bg-row--left"><img src="../assets/covers/shadows.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/007.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/dawnwalker.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/crimson.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/nba.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/tombraider.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/shadows.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/007.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/dawnwalker.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/crimson.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/nba.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/tombraider.jpg" alt="" loading="lazy" width="240" height="112"></div>
+    <div class="bg-row bg-row--right"><img src="../assets/covers/fc26.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/codmw2.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/skylines2.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/survivallog.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/uebs2.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/farfarwest.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/fc26.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/codmw2.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/skylines2.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/survivallog.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/uebs2.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/farfarwest.jpg" alt="" loading="lazy" width="240" height="112"></div>
+    <div class="bg-row bg-row--left"><img src="../assets/covers/fc27.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/gta5.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/wukong.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/eldenring.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/rdr2.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/cod.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/fc27.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/gta5.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/wukong.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/eldenring.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/rdr2.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/cod.jpg" alt="" loading="lazy" width="240" height="112"></div>
+    <div class="bg-row bg-row--right"><img src="../assets/covers/palworld.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/silenthill.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/forza6.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/starwars.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/phantom.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/re_requiem.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/palworld.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/silenthill.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/forza6.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/starwars.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/phantom.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/re_requiem.jpg" alt="" loading="lazy" width="240" height="112"></div>
+    <div class="bg-row bg-row--left"><img src="../assets/covers/shadows.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/007.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/dawnwalker.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/crimson.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/nba.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/tombraider.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/shadows.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/007.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/dawnwalker.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/crimson.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/nba.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/tombraider.jpg" alt="" loading="lazy" width="240" height="112"></div>
+    <div class="bg-row bg-row--right"><img src="../assets/covers/fc26.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/codmw2.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/skylines2.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/survivallog.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/uebs2.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/farfarwest.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/fc26.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/codmw2.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/skylines2.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/survivallog.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/uebs2.jpg" alt="" loading="lazy" width="240" height="112"><img src="../assets/covers/farfarwest.jpg" alt="" loading="lazy" width="240" height="112"></div>
+  </div>
+  <div class="bg-veil"></div>
+  <div class="bg-glow bg-glow--purple"></div>
+  <div class="bg-glow bg-glow--green"></div>
+  <div class="bg-grid"></div>
+</div>
+
+<main class="page">
+  <div class="wrap">
+
+    <!-- ============ GAME BANNER ============ -->
+    <div class="banner">
+      <div class="banner-track">
+        <img src="../assets/covers/fc27.jpg" alt="" loading="eager" width="342" height="160">
+        <img src="../assets/covers/gta5.jpg" alt="" loading="eager" width="342" height="160">
+        <img src="../assets/covers/wukong.jpg" alt="" loading="eager" width="342" height="160">
+        <img src="../assets/covers/eldenring.jpg" alt="" loading="eager" width="342" height="160">
+        <img src="../assets/covers/rdr2.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/cod.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/palworld.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/silenthill.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/forza6.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/starwars.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/phantom.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/re_requiem.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/shadows.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/007.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/dawnwalker.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/crimson.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/nba.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/tombraider.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/fc26.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/codmw2.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/skylines2.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/survivallog.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/uebs2.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/farfarwest.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/fc27.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/gta5.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/wukong.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/eldenring.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/rdr2.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/cod.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/palworld.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/silenthill.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/forza6.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/starwars.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/phantom.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/re_requiem.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/shadows.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/007.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/dawnwalker.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/crimson.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/nba.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/tombraider.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/fc26.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/codmw2.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/skylines2.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/survivallog.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/uebs2.jpg" alt="" loading="lazy" width="342" height="160">
+        <img src="../assets/covers/farfarwest.jpg" alt="" loading="lazy" width="342" height="160">
+      </div>
+      <div class="banner-badge"><span class="dot"></span>Catálogo ao vivo</div>
+    </div>
+
+    <!-- ============ IDENTITY ============ -->
+    <header class="identity">
+      <div class="logo-ring">
+        <img src="../assets/logo-128.png" alt="Almaz Store" width="82" height="82">
+      </div>
+      <div class="brand">ALMA<i>Z</i> STORE</div>
+      <div class="tagline">Seu próximo jogo começa aqui.</div>
+      <div class="subtitle">Central oficial de links</div>
+    </header>
+
+    <!-- ============ STATS ============ -->
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num"><span class="plus">+</span>40.000</div>
+        <div class="stat-label">Jogos</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">Steam</div>
+        <div class="stat-label">Download</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">R$ 9,97</div>
+        <div class="stat-label">A partir de</div>
+      </div>
+    </div>
+
+    <!-- ============ LINKS ============ -->
+    <nav class="links" aria-label="Links oficiais da Almaz Store">
+
+      <a class="lnk lnk--sales" href="https://almazstore.com.br/?utm_source=links&utm_medium=bio" data-link="sales_page">
+        <div class="lnk-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <div class="lnk-txt">
+          <span class="lnk-title">Conhecer os Planos</span>
+          <span class="lnk-desc">Descubra a oferta completa da Almaz Store</span>
+        </div>
+        <svg class="lnk-arr" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+
+      <a class="lnk lnk--community" href="https://almazstore.com.br/grupo/?utm_source=links&utm_medium=bio" data-link="community">
+        <div class="lnk-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="lnk-txt">
+          <span class="lnk-title">Entrar na Comunidade</span>
+          <span class="lnk-desc">Grupo oficial no WhatsApp — drops e novidades</span>
+        </div>
+        <svg class="lnk-arr" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+
+      <a class="lnk lnk--support" href="https://wa.me/5545999515463?text=Oi%2C%20vim%20pelo%20link%20da%20bio%20e%20preciso%20de%20ajuda" target="_blank" rel="noopener" data-link="support">
+        <div class="lnk-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </div>
+        <div class="lnk-txt">
+          <span class="lnk-title">Suporte Almaz</span>
+          <span class="lnk-desc">Precisa de ajuda? Fale direto conosco</span>
+        </div>
+        <svg class="lnk-arr" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+
+    </nav>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="foot">
+      <div class="foot-brand">ALMAZ STORE © 2026</div>
+      <a class="foot-link" href="https://almazstore.com.br/">almazstore.com.br</a>
+    </footer>
+
+  </div>
+</main>
+
+<!-- Click tracking -->
+<script>
+(function(){
+  'use strict';
+  document.querySelectorAll('.lnk[data-link]').forEach(function(el){
+    el.addEventListener('click', function(){
+      var id = this.getAttribute('data-link');
+      try { if(window.clarity) window.clarity('event','links_click_'+id); } catch(e){}
+    }, {passive:true});
+  });
+})();
+</script>
+
+</body>
+</html>

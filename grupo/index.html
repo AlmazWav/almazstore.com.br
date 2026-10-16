@@ -2,13 +2,33 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Almaz Store | +40.000 jogos na sua Steam por uma taxa única</title>
-<meta name="description" content="Aplicativo para Windows que libera mais de 40.000 jogos na sua conta Steam. Veja o catálogo completo e entre no Grupo de Clientes.">
-<link rel="icon" type="image/png" href="../assets/logo-128.png">
-<meta name="theme-color" content="#0b1219">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Almaz Store | Grupo Oficial no WhatsApp — Radar de Jogos Steam</title>
+<meta name="description" content="Participe do Grupo Oficial da Almaz Store no WhatsApp. Receba alertas de novos jogos liberados na Steam, atualizações semanais, fixes e tire dúvidas direto com os administradores. 100% gratuito e focado em atualizações oficiais.">
 
-<!-- Microsoft Clarity -->
+<!-- Open Graph / Meta Compartilhamento -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://almazstore.com.br/grupo/">
+<meta property="og:title" content="Almaz Store | Grupo Oficial no WhatsApp — Radar de Jogos Steam">
+<meta property="og:description" content="Alertas de novos jogos liberados toda semana, atualizações e comunidade gamer no PC. 100% gratuito e avisos oficiais.">
+<meta property="og:image" content="https://almazstore.com.br/assets/logo-180.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" type="image/png" href="../assets/logo-128.png">
+<link rel="apple-touch-icon" href="../assets/logo-180.png">
+<meta name="theme-color" content="#070b10">
+
+<!-- Preconnects para aceleração de carregamento (Core Web Vitals) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://shared.fastly.steamstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.utmify.com.br" crossorigin>
+<link rel="preconnect" href="https://www.clarity.ms" crossorigin>
+
+<!-- Fonte Inter com display swap para evitar FOIT -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- Microsoft Clarity (carregamento em background) -->
 <script type="text/javascript">
     (function(){
         function loadClarity(){
@@ -42,8 +62,7 @@
   defer
 ></script>
 
-<!-- Utmify Lead Stitching — costura o _id do lead dentro do utm_source
-     para que a venda no checkout seja casada com a visita/pixel (fbp/fbc). -->
+<!-- Utmify Lead Stitching — costura o _id do lead dentro do utm_source -->
 <script>
 (function () {
   var POLL_MS = 500;
@@ -111,12 +130,9 @@
 })();
 </script>
 
-<!-- Propagação de UTMs: qualquer link pro site principal leva as UTMs
-     que o visitante trouxe do anúncio, pra venda ser atribuída mesmo
-     passando pelo grupo do WhatsApp antes. -->
+<!-- Propagação de UTMs para links de saída -->
 <script>
 (function(){
-  /* Captura as UTMs da URL atual (vem do anúncio) */
   var params = new URLSearchParams(window.location.search);
   var utmKeys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];
   var utms = {};
@@ -125,7 +141,6 @@
     if (v) utms[k] = v;
   });
 
-  /* Salva no localStorage pra não perder se a pessoa navegar */
   var STORAGE_KEY = 'almaz_grupo_utms';
   if (Object.keys(utms).length) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(utms));
@@ -133,312 +148,1070 @@
     try { utms = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e){}
   }
 
-  /* Se não tem UTM nenhuma, marca que veio do grupo */
   if (!Object.keys(utms).length) {
     utms = { utm_source: 'grupo-whatsapp', utm_medium: 'landing' };
   }
 
-  /* Injeta as UTMs em todos os links que apontam pro site principal */
   function decorarLinks(){
     document.querySelectorAll('a[href*="almazstore.com.br"]').forEach(function(a){
       try {
         var url = new URL(a.href);
         for (var k in utms) { url.searchParams.set(k, utms[k]); }
-        /* Marca que passou pelo grupo */
-        url.searchParams.set('utm_content', utms.utm_content || 'via-grupo');
+        if (!url.searchParams.get('utm_content')) {
+          url.searchParams.set('utm_content', 'via-grupo');
+        }
         a.href = url.toString();
       } catch(e){}
     });
   }
 
-  /* Roda no load e observa DOM pra pegar links dinâmicos (modal etc) */
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', decorarLinks);
   } else {
     decorarLinks();
   }
-  /* Re-decora quando o modal abre (muda links dinâmicos) */
   var obs = new MutationObserver(decorarLinks);
   obs.observe(document.body || document.documentElement, { childList: true, subtree: true });
 })();
 </script>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://cdn.cloudflare.steamstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
 <style>
 /* =========================================================================
-   Design system oficial Almaz Store — tokens da página de vendas.
-   Página de oferta com o catálogo interativo como protagonista.
+   ALMAZ STORE — DESIGN SYSTEM GAMER PREMIUM & CRO WHATSAPP
    ========================================================================= */
-*{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --bg:#0b1219; --bg2:#0f1a24; --panel:#16222f; --panel2:#1d2b3a; --panel3:#243546;
-  --line:rgba(146,186,220,.13); --line2:rgba(146,186,220,.22);
-  --txt:#dbe6f1; --txt2:#aebfd0; --dim:#8399ae;
-  --blue:#59a6e0; --blue-dim:rgba(89,166,224,.12);
-  --buy:#4a9d2a; --buy2:#57b533; --buy-dark:#2f6b18;
-  --deal-bg:#2f5d10; --deal-tx:#bce337;
-  --warn:#e0a03a;
-  --f:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
-  --r:8px; --r2:12px;
-  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
-}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-body{
-  background:var(--bg);color:var(--txt);font-family:var(--f);line-height:1.55;
-  font-size:15px;overflow-x:hidden;-webkit-font-smoothing:antialiased;
-}
-img{display:block;max-width:100%}
-button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
-a{color:inherit;text-decoration:none}
-.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
-.num{font-variant-numeric:tabular-nums}
+* { margin:0; padding:0; box-sizing:border-box; }
 
-h1,h2,h3{font-weight:700;line-height:1.15;letter-spacing:-.02em}
-h2{font-size:clamp(21px,3.1vw,27px);margin-bottom:6px}
-.sec{padding:44px 0;border-top:1px solid var(--line)}
-.sec-head{margin-bottom:20px;max-width:680px}
-.sec-head p{color:var(--dim);font-size:14.5px;margin-top:4px}
-
-/* ---------- botão de compra oficial (verde de loja) ---------- */
-.offer-btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  background:linear-gradient(180deg,#64d541,#56b938);
-  color:#08110a;font-weight:700;font-size:15px;letter-spacing:.01em;
-  padding:13px 26px;border-radius:var(--r);border:1px solid rgba(0,0,0,.25);
-  box-shadow:0 1px 0 rgba(255,255,255,.14) inset,0 4px 14px rgba(0,0,0,.35);
-  transition:filter .15s,transform .1s;cursor:pointer;text-align:center;
-}
-.offer-btn:hover{filter:brightness(1.1)}
-.offer-btn:active{transform:translateY(1px)}
-.btn-ghost{
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  background:var(--panel2);color:var(--txt);font-weight:600;font-size:14px;
-  padding:11px 20px;border-radius:var(--r);border:1px solid var(--line2);
-  transition:background .15s,border-color .15s;cursor:pointer;
-}
-.btn-ghost:hover{background:var(--panel3);border-color:var(--blue)}
-
-/* ---------- topbar oficial ---------- */
-.topbar{
-  position:sticky;top:0;z-index:600;background:rgba(11,18,25,.94);
-  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
-}
-.topbar-in{
-  max-width:1180px;margin:0 auto;padding:0 20px;height:58px;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.tb-brand{display:flex;align-items:center;gap:9px}
-.tb-brand img{width:26px;height:26px;border-radius:5px}
-.tb-brand span{font-weight:700;font-size:15px;letter-spacing:-.01em;color:#fff}
-.tb-cta{
-  background:var(--buy);color:#fff;font-size:13px;font-weight:700;
-  padding:8px 16px;border-radius:6px;display:inline-flex;align-items:center;gap:7px;transition:.15s;
-}
-.tb-cta:hover{background:var(--buy2)}
-.tb-cta svg{width:15px;height:15px;fill:#fff;flex:0 0 15px}
-@media(max-width:720px){.topbar-in{height:52px}}
-
-/* ---------- hero ---------- */
-.hero{padding:32px 0 10px}
-.hero h1{font-size:clamp(24px,4.2vw,36px);letter-spacing:-1px;line-height:1.15;max-width:780px;color:#fff}
-.hero .lead{font-size:clamp(14px,1.8vw,16px);color:var(--txt2);margin-top:10px;max-width:700px;line-height:1.6}
-
-/* oferta compacta: preço + benefícios lado a lado */
-.offer-strip{
-  display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;
-  margin-top:22px;background:var(--panel);border:1px solid var(--line);
-  border-radius:var(--r2);padding:18px 20px;
-}
-.os-price-col{display:flex;flex-direction:column;gap:4px;min-width:160px}
-.os-lbl{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--dim)}
-.os-val{font-size:clamp(28px,5vw,36px);font-weight:800;color:#fff;letter-spacing:-1.5px;line-height:1}
-.os-sub{font-size:12px;color:var(--deal-tx);font-weight:600}
-.os-alt{font-size:11.5px;color:var(--dim);margin-top:2px}
-.os-feats{list-style:none;display:flex;flex-direction:column;gap:6px}
-.os-feats li{font-size:13px;color:var(--txt2);display:flex;align-items:center;gap:8px;line-height:1.4}
-.os-feats li::before{
-  content:'';flex-shrink:0;width:14px;height:14px;border-radius:3px;
-  background:rgba(74,157,42,.2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%2357b533' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/10px no-repeat;
-}
-.os-feats li b{color:#fff;font-weight:600}
-.os-cta{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
-@media(max-width:640px){
-  .offer-strip{grid-template-columns:1fr}
-  .os-price-col{flex-direction:row;align-items:baseline;gap:10px;flex-wrap:wrap}
+:root {
+  --bg-deep: #070b10;
+  --bg-surface: #0b1219;
+  --bg-card: #101a24;
+  --bg-card-hover: #162432;
+  --bg-card-alt: #1a293a;
+  
+  --line-subtle: rgba(146, 186, 220, 0.10);
+  --line-bright: rgba(146, 186, 220, 0.22);
+  --line-green: rgba(37, 211, 102, 0.25);
+  
+  --txt-primary: #f0f6fc;
+  --txt-secondary: #c2d2e2;
+  --txt-muted: #7e95ab;
+  
+  --wpp: #25D366;
+  --wpp-hover: #2cdb6e;
+  --wpp-dark: #128C7E;
+  --wpp-glow: rgba(37, 211, 102, 0.35);
+  
+  --steam-blue: #59a6e0;
+  --steam-glow: rgba(89, 166, 224, 0.25);
+  --deal-lime: #bce337;
+  --gold: #f59e0b;
+  
+  --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-pill: 9999px;
+  
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.45);
+  --shadow-glow: 0 0 30px rgba(37, 211, 102, 0.2);
 }
 
-/* ---------- abas de plano ---------- */
-.planos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0 0}
-.plano{position:relative;background:var(--panel);border:1px solid var(--line);
-  border-radius:var(--r2);padding:13px 12px;text-align:left;transition:.16s;overflow:hidden;cursor:pointer}
-.plano:hover{background:var(--panel2)}
-.plano .pn{font-size:13px;font-weight:700;color:var(--txt2)}
-.plano .pq{font-size:clamp(17px,3.4vw,23px);font-weight:800;letter-spacing:-.6px;margin-top:1px}
-.plano .pd{font-size:11.5px;color:var(--dim);margin-top:3px;line-height:1.35}
-.plano.on{border-color:var(--blue);background:var(--blue-dim)}
-.plano.on .pq{color:#fff}
-.plano.alvo{border-color:rgba(74,157,42,.5)}
-.plano.alvo.on{border-color:var(--buy2);background:rgba(74,157,42,.14)}
-.plano.alvo .pq{color:var(--deal-tx)}
-.selo{position:absolute;top:0;right:0;background:var(--deal-bg);color:var(--deal-tx);
-  font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
-  padding:3px 8px;border-radius:0 var(--r2) 0 var(--r)}
-
-/* ---------- faixa de resumo ---------- */
-.resumo{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-  background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);
-  padding:12px 14px;margin-top:10px;font-size:13.5px;color:var(--txt2)}
-.resumo b{color:var(--txt)}
-.resumo.puxa{border-color:rgba(74,157,42,.4);background:rgba(74,157,42,.08)}
-.resumo .up{margin-left:auto;background:var(--buy);color:#fff;font-weight:700;
-  font-size:12.5px;padding:7px 13px;border-radius:var(--r);white-space:nowrap;cursor:pointer}
-.resumo .up:hover{background:var(--buy2)}
-
-/* ---------- busca ---------- */
-.tools{margin-top:14px;display:flex;flex-direction:column;gap:10px}
-.busca{position:relative}
-.busca svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);
-  width:17px;height:17px;fill:none;stroke:var(--dim);stroke-width:2}
-.busca input{width:100%;background:var(--panel);border:1px solid var(--line2);
-  border-radius:var(--r2);padding:13px 14px 13px 40px;color:var(--txt);font-size:15px;outline:0}
-.busca input:focus{border-color:var(--blue)}
-.busca input::placeholder{color:var(--dim)}
-.chips{display:flex;gap:7px;overflow-x:auto;padding-bottom:3px;scrollbar-width:none}
-.chips::-webkit-scrollbar{display:none}
-.chip{flex:0 0 auto;background:var(--panel);border:1px solid var(--line);
-  border-radius:99px;padding:6px 13px;font-size:12.5px;font-weight:600;color:var(--txt2)}
-.chip.on{background:var(--blue-dim);border-color:var(--blue);color:#fff}
-
-/* ---------- lançamentos ---------- */
-.lanc{margin-top:20px;border:1px solid rgba(74,157,42,.4);border-radius:var(--r2);
-  background:linear-gradient(180deg,rgba(74,157,42,.12),rgba(74,157,42,.03));padding:14px}
-.lanc-h{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:11px}
-.lanc-h b{font-size:15px;font-weight:800;letter-spacing:-.3px}
-.lanc-h span{font-size:12.5px;color:var(--txt2)}
-.lanc-h .so{background:var(--deal-bg);color:var(--deal-tx);font-size:10px;font-weight:800;
-  letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:99px}
-.tira{display:flex;gap:9px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
-.tira::-webkit-scrollbar{display:none}
-.tira .lc{flex:0 0 172px;cursor:pointer}
-.tira .lc img{width:172px;aspect-ratio:460/215;object-fit:cover;border-radius:var(--r);
-  border:1px solid var(--line)}
-.tira .lc .ln{font-size:12px;font-weight:600;margin-top:5px;line-height:1.3;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.tira .lc .ld{font-size:11px;color:var(--deal-tx);font-weight:700;margin-top:1px}
-
-/* ---------- grade ---------- */
-.contador{margin:20px 0 10px;font-size:13px;color:var(--dim)}
-.contador b{color:var(--txt)}
-.grade{display:grid;gap:10px;
-  grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
-.card{position:relative;background:var(--panel);border:1px solid var(--line);
-  border-radius:var(--r);overflow:hidden;cursor:pointer;transition:border-color .14s}
-.card:hover{border-color:var(--line2)}
-.card img{width:100%;aspect-ratio:460/215;object-fit:cover;background:var(--panel3)}
-.card .nome{font-size:12.5px;font-weight:600;padding:7px 9px 9px;line-height:1.32;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:44px}
-.tagn{position:absolute;top:6px;left:6px;background:rgba(11,18,25,.9);color:var(--deal-tx);
-  font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
-  padding:3px 7px;border-radius:99px;border:1px solid rgba(188,227,55,.35)}
-.card.fora img{filter:grayscale(.85) brightness(.42)}
-.card.fora{border-color:rgba(74,157,42,.35)}
-.card.vit{border-color:rgba(74,157,42,.45)}
-.card .fx{background:var(--deal-bg);color:var(--deal-tx);font-size:10px;font-weight:800;
-  letter-spacing:.05em;text-transform:uppercase;text-align:center;padding:4px 6px}
-.card .nome{padding-bottom:7px}
-.cad{position:absolute;inset:0;bottom:44px;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:5px;text-align:center;padding:8px}
-.cad svg{width:19px;height:19px;fill:none;stroke:var(--deal-tx);stroke-width:2}
-.cad span{font-size:10.5px;font-weight:800;color:var(--deal-tx);letter-spacing:.04em;
-  text-transform:uppercase;line-height:1.25}
-
-.vazio{text-align:center;padding:44px 16px;color:var(--dim);font-size:14px}
-.vazio b{display:block;color:var(--txt);font-size:16px;margin-bottom:5px}
-.mais{display:block;margin:20px auto 0;background:var(--panel2);border:1px solid var(--line2);
-  border-radius:var(--r);padding:12px 26px;font-size:14px;font-weight:600}
-.mais:hover{background:var(--panel3)}
-
-/* ---------- fechamento ---------- */
-.fim{margin:40px 0 0;background:var(--panel);border:1px solid var(--line);
-  border-top:2px solid var(--buy);border-radius:var(--r2);padding:24px 20px;text-align:center}
-.fim h2{font-size:clamp(19px,4vw,25px);font-weight:800;letter-spacing:-.6px}
-.fim p{color:var(--txt2);font-size:14.5px;margin-top:8px;max-width:520px;
-  margin-left:auto;margin-right:auto}
-.fim-btns{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:16px;flex-wrap:wrap}
-.fim .offer-btn{width:auto;min-width:250px}
-.fim .btn-ghost{min-width:180px}
-.fim .sub{display:block;margin-top:12px;font-size:12px;color:var(--dim);max-width:460px;margin-inline:auto}
-
-.rod{margin-top:34px;padding:20px 0 34px;border-top:1px solid var(--line);
-  font-size:12px;color:var(--dim);line-height:1.6;text-align:center}
-
-/* ---------- popup do jogo ---------- */
-.ov{position:fixed;inset:0;z-index:9600;background:rgba(6,10,14,.9);
-  display:none;align-items:center;justify-content:center;padding:20px 16px}
-.ov.on{display:flex}
-body.travado{overflow:hidden}
-.box{position:relative;width:min(400px,94vw);max-height:92vh;overflow-y:auto;
-  background:var(--bg2);border:1px solid var(--line2);border-radius:var(--r2);
-  box-shadow:0 30px 70px rgba(0,0,0,.6)}
-.box .capa{width:100%;aspect-ratio:460/215;object-fit:cover;background:var(--panel2)}
-.x{position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:50%;
-  background:rgba(6,10,14,.72);border:1px solid var(--line2);color:#fff;font-size:19px;line-height:1;cursor:pointer}
-.corpo{padding:15px 18px 18px;display:flex;flex-direction:column;gap:12px;text-align:center}
-.corpo .jn{font-size:17px;font-weight:700;color:#fff;line-height:1.3}
-.pill{align-self:center;font-size:12.5px;font-weight:600;padding:4px 11px;border-radius:20px;
-  background:rgba(47,93,16,.55);color:var(--deal-tx)}
-.pill.soon{background:rgba(224,160,58,.14);color:var(--warn)}
-.jt{font-size:14px;line-height:1.55;color:var(--txt2)}
-.jt strong{color:#fff;font-weight:600}
-.emq{display:flex;flex-direction:column;gap:5px;background:var(--panel);
-  border:1px solid var(--line);border-radius:var(--r2);padding:11px 13px}
-.emq-h{font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--dim);text-align:left;margin-bottom:2px}
-.lin{display:flex;align-items:center;gap:8px;font-size:13.5px;text-align:left}
-.lin .ic{width:16px;flex:0 0 16px;font-weight:800;font-size:13px;text-align:center}
-.lin.sim .ic{color:var(--buy2)}
-.lin.nao .ic{color:var(--dim)}
-.lin.nao{color:var(--dim)}
-.lin .qn{margin-left:auto;font-size:11.5px;color:var(--dim)}
-.lin.alvo{color:var(--deal-tx);font-weight:700}
-.lin.alvo .ic{color:var(--deal-tx)}
-
-.modal-btns{display:flex;flex-direction:column;gap:8px;margin-top:4px}
-.jbtn-adm{
-  display:flex;align-items:center;justify-content:center;gap:7px;
-  background:linear-gradient(180deg,#64d541,#56b938);color:#08110a;font-weight:700;
-  font-size:14px;padding:12px;border-radius:var(--r);text-align:center;
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 76px;
 }
-.jbtn-adm:hover{filter:brightness(1.1)}
-.jbtn-grp{
-  background:var(--panel2);border:1px solid var(--line2);color:var(--txt);
-  font-weight:600;font-size:13px;padding:10px;border-radius:var(--r);text-align:center;
-}
-.jbtn-grp:hover{background:var(--panel3);color:#fff}
-.jvolta{font-size:12.5px;color:var(--dim);padding:2px;cursor:pointer}
-.jvolta:hover{color:var(--txt2)}
-.modal-note{font-size:11px;color:var(--dim);line-height:1.4;margin-top:2px}
 
-/* ---------- floating WhatsApp ---------- */
-.float-wpp{
-  position:fixed;bottom:24px;right:24px;z-index:9000;display:flex;align-items:center;gap:8px;
-  background:var(--buy);color:#fff;padding:10px 18px;border-radius:50px;font-size:13px;font-weight:700;
-  box-shadow:0 4px 18px rgba(0,0,0,.45);transition:.18s;cursor:pointer;border:1px solid rgba(255,255,255,.12);
+body {
+  background-color: var(--bg-deep);
+  background-image: 
+    radial-gradient(ellipse 90% 45% at 50% -10%, rgba(37, 211, 102, 0.08), transparent 70%),
+    radial-gradient(ellipse 70% 35% at 85% 25%, rgba(89, 166, 224, 0.05), transparent 60%),
+    linear-gradient(180deg, var(--bg-deep) 0%, #06090d 100%);
+  background-attachment: fixed;
+  color: var(--txt-primary);
+  font-family: var(--font-main);
+  line-height: 1.55;
+  font-size: 15px;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 96px; /* Espaço para o sticky CTA mobile */
 }
-.float-wpp:hover{background:var(--buy2);transform:translateY(-2px)}
-.float-wpp svg{width:18px;height:18px;fill:#fff;flex:0 0 18px}
 
-@media(max-width:560px){
-  .planos{gap:6px}
-  .plano{padding:10px 9px;border-radius:var(--r)}
-  .resumo .up{margin-left:0;width:100%;text-align:center}
-  .grade{grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
-  .float-wpp span{display:none}
-  .float-wpp{padding:12px;border-radius:50%}
+img { display:block; max-width:100%; }
+a { color:inherit; text-decoration:none; }
+button { font:inherit; color:inherit; background:none; border:0; cursor:pointer; }
+
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ---------- TIPOGRAFIA & HIERARQUIA ---------- */
+h1, h2, h3, h4 {
+  font-weight: 800;
+  line-height: 1.16;
+  letter-spacing: -0.025em;
+  color: #fff;
+}
+
+h1 { font-size: clamp(28px, 4.8vw, 46px); }
+h2 { font-size: clamp(23px, 3.4vw, 34px); }
+h3 { font-size: clamp(18px, 2.5vw, 22px); }
+
+.tag-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(37, 211, 102, 0.12);
+  border: 1px solid rgba(37, 211, 102, 0.3);
+  color: var(--wpp);
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 13px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 14px;
+}
+
+.tag-badge.steam {
+  background: rgba(89, 166, 224, 0.12);
+  border-color: rgba(89, 166, 224, 0.35);
+  color: var(--steam-blue);
+}
+
+.section-header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 36px;
+}
+
+.section-header p {
+  color: var(--txt-secondary);
+  font-size: clamp(14.5px, 1.8vw, 16.5px);
+  margin-top: 10px;
+  line-height: 1.58;
+}
+
+.sec {
+  padding: 54px 0;
+  position: relative;
+}
+
+.sec::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: radial-gradient(ellipse at center, var(--line-bright) 0%, transparent 80%);
+}
+
+/* ---------- TOPBAR ---------- */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  background: rgba(7, 11, 16, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line-subtle);
+  transition: background .2s;
+}
+
+.topbar-content {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  transition: opacity .15s;
+}
+
+.brand:hover { opacity: .9; }
+
+.brand-logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 7px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-size: 15.5px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #fff;
+  line-height: 1.1;
+}
+
+.brand-sub {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--txt-muted);
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.live-indicator {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: var(--txt-secondary);
+  font-weight: 600;
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--wpp);
+  box-shadow: 0 0 10px var(--wpp);
+  animation: pulse-dot 2s infinite ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.btn-topbar {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--wpp);
+  color: #05130a;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  transition: filter .15s, transform .1s;
+}
+
+.btn-topbar:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.btn-topbar svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+/* ---------- BOTÕES DE CONVERSÃO WHATSAPP (CRO) ---------- */
+.btn-cta-wpp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  background: linear-gradient(180deg, #28dc6c 0%, #1fb857 100%);
+  color: #041208;
+  font-weight: 800;
+  font-size: clamp(15px, 2vw, 17px);
+  letter-spacing: -0.01em;
+  padding: 16px 32px;
+  border-radius: var(--radius-md);
+  box-shadow: 
+    0 1px 0 rgba(255, 255, 255, 0.25) inset,
+    0 8px 24px var(--wpp-glow),
+    0 2px 6px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  text-align: center;
+  transition: transform .15s ease, filter .15s ease, box-shadow .2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-cta-wpp::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+  transform: skewX(-20deg);
+  transition: 0.6s;
+}
+
+.btn-cta-wpp:hover::after {
+  left: 150%;
+}
+
+.btn-cta-wpp:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 1px 0 rgba(255, 255, 255, 0.3) inset,
+    0 12px 30px rgba(37, 211, 102, 0.5),
+    0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.btn-cta-wpp:active {
+  transform: translateY(1px);
+  filter: brightness(0.98);
+}
+
+.btn-cta-wpp svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.btn-ghost-steam {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--bg-card);
+  color: var(--txt-primary);
+  font-weight: 600;
+  font-size: 14.5px;
+  padding: 15px 24px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line-bright);
+  transition: background .15s, border-color .15s, transform .1s;
+}
+
+.btn-ghost-steam:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--steam-blue);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* ---------- SEÇÃO 1: HERO (PRIMEIRA IMPRESSÃO) ---------- */
+.hero-section {
+  padding: 42px 0 36px;
+  text-align: center;
+}
+
+.hero-box {
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.hero-lead {
+  font-size: clamp(15.5px, 2.1vw, 18.5px);
+  color: var(--txt-secondary);
+  line-height: 1.62;
+  margin: 18px auto 28px;
+  max-width: 720px;
+}
+
+.hero-lead strong {
+  color: #fff;
+  font-weight: 700;
+}
+
+.hero-pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 28px 0 34px;
+}
+
+.pillar-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--line-subtle);
+  border-radius: var(--radius-md);
+  padding: 14px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  transition: border-color .2s;
+}
+
+.pillar-item:hover {
+  border-color: var(--line-bright);
+}
+
+.pillar-icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.pillar-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.pillar-desc {
+  font-size: 11.5px;
+  color: var(--txt-muted);
+  line-height: 1.35;
+}
+
+.hero-cta-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.hero-subtext {
+  font-size: 12px;
+  color: var(--txt-muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hero-subtext span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ---------- SEÇÃO 2: CRIAR DESEJO (VITRINE DE JOGOS) ---------- */
+.showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-top: 26px;
+}
+
+.game-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--line-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.game-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--steam-blue);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.5), 0 0 16px var(--steam-glow);
+}
+
+.game-thumb-wrap {
+  position: relative;
+  aspect-ratio: 460 / 215;
+  background: #141f2b;
+  overflow: hidden;
+}
+
+.game-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .3s ease;
+}
+
+.game-card:hover .game-thumb {
+  transform: scale(1.05);
+}
+
+.game-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  font-size: 9.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  background: rgba(7, 11, 16, 0.9);
+  color: var(--deal-lime);
+  border: 1px solid rgba(188, 227, 55, 0.35);
+}
+
+.game-info {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.game-name {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+  margin-bottom: 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.game-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  font-size: 11.5px;
+  padding-top: 6px;
+  border-top: 1px solid var(--line-subtle);
+}
+
+.game-genre {
+  color: var(--txt-muted);
+  font-weight: 500;
+}
+
+.game-status {
+  color: var(--wpp);
+  font-weight: 700;
+}
+
+.showcase-banner {
+  margin-top: 28px;
+  background: linear-gradient(135deg, rgba(89, 166, 224, 0.12), rgba(37, 211, 102, 0.08));
+  border: 1px solid var(--line-bright);
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.sb-info h4 {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.sb-info p {
+  font-size: 13.5px;
+  color: var(--txt-secondary);
+}
+
+.sb-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--bg-card);
+  color: var(--txt-primary);
+  border: 1px solid var(--line-bright);
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  font-weight: 700;
+  transition: background .15s, border-color .15s;
+}
+
+.sb-btn:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--steam-blue);
+  color: #fff;
+}
+
+/* ---------- SEÇÃO 3: PREVIEW DO WHATSAPP (O QUE HÁ NO GRUPO) ---------- */
+.wpp-preview-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 32px;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* Mockup de Interface do WhatsApp Dark */
+.wpp-mockup-window {
+  background: #111b21;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+
+.wpp-window-header {
+  background: #202c33;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.wpp-group-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.wpp-header-info {
+  flex-grow: 1;
+}
+
+.wpp-group-name {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #e9edef;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wpp-verified-badge {
+  width: 14px;
+  height: 14px;
+  fill: var(--wpp);
+}
+
+.wpp-group-status {
+  font-size: 11px;
+  color: #8696a0;
+}
+
+.wpp-chat-body {
+  padding: 18px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background-color: #0b141a;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 16px 16px;
+  max-height: 460px;
+  overflow-y: auto;
+}
+
+.wpp-msg-bubble {
+  background: #202c33;
+  color: #e9edef;
+  border-radius: 10px 10px 10px 2px;
+  padding: 12px 14px;
+  font-size: 13.5px;
+  line-height: 1.45;
+  max-width: 92%;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  border-left: 3px solid var(--wpp);
+}
+
+.wpp-msg-author {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--wpp);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wpp-admin-tag {
+  background: rgba(37, 211, 102, 0.18);
+  font-size: 9.5px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.wpp-msg-text {
+  color: #d1d7db;
+}
+
+.wpp-msg-text b, .wpp-msg-text strong {
+  color: #fff;
+  font-weight: 700;
+}
+
+.wpp-msg-footer {
+  text-align: right;
+  font-size: 10.5px;
+  color: #8696a0;
+  margin-top: 5px;
+}
+
+/* Coluna de Benefícios ao lado do Mockup */
+.preview-benefits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.benefit-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--line-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  transition: border-color .2s;
+}
+
+.benefit-card:hover {
+  border-color: var(--line-green);
+}
+
+.bc-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(37, 211, 102, 0.12);
+  color: var(--wpp);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  flex-shrink: 0;
+}
+
+.bc-content h4 {
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.bc-content p {
+  font-size: 13px;
+  color: var(--txt-secondary);
+  line-height: 1.45;
+}
+
+/* ---------- SEÇÃO DE PROVA REAL (FEEDBACKS) ---------- */
+.feedbacks-scroller {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 10px 4px 18px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-bright) transparent;
+}
+
+.feedbacks-scroller::-webkit-scrollbar {
+  height: 6px;
+}
+
+.feedbacks-scroller::-webkit-scrollbar-thumb {
+  background: var(--line-bright);
+  border-radius: 4px;
+}
+
+.fb-card-item {
+  flex: 0 0 280px;
+  scroll-snap-align: start;
+  background: var(--bg-surface);
+  border: 1px solid var(--line-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: transform .2s, border-color .2s;
+}
+
+.fb-card-item:hover {
+  transform: translateY(-2px);
+  border-color: var(--line-bright);
+}
+
+.fb-card-item img {
+  width: 100%;
+  aspect-ratio: 1080 / 1310;
+  object-fit: cover;
+  background: #141f2b;
+}
+
+.feedbacks-note {
+  text-align: center;
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--txt-muted);
+}
+
+/* ---------- SEÇÃO 4: QUEBRA DE OBJEÇÕES (FAQ) ---------- */
+.faq-list {
+  max-width: 780px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faq-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--line-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color .2s ease;
+}
+
+.faq-item:hover, .faq-item[open] {
+  border-color: var(--line-bright);
+}
+
+.faq-summary {
+  padding: 18px 20px;
+  font-size: 15.5px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  list-style: none;
+  user-select: none;
+}
+
+.faq-summary::-webkit-details-marker { display:none; }
+
+.faq-summary svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--txt-muted);
+  fill: none;
+  stroke-width: 2.5;
+  transition: transform .2s ease, stroke .2s;
+  flex-shrink: 0;
+}
+
+.faq-item[open] .faq-summary svg {
+  transform: rotate(180deg);
+  stroke: var(--wpp);
+}
+
+.faq-answer {
+  padding: 0 20px 18px;
+  font-size: 14px;
+  color: var(--txt-secondary);
+  line-height: 1.6;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  padding-top: 12px;
+}
+
+/* ---------- SEÇÃO 5: CONVERSÃO FINAL ---------- */
+.final-cta-card {
+  background: 
+    radial-gradient(circle at 50% 0%, rgba(37, 211, 102, 0.15) 0%, transparent 70%),
+    linear-gradient(180deg, var(--bg-surface) 0%, #0d1721 100%);
+  border: 1px solid var(--line-green);
+  border-radius: var(--radius-lg);
+  padding: 44px 28px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(37, 211, 102, 0.15);
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.final-cta-card h2 {
+  font-size: clamp(24px, 4vw, 36px);
+  margin-bottom: 12px;
+}
+
+.final-cta-card p {
+  color: var(--txt-secondary);
+  font-size: clamp(14.5px, 2vw, 17px);
+  max-width: 620px;
+  margin: 0 auto 28px;
+  line-height: 1.58;
+}
+
+.final-cta-card .btn-cta-wpp {
+  min-width: 320px;
+}
+
+.final-security-badges {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 22px;
+  font-size: 12.5px;
+  color: var(--txt-muted);
+  flex-wrap: wrap;
+}
+
+.final-security-badges span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ---------- FOOTER ---------- */
+.site-footer {
+  padding: 38px 0 20px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--txt-muted);
+  line-height: 1.65;
+}
+
+.footer-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.footer-nav a {
+  color: var(--txt-secondary);
+  font-weight: 500;
+  transition: color .15s;
+}
+
+.footer-nav a:hover {
+  color: #fff;
+}
+
+.footer-disclaimer {
+  max-width: 680px;
+  margin: 0 auto;
+  opacity: .75;
+}
+
+/* ---------- BARRA STICKY MOBILE (CONVERSÃO MOBILE) ---------- */
+.sticky-mobile-bar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 990;
+  background: rgba(7, 11, 16, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid rgba(37, 211, 102, 0.25);
+  padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.sticky-mobile-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.sticky-mobile-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.sticky-mobile-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.15;
+}
+
+.sticky-mobile-sub {
+  font-size: 11px;
+  color: var(--wpp);
+  font-weight: 600;
+}
+
+.sticky-mobile-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--wpp);
+  color: #041208;
+  font-weight: 800;
+  font-size: 13.5px;
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  box-shadow: 0 2px 10px var(--wpp-glow);
+}
+
+.sticky-mobile-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+/* ---------- RESPONSIVIDADE ---------- */
+@media (max-width: 900px) {
+  .showcase-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .wpp-preview-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sticky-mobile-bar {
+    display: block;
+  }
+  .topbar-right .live-indicator {
+    display: none;
+  }
+  .hero-pillars {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .pillar-item {
+    flex-direction: row;
+    text-align: left;
+    padding: 10px 14px;
+  }
+  .pillar-icon {
+    font-size: 22px;
+  }
+  .showcase-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .showcase-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .final-cta-card .btn-cta-wpp {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 16px;
+  }
+  .btn-cta-wpp {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 15px;
+  }
+  .btn-ghost-steam {
+    width: 100%;
+  }
 }
 </style>
 </head>
@@ -446,465 +1219,605 @@ body.travado{overflow:hidden}
 
 <!-- ===================== BARRA SUPERIOR ===================== -->
 <header class="topbar">
-  <div class="topbar-in">
-    <a class="tb-brand" href="https://almazstore.com.br/?utm_source=grupo&utm_medium=logo">
-      <img src="../assets/logo-128.png" alt="Almaz Store">
-      <span>Almaz Store</span>
-    </a>
-    <a class="tb-cta" href="https://chat.whatsapp.com/EpFIccHn0aZ1hd9jRNcUEq" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
-      <span>Entrar no Grupo</span>
-    </a>
+  <div class="container">
+    <div class="topbar-content">
+      <a class="brand" href="https://almazstore.com.br/?utm_source=grupo&utm_medium=logo">
+        <img class="brand-logo" src="../assets/logo-128.png" alt="Logo Almaz Store" width="32" height="32">
+        <div class="brand-text">
+          <span class="brand-title">Almaz Store</span>
+          <span class="brand-sub">Comunidade Steam</span>
+        </div>
+      </a>
+      
+      <div class="topbar-right">
+        <div class="live-indicator">
+          <span class="live-dot" aria-hidden="true"></span>
+          <span>Grupo Oficial Ativo</span>
+        </div>
+        
+        <a class="btn-topbar js-wpp-btn" data-section="topbar" href="https://chat.whatsapp.com/EpFIccHn0aZ1hd9jRNcUEq" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+          <span>Entrar no Grupo</span>
+        </a>
+      </div>
+    </div>
   </div>
 </header>
 
-<main class="wrap">
+<main>
 
-  <!-- ===================== HERO: OFERTA DIRETA ===================== -->
-  <section class="hero">
-    <h1>Você paga uma vez e nunca mais gasta com jogo na Steam</h1>
-    <p class="lead">
-      Aplicativo para Windows que libera mais de 40.000 jogos direto na sua conta Steam.
-      Download pela própria Steam, multiplayer funcionando e jogos novos toda semana sem pagar mais nada.
-    </p>
+  <!-- ===================== SEÇÃO 1: HERO (PRIMEIRA IMPRESSÃO) ===================== -->
+  <section class="sec hero-section" id="inicio">
+    <div class="container">
+      <div class="hero-box">
+        <div class="tag-badge">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+          Comunidade Gamer no WhatsApp · Steam no PC
+        </div>
+        
+        <h1>Nunca mais perca um drop de jogo na Steam.</h1>
+        
+        <p class="hero-lead">
+          Receba alertas de <strong>novos jogos adicionados toda semana</strong>, acompanhe lançamentos esperados, novidades de fixes online e participe das votações da comunidade. <strong>100% gratuito e canal oficial.</strong>
+        </p>
 
-    <div class="offer-strip">
-      <div class="os-price-col">
-        <span class="os-lbl">Plano Vitalício</span>
-        <span class="os-val num">R$ 49,97</span>
-        <span class="os-sub">taxa única · sem mensalidade</span>
-        <span class="os-alt">ou a partir de R$ 9,97 no Básico</span>
+        <!-- Três pilares de valor imediato -->
+        <div class="hero-pillars">
+          <div class="pillar-item">
+            <span class="pillar-icon" aria-hidden="true">⚡</span>
+            <div>
+              <div class="pillar-title">Alertas em 1ª Mão</div>
+              <div class="pillar-desc">Drops de jogos e fixes assim que liberados</div>
+            </div>
+          </div>
+          
+          <div class="pillar-item">
+            <span class="pillar-icon" aria-hidden="true">🛡️</span>
+            <div>
+              <div class="pillar-title">Canal Silencioso</div>
+              <div class="pillar-desc">Apenas comunicados oficiais da equipe</div>
+            </div>
+          </div>
+          
+          <div class="pillar-item">
+            <span class="pillar-icon" aria-hidden="true">🎮</span>
+            <div>
+              <div class="pillar-title">Downloads na Steam</div>
+              <div class="pillar-desc">Sem contas compartilhadas e sem pedir senha</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Call to Action Principal -->
+        <div class="hero-cta-wrap">
+          <div class="hero-buttons">
+            <a class="btn-cta-wpp js-wpp-btn" data-section="hero" href="https://chat.whatsapp.com/EpFIccHn0aZ1hd9jRNcUEq" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+              <span>Entrar no Grupo Oficial do WhatsApp</span>
+            </a>
+            
+            <a class="btn-ghost-steam" href="#jogos">
+              <span>Ver jogos em destaque ↓</span>
+            </a>
+          </div>
+          
+          <div class="hero-subtext">
+            <span>✓ Entrada imediata e gratuita</span>
+            <span>·</span>
+            <span>✓ Notificações moderadas</span>
+            <span>·</span>
+            <span>✓ Saia quando quiser com 1 toque</span>
+          </div>
+        </div>
       </div>
-      <ul class="os-feats">
-        <li><b>Na sua própria conta Steam</b>, sem contas compartilhadas</li>
-        <li>Download pela <b>própria Steam</b></li>
-        <li><b>Multiplayer funcionando</b> nos jogos que tem online</li>
-        <li>Jogos novos entram <b>toda semana</b></li>
-        <li><b>7 dias de garantia</b>, devolvem pelo PIX</li>
-      </ul>
-    </div>
-
-    <div class="os-cta">
-      <a class="offer-btn" href="https://chat.whatsapp.com/EpFIccHn0aZ1hd9jRNcUEq" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
-        Entrar no Grupo de Clientes
-      </a>
-      <a class="btn-ghost" href="#catalogo">Ver catálogo completo ↓</a>
     </div>
   </section>
 
-  <!-- ===================== CATÁLOGO INTERATIVO ===================== -->
-  <section class="sec" id="catalogo">
-    <div class="sec-head">
-      <h2>Catálogo completo</h2>
-      <p>Pesquise qualquer jogo pelo nome e veja se ele tá incluso antes de entrar no grupo.</p>
-    </div>
-
-    <div class="planos" id="planos"></div>
-    <div class="resumo" id="resumo"></div>
-
-    <div class="tools">
-      <div class="busca">
-        <svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input id="q" type="text" placeholder="Digite o nome de qualquer jogo (ex: GTA, Elden Ring, Resident Evil, FIFA)..." autocomplete="off" spellcheck="false">
+  <!-- ===================== SEÇÃO 2: CRIAR DESEJO (VITRINE DE JOGOS) ===================== -->
+  <section class="sec" id="jogos">
+    <div class="container">
+      <div class="section-header">
+        <div class="tag-badge steam">Ecossistema Steam Almaz Store</div>
+        <h2>Os maiores títulos do mundo rodando na sua conta</h2>
+        <p>Estes são alguns dos jogos mais procurados e votados que entram no ecossistema e são comunicados em primeira mão no grupo:</p>
       </div>
-      <div class="chips" id="chips"></div>
-    </div>
 
-    <section class="lanc" id="lanc" hidden>
-      <div class="lanc-h">
-        <b>Lançamentos que ainda vão sair</b>
-        <span class="so">só no Vitalício</span>
-        <span id="lanc-n"></span>
+      <div class="showcase-grid">
+        <!-- Card 1: Black Myth: Wukong -->
+        <article class="game-card">
+          <div class="game-thumb-wrap">
+            <img class="game-thumb" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2358720/header.jpg" alt="Black Myth: Wukong" loading="lazy" width="460" height="215">
+            <span class="game-badge">Destaque</span>
+          </div>
+          <div class="game-info">
+            <h3 class="game-name">Black Myth: Wukong</h3>
+            <div class="game-meta">
+              <span class="game-genre">Ação / RPG</span>
+              <span class="game-status">No Launcher</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2: Elden Ring -->
+        <article class="game-card">
+          <div class="game-thumb-wrap">
+            <img class="game-thumb" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/header.jpg" alt="Elden Ring" loading="lazy" width="460" height="215">
+            <span class="game-badge">GOTY</span>
+          </div>
+          <div class="game-info">
+            <h3 class="game-name">Elden Ring</h3>
+            <div class="game-meta">
+              <span class="game-genre">RPG de Ação</span>
+              <span class="game-status">No Launcher</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3: Red Dead Redemption 2 -->
+        <article class="game-card">
+          <div class="game-thumb-wrap">
+            <img class="game-thumb" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg" alt="Red Dead Redemption 2" loading="lazy" width="460" height="215">
+            <span class="game-badge">Bypass OK</span>
+          </div>
+          <div class="game-info">
+            <h3 class="game-name">Red Dead Redemption 2</h3>
+            <div class="game-meta">
+              <span class="game-genre">Mundo Aberto</span>
+              <span class="game-status">No Launcher</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 4: God of War Ragnarök -->
+        <article class="game-card">
+          <div class="game-thumb-wrap">
+            <img class="game-thumb" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2322010/header.jpg" alt="God of War Ragnarök" loading="lazy" width="460" height="215">
+            <span class="game-badge">Aventura</span>
+          </div>
+          <div class="game-info">
+            <h3 class="game-name">God of War Ragnarök</h3>
+            <div class="game-meta">
+              <span class="game-genre">Ação / Narrativa</span>
+              <span class="game-status">No Launcher</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 5: EA SPORTS FC -->
+        <article class="game-card">
+          <div class="game-thumb-wrap">
+            <img class="game-thumb" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4080220/05d419a45653a1299ce46d13dbff4533fa076c1c/header.jpg" alt="EA SPORTS FC" loading="lazy" width="460" height="215">
+            <span class="game-badge">Esportes</span>
+          </div>
+          <div class="game-info">
+            <h3 class="game-name">EA SPORTS FC</h3>
+            <div class="game-meta">
+              <span class="game-genre">Futebol / PC</span>
+              <span class="game-status">No Launcher</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 6: GTA V -->
+        <article class="game-card">
+          <div class="game-thumb-wrap">
+            <img class="game-thumb" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/271590/header.jpg" alt="Grand Theft Auto V" loading="lazy" width="460" height="215">
+            <span class="game-badge">Clássico</span>
+          </div>
+          <div class="game-info">
+            <h3 class="game-name">Grand Theft Auto V</h3>
+            <div class="game-meta">
+              <span class="game-genre">Mundo Aberto</span>
+              <span class="game-status">No Launcher</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 7: Resident Evil Requiem / 4 Remake -->
+        <article class="game-card">
+          <div class="game-thumb-wrap">
+            <img class="game-thumb" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2050650/header.jpg" alt="Resident Evil 4 Remake" loading="lazy" width="460" height="215">
+            <span class="game-badge">Terror</span>
+          </div>
+          <div class="game-info">
+            <h3 class="game-name">Resident Evil 4 Remake</h3>
+            <div class="game-meta">
+              <span class="game-genre">Sobrevivência</span>
+              <span class="game-status">No Launcher</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 8: Cyberpunk 2077 -->
+        <article class="game-card">
+          <div class="game-thumb-wrap">
+            <img class="game-thumb" src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg" alt="Cyberpunk 2077" loading="lazy" width="460" height="215">
+            <span class="game-badge">RPG Sci-Fi</span>
+          </div>
+          <div class="game-info">
+            <h3 class="game-name">Cyberpunk 2077</h3>
+            <div class="game-meta">
+              <span class="game-genre">Mundo Aberto</span>
+              <span class="game-status">No Launcher</span>
+            </div>
+          </div>
+        </article>
       </div>
-      <div class="tira" id="tira"></div>
-    </section>
 
-    <div class="contador" id="contador"></div>
-    <div class="grade" id="grade"></div>
-    <button class="mais" id="mais" hidden>Carregar mais jogos</button>
+      <!-- Banner de Transparência e Catálogo Completo -->
+      <div class="showcase-banner">
+        <div class="sb-info">
+          <h4>Procurando algum jogo específico?</h4>
+          <p>O ecossistema conta com mais de 40.000 jogos cadastrados e novos títulos entram a cada semana.</p>
+        </div>
+        <a class="sb-btn" href="../catalogo-grupo/" target="_blank">
+          <span>Pesquisar no Catálogo Completo</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
   </section>
 
-  <!-- ===================== FECHAMENTO ===================== -->
-  <section class="fim">
-    <h2>Achou o seu jogo?</h2>
-    <p>Entre no nosso Grupo de Clientes no WhatsApp. As vendas são feitas só com os administradores do grupo ou pelo link do site na descrição (entrega automática no PIX).</p>
+  <!-- ===================== SEÇÃO 3: O QUE EXISTE DENTRO DO GRUPO (PREVIEW REAL) ===================== -->
+  <section class="sec" id="grupo-por-dentro">
+    <div class="container">
+      <div class="section-header">
+        <div class="tag-badge">Transparência Total</div>
+        <h2>Veja exatamente como é a experiência no WhatsApp</h2>
+        <p>Sem grupos lotados de conversas paralelas ou mensagens a cada 5 minutos. Conheça o formato organizado dos nossos comunicados:</p>
+      </div>
 
-    <div class="fim-btns">
-      <a class="offer-btn" href="https://chat.whatsapp.com/EpFIccHn0aZ1hd9jRNcUEq" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
-        Entrar no Grupo de Clientes
-      </a>
-      <a class="btn-ghost" href="https://almazstore.com.br/?utm_source=grupo&utm_medium=rodape" target="_blank">Ir pro Site Oficial</a>
+      <div class="wpp-preview-layout">
+        <!-- Mockup Visual de WhatsApp -->
+        <div class="wpp-mockup-window">
+          <div class="wpp-window-header">
+            <img class="wpp-group-avatar" src="../assets/logo-128.png" alt="Avatar Almaz" width="42" height="42">
+            <div class="wpp-header-info">
+              <div class="wpp-group-name">
+                Almaz Store | Avisos Oficiais
+                <svg class="wpp-verified-badge" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+              </div>
+              <div class="wpp-group-status">Somente administradores podem enviar mensagens</div>
+            </div>
+          </div>
+
+          <div class="wpp-chat-body">
+            <!-- Mensagem 1: Drop Semanal -->
+            <div class="wpp-msg-bubble">
+              <div class="wpp-msg-author">
+                <span>Almaz Store ADM</span>
+                <span class="wpp-admin-tag">Admin</span>
+              </div>
+              <div class="wpp-msg-text">
+                🎮 <strong>DROP DA SEMANA LIBERADO NO LAUNCHER!</strong><br><br>
+                Fala galera! Acabamos de adicionar mais <strong>15 jogos</strong> na biblioteca, incluindo títulos pedidos na última votação.<br>
+                ✓ Todos já liberados para download direto na sua própria Steam.<br>
+                ✓ Saves e conquistas funcionando normalmente.
+              </div>
+              <div class="wpp-msg-footer">Ontem às 18:42</div>
+            </div>
+
+            <!-- Mensagem 2: Fix Online -->
+            <div class="wpp-msg-bubble">
+              <div class="wpp-msg-author">
+                <span>Almaz Store ADM</span>
+                <span class="wpp-admin-tag">Admin</span>
+              </div>
+              <div class="wpp-msg-text">
+                ⚡ <strong>ATUALIZAÇÃO DE FIX MULTIPLAYER</strong><br><br>
+                O fix online do jogo em alta foi atualizado para compatibilidade com o último update da Steam.<br>
+                Quem já usa o launcher: basta abrir o app para sincronizar.
+              </div>
+              <div class="wpp-msg-footer">Hoje às 11:15</div>
+            </div>
+
+            <!-- Mensagem 3: Votação -->
+            <div class="wpp-msg-bubble">
+              <div class="wpp-msg-author">
+                <span>Almaz Store ADM</span>
+                <span class="wpp-admin-tag">Admin</span>
+              </div>
+              <div class="wpp-msg-text">
+                🗳️ <strong>VOTAÇÃO ABERTA PARA O PRÓXIMO DROP</strong><br><br>
+                Qual jogo você quer que entre no launcher na próxima leva? Deixem o voto no painel da comunidade. Os mais votados sobem primeiro!
+              </div>
+              <div class="wpp-msg-footer">Hoje às 14:02</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Benefícios do formato do grupo -->
+        <div class="preview-benefits-list">
+          <div class="benefit-card">
+            <div class="bc-icon" aria-hidden="true">🔇</div>
+            <div class="bc-content">
+              <h4>Canal Exclusivo e Organizado</h4>
+              <p>Apenas a equipe publica avisos. Você recebe somente os comunicados que realmente importam, sem mensagens paralelas nem notificações desnecessárias.</p>
+            </div>
+          </div>
+
+          <div class="benefit-card">
+            <div class="bc-icon" aria-hidden="true">⚡</div>
+            <div class="bc-content">
+              <h4>Novidades Antes de Todo Mundo</h4>
+              <p>Fique sabendo no minuto em que um lançamento ou jogo esperado tiver o download liberado na Steam.</p>
+            </div>
+          </div>
+
+          <div class="benefit-card">
+            <div class="bc-icon" aria-hidden="true">🗳️</div>
+            <div class="bc-content">
+              <h4>Poder de Voto na Loja</h4>
+              <p>Membros do grupo recebem o link para votar em quais jogos querem que a equipe adicione ao catálogo.</p>
+            </div>
+          </div>
+
+          <div class="benefit-card">
+            <div class="bc-icon" aria-hidden="true">🛡️</div>
+            <div class="bc-content">
+              <h4>Suporte Direto com Admins</h4>
+              <p>Dúvidas sobre compatibilidade com seu PC? Nossos administradores estão identificados no grupo e atendem no privado.</p>
+            </div>
+          </div>
+
+          <a class="btn-cta-wpp js-wpp-btn" data-section="preview" href="https://chat.whatsapp.com/EpFIccHn0aZ1hd9jRNcUEq" target="_blank" rel="noopener" style="width:100%;margin-top:6px;">
+            <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+            <span>Quero Participar do Grupo</span>
+          </a>
+        </div>
+      </div>
     </div>
-
-    <span class="sub">Pagamento único no PIX · 7 dias de garantia · Entrega automática pelo link na descrição do grupo</span>
   </section>
 
-  <div class="rod">
-    Não somos afiliados da Valve Corporation. Steam é marca registrada da Valve.<br>
-    Os downloads são feitos pela própria Steam na sua máquina.<br>
-    Almaz Store © 2026
-  </div>
+  <!-- ===================== PROVA SOCIAL REAL (FEEDBACKS) ===================== -->
+  <section class="sec" id="feedbacks">
+    <div class="container">
+      <div class="section-header">
+        <div class="tag-badge steam">Comunidade Ativa</div>
+        <h2>O que os membros reais dizem sobre a Almaz Store</h2>
+        <p>Capturas reais de membros e clientes que já utilizam o launcher na Steam no dia a dia:</p>
+      </div>
+
+      <div class="feedbacks-scroller">
+        <div class="fb-card-item">
+          <img src="../assets/feedbacks/fb-01.webp" alt="Feedback real de cliente 1" loading="lazy" width="280" height="340">
+        </div>
+        <div class="fb-card-item">
+          <img src="../assets/feedbacks/fb-02.webp" alt="Feedback real de cliente 2" loading="lazy" width="280" height="340">
+        </div>
+        <div class="fb-card-item">
+          <img src="../assets/feedbacks/fb-03.webp" alt="Feedback real de cliente 3" loading="lazy" width="280" height="340">
+        </div>
+        <div class="fb-card-item">
+          <img src="../assets/feedbacks/fb-04.webp" alt="Feedback real de cliente 4" loading="lazy" width="280" height="340">
+        </div>
+        <div class="fb-card-item">
+          <img src="../assets/feedbacks/fb-05.webp" alt="Feedback real de cliente 5" loading="lazy" width="280" height="340">
+        </div>
+        <div class="fb-card-item">
+          <img src="../assets/feedbacks/fb-06.webp" alt="Feedback real de cliente 6" loading="lazy" width="280" height="340">
+        </div>
+      </div>
+
+      <div class="feedbacks-note">
+        ★ Avaliações e mensagens verificadas enviadas por clientes reais em atendimento.
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SEÇÃO 4: QUEBRA DE OBJEÇÕES (FAQ) ===================== -->
+  <section class="sec" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <div class="tag-badge">Perguntas Frequentes</div>
+        <h2>Tudo o que você precisa saber antes de entrar</h2>
+        <p>Tiramos as principais dúvidas para você entrar com total clareza e tranquilidade:</p>
+      </div>
+
+      <div class="faq-list">
+        <!-- FAQ 1 -->
+        <details class="faq-item" open>
+          <summary class="faq-summary">
+            <span>O grupo de WhatsApp é 100% gratuito?</span>
+            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="faq-answer">
+            <strong>Sim, 100% gratuito.</strong> Você não paga nada para entrar, acompanhar as novidades, ver os drops de jogos e participar das votações da comunidade.
+          </div>
+        </details>
+
+        <!-- FAQ 2 -->
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>Com que frequência o grupo envia notificações?</span>
+            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="faq-answer">
+            <strong>Apenas avisos essenciais.</strong> O grupo é fechado para mensagens gerais e restrito à equipe. Você só recebe alertas quando novos jogos entram no catálogo, quando há novidades de fixes ou votações da comunidade, de forma moderada e organizada.
+          </div>
+        </details>
+
+        <!-- FAQ 3 -->
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>O grupo serve para quem ainda não comprou nenhum plano?</span>
+            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="faq-answer">
+            <strong>Com certeza.</strong> O grupo é o melhor lugar para você ver a loja funcionando na prática, conferir os jogos que entram toda semana e tirar suas dúvidas com a equipe antes de decidir qualquer coisa no seu tempo.
+          </div>
+        </details>
+
+        <!-- FAQ 4 -->
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>Como funciona o launcher da Almaz Store?</span>
+            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="faq-answer">
+            É um programa para PC com Windows. Ele libera os jogos na biblioteca da <strong>sua própria conta Steam</strong>, e os arquivos baixam diretamente pelos servidores da Valve na sua máquina. Não usamos contas compartilhadas e não pedimos sua senha em momento nenhum.
+          </div>
+        </details>
+
+        <!-- FAQ 5 -->
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>Funciona no meu computador?</span>
+            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="faq-answer">
+            Funciona em qualquer PC ou notebook com Windows e Steam instalada. Cada jogo roda de acordo com os requisitos normais de hardware dele (os mesmos descritos na página do jogo na Steam). Não funciona em consoles (PS/Xbox) nem em celulares.
+          </div>
+        </details>
+
+        <!-- FAQ 6 -->
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>Posso sair do grupo quando eu quiser?</span>
+            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="faq-answer">
+            <strong>Sim, a qualquer instante.</strong> Com apenas um toque no próprio WhatsApp você silencia ou sai do grupo, sem qualquer burocracia, pegadinha ou cobrança.
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SEÇÃO 5: CONVERSÃO FINAL ===================== -->
+  <section class="sec" id="entrar">
+    <div class="container">
+      <div class="final-cta-card">
+        <div class="tag-badge">Comunidade Oficial Almaz Store</div>
+        <h2>Sua biblioteca Steam nunca mais será a mesma.</h2>
+        <p>
+          Não fique de fora do próximo drop da semana. Entre agora no nosso Grupo Oficial de WhatsApp e venha acompanhar as novidades de perto com a gente.
+        </p>
+
+        <a class="btn-cta-wpp js-wpp-btn" data-section="final" href="https://chat.whatsapp.com/EpFIccHn0aZ1hd9jRNcUEq" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+          <span>Entrar no Grupo Oficial no WhatsApp</span>
+        </a>
+
+        <div class="final-security-badges">
+          <span>⚡ Entrada Gratuita & Imediata</span>
+          <span>·</span>
+          <span>🛡️ 7 Dias de Garantia nos Planos</span>
+          <span>·</span>
+          <span>🔒 Reembolso via PIX</span>
+          <span>·</span>
+          <span>👨‍💻 Suporte com Administradores</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </main>
 
-<!-- ===================== POPUP DO JOGO ===================== -->
-<div class="ov" id="ov" role="dialog" aria-modal="true" aria-labelledby="jn">
-  <div class="box">
-    <button class="x" id="x" type="button" aria-label="Fechar">&times;</button>
-    <img class="capa" id="jcapa" src="" alt="">
-    <div class="corpo">
-      <div class="jn" id="jn"></div>
-      <div class="pill" id="jpill"></div>
-      <div class="emq">
-        <div class="emq-h">Entra em quais planos</div>
-        <div id="jplanos"></div>
-      </div>
-      <div class="jt" id="jt"></div>
-      <div class="modal-btns">
-        <a class="jbtn-adm" id="jbtn-adm" href="#" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
-          <span id="jbtn-adm-txt">Falar com o ADM no WhatsApp</span>
-        </a>
-        <a class="jbtn-grp" href="https://chat.whatsapp.com/EpFIccHn0aZ1hd9jRNcUEq" target="_blank" rel="noopener">Entrar no Grupo de Clientes</a>
-      </div>
-      <div class="modal-note">Vendas só com os administradores do grupo ou pelo link do site na descrição.</div>
-      <button class="jvolta" id="jvolta" type="button">← Continuar vendo os jogos</button>
+<!-- ===================== RODAPÉ ===================== -->
+<footer class="site-footer">
+  <div class="container">
+    <nav class="footer-nav">
+      <a href="https://almazstore.com.br/?utm_source=grupo&utm_medium=rodape">Site Oficial</a>
+      <span>·</span>
+      <a href="../catalogo-grupo/">Catálogo Completo (+40k)</a>
+      <span>·</span>
+      <a href="https://wa.me/5545999515463" target="_blank" rel="noopener">Falar com Suporte (ADM)</a>
+    </nav>
+    
+    <div class="footer-disclaimer">
+      Não somos afiliados da Valve Corporation. Steam é marca registrada da Valve Corporation.<br>
+      Os downloads de arquivos são efetuados diretamente pelos servidores da Steam na sua máquina.<br>
+      Almaz Store © 2026 · Todos os direitos reservados.
     </div>
+  </div>
+</footer>
+
+<!-- ===================== STICKY MOBILE CONVERSION BAR ===================== -->
+<div class="sticky-mobile-bar" aria-label="Acesso rápido ao grupo WhatsApp">
+  <div class="sticky-mobile-inner">
+    <div class="sticky-mobile-text">
+      <span class="sticky-mobile-title">Grupo Oficial Almaz</span>
+      <span class="sticky-mobile-sub">100% Gratuito · Canal Oficial</span>
+    </div>
+    
+    <a class="sticky-mobile-btn js-wpp-btn" data-section="sticky_mobile" href="https://chat.whatsapp.com/EpFIccHn0aZ1hd9jRNcUEq" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+      <span>Entrar</span>
+    </a>
   </div>
 </div>
 
-<!-- Floating WhatsApp -->
-<a class="float-wpp" href="https://chat.whatsapp.com/EpFIccHn0aZ1hd9jRNcUEq" target="_blank" rel="noopener">
-  <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
-  <span>Grupo de Clientes</span>
-</a>
-
-<script src="../assets/destaques.js"></script>
-<script src="../assets/catalogo.js"></script>
+<!-- ===================== SCRIPT DE RASTREAMENTO DE CONVERSÃO CRO ===================== -->
 <script>
 (function(){
-'use strict';
+  'use strict';
 
-var TUDO = window.ALMAZ_CATALOGO || [];
+  var WPP_URL = 'https://chat.whatsapp.com/EpFIccHn0aZ1hd9jRNcUEq';
 
-/* ---------- os tres planos ---------- */
-var FIXO = TUDO.filter(function(g){ return !g.soon && !g.nw; });
+  /* Handler universal para cliques no WhatsApp com envio analítico por seção */
+  function handleWppClick(e) {
+    var btn = e.currentTarget;
+    var section = btn.getAttribute('data-section') || 'geral';
 
-var DEST = {};
-(window.ALMAZ_DESTAQUES || []).forEach(function(id, k){ DEST[id] = k; });
+    /* 1. Log no console em dev/teste */
+    try {
+      console.log('[CRO Tracker] WhatsApp CTA clicado na seção: ' + section);
+    } catch(err){}
 
-function destaqueNaFrente(lista){
-  var pin = [], resto = [];
-  lista.forEach(function(g){ (DEST[g.i] !== undefined ? pin : resto).push(g); });
-  pin.sort(function(a, b){ return DEST[a.i] - DEST[b.i]; });
-  return pin.concat(resto);
-}
+    /* 2. Disparo para Microsoft Clarity como evento customizado */
+    try {
+      if (typeof window.clarity === 'function') {
+        window.clarity('event', 'whatsapp_click_' + section);
+        window.clarity('set', 'last_wpp_section', section);
+      }
+    } catch(err){}
 
-var HOJE = (function(){
-  var d = new Date();
-  return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
-})();
+    /* 3. Disparo para Utmify / dataLayer / Pixel se disponível */
+    try {
+      if (window.dataLayer && Array.isArray(window.dataLayer)) {
+        window.dataLayer.push({
+          event: 'whatsapp_click',
+          section: section,
+          timestamp: new Date().toISOString()
+        });
+      }
+      if (window.utmify && typeof window.utmify.track === 'function') {
+        window.utmify.track('WhatsAppClick', { section: section });
+      }
+    } catch(err){}
 
-function futuro(g){ return !!g.soon && (!g.o || g.o > HOJE); }
-
-var SOON = TUDO.filter(futuro);
-var DOANO = TUDO.filter(function(g){ return (g.nw || g.soon) && !futuro(g); });
-var LANCAMENTOS = destaqueNaFrente(SOON);
-var NOVIDADE = destaqueNaFrente(DOANO.concat(SOON));
-var VITALICIO = NOVIDADE.concat(FIXO);
-
-var PLANOS = [
-  { id:'basico',    nome:'Básico',    qtd:1000,  lista:FIXO.slice(0, 1000),
-    desc:'Os 1.000 mais procurados' },
-  { id:'avancado',  nome:'Avançado',  qtd:20000, lista:FIXO.slice(0, 20000),
-    desc:'Os 20.000 mais procurados' },
-  { id:'vitalicio', nome:'Vitalício', qtd:40000, lista:VITALICIO, alvo:true,
-    desc:'Tudo, mais os lançamentos' }
-];
-
-var ONDE = {};
-PLANOS.forEach(function(p, pi){
-  p.lista.forEach(function(g){ if (ONDE[g.i] === undefined) ONDE[g.i] = pi; });
-});
-
-var PORID = {};
-TUDO.forEach(function(g){ PORID[g.i] = g; });
-
-var CATS = [
-  ['', 'Todos'], ['acao','Ação'], ['aventura','Aventura'], ['rpg','RPG'], ['fps','FPS'],
-  ['terror','Terror'], ['esportes','Esportes'], ['corrida','Corrida'], ['coop','Co-op'],
-  ['sobrevivencia','Sobrevivência'], ['mundoaberto','Mundo aberto'], ['simulador','Simulador'],
-  ['indie','Indie'], ['vr','VR']
-];
-
-var PASSO = 60;
-var estado = { plano:2, cat:'', busca:'', mostrando:PASSO };
-
-function nf(n){ return n.toLocaleString('pt-BR'); }
-
-function capa(g){
-  if (g.u) return g.u;
-  var base = 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/' + g.i + '/';
-  return g.h ? base + g.h + '/header.jpg' : base + 'header.jpg';
-}
-
-function fallback(img, g){
-  var base = 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/' + g.i + '/';
-  var tenta = [base + 'library_hero.jpg', base + 'capsule_616x353.jpg', base + 'header.jpg'];
-  var n = 0;
-  img.onerror = function(){
-    if (n < tenta.length) { img.src = tenta[n++]; }
-    else { img.onerror = null; img.removeAttribute('src'); }
-  };
-}
-
-function esc(s){
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
-                  .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-function chave(s){
-  return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-}
-
-function filtrar(){
-  var p = PLANOS[estado.plano];
-  var base = estado.busca ? TUDO : p.lista;
-  var q = chave(estado.busca);
-  var r = [];
-  for (var i = 0; i < base.length; i++){
-    var g = base[i];
-    if (estado.cat && g.c !== estado.cat) continue;
-    if (q){
-      var k = g._k || (g._k = chave(g.n));
-      if (k.indexOf(q) === -1) continue;
-    }
-    r.push(g);
-    if (!q && r.length > 4000) break;
+    /* 4. Armazena timestamp e origem no localStorage para cruzamento de atribuição */
+    try {
+      var clickData = {
+        section: section,
+        timestamp: Date.now(),
+        url: window.location.href
+      };
+      localStorage.setItem('almaz_last_wpp_click', JSON.stringify(clickData));
+    } catch(err){}
   }
-  return r;
-}
 
-function noPlano(g){
-  return ONDE[g.i] !== undefined && ONDE[g.i] <= estado.plano;
-}
-
-function pintarPlanos(){
-  document.getElementById('planos').innerHTML = PLANOS.map(function(p, i){
-    return '<button class="plano' + (i === estado.plano ? ' on' : '') +
-           (p.alvo ? ' alvo' : '') + '" data-p="' + i + '">' +
-           (p.alvo ? '<span class="selo">recomendado</span>' : '') +
-           '<span class="pn">' + p.nome + '</span>' +
-           '<div class="pq">' + nf(p.qtd) + '</div>' +
-           '<div class="pd">' + p.desc + '</div></button>';
-  }).join('');
-}
-
-function pintarResumo(){
-  var p = PLANOS[estado.plano];
-  var el = document.getElementById('resumo');
-  if (p.alvo){
-    el.className = 'resumo';
-    el.innerHTML = '<span>Começando pelos <b>' + nf(DOANO.length) + ' jogos de 2026</b> e ' +
-      'pelos <b>' + SOON.length + ' que ainda vão sair</b>, que não existem nos planos menores.</span>';
-  } else {
-    var faltam = 40000 - p.qtd;
-    el.className = 'resumo puxa';
-    el.innerHTML = '<span>Faltam <b>' + nf(faltam) + ' jogos</b> neste plano, e ' +
-      '<b>nenhum lançamento</b> futuro entra nele.</span>' +
-      '<button class="up" data-p="2">Ver os 40.000</button>';
-  }
-}
-
-function pintarLancamentos(){
-  var sec = document.getElementById('lanc');
-  sec.hidden = !PLANOS[estado.plano].alvo || !!estado.busca;
-  if (sec.hidden) return;
-  document.getElementById('lanc-n').textContent = LANCAMENTOS.length + ' a caminho';
-  document.getElementById('tira').innerHTML = LANCAMENTOS.slice(0, 24).map(function(g){
-    return '<div class="lc" data-jogo="' + esc(g.i) + '"><img loading="lazy" data-i="' + esc(g.i) + '" src="' + capa(g) +
-           '" alt=""><div class="ln">' + esc(g.n) + '</div>' +
-           '<div class="ld">' + esc(g.dt || 'em breve') + '</div></div>';
-  }).join('');
-  ligarFallback(document.getElementById('tira'));
-}
-
-function ligarFallback(raiz){
-  raiz.querySelectorAll('img[data-i]').forEach(function(img){
-    var g = PORID[img.getAttribute('data-i')];
-    if (g) fallback(img, g);
+  /* Vincula a todos os botões com a classe .js-wpp-btn */
+  document.querySelectorAll('.js-wpp-btn').forEach(function(el){
+    el.addEventListener('click', handleWppClick, { passive: true });
   });
-}
 
-var CADEADO = '<div class="cad"><svg viewBox="0 0 24 24" stroke-linecap="round">' +
-  '<rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>' +
-  '<span>só no<br>Vitalício</span></div>';
-
-function pintarGrade(){
-  var lista = filtrar();
-  var mostra = lista.slice(0, estado.mostrando);
-  var grade = document.getElementById('grade');
-  var cont = document.getElementById('contador');
-  var mais = document.getElementById('mais');
-
-  if (!lista.length){
-    cont.textContent = '';
-    mais.hidden = true;
-    grade.innerHTML = '<div class="vazio" style="grid-column:1/-1">' +
-      '<b>Não achamos esse jogo</b>Confira a escrita, ou busque só uma parte do nome.</div>';
-    return;
-  }
-
-  var fora = 0;
-  grade.innerHTML = mostra.map(function(g){
-    var dentro = noPlano(g);
-    if (!dentro) fora++;
-    var data = (!g.dt || g.dt === 'a confirmar') ? 'em breve' : g.dt;
-    var tag = futuro(g) ? '<span class="tagn">' + esc(data) + '</span>'
-            : ((g.nw || g.soon) ? '<span class="tagn">novo</span>' : '');
-
-    var soVit = ONDE[g.i] === 2;
-    var faixa = (dentro && soVit && PLANOS[estado.plano].alvo)
-      ? '<div class="fx">só no Vitalício</div>' : '';
-
-    return '<div class="card' + (dentro ? '' : ' fora') +
-           (faixa ? ' vit' : '') + '" data-jogo="' + esc(g.i) + '">' +
-           '<img loading="lazy" data-i="' + esc(g.i) + '" src="' + capa(g) + '" alt="">' +
-           (dentro ? tag : CADEADO) +
-           '<div class="nome">' + esc(g.n) + '</div>' + faixa + '</div>';
-  }).join('');
-  ligarFallback(grade);
-
-  var p = PLANOS[estado.plano];
-  if (estado.busca){
-    cont.innerHTML = '<b>' + nf(lista.length) + '</b> resultado' +
-      (lista.length > 1 ? 's' : '') + ' para "' + esc(estado.busca) + '"' +
-      (fora ? ' &middot; <b style="color:var(--deal-tx)">' + fora + '</b> só no Vitalício' : '');
-  } else {
-    cont.innerHTML = 'Mostrando <b>' + nf(mostra.length) + '</b> de <b>' +
-      nf(p.qtd) + '</b> jogos do plano ' + p.nome;
-  }
-
-  mais.hidden = lista.length <= estado.mostrando;
-}
-
-function pintar(){ pintarPlanos(); pintarResumo(); pintarLancamentos(); pintarGrade(); }
-
-/* ---------- eventos ---------- */
-document.getElementById('chips').innerHTML = CATS.map(function(c){
-  return '<button class="chip' + (c[0] === estado.cat ? ' on' : '') +
-         '" data-c="' + c[0] + '">' + c[1] + '</button>';
-}).join('');
-
-document.addEventListener('click', function(e){
-  var p = e.target.closest('[data-p]');
-  if (p){
-    estado.plano = +p.getAttribute('data-p');
-    estado.mostrando = PASSO;
-    pintar();
-    return;
-  }
-  var j = e.target.closest('[data-jogo]');
-  if (j){
-    var g = PORID[j.getAttribute('data-jogo')];
-    if (g) abrirJogo(g);
-    return;
-  }
-  var c = e.target.closest('.chip');
-  if (c){
-    estado.cat = c.getAttribute('data-c');
-    estado.mostrando = PASSO;
-    document.querySelectorAll('.chip').forEach(function(x){
-      x.classList.toggle('on', x === c);
+  /* Fallback automático de imagens do CDN Steam caso alguma falhe */
+  document.querySelectorAll('.game-thumb').forEach(function(img){
+    img.addEventListener('error', function(){
+      if (!this.getAttribute('data-failed')) {
+        this.setAttribute('data-failed', '1');
+        var currentSrc = this.src;
+        if (currentSrc.indexOf('header.jpg') !== -1) {
+          this.src = currentSrc.replace('header.jpg', 'capsule_616x353.jpg');
+        }
+      }
     });
-    pintarGrade();
-  }
-});
+  });
 
-/* ---------- popup do jogo ---------- */
-var ov = document.getElementById('ov');
-
-function abrirJogo(g){
-  document.getElementById('jn').textContent = g.n;
-
-  var img = document.getElementById('jcapa');
-  img.src = capa(g); img.alt = g.n;
-  fallback(img, g);
-
-  var pill = document.getElementById('jpill');
-  if (futuro(g)){
-    pill.className = 'pill soon';
-    pill.textContent = (!g.dt || g.dt === 'a confirmar')
-      ? 'Lançamento futuro' : 'Chega em ' + g.dt;
-  } else {
-    pill.className = 'pill';
-    pill.textContent = 'Disponível no launcher';
-  }
-
-  var min = ONDE[g.i];
-  document.getElementById('jplanos').innerHTML = PLANOS.map(function(p, i){
-    var tem = min !== undefined && min <= i;
-    return '<div class="lin ' + (tem ? 'sim' : 'nao') +
-           (tem && p.alvo ? ' alvo' : '') + '">' +
-           '<span class="ic">' + (tem ? '&#10003;' : '&#128274;') + '</span>' +
-           p.nome + '<span class="qn">' + nf(p.qtd) + ' jogos</span></div>';
-  }).join('');
-
-  var txt = document.getElementById('jt');
-  var btnAdm = document.getElementById('jbtn-adm');
-  var btnAdmTxt = document.getElementById('jbtn-adm-txt');
-
-  if (futuro(g)){
-    txt.innerHTML = '<strong>' + esc(g.n) + '</strong> ainda não saiu. Quando lançar, ' +
-      'entra na sua biblioteca pelo Vitalício sem pagar mais nada.';
-    btnAdmTxt.textContent = 'Falar com ADM sobre esse jogo';
-  } else if (min === 2){
-    txt.innerHTML = '<strong>' + esc(g.n) + '</strong> só entra no Vitalício, ' +
-      'junto com os outros ' + nf(40000) + ' jogos e tudo que ainda vai sair.';
-    btnAdmTxt.textContent = 'Falar com o ADM no WhatsApp';
-  } else {
-    txt.innerHTML = '<strong>' + esc(g.n) + '</strong> tá incluso. ' +
-      'O download é pela própria Steam, na sua conta.';
-    btnAdmTxt.textContent = 'Falar com o ADM no WhatsApp';
-  }
-
-  var msg = encodeURIComponent('Oi! Vi o jogo "' + g.n + '" no catálogo e queria saber mais.');
-  btnAdm.href = 'https://wa.me/5545999515463?text=' + msg;
-
-  ov.classList.add('on');
-  document.body.classList.add('travado');
-}
-
-function fecharJogo(){
-  ov.classList.remove('on');
-  document.body.classList.remove('travado');
-}
-
-document.getElementById('x').addEventListener('click', fecharJogo);
-document.getElementById('jvolta').addEventListener('click', fecharJogo);
-ov.addEventListener('click', function(e){ if (e.target === ov) fecharJogo(); });
-document.addEventListener('keydown', function(e){ if (e.key === 'Escape') fecharJogo(); });
-
-var timer;
-document.getElementById('q').addEventListener('input', function(e){
-  clearTimeout(timer);
-  var v = e.target.value.trim();
-  timer = setTimeout(function(){
-    estado.busca = v;
-    estado.mostrando = PASSO;
-    pintarLancamentos();
-    pintarGrade();
-  }, 140);
-});
-
-document.getElementById('mais').addEventListener('click', function(){
-  estado.mostrando += PASSO;
-  pintarGrade();
-});
-
-pintar();
 })();
 </script>
+
 </body>
 </html>

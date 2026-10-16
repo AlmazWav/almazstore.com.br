@@ -1515,26 +1515,10 @@ var io = (function(){
 <section class="ph">
   <div class="wrap">
 
-    <div class="ph-crumb">Almaz Store &nbsp;›&nbsp; <b>Biblioteca Steam completa</b></div>
+    <div class="ph-crumb"><span style="color:var(--deal-tx);font-weight:700">● LAUNCHER ALMAZ STORE</span> &nbsp;›&nbsp; Jogos na sua própria Steam &nbsp;›&nbsp; PC Windows</div>
 
-    <!-- H1 mudou em 20/08/2026. Antes era "Mais de 40.000 jogos originais rodando na sua
-         conta Steam", ou seja, vendia QUANTIDADE. O numero continua na pagina inteira (e
-         na ficha tecnica logo abaixo, na mesma primeira tela), mas a manchete passou a
-         vender a CONSEQUENCIA: a pessoa para de comprar jogo. Quantidade so impressiona
-         quem ja queria comprar; "nunca mais gastar" fala com quem ainda esta decidindo. -->
-    <!-- Ajuste de tom em 20/08/2026, no mesmo dia: era "Pague uma vez e nunca mais
-         gaste", no imperativo. "Pague" e ordem sobre dinheiro nas duas primeiras
-         palavras da pagina, e soava agressivo. No indicativo o vocabulario e o ritmo
-         sao os mesmos, mas a frase descreve o que acontece com a pessoa em vez de
-         mandar ela pagar. Se for mexer aqui de novo, mexa no MODO do verbo, nao na
-         promessa: o "nunca mais gasta" e o eixo da pagina inteira. -->
-    <h1>Você paga uma vez e nunca mais gasta com jogo na Steam</h1>
-    <!-- Aqui existia o subtitulo "Taxa unica, licenca vitalicia. O download vem dos
-         servidores oficiais da Steam, na sua propria conta." Removido em 13/08/2026:
-         ocupava 80px logo acima do banner, e as duas informacoes dele passaram a estar
-         repetidas em outros dois pontos da mesma tela (o bloco das 3 duvidas embaixo do
-         botao e a ficha tecnica). Como 59% dos visitantes nao passam da primeira tela,
-         80px acima do banner valem mais do que um texto repetido. -->
+    <h1>Sua próxima grande jogatina na Steam, muito mais acessível do que você imagina.</h1>
+    <p class="ph-sub">Um aplicativo para Windows que conecta você a uma enorme biblioteca de jogos para baixar direto na sua conta Steam. Download oficial, multiplayer funcionando e planos a partir de R$ 9,97 no PIX.</p>
 
     <div class="pg">
 
@@ -1608,15 +1592,15 @@ var io = (function(){
 
         <div class="side-card">
           <p class="side-desc">
-            Mais de 40.000 jogos no Vitalício. Lançamentos futuros também entram no Avançado.
-            Você baixa pela própria Steam, sem compartilhar conta.
+            Acesso a milhares de jogos na sua biblioteca Steam.
+            Downloads oficiais direto pelos servidores da Valve, sem contas compartilhadas.
           </p>
           <dl class="spec">
-            <div class="spec-row"><dt>Jogos no Vitalício</dt><dd class="num">+<span data-almaz-games="vitalicio">40.000</span></dd></div>
-            <div class="spec-row"><dt>Lançamentos futuros</dt><dd class="ok">Avançado e Vitalício</dd></div>
+            <div class="spec-row"><dt>Jogos no catálogo</dt><dd class="num">+<span data-almaz-games="vitalicio">40.000</span> no Vitalício</dd></div>
+            <div class="spec-row"><dt>Lançamentos futuros</dt><dd class="ok">Inclusos no Vitalício</dd></div>
             <div class="spec-row"><dt>Download</dt><dd>Pela própria Steam</dd></div>
             <div class="spec-row"><dt>Multiplayer</dt><dd class="ok">Nos jogos compatíveis</dd></div>
-            <div class="spec-row"><dt>Garantia</dt><dd>7 dias</dd></div>
+            <div class="spec-row"><dt>Garantia</dt><dd>7 dias com reembolso PIX</dd></div>
           </dl>
         </div>
 
@@ -1628,8 +1612,8 @@ var io = (function(){
                  pra ninguem levar susto de preco na primeira tela. Ele aparece na secao de
                  planos, depois que a pessoa ja leu a oferta inteira. Nao "conserte" isso
                  achando que faltou o preco cheio: e escolha, nao esquecimento.
-                  A ficha tecnica identifica os 40.000 jogos e os lancamentos semanais como
-                  beneficios do Vitalicio; o preco de entrada identifica o Basico com 1.000 jogos. -->
+                   A ficha tecnica identifica os 40.000 jogos e os lancamentos semanais como
+                   beneficios do Vitalicio; o preco de entrada identifica o Basico com 1.000 jogos. -->
             <span class="buybox-prices">
               <span class="buybox-from">a partir de</span>
               <span class="buybox-new num">R$ 9,97</span>
@@ -1661,7 +1645,7 @@ var io = (function(){
               <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.8 3.8 9S14.5 18.3 12 21c-2.5-2.7-3.8-5.8-3.8-9S9.5 5.7 12 3z"/></svg>
               <span class="medo-txt">
                 <span class="medo-q">Funciona online?</span>
-                <span class="medo-a">Funciona. Os jogos com multiplayer rodam online normalmente, com qualquer pessoa que tenha o jogo.</span>
+                <span class="medo-a">Sim. No Avançado e Vitalício, os jogos com modo cooperativo e multiplayer rodam online normalmente nos títulos compatíveis.</span>
               </span>
             </div>
           </div>
@@ -1683,12 +1667,120 @@ var io = (function(){
   </div>
 </section>
 
+<!-- ===================== BIBLIOTECA ===================== -->
+<section class="sec" id="biblioteca">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Conheça um pedaço da nossa biblioteca</h2>
+      <p>Pesquise seu jogo favorito ou navegue pelos destaques para conferir os títulos inclusos.</p>
+    </div>
+
+    <div id="disponibilidade">
+      <div class="av-chips reveal" id="av-chips"></div>
+      <div class="av-body reveal">
+        <div class="av-results">
+          <button class="av-arrow prev" id="av-prev" type="button" aria-label="Anterior">&#8249;</button>
+          <div class="av-track" id="av-track"></div>
+          <button class="av-arrow next" id="av-next" type="button" aria-label="Próximo">&#8250;</button>
+        </div>
+      </div>
+      <div class="av-catalog reveal">
+        <button class="btn-ghost" id="av-catalog-open" type="button">Abrir catálogo completo</button>
+        <span class="av-catalog-note">Busque por nome ou filtre por categoria</span>
+      </div>
+
+      <!-- 21/08/2026: apontava pra #passos. Com os passos movidos pra depois da oferta,
+           o degrau seguinte a biblioteca virou a ancora de preco (#conta).
+           21/09/2026: continua #conta. Chegou a apontar pros planos num corte
+           desse dia e voltou: e degrau do funil, nao atalho. -->
+      <div class="flow reveal"><a href="#launcher" class="btn-ghost">Como o aplicativo funciona na prática ↓</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== O PROGRAMA ===================== -->
+<section class="sec" id="launcher">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Veja como é o programa no seu PC</h2>
+      <p>Um aplicativo leve para Windows que conecta você direto à sua conta Steam.</p>
+    </div>
+
+    <div class="lch-wrap reveal">
+      <div class="lch">
+        <div class="lch-tt">
+          <span class="lch-dot"></span><span class="lch-dot"></span><span class="lch-dot"></span>
+          <span class="lch-tt-name">ALMAZ Store</span>
+        </div>
+
+        <div class="lch-app">
+          <div class="lch-bar">
+            <div class="lch-brand">
+              <img src="assets/logo-128.png" alt="" aria-hidden="true">
+              <span class="lch-brand-txt">
+                <span class="lch-name">ALMA<i>Z</i> STORE</span>
+                <span class="lch-plan">VITALÍCIO</span>
+              </span>
+            </div>
+            <div class="lch-nav">
+              <span class="on">Início</span>
+              <span>Adicionar Jogo</span>
+              <span>Novos Jogos</span>
+              <span>Em Alta</span>
+            </div>
+            <div class="lch-right">
+              <span class="lch-pill"><span class="d"></span>Steam detectada</span>
+              <span class="lch-chip"><span data-almaz-games="vitalicio">40.000</span> jogos</span>
+            </div>
+          </div>
+
+          <div class="lch-body">
+            <div class="lch-h1">Meu <i>ALMAZ</i></div>
+
+            <!-- Barra de busca: e o elemento que mais faz o bloco ler como
+                 programa. Dashboard com contador qualquer site tem; campo de
+                 busca dentro de uma janela, nao. Fica em cima do contador. -->
+            <div class="lch-search">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <span>Buscar jogo por nome ou AppID</span>
+            </div>
+
+            <div class="lch-hero">
+              <div class="lch-hero-l">
+                <h4>Sua biblioteca <i>completa</i> está pronta.</h4>
+                <span class="lch-fake-btn">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  <!-- span unico por dentro: o .lch-fake-btn e inline-flex com
+                       gap, entao numero solto viraria item de flex e abriria
+                       buraco em volta (mesmo caso do botao da calculadora) -->
+                  <span>Adicionar os <span data-almaz-games="vitalicio">40.000</span> jogos</span>
+                </span>
+              </div>
+              <div class="lch-stat">
+                <b class="num" data-almaz-games="vitalicio">40.000</b>
+                <span>JOGOS NO SEU PLANO</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aqui existia um paragrafo sobre o programa ser leve e ter suporte no
+           WhatsApp/Discord por dentro. Saiu em 13/08/2026: as duas informacoes
+           ja aparecem na lista da secao de baixo, e a janela do launcher vende
+           sozinha. Menos texto, a pessoa desce mais rapido. -->
+
+      <div class="flow reveal"><a href="#conta" class="btn-ghost">Faça as contas: comparativo de custos ↓</a></div>
+    </div>
+  </div>
+</section>
+
 <!-- ===================== QUANTO CUSTA COMPRAR NA STEAM ===================== -->
 <section class="sec" id="conta">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>Quanto custam alguns jogos na Steam?</h2>
-      <p>Preços da Steam Brasil em 25/09/2026.</p>
+      <h2>Quanto custariam esses jogos direto na Steam?</h2>
+      <p>Preços oficiais da Steam Brasil em 2026. Apenas alguns lançamentos já ultrapassam R$ 1.600.</p>
     </div>
 
     <div class="conta reveal">
@@ -1765,7 +1857,7 @@ var io = (function(){
           <span>e acabou</span>
         </div>
         <p class="conta-vs-sub">
-          Esses jogos e mais de <strong><span data-almaz-games="vitalicio">40.000</span> títulos</strong> por pagamento único. O Avançado também inclui lançamentos futuros.
+          Esses jogos e mais de <strong><span data-almaz-games="vitalicio">40.000</span> títulos</strong> por pagamento único. No Vitalício, você ainda recebe todas as novidades que forem saindo toda semana.
         </p>
         <!-- Este botao ia DIRETO pro checkout ate 20/08/2026. Virou degrau do funil:
              a caixa continua fazendo a comparacao de preco, que e o trabalho dela, mas
@@ -1773,7 +1865,7 @@ var io = (function(){
              "Pagamento no PIX" e "Aprovacao na hora e 7 dias de garantia": elas so
              fazem sentido embaixo de um botao que cobra, e embaixo de um botao que
              rola viravam promessa solta. As duas continuam na secao de planos. -->
-        <a href="#cresce" class="btn-ghost">Ver lançamentos futuros</a>
+        <a href="#cresce" class="btn-ghost">Conheça as atualizações e lançamentos ↓</a>
       </div>
 
     </div>
@@ -1784,8 +1876,8 @@ var io = (function(){
 <section class="sec" id="cresce">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>Lançamentos futuros também entram</h2>
-      <p>No Avançado e no Vitalício, os próximos lançamentos entram sem custo extra.</p>
+      <h2>Catálogo vivo e sempre atualizado</h2>
+      <p>No Plano Vitalício, novos lançamentos e títulos da comunidade entram toda semana sem custo extra.</p>
     </div>
 
     <div class="cresce reveal">
@@ -1858,119 +1950,11 @@ var io = (function(){
 
     <div class="cresce-cta reveal">
       <p>
-        No Avançado e no Vitalício, os próximos lançamentos entram sem custo extra.
+        No plano Vitalício, novos jogos entram na sua conta conforme forem liberados, sem pagar nenhuma mensalidade.
       </p>
       <!-- Ultimo degrau do funil: daqui a pessoa cai na oferta. Ia DIRETO pro checkout
            ate 20/08/2026, o que deixava ela comprar sem nunca ter visto os 3 planos. -->
-      <a href="#pricing" class="btn-ghost">Ver os planos</a>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== O PROGRAMA ===================== -->
-<section class="sec" id="launcher">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <h2>Veja como é o programa</h2>
-      <p>Chega no seu e-mail depois do pagamento.</p>
-    </div>
-
-    <div class="lch-wrap reveal">
-      <div class="lch">
-        <div class="lch-tt">
-          <span class="lch-dot"></span><span class="lch-dot"></span><span class="lch-dot"></span>
-          <span class="lch-tt-name">ALMAZ Store</span>
-        </div>
-
-        <div class="lch-app">
-          <div class="lch-bar">
-            <div class="lch-brand">
-              <img src="assets/logo-128.png" alt="" aria-hidden="true">
-              <span class="lch-brand-txt">
-                <span class="lch-name">ALMA<i>Z</i> STORE</span>
-                <span class="lch-plan">VITALÍCIO</span>
-              </span>
-            </div>
-            <div class="lch-nav">
-              <span class="on">Início</span>
-              <span>Adicionar Jogo</span>
-              <span>Novos Jogos</span>
-              <span>Em Alta</span>
-            </div>
-            <div class="lch-right">
-              <span class="lch-pill"><span class="d"></span>Steam detectada</span>
-              <span class="lch-chip"><span data-almaz-games="vitalicio">40.000</span> jogos</span>
-            </div>
-          </div>
-
-          <div class="lch-body">
-            <div class="lch-h1">Meu <i>ALMAZ</i></div>
-
-            <!-- Barra de busca: e o elemento que mais faz o bloco ler como
-                 programa. Dashboard com contador qualquer site tem; campo de
-                 busca dentro de uma janela, nao. Fica em cima do contador. -->
-            <div class="lch-search">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <span>Buscar jogo por nome ou AppID</span>
-            </div>
-
-            <div class="lch-hero">
-              <div class="lch-hero-l">
-                <h4>Sua biblioteca <i>completa</i> está pronta.</h4>
-                <span class="lch-fake-btn">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                  <!-- span unico por dentro: o .lch-fake-btn e inline-flex com
-                       gap, entao numero solto viraria item de flex e abriria
-                       buraco em volta (mesmo caso do botao da calculadora) -->
-                  <span>Adicionar os <span data-almaz-games="vitalicio">40.000</span> jogos</span>
-                </span>
-              </div>
-              <div class="lch-stat">
-                <b class="num" data-almaz-games="vitalicio">40.000</b>
-                <span>JOGOS NO SEU PLANO</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Aqui existia um paragrafo sobre o programa ser leve e ter suporte no
-           WhatsApp/Discord por dentro. Saiu em 13/08/2026: as duas informacoes
-           ja aparecem na lista da secao de baixo, e a janela do launcher vende
-           sozinha. Menos texto, a pessoa desce mais rapido. -->
-
-      <div class="flow reveal"><a href="#pricing" class="btn-ghost">Ver os planos</a></div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== BIBLIOTECA ===================== -->
-<section class="sec" id="biblioteca">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <h2>Um pedaço da biblioteca</h2>
-      <p>Pesquise seu jogo ou abra o catálogo completo para conferir se ele está incluso.</p>
-    </div>
-
-    <div id="disponibilidade">
-      <div class="av-chips reveal" id="av-chips"></div>
-      <div class="av-body reveal">
-        <div class="av-results">
-          <button class="av-arrow prev" id="av-prev" type="button" aria-label="Anterior">&#8249;</button>
-          <div class="av-track" id="av-track"></div>
-          <button class="av-arrow next" id="av-next" type="button" aria-label="Próximo">&#8250;</button>
-        </div>
-      </div>
-      <div class="av-catalog reveal">
-        <button class="btn-ghost" id="av-catalog-open" type="button">Abrir catálogo completo</button>
-        <span class="av-catalog-note">Busque por nome ou filtre por categoria</span>
-      </div>
-
-      <!-- 21/08/2026: apontava pra #passos. Com os passos movidos pra depois da oferta,
-           o degrau seguinte a biblioteca virou a ancora de preco (#conta).
-           21/09/2026: continua #conta. Chegou a apontar pros planos num corte
-           desse dia e voltou: e degrau do funil, nao atalho. -->
-      <div class="flow reveal"><a href="#pricing" class="btn-ghost">Ver planos e preços</a></div>
+      <a href="#pirata" class="btn-ghost">Por que não é pirataria arriscada? ↓</a>
     </div>
   </div>
 </section>
@@ -1979,8 +1963,8 @@ var io = (function(){
 <section class="sec" id="pirata">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>Isso não é jogo pirata</h2>
-      <p>Os jogos são originais e baixados pela própria Steam.</p>
+      <h2>Download oficial pela Steam, sem riscos</h2>
+      <p>Os jogos são originais e baixados diretamente pelos servidores oficiais da Steam.</p>
     </div>
 
     <div class="vs reveal">
@@ -2018,7 +2002,7 @@ var io = (function(){
          As duas colunas ja dizem isso item por item; o paragrafo por baixo so
          repetia em prosa e alongava a secao no celular. -->
 
-    <div class="flow reveal"><a href="#pricing" class="btn-ghost">Ver planos e preços</a></div>
+    <div class="flow reveal"><a href="#feedbacks" class="btn-ghost">O que nossos clientes estão falando ↓</a></div>
   </div>
 </section>
 
@@ -2044,7 +2028,7 @@ var io = (function(){
       <span class="fbk-cont" id="fbk-cont" aria-live="polite">1 de 12 mensagens</span>
       <button class="fbk-seta" id="fbk-next" type="button" aria-label="Próxima mensagem">&#8250;</button>
     </div>
-    <div class="flow reveal"><a href="#pricing" class="btn-ghost">Ver os planos</a></div>
+    <div class="flow reveal"><a href="#pricing" class="btn-ghost">Escolha seu plano e comece a jogar ↓</a></div>
   </div>
 </section>
 
@@ -2052,8 +2036,8 @@ var io = (function(){
 <section class="sec" id="pricing">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>Escolha seu plano</h2>
-      <p>Pagamento único. Sem mensalidade nem renovação. Lançamentos futuros no Avançado e no Vitalício.</p>
+      <h2>Escolha seu plano de acesso</h2>
+      <p>Pagamento único no PIX. Sem mensalidade nem renovação. 7 dias de garantia incondicional.</p>
     </div>
 
     <div class="eds reveal">
@@ -2062,14 +2046,16 @@ var io = (function(){
       <div class="offer-card" data-plan-id="basico">
         <div class="ed-top">
           <div class="ed-name">Básico<small><span data-almaz-games="basico">1.000</span> jogos</small></div>
+          <span class="ed-plan-tag">Entrada Econômica</span>
         </div>
         <div class="ed-body">
           <ul class="offer-features">
-            <li><strong><span data-almaz-games="basico">1.000</span> jogos</strong> inclusos</li>
-            <li>Download pela Steam</li>
-            <li>Modo história liberado</li>
-            <li>Entrega automática</li>
-            <li class="no">Biblioteca fechada, sem jogos novos</li>
+            <li><strong><span data-almaz-games="basico">1.000</span> jogos</strong> essenciais inclusos</li>
+            <li>Download oficial direto pela Steam</li>
+            <li>Campanha / Modo história individual liberado</li>
+            <li>Instalação fácil com entrega automática</li>
+            <li class="no">Biblioteca fixa (sem jogos novos)</li>
+            <li class="no">Sem suporte a multiplayer online</li>
             <li class="no">Lançamentos futuros não entram</li>
           </ul>
         </div>
@@ -2079,26 +2065,29 @@ var io = (function(){
               <span class="ed-new num">R$ 9,97</span>
             </span>
           </div>
-          <a role="button" tabindex="0" href="#pricing" onclick="almazUpsell('basico');return false" class="offer-btn">Quero garantir</a>
-          <div class="offer-methods">Pagamento no PIX</div>
-          <div class="offer-trust"><strong>Aprovação na hora</strong> e 7 dias de garantia</div>
+          <a href="https://ggcheckout.app/checkout/v5/3SZQGWf2lurzA7Sb3M26"
+             onclick="checkout('https://ggcheckout.app/checkout/v5/3SZQGWf2lurzA7Sb3M26',9.97);return false"
+             class="offer-btn">Quero garantir</a>
+          <div class="offer-methods">Pagamento único no PIX</div>
+          <div class="offer-trust"><strong>Liberação imediata</strong> e 7 dias de garantia</div>
         </div>
       </div>
 
       <!-- Avançado -->
       <div class="offer-card featured" data-plan-id="avancado">
-        <div class="ed-ribbon">Mais vendido</div>
+        <div class="ed-ribbon">Catálogo + Online</div>
         <div class="ed-top">
           <div class="ed-name">Avançado<small><span data-almaz-games="avancado">20.000</span> jogos</small></div>
         </div>
         <div class="ed-body">
           <ul class="offer-features">
-            <li><strong><span data-almaz-games="avancado">20.000</span> jogos</strong> inclusos</li>
-            <li>Acesso para sempre</li>
-            <li>Multiplayer nos jogos compatíveis</li>
-            <li>Entrega automática</li>
-            <li>Suporte prioritário por WhatsApp e Discord</li>
-            <li>Lançamentos futuros inclusos, sem pagar mais</li>
+            <li><strong><span data-almaz-games="avancado">20.000</span> jogos</strong> liberados</li>
+            <li>Download oficial direto pela Steam</li>
+            <li>Multiplayer nos títulos compatíveis (coop fix)</li>
+            <li>Bypass de proteções avançadas</li>
+            <li>Entrega automática e suporte prioritário</li>
+            <li>Acesso vitalício ao catálogo atual (taxa única)</li>
+            <li class="no">Biblioteca fixa (lançamentos futuros não entram)</li>
           </ul>
         </div>
         <div class="ed-buy">
@@ -2107,9 +2096,11 @@ var io = (function(){
               <span class="ed-new num">R$ 19,97</span>
             </span>
           </div>
-          <a role="button" tabindex="0" href="#pricing" onclick="almazUpsell('avancado');return false" class="offer-btn">Quero garantir</a>
-          <div class="offer-methods">Pagamento no PIX</div>
-          <div class="offer-trust"><strong>Aprovação na hora</strong> e 7 dias de garantia</div>
+          <a href="https://ggcheckout.app/checkout/v5/EBQq9V24j7dAljWU9EUd"
+             onclick="checkout('https://ggcheckout.app/checkout/v5/EBQq9V24j7dAljWU9EUd',19.97);return false"
+             class="offer-btn">Quero garantir</a>
+          <div class="offer-methods">Pagamento único no PIX</div>
+          <div class="offer-trust"><strong>Liberação imediata</strong> e 7 dias de garantia</div>
         </div>
       </div>
 
@@ -2117,24 +2108,24 @@ var io = (function(){
       <div class="offer-card" data-plan-id="vitalicio">
         <div class="ed-top">
           <div class="ed-name">Vitalício<small><span data-almaz-games="vitalicio">40.000</span> jogos</small></div>
-          <span class="ed-plan-tag">Melhor custo-benefício</span>
+          <span class="ed-plan-tag">Completo + Lançamentos</span>
         </div>
         <div class="ed-body">
           <ul class="offer-features">
-            <li><strong><span data-almaz-games="vitalicio">40.000</span> jogos</strong> liberados</li>
-            <li>Lançamentos futuros inclusos</li>
-            <li>Jogos novos toda semana</li>
-            <li>Acesso vitalício</li>
-            <li>Jogos com Denuvo funcionando</li>
-            <li>Multiplayer nos jogos compatíveis</li>
-            <li>Peça um jogo para adicionar</li>
-            <li>Entrega automática</li>
-            <li>Suporte prioritário por WhatsApp e Discord</li>
+            <li><strong><span data-almaz-games="vitalicio">40.000</span> jogos</strong> liberados agora</li>
+            <li><strong>Lançamentos futuros inclusos</strong> para sempre</li>
+            <li>Jogos novos adicionados toda semana</li>
+            <li>Download oficial direto pela Steam</li>
+            <li>Multiplayer nos títulos compatíveis</li>
+            <li>Bypass de proteções e títulos com Denuvo</li>
+            <li>Canal de pedidos para adicionar jogos ao catálogo</li>
+            <li>Entrega automática e suporte prioritário no WhatsApp e Discord</li>
+            <li>Acesso vitalício sem nenhuma mensalidade</li>
           </ul>
         </div>
         <div class="ed-buy">
           <div class="ed-gain">
-            Por <b>R$ 30,00</b> a mais que o Avançado, você leva mais <b>20.000 jogos</b> e jogos com Denuvo funcionando.
+            Por <b>R$ 30,00</b> a mais que o Avançado, você garante <b>+20.000 jogos</b>, títulos com Denuvo e <b>todos os lançamentos futuros</b> para sempre.
           </div>
           <div class="ed-price-row">
             <span class="ed-price">
@@ -2144,8 +2135,8 @@ var io = (function(){
           <a href="https://ggcheckout.app/checkout/v5/Tjjri534N4VrT34qfUTm"
              onclick="checkout('https://ggcheckout.app/checkout/v5/Tjjri534N4VrT34qfUTm',49.97);return false"
              class="offer-btn">Quero garantir</a>
-          <div class="offer-methods">Pagamento no PIX</div>
-          <div class="offer-trust"><strong>Aprovação na hora</strong> e 7 dias de garantia</div>
+          <div class="offer-methods">Pagamento único no PIX</div>
+          <div class="offer-trust"><strong>Liberação imediata</strong> e 7 dias de garantia</div>
         </div>
       </div>
 
@@ -2304,13 +2295,13 @@ var io = (function(){
       <div class="gm-offer">
         <div class="gm-offer-hd">O que você leva</div>
         <ul class="gm-offer-list">
-          <li>Paga <strong>uma vez</strong> e nunca mais gasta com jogo</li>
-          <li>Lançamentos futuros inclusos no Avançado e no Vitalício</li>
-          <li>Online funcionando</li>
+          <li>Pagamento <strong>único</strong>, sem nenhuma mensalidade</li>
+          <li>Download oficial direto na sua conta Steam</li>
+          <li>Multiplayer online nos títulos compatíveis</li>
         </ul>
-        <a href="#pricing" class="offer-btn" id="gm-go">Quero garantir</a>
-        <div class="gm-offer-pay">Pagamento no PIX</div>
-        <div class="gm-offer-trust"><strong>Aprovação na hora</strong> e 7 dias de garantia</div>
+        <a href="#pricing" class="offer-btn" id="gm-go">Ver planos e garantir</a>
+        <div class="gm-offer-pay">Pagamento rápido via PIX</div>
+        <div class="gm-offer-trust"><strong>Liberação imediata</strong> e 7 dias de garantia</div>
       </div>
 
       <button type="button" class="gm-back" id="gm-back">Continuar vendo os jogos</button>
@@ -2334,7 +2325,7 @@ var io = (function(){
       </button>
     </div>
     <div class="ai-messages" id="ai-messages">
-      <div class="msg msg-ai">Opa, tudo certo? 👋 Aqui é o suporte da Almaz. Pode perguntar sem cerimônia. Toca na dúvida que mais te preocupa que eu já te explico:</div>
+      <div class="msg msg-ai">Opa, tudo certo? 👋 Tire suas dúvidas na hora. Respostas diretas e sem enrolação — toque em uma opção abaixo:</div>
     </div>
     <div class="ai-options-container">
       <div class="ai-options-title">Selecione uma dúvida abaixo:</div>
@@ -2349,7 +2340,7 @@ var io = (function(){
   <div class="qbx-ov-box">
     <img id="qbx-ov-img" src="" alt="Print da caixinha de perguntas do Instagram">
     <div class="qbx-ov-cta">
-      <p id="qbx-ov-txt">Tirou a dúvida? Então é só escolher o seu acesso e <strong>nunca mais gastar com jogo</strong>.</p>
+      <p id="qbx-ov-txt">Tirou a dúvida? Então escolha o seu plano e <strong>comece a jogar hoje mesmo</strong>.</p>
       <a role="button" tabindex="0" href="javascript:void(0)" class="offer-btn" id="qbx-ov-go">Ver os planos e preços</a>
     </div>
   </div>
@@ -2358,21 +2349,21 @@ var io = (function(){
 <div id="upsell-ov" role="dialog" aria-modal="true" aria-label="Oferta especial">
   <div class="ups-box">
     <button class="ups-x" id="upsell-x" type="button" aria-label="Fechar">×</button>
-    <div class="ups-badge">🔥 Só agora, 50% OFF</div>
-    <h3 class="ups-title"><span>Nunca mais gaste com jogo</span> por metade do preço</h3>
-    <p class="ups-sub">O Avançado inclui 20.000 jogos e lançamentos futuros. No Vitalício, são 40.000 jogos e títulos com Denuvo funcionando.</p>
+    <div class="ups-badge">🔥 Oportunidade Especial de Upgrade</div>
+    <h3 class="ups-title"><span>Leve o Plano Vitalício</span> pela metade do preço</h3>
+    <p class="ups-sub">Garanta a biblioteca completa de +40.000 jogos, títulos com Denuvo e todos os futuros lançamentos inclusos para sempre.</p>
     <div class="ups-price">
       <span class="ups-old">de R$ 49,97</span>
       <span class="ups-new">R$ <b>24</b>,98</span>
     </div>
     <ul class="ups-feat">
-      <li>✅ 40.000 jogos liberados</li>
-      <li>✅ Lançamentos futuros inclusos</li>
-      <li>✅ Multiplayer funcionando</li>
-      <li>✅ Acesso vitalício, taxa única</li>
+      <li>✅ Mais de 40.000 jogos liberados</li>
+      <li>✅ Lançamentos futuros semanais inclusos</li>
+      <li>✅ Modo multiplayer nos compatíveis</li>
+      <li>✅ Acesso vitalício com pagamento único</li>
     </ul>
-    <a role="button" tabindex="0" href="javascript:void(0)" id="upsell-accept" class="offer-btn ups-accept">Quero garantir com 50% OFF</a>
-    <button type="button" id="upsell-decline" class="ups-decline">Não, continuar com o plano menor →</button>
+    <a role="button" tabindex="0" href="javascript:void(0)" id="upsell-accept" class="offer-btn ups-accept">Quero garantir o Vitalício com 50% OFF</a>
+    <button type="button" id="upsell-decline" class="ups-decline">Não, continuar com o plano escolhido →</button>
   </div>
 </div>
 
@@ -2879,7 +2870,7 @@ var io = (function(){
 
     var b=e.target.closest('.av-unlock'); if(!b)return;
 
-    gotoNext('pirata');
+    gotoNext('launcher');
 
   });
 
@@ -3371,7 +3362,7 @@ var io = (function(){
   window.almazOpenPrint=function(src,texto){
     img.src=src;
     var t=document.getElementById('qbx-ov-txt');
-    if(t) t.innerHTML = texto || 'Tirou a dúvida? Então é só escolher o seu acesso e <strong>nunca mais gastar com jogo</strong>.';
+    if(t) t.innerHTML = texto || 'Tirou a dúvida? Então escolha o seu plano e <strong>comece a jogar hoje mesmo</strong>.';
     ov.classList.add('on');
     document.body.style.overflow='hidden';
   };
@@ -4134,7 +4125,18 @@ document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
 
 
 
-(function(){var F=[{q:'Vou tomar ban na minha conta Steam?',a:'Você usa sua própria conta Steam. Não compartilhamos contas. E tem 7 dias de garantia.'},{q:'Vou ter que pagar de novo algum dia?',a:'Todos os planos são pagamento único, sem renovação nem mensalidade. O Avançado e o Vitalício incluem lançamentos futuros.'},{q:'E os jogos que saírem em 2027, 2028?',a:'Entram na sua biblioteca sem custo nenhum. A gente adiciona os lançamentos toda semana, e os planos Avançado e Vitalício recebem todos sem pagar a mais.'},{q:'Como recebo depois de pagar?',a:'Depois que o PIX é aprovado, o acesso chega por e-mail com o passo a passo.'},{q:'É seguro?',a:'Os downloads são feitos pelos servidores oficiais da Steam. Você pode testar por 7 dias.'},{q:'Como funciona?',a:'Instale o launcher, entre com o e-mail da compra e baixe os jogos pela Steam.'},{q:'Os jogos são originais?',a:'Sim. Os jogos e as atualizações vêm da própria Steam.'},{q:'Funciona online?',a:'Sim, nos jogos que têm multiplayer.'},{q:'Quais as formas de pagamento?',a:'O pagamento é por PIX. O acesso é liberado após a aprovação.'},{q:'Como funciona o suporte?',a:'Nossa equipe ajuda pelo WhatsApp.'}];var fl=document.getElementById('fl');fl.innerHTML=F.map(function(f){return'<div class="faq-item reveal"><button class="faq-q" onclick="tFaq(this)">'+f.q+'<span class="faq-chev">▼</span></button><div class="faq-a">'+f.a+'</div></div>'}).join('');fl.querySelectorAll('.reveal').forEach(function(el){io.observe(el)})})();
+(function(){var F=[
+  {q:'Vou tomar ban ou ter problemas na minha conta Steam?',a:'Fique 100% tranquilo. Você utiliza a sua própria conta pessoal da Steam. O método não altera os servidores da Valve nem utiliza contas compartilhadas com estranhos. Os arquivos são baixados diretamente da rede oficial da Steam. Além disso, você conta com 7 dias de garantia incondicional com devolução via PIX se tiver qualquer dúvida.'},
+  {q:'Como o produto funciona na prática?',a:'Após a confirmação do pagamento no PIX, você recebe imediatamente no seu e-mail e WhatsApp o acesso ao Launcher Almaz para Windows. Você instala o aplicativo (super leve), faz login com o e-mail cadastrado e escolhe os jogos do catálogo do seu plano. Ao clicar em adicionar, o jogo é integrado ao seu cliente Steam e o download é feito diretamente pelos servidores oficiais da Valve.'},
+  {q:'Vou ter que pagar alguma mensalidade ou renovação?',a:'Não! Todos os nossos planos (Básico, Avançado e Vitalício) são de pagamento único, sem nenhuma mensalidade, assinatura oculta ou cobrança recorrente. Você paga uma única vez no PIX e tem acesso conforme as regras do seu plano.'},
+  {q:'Qual a diferença real entre os planos Básico, Avançado e Vitalício?',a:'• <strong>Básico (R$ 9,97):</strong> Dá acesso a 1.000 jogos essenciais focados em modo história/campanha offline. A biblioteca é fixa (não recebe lançamentos futuros nem jogos novos). Perfeito para quem quer apenas zerar títulos consagrados gastando o mínimo possível.<br>• <strong>Avançado (R$ 19,97):</strong> Dá acesso a 20.000 jogos, inclui suporte a multiplayer online nos títulos compatíveis (via coop fix) e bypass de proteções. A biblioteca também é fixa.<br>• <strong>Vitalício (R$ 49,97):</strong> O plano mais completo com mais de 40.000 títulos liberados, suporte online, bypass e o benefício exclusivo de receber todos os lançamentos futuros e atualizações semanais para sempre, sem nunca pagar nada a mais. Além disso, membros do Vitalício contam com canal para solicitar jogos específicos.'},
+  {q:'E os jogos que saírem em 2026, 2027 e nos próximos anos?',a:'Novos lançamentos são adicionados semanalmente de forma contínua e são <strong>exclusivos para clientes do Plano Vitalício</strong>. Se você possui o plano Vitalício, qualquer novo título lançado entra na sua biblioteca automaticamente sem você precisar desembolsar nem um centavo a mais.'},
+  {q:'O modo multiplayer / online funciona?',a:'Sim! No Plano Avançado e no Plano Vitalício, os títulos que possuem suporte a cooperativo/online fix funcionam para você jogar com amigos que também utilizam o sistema. Jogos puramente competitivos com anti-cheat restrito de kernel da Valve (como servidores oficiais ranqueados de CS2 ou Dota 2) requerem licença de loja, mas centenas de jogos cooperativos e multiplayer funcionam perfeitamente.'},
+  {q:'Como funciona a garantia de 7 dias e o reembolso?',a:'Nossa garantia é incondicional. Você tem 7 dias corridos após a compra para testar o launcher e os jogos no seu PC. Se por qualquer motivo achar que não atendeu às suas expectativas, basta acionar nossa equipe pelo WhatsApp ou abrir o formulário de suporte no site: estornamos 100% do valor pago via PIX imediatamente, sem burocracia.'},
+  {q:'Preciso de um computador potente? Funciona em Mac ou Linux?',a:'O Launcher Almaz foi desenvolvido especificamente para computadores com <strong>Windows 10 ou Windows 11</strong>. Ele é extremamente leve e consome pouquíssima memória. Para rodar cada jogo específico, você só precisa que o seu computador atenda aos requisitos mínimos normais daquele jogo (placa de vídeo, processador e espaço em disco).'},
+  {q:'Como recebo o acesso após a compra?',a:'A aprovação do PIX pelo Mercado Pago leva poucos segundos. Assim que confirmado, nosso sistema automático envia os dados de acesso, o link do instalador e o guia passo a passo diretamente para o e-mail informado na compra e para o seu WhatsApp cadastrado.'},
+  {q:'Como falar com o suporte se eu precisar de ajuda para instalar?',a:'Oferecemos suporte humanizado em português diretamente pelo WhatsApp e também pela nossa comunidade no Discord. Caso tenha qualquer dúvida na instalação ou na configuração de um jogo, nossa equipe está pronta para te auxiliar passo a passo.'}
+];var fl=document.getElementById('fl');fl.innerHTML=F.map(function(f){return'<div class="faq-item reveal"><button class="faq-q" onclick="tFaq(this)">'+f.q+'<span class="faq-chev">▼</span></button><div class="faq-a">'+f.a+'</div></div>'}).join('');fl.querySelectorAll('.reveal').forEach(function(el){io.observe(el)})})();
 
 function tFaq(b){var a=b.nextElementSibling,o=b.classList.contains('open');document.querySelectorAll('.faq-q.open').forEach(function(q){q.classList.remove('open');q.nextElementSibling.classList.remove('open')});if(!o){b.classList.add('open');a.classList.add('open')}}
 
@@ -4347,7 +4349,7 @@ else{el.scrollIntoView({behavior:'smooth'});}
 
   if (nudge) {
 
-    var nudgeOff = false;
+    var nudgeOff = true;
 
     try { nudgeOff = sessionStorage.getItem('almazNudgeOff') === '1'; } catch (e) {}
 
@@ -4649,103 +4651,60 @@ else{el.scrollIntoView({behavior:'smooth'});}
   
 
   var qaData = [
-
     {
-
-      q: "Isso é legal? Vou tomar ban?",
-
+      q: "Vou tomar ban na minha conta Steam?",
       a: [
-
-        "Boa pergunta, e vou ser sincero com você: dá pra usar tranquilo. Não é aquele joguinho pirata cheio de vírus. Você baixa os arquivos originais direto pelos servidores da Steam, igual a quem comprou na loja.",
-
-        "Funciona assim: o nosso launcher libera os jogos direto na SUA conta Steam, nada de conta compartilhada nem login de terceiros. Tem bastante gente usando todo dia, e se em algum momento não rolar como você esperava, ainda tem os 7 dias de garantia. Você não fica na mão."
-
+        "<strong>NÃO.</strong> Você joga 100% na sua própria conta Steam. Não usamos contas compartilhadas e todos os downloads vêm direto dos servidores oficiais da Valve. Risco zero para o seu perfil."
       ]
-
     },
-
     {
-
-      q: "A conta Steam é minha mesmo?",
-
+      q: "A conta Steam é minha própria?",
       a: [
-
-        "É a SUA Steam, sim. Você não troca de conta nem entrega seu login pra ninguém. Instala o nosso launcher, entra com o email da compra e os jogos aparecem na sua biblioteca pra baixar.",
-
-        "Ou seja: seu perfil, seus saves, seus amigos de sempre. Só que com a estante de jogos bem maior. 🙂"
-
+        "<strong>SIM.</strong> É a sua conta pessoal de sempre. Você não troca de conta e não passa sua senha para ninguém. Seus amigos, saves e conquistas continuam intactos."
       ]
-
     },
-
     {
-
-      q: "É seguro? Tem garantia?",
-
+      q: "Funciona multiplayer / modo online?",
       a: [
-
-        "É seguro e você tem 7 dias de garantia. Se comprar e não curtir, é só pedir o reembolso dentro desse prazo, sem a gente ficar inventando desculpa pra te segurar.",
-
-        "O pagamento é no PIX, e a liberação é na hora que confirma. Se travar em qualquer parte, a gente te ajuda no WhatsApp."
-
+        "<strong>SIM.</strong> Nos planos Avançado e Vitalício, você joga online normalmente com amigos nos títulos compatíveis (via coop fix)."
       ]
-
     },
-
     {
-
-      q: "Como funciona o desbloqueio?",
-
+      q: "Tem mensalidade ou cobrança recorrente?",
       a: [
-
-        "É bem direto: depois da compra você baixa o nosso launcher, entra com o email que usou e clica em desbloquear. Em poucos minutos os jogos já aparecem na sua Steam prontos pra baixar, tudo no seu PC, sem complicação."
-
-      ],
-
-      video: "1205055795"
-
-    },
-
-    {
-
-      q: "Recebo na hora?",
-
-      a: [
-
-        "Recebe sim. Assim que o PIX ou o cartão é confirmado o acesso libera na hora, questão de minutos e você já tá desbloqueando. ⚡"
-
-      ],
-
-      video: "1205055794"
-
-    },
-
-    {
-
-      q: "Qual o preço?",
-
-      a: [
-
-        "Os 3 planos são pagamento único, sem mensalidade nem renovação: Básico, R$ 9,97, com 1.000 jogos; Avançado, R$ 19,97, com 20.000 jogos e lançamentos futuros (mais vendido); Vitalício, R$ 49,97, com 40.000 jogos e Denuvo funcionando.",
-
-        "Dá uma olhada na seção de Planos e escolhe o que faz sentido pra você."
-
+        "<strong>NÃO.</strong> Todos os nossos planos são de pagamento único no PIX. Você paga uma única vez e nunca mais é cobrado."
       ]
-
     },
-
     {
-
-      q: "Funciona no meu PC?",
-
+      q: "Tem garantia de reembolso?",
       a: [
-
-        "Se for PC com Windows e a Steam instalada, funciona. É só baixar o nosso launcher, entrar e desbloquear. (Por enquanto é só pra PC mesmo, não roda em console nem celular.)"
-
+        "<strong>SIM.</strong> Você tem 7 dias de garantia incondicional. Se não gostar por qualquer motivo, devolvemos 100% do seu valor no PIX na mesma hora."
       ]
-
+    },
+    {
+      q: "A liberação é na hora após o PIX?",
+      a: [
+        "<strong>SIM.</strong> A aprovação é imediata em segundos. Você recebe o acesso ao aplicativo e o guia de instalação direto no seu e-mail e WhatsApp na hora."
+      ]
+    },
+    {
+      q: "Funciona no meu computador?",
+      a: [
+        "<strong>SIM.</strong> Funciona em qualquer computador ou notebook com Windows (10 ou 11) e a Steam instalada. Não roda em consoles (PS/Xbox) nem celulares."
+      ]
+    },
+    {
+      q: "Preciso desativar o antivírus?",
+      a: [
+        "<strong>NÃO.</strong> Os downloads são oficiais diretamente da Steam. Não há vírus, cracks suspeitos nem instaladores perigosos no seu computador."
+      ]
+    },
+    {
+      q: "Lançamentos futuros estão inclusos?",
+      a: [
+        "<strong>SIM.</strong> No Plano Vitalício, você recebe todos os novos lançamentos adicionados semanalmente para sempre. (Nos planos Básico e Avançado a biblioteca é fixa)."
+      ]
     }
-
   ];
 
 
@@ -4828,21 +4787,19 @@ else{el.scrollIntoView({behavior:'smooth'});}
 
     offer.className = 'chat-btn chat-btn-v';
 
-    offer.innerHTML = '🎮 Ver a oferta do acesso vitalício';
+    offer.innerHTML = '🎮 Ver os planos e garantir';
 
     offer.onclick = function() {
 
       if (typeof window.trackEvent === 'function') {
 
-        window.trackEvent('ChatbotInteraction', { action: 'cta_oferta_vitalicio' });
+        window.trackEvent('ChatbotInteraction', { action: 'cta_oferta_planos' });
 
       }
 
       win.classList.remove('open');
 
-      var card = document.querySelector('.offer-card[data-plan-id="vitalicio"]');
-
-      var target = card || document.getElementById('pricing');
+      var target = document.getElementById('pricing');
 
       if (window.almazScrollTo) { window.almazScrollTo(target); }
 
@@ -4968,7 +4925,7 @@ else{el.scrollIntoView({behavior:'smooth'});}
 
         var cleanText = msgText.replace(/<[^>]*>/g, '');
 
-        var delay = Math.max(500, Math.min(1200, cleanText.length * 15));
+        var delay = Math.max(250, Math.min(500, cleanText.length * 6));
 
 
 
