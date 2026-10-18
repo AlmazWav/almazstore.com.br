@@ -3264,6 +3264,8 @@ var io = (function(){
      o preço na página do checkout — o popup promete R$24,98 e precisa bater. */
   var UPSELL_URL = 'https://ggcheckout.app/checkout/v5/uDIPxkFgNZlX2eQzy1ua';
   var UPSELL_VAL = 24.98;
+  // Reative para restaurar temporariamente a oferta nos planos de 1k e 20k.
+  var UPSELL_FOR_BASIC_PLANS_ENABLED = false;
   /* ============================================================ */
   var PLANOS = {
     basico:   { url:'https://ggcheckout.app/checkout/v5/3SZQGWf2lurzA7Sb3M26', val:9.97,  nome:'Básico',   preco:'R$ 9,97'  },
@@ -3280,6 +3282,7 @@ var io = (function(){
   var _declineHandler = null;
   window.almazUpsell = function(plan){
     var p = PLANOS[plan]; if(!p) return;
+    if(!UPSELL_FOR_BASIC_PLANS_ENABLED){ checkout(p.url, p.val); return; }
     /* aceite -> Vitalício com desconto; recusa -> checkout do plano original (mesma função checkout() de sempre) */
     if(_acceptHandler) accept.removeEventListener('click', _acceptHandler);
     if(_declineHandler) decline.removeEventListener('click', _declineHandler);
