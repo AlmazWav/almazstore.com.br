@@ -412,9 +412,372 @@ tbody td { height: 61px; border-top: 1px solid #202027; color: #d1d1d8; font-siz
 .home-welcome h2 { margin: 6px 0 4px; font: 700 16px 'Manrope',sans-serif; }
 .home-welcome p { margin: 0; font-size: 12px; }
 .customer-overview { margin-top: 12px; }
-.feedback-panel,.pending-panel,.recovery-panel,.recovery-dashboard-panel,.commission-panel,.history-panel { margin-bottom: 14px; }
+.feedback-panel,.pending-panel,.recovery-panel,.recovery-dashboard-panel,.commission-panel,.history-panel,.upsell-leads-panel,.upsell-scripts-panel { margin-bottom: 14px; }
 .commission-panel { margin-top: 0; }
 .page-footer { margin-top: 12px; }
+
+/* ============================================================
+   EXCLUSIVO ALMAZ: UPSELL VITALÍCIO (9,97 & 19,97)
+   ============================================================ */
+
+.nav-item-upsell {
+  border: 1px solid rgba(221, 169, 79, 0.22);
+  background: linear-gradient(135deg, rgba(221, 169, 79, 0.08), rgba(226, 68, 72, 0.06));
+}
+.nav-item-upsell:hover {
+  border-color: rgba(221, 169, 79, 0.45);
+  background: linear-gradient(135deg, rgba(221, 169, 79, 0.14), rgba(226, 68, 72, 0.12));
+}
+.nav-item-upsell.active {
+  border-color: #dda94f;
+  background: linear-gradient(135deg, rgba(221, 169, 79, 0.22), rgba(184, 46, 53, 0.25));
+  color: #fff;
+}
+.upsell-pill {
+  border-color: rgba(221, 169, 79, 0.35);
+  background: #2a2012;
+  color: #f0cb82;
+  font-weight: 700;
+}
+.admin-badge {
+  border-color: rgba(221, 169, 79, 0.35);
+  background: #241d14;
+  color: #ebc47e;
+  font-weight: 700;
+}
+.admin-badge span { color: #f0cb82; margin-right: 5px; }
+
+/* Lock Panel */
+.upsell-lock-panel {
+  max-width: 580px;
+  margin: 35px auto;
+  padding: 38px 34px;
+  text-align: center;
+  border-color: #3f3223;
+  background: linear-gradient(145deg, #181512, #100f0d);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+}
+.lock-graphic {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 16px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #e5a842, #b83339);
+  color: #fff;
+  font-size: 26px;
+  box-shadow: 0 8px 24px rgba(229, 168, 66, 0.25);
+}
+.upsell-lock-panel h2 {
+  margin: 10px 0 12px;
+  font: 700 22px 'Manrope', sans-serif;
+  color: #f5f5f7;
+}
+.upsell-auth-form {
+  margin-top: 24px;
+  text-align: left;
+}
+.upsell-auth-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+.upsell-auth-row input {
+  flex: 1;
+}
+.upsell-auth-row .button {
+  white-space: nowrap;
+  padding: 0 20px;
+}
+
+/* KPI Grid */
+.upsell-kpi-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.upsell-stat-highlight strong {
+  color: #f0cb82 !important;
+}
+.upsell-stat-success strong {
+  color: #4dc397 !important;
+}
+
+/* Scripts Panel */
+.upsell-scripts-panel {
+  padding: 18px 20px;
+}
+.upsell-scripts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid var(--line-soft);
+}
+.script-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 14px;
+  border: 1px solid #282832;
+  border-radius: 9px;
+  background: #14141b;
+}
+.script-tag {
+  color: #ebc47e;
+  font: 700 9px 'Manrope', sans-serif;
+  letter-spacing: .08em;
+  margin-bottom: 8px;
+}
+.script-text {
+  flex: 1;
+  color: #c9c9d4;
+  font-size: 11px;
+  line-height: 1.5;
+  margin: 0 0 12px;
+  font-style: italic;
+}
+.button-copy-script {
+  align-self: flex-start;
+  font-size: 10px;
+  padding: 0 10px;
+  min-height: 28px;
+}
+
+/* Toolbar & Filters */
+.upsell-leads-panel {
+  padding: 20px 20px 16px;
+}
+.upsell-toolbar {
+  margin: 15px 0 12px;
+}
+.upsell-search-form {
+  margin: 0;
+  max-width: 500px;
+}
+.upsell-filters-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 0 15px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.filter-divider {
+  width: 1px;
+  height: 20px;
+  background: #2a2a34;
+  margin: 0 4px;
+}
+
+/* Leads List & Cards */
+.upsell-leads-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+.upsell-card {
+  padding: 16px 18px;
+  border: 1px solid #272731;
+  border-radius: 11px;
+  background: linear-gradient(145deg, #15151c, #121217);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+  transition: border-color .18s, transform .18s;
+}
+.upsell-card:hover {
+  border-color: #383846;
+}
+.upsell-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+.upsell-lead-info {
+  flex: 1;
+  min-width: 0;
+}
+.upsell-name-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.upsell-lead-name {
+  color: #fff;
+  font: 700 15px 'Manrope', sans-serif;
+}
+.plan-badge-1k {
+  border-color: #323b49 !important;
+  background: #171d26 !important;
+  color: #8bb3e8 !important;
+}
+.plan-badge-20k {
+  border-color: #4b3658 !important;
+  background: #211728 !important;
+  color: #d19fe8 !important;
+}
+.status-opportunity {
+  border-color: #5d4624 !important;
+  background: #271c0f !important;
+  color: #f0cb82 !important;
+  font-weight: 700;
+}
+.status-converted {
+  border-color: #1f5039 !important;
+  background: #10241b !important;
+  color: #6ee7b7 !important;
+  font-weight: 700;
+}
+.upsell-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  color: #8c8c99;
+  font-size: 11px;
+  margin-bottom: 8px;
+}
+.upsell-email {
+  color: #b5b5c2;
+}
+.upsell-separator {
+  color: #484856;
+}
+.upsell-phone {
+  color: #c9c9d6;
+}
+.upsell-phone b {
+  color: #4dc397;
+}
+.upsell-phone.missing {
+  color: #e27c80;
+}
+.upsell-date {
+  color: #797987;
+}
+.upsell-key-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border: 1px solid #292934;
+  border-radius: 6px;
+  background: #0d0d12;
+  margin-top: 4px;
+}
+.upsell-key-row code {
+  color: #e0e0ea;
+  font-size: 11px;
+}
+.button-copy-key {
+  min-height: 22px;
+  padding: 0 6px;
+  font-size: 9px;
+  border-radius: 4px;
+}
+
+/* Status Selector */
+.upsell-status-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+}
+.upsell-status-label {
+  margin: 0;
+  font-size: 10px;
+  color: #7d7d8a;
+  font-weight: 600;
+}
+.upsell-status-select {
+  height: 33px;
+  padding: 0 10px;
+  border: 1px solid #363644;
+  border-radius: 6px;
+  background: #1a1a23;
+  color: #e3e3ea;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: border-color .16s;
+}
+.upsell-status-select:focus {
+  border-color: #dda94f;
+}
+
+/* Actions */
+.upsell-card-actions {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+.upsell-btns-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.button-whatsapp-primary {
+  border-color: #1ea952 !important;
+  background: linear-gradient(135deg, #25d366, #128c7e) !important;
+  color: #fff !important;
+  text-decoration: none;
+  font-weight: 700;
+  min-height: 33px;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.25);
+}
+.button-whatsapp-primary:hover {
+  background: linear-gradient(135deg, #2ae36e, #169e8f) !important;
+}
+.button-whatsapp-offer {
+  border-color: #5c3b7a !important;
+  background: #231630 !important;
+  color: #c99bf0 !important;
+  text-decoration: none;
+  min-height: 33px;
+}
+.button-whatsapp-offer:hover {
+  border-color: #7b4ea6 !important;
+  background: #2d1c3e !important;
+}
+
+/* Notes Form */
+.upsell-card-notes {
+  margin-top: 10px;
+}
+.upsell-notes-form {
+  display: flex;
+  gap: 8px;
+}
+.upsell-notes-input {
+  height: 32px;
+  padding: 0 10px;
+  font-size: 11px;
+  background: #0f0f14;
+  border: 1px solid #272733;
+}
+.upsell-notes-input:focus {
+  border-color: #dda94f;
+  box-shadow: 0 0 0 2px rgba(221, 169, 79, 0.15);
+}
+.btn-save-note {
+  min-height: 32px;
+  padding: 0 12px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
 @media (max-width: 900px) {
   .app-layout { grid-template-columns: minmax(0,1fr); gap: 10px; padding-top: 10px; }
   .app-sidebar { position: sticky; top: 0; z-index: 5; min-height: 0; padding: 8px; border-radius: 10px; backdrop-filter: blur(16px); }
@@ -424,6 +787,11 @@ tbody td { height: 61px; border-top: 1px solid #202027; color: #d1d1d8; font-siz
   .nav-divider { display: none; }
   .nav-count { min-width: 18px; height: 18px; }
   .app-main > .page-heading { padding-top: 22px; }
+  .upsell-kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .upsell-scripts-grid { grid-template-columns: minmax(0, 1fr); }
+  .upsell-card-top { flex-direction: column; }
+  .upsell-status-box { align-items: flex-start; width: 100%; }
+  .upsell-status-select { width: 100%; }
 }
 @media (max-width: 520px) {
   .shell { padding-right: 12px; padding-left: 12px; }
@@ -441,4 +809,9 @@ tbody td { height: 61px; border-top: 1px solid #202027; color: #d1d1d8; font-siz
   .welcome-mark { width: 35px; height: 35px; flex-basis: 35px; border-radius: 10px; font-size: 16px; }
   .home-welcome h2 { font-size: 14px; }
   .home-welcome p { font-size: 11px; }
+  .upsell-kpi-grid { grid-template-columns: minmax(0, 1fr); }
+  .upsell-auth-row { flex-direction: column; }
+  .upsell-btns-group { flex-direction: column; align-items: stretch; }
+  .upsell-btns-group .button { width: 100%; }
+  .upsell-notes-form { flex-direction: column; }
 }

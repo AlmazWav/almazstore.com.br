@@ -1,6 +1,8 @@
 (() => {
   const TOKEN_KEY = 'almaz_support_token';
   const AGENT_KEY = 'almaz_support_agent';
+  const UPSELL_TOKEN_KEY = 'almaz_upsell_token';
+  const IS_ADMIN_KEY = 'almaz_is_admin';
   const loginView = document.getElementById('login-view');
   const appView = document.getElementById('app-view');
   const appSections = [...document.querySelectorAll('[data-app-section]')];
@@ -30,7 +32,61 @@
   const resetDialog = document.getElementById('reset-dialog');
   const resetForm = document.getElementById('reset-form');
   const resetReason = document.getElementById('reset-reason');
+
+  // Elementos do Upsell Vitalício
+  const navUpsellCount = document.getElementById('nav-upsell-count');
+  const homeUpsellCount = document.getElementById('home-upsell-count');
+  const upsellLockedView = document.getElementById('upsell-locked-view');
+  const upsellUnlockedView = document.getElementById('upsell-unlocked-view');
+  const upsellAuthForm = document.getElementById('upsell-auth-form');
+  const upsellAuthError = document.getElementById('upsell-auth-error');
+  const upsellTokenInput = document.getElementById('upsell-token-input');
+  const upsellLeadsList = document.getElementById('upsell-leads-list');
+  const upsellLeadsCount = document.getElementById('upsell-leads-count');
+  const upsellSearchInput = document.getElementById('upsell-search-input');
+  const upsellStatPending = document.getElementById('upsell-stat-pending');
+  const upsellStat1k = document.getElementById('upsell-stat-1k');
+  const upsellStat20k = document.getElementById('upsell-stat-20k');
+  const upsellStatContacted = document.getElementById('upsell-stat-contacted');
+  const upsellStatConverted = document.getElementById('upsell-stat-converted');
+  const toggleScriptsBtn = document.getElementById('toggle-scripts-btn');
+  const upsellScriptsBody = document.getElementById('upsell-scripts-body');
+
+  let allUpsellLeads = [];
+  let upsellFilterOpportunity = 'pending';
+  let upsellFilterPlan = 'all';
+  let upsellFilterStatus = 'all';
+  let upsellSearchTimer;
+  let upsellLoaded = false;
+  let upsellLoading = false;
+
   const demoMode = location.protocol === 'file:';
+  const demoUpsellLeads = [
+    {
+      paymentId: 'DEMO-UP-1', email: 'gabriel.costa@exemplo.com', name: 'Gabriel Costa',
+      phone: '11988887777', planCode: '1k', planLabel: 'Básico (1k)', planPrice: 9.97,
+      currentPlan: '1k', isVitalicio: false, key: 'ALMAZ-BAS-91K2', eventAt: '2026-10-19T10:15:00.000Z',
+      status: 'novo', notes: ''
+    },
+    {
+      paymentId: 'DEMO-UP-2', email: 'matheus.ribeiro@exemplo.com', name: 'Matheus Ribeiro',
+      phone: '21977776666', planCode: '20k', planLabel: 'Avançado (20k)', planPrice: 19.97,
+      currentPlan: '20k', isVitalicio: false, key: 'ALMAZ-AV-4K89', eventAt: '2026-10-18T22:30:00.000Z',
+      status: 'contatado', notes: 'Joga Forza Horizon, adorou o suporte'
+    },
+    {
+      paymentId: 'DEMO-UP-3', email: 'felipe.cardoso@exemplo.com', name: 'Felipe Cardoso',
+      phone: '31966665555', planCode: '1k', planLabel: 'Básico (1k)', planPrice: 9.97,
+      currentPlan: '1k', isVitalicio: false, key: 'ALMAZ-BAS-1893', eventAt: '2026-10-18T18:40:00.000Z',
+      status: 'em_conversa', notes: 'Quer jogar Wukong e lançamentos, vai pegar na sexta'
+    },
+    {
+      paymentId: 'DEMO-UP-4', email: 'bruno.lima@exemplo.com', name: 'Bruno Lima',
+      phone: '41955554444', planCode: '20k', planLabel: 'Avançado (20k)', planPrice: 19.97,
+      currentPlan: '40k', isVitalicio: true, key: 'ALMAZ-VIT-7721', eventAt: '2026-10-17T14:10:00.000Z',
+      status: 'convertido', notes: 'Converteu pro Vitalício com a condição especial!'
+    }
+  ];
   const demoCustomers = [
     {
       email: 'marina.oliveira@example.test', name: 'Marina Oliveira', key: 'ALMAZ-DEMO-82KX', plan: '40k',
@@ -137,15 +193,22 @@
   function clearSession(message = '') {
     sessionStorage.removeItem(TOKEN_KEY);
     sessionStorage.removeItem(AGENT_KEY);
+    sessionStorage.removeItem(UPSELL_TOKEN_KEY);
+    sessionStorage.removeItem(IS_ADMIN_KEY);
     appView.classList.add('hidden');
     loginView.classList.remove('hidden');
     if (message) showMessage(loginMessage, message);
   }
 
-  function setAuthenticated(agent) {
+  function setAuthenticated(agent, isAdmin = false) {
     loginView.classList.add('hidden');
     appView.classList.remove('hidden');
-    document.getElementById('agent-label').textContent = agent;
+    if (isAdmin) {
+      sessionStorage.setItem(IS_ADMIN_KEY, 'true');
+      document.getElementById('agent-label').textContent = `${agent} (Admin)`;
+    } else {
+      document.getElementById('agent-label').textContent = agent;
+    }
     loginMessage.textContent = '';
     loginMessage.className = 'message';
     const requestedSection = location.hash.slice(1);
@@ -167,6 +230,7 @@
       history.replaceState(null, '', `${location.pathname}${location.search}#${sectionName}`);
     }
     if (sectionName === 'expired-history' && !expiredHistoryLoaded && !expiredHistoryLoading) loadExpiredHistory(true);
+    if (sectionName === 'upsell') checkUpsellAccessAndLoad();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -176,10 +240,15 @@
 
   async function apiRequest(url, options = {}) {
     const targetUrl = url.startsWith('http') ? url : `${API_BASE}${url}`;
+    const mainToken = sessionStorage.getItem(TOKEN_KEY) || '';
+    const upsellToken = sessionStorage.getItem(UPSELL_TOKEN_KEY) || '';
+    const isAdmin = sessionStorage.getItem(IS_ADMIN_KEY) === 'true';
     const headers = {
       ...(options.headers || {}),
-      'x-support-token': sessionStorage.getItem(TOKEN_KEY) || '',
+      'x-support-token': mainToken,
       'x-support-agent': sessionStorage.getItem(AGENT_KEY) || '',
+      'x-upsell-token': upsellToken || (isAdmin ? mainToken : ''),
+      'x-admin-token': isAdmin ? mainToken : (upsellToken || ''),
     };
     if (options.body) headers['content-type'] = 'application/json';
     const response = await fetch(targetUrl, { ...options, headers });
@@ -198,8 +267,12 @@
     try {
       const response = await fetch(`${API_BASE}/api/support/session`, { headers: { 'x-support-token': token } });
       if (!response.ok) return clearSession();
-      setAuthenticated(agent);
-      await Promise.all([loadCustomers(''), loadFeedbacks(), loadRecoveries(), loadRecoveryDashboard(), loadCommissions()]);
+      const data = await response.json().catch(() => ({}));
+      setAuthenticated(agent, !!data.isAdmin);
+      await Promise.all([
+        loadCustomers(''), loadFeedbacks(), loadRecoveries(), loadRecoveryDashboard(), loadCommissions(),
+        data.isAdmin || sessionStorage.getItem(UPSELL_TOKEN_KEY) ? loadUpsellLeads(false) : Promise.resolve(),
+      ]);
     } catch (_) {
       clearSession('Não foi possível conectar ao servidor. Tente novamente.');
     }
@@ -218,8 +291,14 @@
       if (!response.ok) throw new Error(data.message || 'Não foi possível validar o acesso.');
       sessionStorage.setItem(TOKEN_KEY, token);
       sessionStorage.setItem(AGENT_KEY, agent);
-      setAuthenticated(agent);
-      await Promise.all([loadCustomers(''), loadFeedbacks(), loadRecoveries(), loadRecoveryDashboard(), loadCommissions()]);
+      if (data.isAdmin) {
+        sessionStorage.setItem(IS_ADMIN_KEY, 'true');
+      }
+      setAuthenticated(agent, !!data.isAdmin);
+      await Promise.all([
+        loadCustomers(''), loadFeedbacks(), loadRecoveries(), loadRecoveryDashboard(), loadCommissions(),
+        data.isAdmin ? loadUpsellLeads(false) : Promise.resolve(),
+      ]);
     } catch (error) {
       showMessage(loginMessage, error.message || 'Falha de conexão. Tente novamente.');
     } finally {
@@ -569,6 +648,407 @@
     }
   }
 
+  // ============================================================
+  // EXCLUSIVO ALMAZ: UPSELL VITALÍCIO (9,97 & 19,97)
+  // ============================================================
+
+  function isUpsellUnlocked() {
+    if (demoMode) return true;
+    return sessionStorage.getItem(IS_ADMIN_KEY) === 'true' || !!sessionStorage.getItem(UPSELL_TOKEN_KEY);
+  }
+
+  function checkUpsellAccessAndLoad() {
+    if (!upsellLockedView || !upsellUnlockedView) return;
+    if (isUpsellUnlocked()) {
+      upsellLockedView.classList.add('hidden');
+      upsellUnlockedView.classList.remove('hidden');
+      if (!upsellLoaded && !upsellLoading) {
+        loadUpsellLeads(true);
+      }
+    } else {
+      upsellLockedView.classList.remove('hidden');
+      upsellUnlockedView.classList.add('hidden');
+    }
+  }
+
+  function buildUpsellWhatsAppUrl(phone, name, planLabel, type = 'intro') {
+    let digits = String(phone || '').replace(/\D/g, '');
+    if (digits.startsWith('00')) digits = digits.slice(2);
+    if (digits.startsWith('0')) digits = digits.slice(1);
+    if (digits.length === 10 || digits.length === 11) digits = `55${digits}`;
+    if (digits.length < 12 || digits.length > 15) return '';
+    const firstName = String(name || '').trim().split(' ')[0] || 'amigo';
+    let text = '';
+    if (type === 'offer') {
+      text = `Show de bola, ${firstName}! Fico feliz que deu tudo certo! Só te dando um toque: como você já é nosso cliente, se algum dia quiser ter todos os lançamentos inclusos, a gente consegue abater o que você já pagou e você só paga a diferença pro Vitalício, beleza?`;
+    } else {
+      // Chegar 100% de boa, perguntando se deu tudo certo com a compra e com os jogos, zero CTA
+      text = `Opa ${firstName}, tudo bem? Aqui é o Almaz! Passando só pra saber se deu tudo certo com a sua compra e se tá conseguindo jogar tranquilo?`;
+    }
+    return `https://wa.me/${digits}?text=${encodeURIComponent(text)}`;
+  }
+
+  function formatPhoneDisplay(phone) {
+    const d = String(phone || '').replace(/\D/g, '');
+    if (!d) return 'Não informado';
+    let local = d;
+    if (local.startsWith('55') && local.length >= 12) local = local.slice(2);
+    if (local.length === 11) return `(${local.slice(0, 2)}) ${local.slice(2, 7)}-${local.slice(7)}`;
+    if (local.length === 10) return `(${local.slice(0, 2)}) ${local.slice(2, 6)}-${local.slice(6)}`;
+    return phone;
+  }
+
+  async function loadUpsellLeads(render = true) {
+    if (upsellLoading) return;
+    upsellLoading = true;
+
+    if (demoMode) {
+      allUpsellLeads = [...demoUpsellLeads];
+      updateUpsellKPIs({
+        total: allUpsellLeads.length,
+        pendingUpsell: allUpsellLeads.filter(l => !l.isVitalicio && l.status !== 'convertido').length,
+        plan1k: allUpsellLeads.filter(l => l.planCode === '1k').length,
+        plan20k: allUpsellLeads.filter(l => l.planCode === '20k').length,
+        contacted: allUpsellLeads.filter(l => ['contatado', 'em_conversa', 'interessado'].includes(l.status)).length,
+        converted: allUpsellLeads.filter(l => l.isVitalicio || l.status === 'convertido').length,
+      });
+      if (render) renderUpsellLeads(allUpsellLeads);
+      upsellLoaded = true;
+      upsellLoading = false;
+      return;
+    }
+
+    if (render && upsellLeadsList) {
+      upsellLeadsList.innerHTML = '<div class="empty-state"><span class="spinner"></span><b>Carregando compradores de 9,97 e 19,97…</b></div>';
+    }
+
+    try {
+      const params = new URLSearchParams({
+        opportunity: upsellFilterOpportunity,
+        plan: upsellFilterPlan,
+        status: upsellFilterStatus,
+        limit: '300',
+      });
+      const query = (upsellSearchInput ? upsellSearchInput.value : '').trim();
+      if (query) params.set('search', query);
+
+      const { response, data } = await apiRequest(`/api/support/upsell/leads?${params}`);
+      if (!response.ok) {
+        if (response.status === 403) {
+          sessionStorage.removeItem(UPSELL_TOKEN_KEY);
+          if (upsellLockedView) upsellLockedView.classList.remove('hidden');
+          if (upsellUnlockedView) upsellUnlockedView.classList.add('hidden');
+          return;
+        }
+        throw new Error(data.message || 'Falha ao buscar leads de upsell.');
+      }
+
+      allUpsellLeads = data.leads || [];
+      updateUpsellKPIs(data.totals || {});
+      if (render) renderUpsellLeads(allUpsellLeads);
+      upsellLoaded = true;
+    } catch (err) {
+      if (render && upsellLeadsList) {
+        upsellLeadsList.innerHTML = `<div class="empty-state error-text"><b>Não foi possível carregar</b><span>${escapeHtml(err.message)}</span></div>`;
+      }
+    } finally {
+      upsellLoading = false;
+    }
+  }
+
+  function updateUpsellKPIs(totals) {
+    const pending = totals.pendingUpsell ?? 0;
+    const plan1k = totals.plan1k ?? 0;
+    const plan20k = totals.plan20k ?? 0;
+    const contacted = totals.contacted ?? 0;
+    const converted = totals.converted ?? 0;
+
+    if (upsellStatPending) upsellStatPending.textContent = String(pending);
+    if (upsellStat1k) upsellStat1k.textContent = String(plan1k);
+    if (upsellStat20k) upsellStat20k.textContent = String(plan20k);
+    if (upsellStatContacted) upsellStatContacted.textContent = String(contacted);
+    if (upsellStatConverted) upsellStatConverted.textContent = String(converted);
+    if (navUpsellCount) navUpsellCount.textContent = String(pending);
+    if (homeUpsellCount) homeUpsellCount.textContent = String(pending);
+  }
+
+  function renderUpsellLeads(leads) {
+    if (!upsellLeadsList) return;
+    if (upsellLeadsCount) upsellLeadsCount.textContent = String(leads.length);
+
+    if (!leads.length) {
+      upsellLeadsList.innerHTML = '<div class="empty-state"><span class="empty-icon">🎯</span><b>Nenhum comprador encontrado neste filtro</b><span>Alterne os filtros acima para visualizar mais clientes.</span></div>';
+      return;
+    }
+
+    upsellLeadsList.innerHTML = leads.map(lead => {
+      const waIntro = buildUpsellWhatsAppUrl(lead.phone, lead.name, lead.planLabel, 'intro');
+      const waOffer = buildUpsellWhatsAppUrl(lead.phone, lead.name, lead.planLabel, 'offer');
+      const formattedPhone = formatPhoneDisplay(lead.phone);
+      const is20k = lead.planCode === '20k';
+
+      const planBadge = is20k
+        ? '<span class="status-badge plan-badge-20k">Avançado · R$ 19,97</span>'
+        : '<span class="status-badge plan-badge-1k">Básico · R$ 9,97</span>';
+
+      const opportunityBadge = lead.isVitalicio || lead.status === 'convertido'
+        ? '<span class="status-badge status-converted">🏆 Vitalício Ativo</span>'
+        : '<span class="status-badge status-opportunity">🎯 Margem Vitalício</span>';
+
+      const direct40k = `https://ggcheckout.app/checkout/v5/Tjjri534N4VrT34qfUTm?utm_source=suporte&utm_medium=whatsapp&utm_campaign=almaz_upsell&utm_content=${encodeURIComponent(lead.email)}`;
+      const promo40k = `https://ggcheckout.app/checkout/v5/uDIPxkFgNZlX2eQzy1ua?utm_source=suporte&utm_medium=whatsapp&utm_campaign=almaz_upsell_promo&utm_content=${encodeURIComponent(lead.email)}`;
+
+      const currentStatus = lead.status || (lead.isVitalicio ? 'convertido' : 'novo');
+
+      const statusOptions = [
+        { val: 'novo', label: '🟡 Não chamado' },
+        { val: 'contatado', label: '🔵 Mensagem enviada' },
+        { val: 'em_conversa', label: '🟣 Em conversa' },
+        { val: 'interessado', label: '🟠 Muito interessado' },
+        { val: 'convertido', label: '🟢 Converteu Vitalício! 🚀' },
+        { val: 'recusado', label: '⚪ Sem interesse' },
+      ].map(opt => `<option value="${opt.val}" ${currentStatus === opt.val ? 'selected' : ''}>${opt.label}</option>`).join('');
+
+      return `
+        <article class="upsell-card" data-email="${escapeHtml(lead.email)}">
+          <div class="upsell-card-top">
+            <div class="upsell-lead-info">
+              <div class="upsell-name-row">
+                <strong class="upsell-lead-name">${escapeHtml(lead.name || 'Cliente')}</strong>
+                ${planBadge}
+                ${opportunityBadge}
+              </div>
+              <div class="upsell-meta-row">
+                <span class="upsell-email">${escapeHtml(lead.email)}</span>
+                <span class="upsell-separator">•</span>
+                <span class="upsell-phone ${!lead.phone ? 'missing' : ''}">
+                  ${lead.phone ? `WhatsApp: <b>${escapeHtml(formattedPhone)}</b>` : 'Telefone não cadastrado'}
+                </span>
+                <span class="upsell-separator">•</span>
+                <span class="upsell-date">Comprou em ${escapeHtml(formatDate(lead.eventAt))}</span>
+              </div>
+              ${lead.key ? `
+                <div class="upsell-key-row">
+                  <code>${escapeHtml(lead.key)}</code>
+                  <button type="button" class="button button-quiet button-copy-key" data-key="${escapeHtml(lead.key)}">Copiar key</button>
+                </div>
+              ` : ''}
+            </div>
+
+            <div class="upsell-status-box">
+              <label class="upsell-status-label">Status de Contato:</label>
+              <select class="upsell-status-select" data-email="${escapeHtml(lead.email)}">
+                ${statusOptions}
+              </select>
+            </div>
+          </div>
+
+          <div class="upsell-card-actions">
+            <div class="upsell-btns-group">
+              ${waIntro ? `
+                <a class="button button-whatsapp-primary" href="${escapeHtml(waIntro)}" target="_blank" rel="noopener noreferrer" data-upsell-action="contact" data-email="${escapeHtml(lead.email)}">
+                  <span>💬</span> Chamar no Zap (Sem CTA • Conexão)
+                </a>
+              ` : `<span class="button button-quiet disabled" title="Sem telefone para WhatsApp">WhatsApp indisponível</span>`}
+
+              ${waOffer ? `
+                <a class="button button-quiet button-whatsapp-offer" href="${escapeHtml(waOffer)}" target="_blank" rel="noopener noreferrer" data-upsell-action="contact" data-email="${escapeHtml(lead.email)}">
+                  <span>⚡</span> Oferta Vitalício (Quando responder)
+                </a>
+              ` : ''}
+
+              <button type="button" class="button button-quiet button-copy-link" data-copy-link="${escapeHtml(direct40k)}">
+                Copiar Link Vitalício (R$ 49,97)
+              </button>
+
+              <button type="button" class="button button-quiet button-copy-link" data-copy-link="${escapeHtml(promo40k)}">
+                Link Promo (R$ 24,98)
+              </button>
+            </div>
+          </div>
+
+          <div class="upsell-card-notes">
+            <div class="upsell-notes-form">
+              <input type="text" class="upsell-notes-input" placeholder="Adicionar anotação (ex.: joga RDR2, vai pegar Vitalício amanhã)..." value="${escapeHtml(lead.notes || '')}">
+              <button type="button" class="button button-quiet btn-save-note" data-email="${escapeHtml(lead.email)}">Salvar anotação</button>
+            </div>
+          </div>
+        </article>
+      `;
+    }).join('');
+  }
+
+  if (upsellAuthForm) {
+    upsellAuthForm.addEventListener('submit', async event => {
+      event.preventDefault();
+      const token = (upsellTokenInput ? upsellTokenInput.value : '').trim();
+      const submit = upsellAuthForm.querySelector('button[type="submit"]');
+      if (!token) return;
+      submit.disabled = true;
+      submit.textContent = 'Verificando…';
+      if (upsellAuthError) upsellAuthError.textContent = '';
+      try {
+        if (demoMode) {
+          sessionStorage.setItem(UPSELL_TOKEN_KEY, token);
+          showToast('Área de Upsell desbloqueada (modo demonstração).');
+          checkUpsellAccessAndLoad();
+          return;
+        }
+        const { response, data } = await apiRequest('/api/support/upsell/auth', {
+          method: 'POST',
+          body: JSON.stringify({ token }),
+        });
+        if (!response.ok) throw new Error(data.message || 'Credencial inválida.');
+        sessionStorage.setItem(UPSELL_TOKEN_KEY, token);
+        showToast('Área de Upsell desbloqueada com sucesso!');
+        checkUpsellAccessAndLoad();
+      } catch (err) {
+        if (upsellAuthError) upsellAuthError.textContent = err.message || 'Falha ao desbloquear.';
+      } finally {
+        submit.disabled = false;
+        submit.innerHTML = 'Desbloquear Área <span>⚡</span>';
+      }
+    });
+  }
+
+  if (toggleScriptsBtn && upsellScriptsBody) {
+    toggleScriptsBtn.addEventListener('click', () => {
+      upsellScriptsBody.classList.toggle('hidden');
+    });
+  }
+
+  document.addEventListener('click', async event => {
+    // Copiar script
+    const scriptBtn = event.target.closest('.button-copy-script');
+    if (scriptBtn) {
+      const card = scriptBtn.closest('.script-card');
+      const text = card?.querySelector('.script-text')?.textContent?.replace(/^"|"$/g, '') || '';
+      if (text) {
+        await navigator.clipboard.writeText(text).catch(() => prompt('Copie o script:', text));
+        showToast('Script copiado com sucesso!');
+        const prev = scriptBtn.textContent;
+        scriptBtn.textContent = 'Copiado!';
+        setTimeout(() => { scriptBtn.textContent = prev; }, 1800);
+      }
+      return;
+    }
+
+    // Copiar key de lead de upsell
+    const copyKeyBtn = event.target.closest('.button-copy-key');
+    if (copyKeyBtn) {
+      const key = copyKeyBtn.dataset.key;
+      if (key) {
+        await navigator.clipboard.writeText(key).catch(() => prompt('Key:', key));
+        showToast('Key copiada!');
+        const prev = copyKeyBtn.textContent;
+        copyKeyBtn.textContent = 'Copiada!';
+        setTimeout(() => { copyKeyBtn.textContent = prev; }, 1800);
+      }
+      return;
+    }
+
+    // Ação de contato WhatsApp (avança status de novo -> contatado)
+    const contactAction = event.target.closest('[data-upsell-action="contact"]');
+    if (contactAction) {
+      const email = contactAction.dataset.email;
+      const card = contactAction.closest('.upsell-card');
+      const select = card?.querySelector('.upsell-status-select');
+      if (select && select.value === 'novo') {
+        select.value = 'contatado';
+        showToast('WhatsApp aberto! Status atualizado para Mensagem enviada.');
+        saveLeadStatus(email, 'contatado');
+      }
+      return;
+    }
+
+    // Salvar anotação
+    const saveNoteBtn = event.target.closest('.btn-save-note');
+    if (saveNoteBtn) {
+      const email = saveNoteBtn.dataset.email;
+      const card = saveNoteBtn.closest('.upsell-card');
+      const input = card?.querySelector('.upsell-notes-input');
+      const note = (input ? input.value : '').trim();
+      saveNoteBtn.disabled = true;
+      saveNoteBtn.textContent = 'Salvando…';
+      try {
+        await saveLeadStatus(email, null, note);
+        showToast('Anotação salva com sucesso!');
+      } catch (e) {
+        showToast('Erro ao salvar anotação.', 'error');
+      } finally {
+        saveNoteBtn.disabled = false;
+        saveNoteBtn.textContent = 'Salvar anotação';
+      }
+      return;
+    }
+  });
+
+  // Mudança de status no select
+  document.addEventListener('change', async event => {
+    const select = event.target.closest('.upsell-status-select');
+    if (select) {
+      const email = select.dataset.email;
+      const newStatus = select.value;
+      try {
+        await saveLeadStatus(email, newStatus);
+        showToast('Status atualizado.');
+      } catch (e) {
+        showToast('Erro ao atualizar status.', 'error');
+      }
+    }
+  });
+
+  async function saveLeadStatus(email, status = null, notes = null) {
+    if (!email) return;
+    if (demoMode) {
+      const lead = demoUpsellLeads.find(l => l.email === email);
+      if (lead) {
+        if (status) lead.status = status;
+        if (notes !== null) lead.notes = notes;
+      }
+      return;
+    }
+    const body = { email };
+    if (status) body.status = status;
+    if (notes !== null) body.notes = notes;
+    await apiRequest('/api/support/upsell/lead-status', {
+      method: 'POST',
+      body: JSON.stringify(body),
+    });
+  }
+
+  // Filtros de Upsell
+  document.addEventListener('click', event => {
+    const chip = event.target.closest('[data-upsell-filter]');
+    if (!chip) return;
+    const type = chip.dataset.upsellFilter;
+    const val = chip.dataset.val;
+
+    const group = chip.closest('.filter-group');
+    if (group) {
+      group.querySelectorAll('.filter-chip').forEach(c => c.classList.toggle('selected', c === chip));
+    }
+
+    if (type === 'opportunity') upsellFilterOpportunity = val;
+    if (type === 'plan') upsellFilterPlan = val;
+    if (type === 'status') upsellFilterStatus = val;
+
+    loadUpsellLeads(true);
+  });
+
+  if (upsellSearchInput) {
+    upsellSearchInput.addEventListener('input', () => {
+      clearTimeout(upsellSearchTimer);
+      upsellSearchTimer = setTimeout(() => loadUpsellLeads(true), 300);
+    });
+    upsellSearchInput.addEventListener('search', () => loadUpsellLeads(true));
+  }
+
+  const refreshUpsellBtn = document.getElementById('refresh-upsell-leads');
+  if (refreshUpsellBtn) {
+    refreshUpsellBtn.addEventListener('click', () => loadUpsellLeads(true));
+  }
+
   async function loadCustomers(query) {
     const requestSequence = ++searchSequence;
     if (demoMode) {
@@ -765,12 +1245,13 @@
     document.getElementById('local-preview-note').classList.add('hidden');
     document.querySelector('.login-foot').classList.add('hidden');
     document.getElementById('demo-banner').classList.remove('hidden');
-    setAuthenticated('Demonstração');
+    setAuthenticated('Demonstração', true);
     loadCustomers('');
     loadFeedbacks();
     loadRecoveries();
     loadRecoveryDashboard();
     loadCommissions();
+    loadUpsellLeads(true);
     showCustomer(demoCustomers[0].email);
   } else {
     connectWithStoredToken();

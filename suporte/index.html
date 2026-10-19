@@ -54,6 +54,8 @@
             <button class="app-nav-item" type="button" data-section-target="recoveries"><span class="nav-icon">↻</span><span>Pagamentos expirados</span><span class="nav-count" id="nav-recovery-count">0</span></button>
             <button class="app-nav-item" type="button" data-section-target="expired-history"><span class="nav-icon">▤</span><span>Histórico de expirados</span></button>
             <button class="app-nav-item" type="button" data-section-target="commissions"><span class="nav-icon">R$</span><span>Comissões</span></button>
+            <div class="nav-divider"><span>EXCLUSIVO ALMAZ</span></div>
+            <button class="app-nav-item nav-item-upsell" type="button" data-section-target="upsell"><span class="nav-icon">⚡</span><span>Upsell Vitalício</span><span class="nav-count upsell-pill" id="nav-upsell-count">0</span></button>
           </nav>
           <div class="sidebar-note"><span class="online-dot"></span><span>Comissão de <b>20%</b> por venda recuperada</span></div>
         </aside>
@@ -69,6 +71,7 @@
               <button class="overview-card home-stat" type="button" data-section-target="recoveries"><span>PAGAMENTOS EXPIRADOS</span><strong id="home-recovery-count">0</strong><small>Abrir recuperação <b>→</b></small></button>
               <button class="overview-card home-stat" type="button" data-section-target="recoveries"><span>VENDAS RECUPERADAS</span><strong id="home-recovery-sold">0</strong><small>Ver desempenho <b>→</b></small></button>
               <button class="overview-card home-stat home-commission" type="button" data-section-target="commissions"><span>COMISSÃO DISPONÍVEL</span><strong id="home-commission-value">R$ 0,00</strong><small>Ver comissões <b>→</b></small></button>
+              <button class="overview-card home-stat home-upsell" type="button" data-section-target="upsell"><span>OPORTUNIDADES UPSELL</span><strong id="home-upsell-count">0</strong><small>Exclusivo Almaz <b>→</b></small></button>
             </div>
             <div class="home-welcome panel"><div class="welcome-mark"><img src="logo.png" alt="ALMAZ"></div><div><div class="eyebrow">ÁREAS DO PAINEL</div><h2>Seu atendimento, organizado</h2><p class="muted">Consulte clientes, aprove feedbacks e recupere pagamentos expirados. O painel não mostra a lista de pagamentos pagos nem pendentes.</p></div></div>
           </section>
@@ -112,6 +115,140 @@
           <section class="app-section hidden" data-app-section="expired-history">
             <div class="page-heading"><div><div class="eyebrow">CONSULTA RESTRITA</div><h1>Histórico de expirados</h1><p class="muted">Histórico completo de cobranças expiradas. A lista não inclui pagamentos pagos ou pendentes.</p></div></div>
             <section class="panel history-panel" aria-label="Histórico de pagamentos expirados"><div class="panel-heading"><div><div class="eyebrow">SOMENTE STATUS EXPIRADO</div><h2>Cobranças expiradas</h2></div><div class="feedback-tools"><span class="count-pill" id="expired-history-total">0</span><button class="button button-quiet" id="refresh-expired-history" type="button">Atualizar</button></div></div><div class="history-payment-list" id="expired-history-list" aria-live="polite"><div class="empty-state"><b>Abra esta seção para carregar o histórico.</b></div></div><button class="button button-quiet history-more hidden" id="load-more-expired-history" type="button">Carregar mais</button></section>
+          </section>
+
+          <section class="app-section hidden" data-app-section="upsell">
+            <div class="page-heading">
+              <div>
+                <div class="eyebrow">EXCLUSIVO ALMAZ • CONVERSÃO NO WHATSAPP</div>
+                <h1>Upsell Vitalício (9,97 & 19,97)</h1>
+                <p class="muted">Fila privativa de compradores de entrada. Chame no WhatsApp, tire dúvidas, dê atenção e ofereça o plano Vitalício.</p>
+              </div>
+              <div class="permission-badge admin-badge"><span>👑</span> Exclusivo Almaz</div>
+            </div>
+
+            <!-- TELA DE BLOQUEIO / DESBLOQUEIO (SE ATENDENTE COMUM TENTAR ACESSAR) -->
+            <div id="upsell-locked-view" class="panel upsell-lock-panel hidden">
+              <div class="lock-graphic">⚡</div>
+              <div class="eyebrow">ÁREA PRIVATIVA DO ALMAZ</div>
+              <h2>Acesso restrito ao administrador</h2>
+              <p class="muted">Esta seção reúne as vendas pagas de R$ 9,97 e R$ 19,97 com telefones para contato direto e oferta de upgrade para o plano Vitalício. Digite sua credencial de administrador para acessar.</p>
+              <form id="upsell-auth-form" class="upsell-auth-form">
+                <label for="upsell-token-input">Credencial de Administrador (ADMIN_TOKEN)</label>
+                <div class="upsell-auth-row">
+                  <input type="password" id="upsell-token-input" placeholder="Digite a credencial de admin" required autocomplete="current-password">
+                  <button type="submit" class="button button-primary">Desbloquear Área <span>⚡</span></button>
+                </div>
+                <div id="upsell-auth-error" class="message"></div>
+              </form>
+            </div>
+
+            <!-- CONTEÚDO PRINCIPAL DO UPSELL (QUANDO DESBLOQUEADO) -->
+            <div id="upsell-unlocked-view" class="hidden">
+              <!-- KPI GRID -->
+              <section class="overview-grid upsell-kpi-grid" aria-label="Métricas de Upsell">
+                <div class="overview-card upsell-stat-highlight">
+                  <span>OPORTUNIDADES DE UPSELL</span>
+                  <strong id="upsell-stat-pending">0</strong>
+                  <small>ainda sem vitalício</small>
+                </div>
+                <div class="overview-card">
+                  <span>VENDAS BÁSICO (9,97)</span>
+                  <strong id="upsell-stat-1k">0</strong>
+                  <small>1.000 jogos (sem lançamentos)</small>
+                </div>
+                <div class="overview-card">
+                  <span>VENDAS AVANÇADO (19,97)</span>
+                  <strong id="upsell-stat-20k">0</strong>
+                  <small>20.000 jogos (sem lançamentos)</small>
+                </div>
+                <div class="overview-card">
+                  <span>EM CONTATO NO ZAP</span>
+                  <strong id="upsell-stat-contacted">0</strong>
+                  <small>conversas iniciadas</small>
+                </div>
+                <div class="overview-card upsell-stat-success">
+                  <span>VITALÍCIO CONVERTIDO</span>
+                  <strong id="upsell-stat-converted">0</strong>
+                  <small>upgrades conquistados 🚀</small>
+                </div>
+              </section>
+
+              <!-- PAINEL DE SCRIPTS RÁPIDOS PARA O WHATSAPP -->
+              <div class="panel upsell-scripts-panel">
+                <div class="panel-heading compact">
+                  <div>
+                    <div class="eyebrow">ESTRATÉGIA: PRIMEIRO CONEXÃO, SEM CTA</div>
+                    <h3>Scripts para WhatsApp (Chegar de boa + Oferta pós-resposta)</h3>
+                  </div>
+                  <button class="button button-quiet" type="button" id="toggle-scripts-btn">Mostrar / Ocultar scripts</button>
+                </div>
+                <div id="upsell-scripts-body" class="upsell-scripts-grid hidden">
+                  <div class="script-card">
+                    <div class="script-tag">1. ABERTURA (Sem CTA • Só Conexão)</div>
+                    <p class="script-text">"Opa {Nome}, tudo bem? Aqui é o Almaz! Passando só pra saber se deu tudo certo com a sua compra e se tá conseguindo jogar tranquilo?"</p>
+                    <button class="button button-quiet button-copy-script" type="button" data-script-id="1">Copiar texto</button>
+                  </div>
+                  <div class="script-card">
+                    <div class="script-tag">2. PÓS-RESPOSTA (Quando o cliente disser que curtiu)</div>
+                    <p class="script-text">"Show de bola, {Nome}! Fico feliz que deu tudo certo! Só te dando um toque: como você já é nosso cliente, se algum dia quiser ter todos os lançamentos inclusos, a gente consegue abater o que você já pagou e você só paga a diferença pro Vitalício, beleza?"</p>
+                    <button class="button button-quiet button-copy-script" type="button" data-script-id="2">Copiar texto</button>
+                  </div>
+                  <div class="script-card">
+                    <div class="script-tag">3. SUPORTE (Se o cliente tiver alguma dúvida ou travar)</div>
+                    <p class="script-text">"Opa, pode deixar comigo que te ajudo a resolver agora mesmo! Me conta o que tá acontecendo aí no seu PC."</p>
+                    <button class="button button-quiet button-copy-script" type="button" data-script-id="3">Copiar texto</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- BARRA DE BUSCA E FILTROS -->
+              <div class="panel upsell-leads-panel">
+                <div class="panel-heading">
+                  <div>
+                    <div class="eyebrow">FILA DE LEADS (9,97 & 19,97)</div>
+                    <h2>Compradores para contato</h2>
+                  </div>
+                  <div class="feedback-tools">
+                    <span class="count-pill" id="upsell-leads-count">0</span>
+                    <button class="button button-quiet" id="refresh-upsell-leads" type="button">Atualizar lista</button>
+                  </div>
+                </div>
+
+                <div class="upsell-toolbar">
+                  <div class="search-form upsell-search-form">
+                    <span class="search-icon" aria-hidden="true">⌕</span>
+                    <input id="upsell-search-input" type="search" placeholder="Buscar por nome, WhatsApp, e-mail ou key..." autocomplete="off">
+                  </div>
+                </div>
+
+                <div class="upsell-filters-container">
+                  <div class="filter-group" role="group" aria-label="Filtrar por oportunidade">
+                    <button class="filter-chip selected" type="button" data-upsell-filter="opportunity" data-val="pending">🎯 Só Oportunidades</button>
+                    <button class="filter-chip" type="button" data-upsell-filter="opportunity" data-val="all">Todos os clientes</button>
+                    <button class="filter-chip" type="button" data-upsell-filter="opportunity" data-val="converted">🏆 Já é Vitalício</button>
+                  </div>
+                  <div class="filter-divider"></div>
+                  <div class="filter-group" role="group" aria-label="Filtrar por plano">
+                    <button class="filter-chip selected" type="button" data-upsell-filter="plan" data-val="all">Todos os planos</button>
+                    <button class="filter-chip" type="button" data-upsell-filter="plan" data-val="1k">Básico (R$ 9,97)</button>
+                    <button class="filter-chip" type="button" data-upsell-filter="plan" data-val="20k">Avançado (R$ 19,97)</button>
+                  </div>
+                  <div class="filter-divider"></div>
+                  <div class="filter-group" role="group" aria-label="Filtrar por status de contato">
+                    <button class="filter-chip selected" type="button" data-upsell-filter="status" data-val="all">Qualquer status</button>
+                    <button class="filter-chip" type="button" data-upsell-filter="status" data-val="novo">🟡 Não chamado</button>
+                    <button class="filter-chip" type="button" data-upsell-filter="status" data-val="contatado">🔵 Mensagem enviada</button>
+                    <button class="filter-chip" type="button" data-upsell-filter="status" data-val="em_conversa">🟣 Em conversa</button>
+                    <button class="filter-chip" type="button" data-upsell-filter="status" data-val="interessado">🟠 Interessado</button>
+                  </div>
+                </div>
+
+                <div class="upsell-leads-list" id="upsell-leads-list" aria-live="polite">
+                  <div class="empty-state"><span class="spinner"></span><b>Carregando compradores de 9,97 e 19,97…</b></div>
+                </div>
+              </div>
+            </div>
           </section>
           <footer class="page-footer"><span>ALMAZ • Central interna de suporte</span><span>Acesso a pagamentos limitado à fila de cobranças expiradas.</span></footer>
         </div>
