@@ -94,16 +94,15 @@
     return `${baseUrl}${sep}utm_source=suporte&utm_medium=whatsapp&utm_campaign=${encodeURIComponent(cleanAgent)}&utm_content=${encodeURIComponent(cleanPaymentId)}&sck=SUP_${encodeURIComponent(shortId)}`;
   }
 
-  function whatsappUrl(phone, name, productName, checkoutLink) {
+  function whatsappUrl(phone, name) {
     let digits = String(phone || '').replace(/\D/g, '');
     if (digits.startsWith('00')) digits = digits.slice(2);
     if (digits.startsWith('0')) digits = digits.slice(1);
     if (digits.length === 10 || digits.length === 11) digits = `55${digits}`;
     if (digits.length < 12 || digits.length > 15) return '';
-    const greeting = String(name || 'amigo').trim().split(' ')[0];
-    const product = String(productName || 'sua assinatura').trim();
-    const linkPart = checkoutLink ? `\n\nSeparei um link direto com liberação imediata para você:\n${checkoutLink}\n` : '';
-    const message = `Olá, ${greeting}! Aqui é do suporte ALMAZ.\nVi que seu pagamento do ${product} expirou.${linkPart}\nQualquer dúvida estou à disposição por aqui!`;
+    const firstName = String(name || '').trim().split(' ')[0];
+    const greeting = firstName ? `Opa, ${firstName}! Tudo bem?` : 'Opa, tudo bem?';
+    const message = `${greeting}\n\nAqui é o suporte da Almaz Store! Vi que você tentou acessar antes, deu algum probleminha no pagamento ou teve alguma dúvida que eu possa te ajudar?`;
     return `https://wa.me/${digits}?text=${encodeURIComponent(message)}`;
   }
 
