@@ -101,8 +101,9 @@
     if (digits.length === 10 || digits.length === 11) digits = `55${digits}`;
     if (digits.length < 12 || digits.length > 15) return '';
     const firstName = String(name || '').trim().split(' ')[0];
-    const greeting = firstName ? `Opa, ${firstName}! Tudo bem?` : 'Opa, tudo bem?';
-    const message = `${greeting}\n\nAqui é o suporte da Almaz Store! Vi que você tentou acessar antes, deu algum probleminha no pagamento ou teve alguma dúvida que eu possa te ajudar?`;
+    const message = firstName
+      ? `Opa ${firstName}, tudo bem? Aqui é o suporte da Almaz Store!`
+      : `Opa, tudo bem? Aqui é o suporte da Almaz Store!`;
     return `https://wa.me/${digits}?text=${encodeURIComponent(message)}`;
   }
 
