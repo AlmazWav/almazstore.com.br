@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>ALMAZ | Central de suporte</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <main class="shell">
+    <section class="login-view" id="login-view">
+      <div class="brand-lockup"><span class="brand-mark"><img src="logo.png" alt="ALMAZ"></span><span>ALMAZ <i>SUPORTE</i></span></div>
+      <div class="login-card">
+        <div class="eyebrow">ACESSO RESTRITO</div>
+        <h1>Central de atendimento</h1>
+        <p class="muted">Entre com a credencial exclusiva de suporte fornecida pelo administrador.</p>
+        <form id="login-form">
+          <label for="agent-name">Seu nome</label>
+          <input id="agent-name" name="agent" autocomplete="name" placeholder="Nome do atendente" required maxlength="80">
+          <label for="support-token">Credencial de suporte</label>
+          <input id="support-token" name="token" type="password" autocomplete="current-password" placeholder="Token de suporte" required>
+          <button class="button button-primary button-full" type="submit">Entrar na central <span>→</span></button>
+        </form>
+        <div id="local-preview-note" class="local-preview-note hidden">
+          <b>Abra pelo servidor da ALMAZ</b>
+          <p>Esta é uma prévia de arquivo. Para entrar e carregar os dados, acesse <code>/suporte/</code> pelo domínio ou pelo servidor local.</p>
+        </div>
+        <div id="login-message" class="message" role="status" aria-live="polite"></div>
+        <div class="login-foot"><span class="lock-icon">▣</span> Acesso registrado e limitado ao atendimento</div>
+      </div>
+    </section>
+
+    <section class="app-view hidden" id="app-view">
+      <header class="topbar">
+        <div class="brand-lockup"><span class="brand-mark"><img src="logo.png" alt="ALMAZ"></span><span>ALMAZ <i>SUPORTE</i></span></div>
+        <div class="topbar-right"><div class="agent-chip"><span class="online-dot"></span><span id="agent-label">Atendente</span></div><button class="button button-quiet" id="logout-button" type="button">Sair</button></div>
+      </header>
+
+      <div class="demo-banner hidden" id="demo-banner"><b>PRÉVIA INTERATIVA</b><span>Dados fictícios. Pesquisas e resets aqui não alteram o servidor.</span></div>
+
+      <div class="app-layout">
+        <aside class="app-sidebar" aria-label="Navegação do suporte">
+          <div class="sidebar-title"><span class="eyebrow">MENU PRINCIPAL</span></div>
+          <nav class="app-nav" id="app-nav">
+            <button class="app-nav-item active" type="button" data-section-target="overview" aria-current="page"><span class="nav-icon">⌂</span><span>Visão geral</span></button>
+            <button class="app-nav-item" type="button" data-section-target="customers"><span class="nav-icon">⌕</span><span>Clientes</span></button>
+            <button class="app-nav-item" type="button" data-section-target="feedbacks"><span class="nav-icon">◉</span><span>Feedbacks</span></button>
+            <div class="nav-divider"><span>VENDAS</span></div>
+            <button class="app-nav-item" type="button" data-section-target="recoveries"><span class="nav-icon">↻</span><span>Pagamentos expirados</span><span class="nav-count" id="nav-recovery-count">0</span></button>
+            <button class="app-nav-item" type="button" data-section-target="expired-history"><span class="nav-icon">▤</span><span>Histórico de expirados</span></button>
+            <button class="app-nav-item" type="button" data-section-target="commissions"><span class="nav-icon">R$</span><span>Comissões</span></button>
+          </nav>
+          <div class="sidebar-note"><span class="online-dot"></span><span>Comissão de <b>20%</b> por venda recuperada</span></div>
+        </aside>
+
+        <div class="app-main">
+          <section class="app-section" data-app-section="overview">
+            <div class="page-heading">
+              <div><div class="eyebrow">CENTRAL DE ATENDIMENTO</div><h1>Visão geral</h1><p class="muted">Acesse cada área do suporte pelo menu. Pagamentos disponíveis aqui são somente os expirados.</p></div>
+              <div class="permission-badge"><span>●</span> Perfil de suporte</div>
+            </div>
+            <div class="overview-grid home-overview" aria-label="Resumo do suporte">
+              <button class="overview-card home-stat" type="button" data-section-target="feedbacks"><span>FEEDBACKS PENDENTES</span><strong id="home-feedback-count">0</strong><small>Abrir aprovação <b>→</b></small></button>
+              <button class="overview-card home-stat" type="button" data-section-target="recoveries"><span>PAGAMENTOS EXPIRADOS</span><strong id="home-recovery-count">0</strong><small>Abrir recuperação <b>→</b></small></button>
+              <button class="overview-card home-stat" type="button" data-section-target="recoveries"><span>VENDAS RECUPERADAS</span><strong id="home-recovery-sold">0</strong><small>Ver desempenho <b>→</b></small></button>
+              <button class="overview-card home-stat home-commission" type="button" data-section-target="commissions"><span>COMISSÃO DISPONÍVEL</span><strong id="home-commission-value">R$ 0,00</strong><small>Ver comissões <b>→</b></small></button>
+            </div>
+            <div class="home-welcome panel"><div class="welcome-mark"><img src="logo.png" alt="ALMAZ"></div><div><div class="eyebrow">ÁREAS DO PAINEL</div><h2>Seu atendimento, organizado</h2><p class="muted">Consulte clientes, aprove feedbacks e recupere pagamentos expirados. O painel não mostra a lista de pagamentos pagos nem pendentes.</p></div></div>
+          </section>
+
+          <section class="app-section hidden" data-app-section="customers">
+            <div class="page-heading"><div><div class="eyebrow">ATENDIMENTO</div><h1>Clientes</h1><p class="muted">Pesquise cadastro e licença para resolver solicitações de suporte.</p></div></div>
+            <section class="search-panel">
+              <form class="search-form" id="search-form"><span class="search-icon" aria-hidden="true">⌕</span><input id="search-input" type="search" placeholder="Buscar por nome, e-mail ou key" autocomplete="off" maxlength="100" aria-label="Buscar cliente por nome, e-mail ou key"><button class="button button-primary search-button" type="submit">Buscar cliente</button></form>
+              <p class="search-help">Também encontra clientes antigos, inclusive cadastros sem e-mail.</p>
+            </section>
+            <section class="overview-grid customer-overview" aria-label="Resumo dos resultados">
+              <div class="overview-card"><span>CLIENTES NA BUSCA</span><strong id="stat-customers">0</strong><small>até 50 por vez</small></div>
+              <div class="overview-card"><span>LICENÇAS ATIVAS</span><strong id="stat-active">0</strong><small>prontas para uso</small></div>
+            </section>
+            <div class="workspace">
+              <section class="panel customer-panel" aria-label="Resultados da busca">
+                <div class="panel-heading results-heading"><div><div class="eyebrow">RESULTADOS</div><h2>Clientes encontrados</h2></div><span class="count-pill" id="result-count">0</span></div>
+                <div class="filter-row" role="group" aria-label="Filtrar resultados"><button class="filter-chip selected" type="button" data-filter="all">Todos</button><button class="filter-chip" type="button" data-filter="active">Licença ativa</button><button class="filter-chip" type="button" data-filter="pending">Sem licença</button></div>
+                <div class="customer-list" id="customers-list" aria-live="polite"><div class="empty-state"><span class="empty-icon">⌕</span><b>Comece buscando um cliente</b><span>Digite o nome, e-mail ou key na busca acima.</span></div></div>
+                <div class="panel-foot"><span class="status-dot"></span><span id="results-note">A busca inclui compras e licenças antigas.</span></div>
+              </section>
+              <section class="panel detail-panel" id="detail-panel"><div class="detail-placeholder"><div class="placeholder-icon">1</div><h2>Selecione um cliente</h2><p class="muted">Confira licença e histórico de atendimento. Depois escolha a ação necessária.</p><div class="how-to"><span><b>1</b> Busque o cliente</span><span><b>2</b> Confira o cadastro</span><span><b>3</b> Registre o atendimento</span></div></div></section>
+            </div>
+          </section>
+
+          <section class="app-section hidden" data-app-section="feedbacks">
+            <div class="page-heading"><div><div class="eyebrow">REVISÃO DE CLIENTES</div><h1>Feedbacks</h1><p class="muted">Aprove os feedbacks para liberar o acesso do cliente. Cada decisão fica registrada com o nome do atendente.</p></div></div>
+            <section class="panel feedback-panel" aria-label="Feedbacks pendentes de aprovação"><div class="panel-heading"><div><div class="eyebrow">PENDENTES DE REVISÃO</div><h2>Feedbacks para aprovar</h2></div><div class="feedback-tools"><span class="count-pill" id="feedback-count">0</span><button class="button button-quiet" id="refresh-feedbacks" type="button">Atualizar</button></div></div><div class="feedback-list" id="feedback-list" aria-live="polite"><div class="empty-state"><b>Carregando feedbacks…</b></div></div></section>
+          </section>
+
+          <section class="app-section hidden" data-app-section="recoveries">
+            <div class="page-heading"><div><div class="eyebrow">RECUPERAÇÃO DE VENDAS</div><h1>Pagamentos expirados</h1><p class="muted">A lista mostra somente cobranças expiradas disponíveis para recuperação; pagamentos pagos e pendentes não aparecem.</p></div></div>
+            <section class="panel recovery-dashboard-panel" aria-label="Painel de desempenho de recuperação"><div class="panel-heading"><div><div class="eyebrow">DESEMPENHO</div><h2>Meu dashboard</h2></div><div class="feedback-tools"><span class="muted" id="recovery-dashboard-agent"></span><button class="button button-quiet" id="refresh-recovery-dashboard" type="button">Atualizar</button></div></div><div class="recovery-kpi-grid"><div><span>CONTATOS ASSUMIDOS</span><b id="recovery-stat-assumed">0</b></div><div><span>MENSAGENS ENVIADAS</span><b id="recovery-stat-sent">0</b></div><div><span>ATENDIMENTOS ENCERRADOS</span><b id="recovery-stat-finished">0</b></div><div><span>VENDAS RECUPERADAS</span><b id="recovery-stat-sold">0</b></div><div><span>COMISSÃO GERADA</span><b id="recovery-stat-commission">R$ 0,00</b></div></div><h3 class="recovery-ledger-title">Seus contatos e resultados</h3><div class="recovery-ledger" id="recovery-dashboard-list" aria-live="polite"><div class="empty-state"><b>Carregando desempenho…</b></div></div></section>
+            <section class="panel recovery-panel" aria-label="Pagamentos expirados para recuperação"><div class="panel-heading"><div><div class="eyebrow">FILA EXCLUSIVA DE RECUPERAÇÃO</div><h2>Contatos disponíveis</h2></div><div class="feedback-tools"><span class="count-pill" id="recovery-count">0</span><button class="button button-quiet" id="refresh-recoveries" type="button">Atualizar</button></div></div><p class="muted feedback-help">Assuma o contato, abra o WhatsApp e marque quando a mensagem for enviada. Uma compra confirmada aparece apenas nos seus resultados e na comissão.</p><div class="feedback-list" id="recovery-list" aria-live="polite"><div class="empty-state"><b>Carregando pagamentos expirados…</b></div></div></section>
+          </section>
+
+          <section class="app-section hidden" data-app-section="commissions">
+            <div class="page-heading"><div><div class="eyebrow">RESULTADOS DE RECUPERAÇÃO</div><h1>Comissões</h1><p class="muted">Acompanhe a comissão das vendas que você recuperou.</p></div></div>
+            <section class="panel commission-panel" aria-label="Comissões de recuperação"><div class="commission-heading"><div><div class="eyebrow">SUAS VENDAS RECUPERADAS</div><h3>Comissão de 20%</h3></div><button class="button button-quiet" id="refresh-commissions" type="button">Atualizar</button></div><p class="muted feedback-help">Uma venda entra aqui quando o pagamento de um contato expirado é confirmado. O Pix é feito pelo administrador.</p><div class="commission-summary"><div><span>DISPONÍVEL</span><b id="commission-available">R$ 0,00</b></div><div><span>JÁ PAGO</span><b id="commission-paid">R$ 0,00</b></div><div><span>REVISAR</span><b id="commission-review">0</b></div></div><div class="commission-list" id="commission-list" aria-live="polite"><div class="empty-state"><b>Carregando comissões…</b></div></div></section>
+          </section>
+          <section class="app-section hidden" data-app-section="expired-history">
+            <div class="page-heading"><div><div class="eyebrow">CONSULTA RESTRITA</div><h1>Histórico de expirados</h1><p class="muted">Histórico completo de cobranças expiradas. A lista não inclui pagamentos pagos ou pendentes.</p></div></div>
+            <section class="panel history-panel" aria-label="Histórico de pagamentos expirados"><div class="panel-heading"><div><div class="eyebrow">SOMENTE STATUS EXPIRADO</div><h2>Cobranças expiradas</h2></div><div class="feedback-tools"><span class="count-pill" id="expired-history-total">0</span><button class="button button-quiet" id="refresh-expired-history" type="button">Atualizar</button></div></div><div class="history-payment-list" id="expired-history-list" aria-live="polite"><div class="empty-state"><b>Abra esta seção para carregar o histórico.</b></div></div><button class="button button-quiet history-more hidden" id="load-more-expired-history" type="button">Carregar mais</button></section>
+          </section>
+          <footer class="page-footer"><span>ALMAZ • Central interna de suporte</span><span>Acesso a pagamentos limitado à fila de cobranças expiradas.</span></footer>
+        </div>
+      </div>
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <dialog id="reset-dialog" class="reset-dialog">
+    <form method="dialog" id="reset-form">
+      <div class="dialog-icon">↻</div>
+      <div class="eyebrow">RESET DE COMPUTADOR</div>
+      <h2>Confirmar reset do vínculo?</h2>
+      <p class="muted">A licença poderá ser ativada em outro computador. Informe o motivo para o histórico.</p>
+      <div class="target-email" id="reset-target"></div>
+      <label for="reset-reason">Motivo do atendimento</label>
+      <textarea id="reset-reason" required maxlength="300" rows="3" placeholder="Ex.: cliente trocou de computador"></textarea>
+      <div class="dialog-actions"><button class="button button-quiet" value="cancel">Cancelar</button><button class="button button-primary" id="confirm-reset" value="confirm">Confirmar reset</button></div>
+    </form>
+  </dialog>
+</body>
+</html>
