@@ -807,54 +807,6 @@ body.gm-open{overflow:hidden}
 @media(max-width:600px){.fbs-card{width:228px}.fbs-track{animation-duration:46s}}
 @media(prefers-reduced-motion:reduce){.fbs-track{animation:none}.fbs{overflow-x:auto}}
 
-/* ---------- feedbacks em video (spotlight: so o do centro toca) ---------- */
-.vfb-rating{display:flex;align-items:center;gap:9px;margin-top:10px;font-size:13.5px;color:var(--dim)}
-.vfb-rating svg{width:14px;height:14px;fill:var(--warn)}
-.vfb-rating b{color:var(--txt);font-weight:700}
-.vfb-grid{
-  display:flex;gap:14px;justify-content:center;overflow-x:auto;
-  scroll-snap-type:x mandatory;scrollbar-width:none;padding:4px 0 10px;
-}
-.vfb-grid::-webkit-scrollbar{display:none}
-.vfb-card{
-  flex:0 0 clamp(232px,27vw,286px);position:relative;scroll-snap-align:center;cursor:pointer;
-  border:1px solid var(--line);border-radius:var(--r2);overflow:hidden;background:#000;
-  transition:filter .35s ease,opacity .35s ease,transform .35s ease,border-color .2s,box-shadow .2s;
-}
-.vfb-card video{width:100%;aspect-ratio:9/16;object-fit:cover;display:block;background:#030303}
-/* Sem blur: o cliente ve todos os videos nitidos. O card fora de foco so fica
-   um pouco mais apagado, o suficiente pra saber qual esta tocando. O blur antigo
-   fazia a pessoa gastar um toque so pra "desborrar" o card. */
-.vfb-grid.vfb-ready .vfb-card:not(.vfb-focus){opacity:.72;transform:scale(.97)}
-.vfb-card.vfb-focus{border-color:var(--line2)}
-.vfb-card.vfb-on{border-color:var(--buy);box-shadow:0 0 20px rgba(0,255,65,.35)}
-.vfb-audio-hint{
-  position:absolute;left:8px;right:8px;bottom:56px;display:flex;align-items:center;justify-content:center;gap:6px;
-  background:rgba(0,0,0,.86);color:#fff;font-size:11.5px;font-weight:600;padding:7px 10px;border-radius:6px;
-  transition:opacity .25s;pointer-events:none;
-}
-.vfb-audio-hint svg{width:13px;height:13px;stroke:var(--buy2);fill:none;stroke-width:2;flex-shrink:0}
-.vfb-audio-hint.hidden{opacity:0}
-.vfb-pause{
-  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  background:rgba(0,0,0,.5);opacity:0;transition:opacity .2s;pointer-events:none;
-}
-.vfb-pause.show{opacity:1}
-.vfb-pause svg{width:46px;height:46px;fill:#fff;filter:drop-shadow(0 2px 8px rgba(0,0,0,.6))}
-.vfb-person{
-  position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:8px;padding:22px 10px 9px;
-  background:linear-gradient(to top,rgba(0,0,0,.94),transparent);pointer-events:none;
-}
-.vfb-person-av{
-  width:24px;height:24px;border-radius:50%;background:var(--panel3);color:var(--blue);
-  font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;
-}
-.vfb-person-meta{display:flex;flex-direction:column;line-height:1.25;min-width:0}
-.vfb-person-name{font-size:12.5px;font-weight:600;color:#fff;display:flex;align-items:center;gap:4px}
-.vfb-person-name svg{width:12px;height:12px;flex-shrink:0}
-.vfb-person-sub{font-size:10.5px;color:var(--deal-tx)}
-@media(max-width:600px){.vfb-grid{justify-content:flex-start}}
-
 /* ---------- garantia ---------- */
 .gr{max-width:680px;margin-inline:auto}
 .gr-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);padding:20px}
@@ -878,10 +830,9 @@ body.gm-open{overflow:hidden}
 .fbk-cont{min-width:130px;text-align:center;font-size:14px;color:var(--txt2);font-weight:600}
 .fbk-cont b{color:var(--txt)}
 
-/* ---------- caixinhas do Instagram (mesmo carrossel dos feedbacks em video) ---------- */
+/* ---------- caixinhas do Instagram (carrossel horizontal de provas) ---------- */
 .qbx-rail{position:relative}
-/* flex-start de proposito (o vfb-grid usa center porque os 3 videos cabem):
-   aqui sao 4 cards que sempre estouram a largura, e com justify center o
+/* flex-start de proposito: estes cards sempre estouram a largura, e com justify center o
    Chrome deixa o pedaco que sobra na esquerda fora do alcance da rolagem. */
 .qbx-track{
   display:flex;gap:14px;justify-content:flex-start;overflow-x:auto;
@@ -959,130 +910,6 @@ body.gm-open{overflow:hidden}
   position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;
   background:var(--panel2);border:1px solid var(--line2);color:var(--txt);
   font-size:22px;line-height:1;cursor:pointer;
-}
-
-/* ---------- janela do launcher ----------
-   Entrou em 13/08/2026. Reproducao fiel do topo do ALMAZ Store Launcher V10
-   (o Electron que vai dentro do ENTREGA_40k). Os valores abaixo foram lidos do
-   getComputedStyle da interface real, nao chutados: appbar 68px em #0a0a0d,
-   vermelho #ee2740, dourado #f5b50a no plano, hero com borda #2a1116 e raio 20,
-   contador 49.6px peso 800 com tracking -2px.
-   POR QUE E VERMELHO NO MEIO DE UM SITE AZUL: o launcher e vermelho de verdade.
-   Repintar de azul aqui deixaria o site bonito e entregaria pro cliente um
-   programa com outra cara. A moldura de janela em volta existe pra isso: marca
-   que aquilo ali e outro programa, nao mais uma secao do site.
-   POR QUE SO O TOPO: a tela inicial inteira tem 1079px de altura e nao cabe em
-   secao de site sem virar miniatura ilegivel. O topo (appbar + hero, 437px do
-   total) e a parte que responde "existe programa mesmo?" e "quantos jogos eu
-   tenho?". As acoes rapidas e o tutorial ficaram de fora de proposito.
-   A fonte do app e a Sora; aqui fica na Inter que a pagina ja carrega, com o
-   mesmo peso 800 e o mesmo tracking negativo. Nao vale um webfont a mais numa
-   pagina que roda trafego pago. */
-/* Sem limite de largura: com 980px sobravam 200px de vazio na direita, e a
-   janela do launcher e justamente o elemento que ganha em ficar grande (a real
-   tem 1200px de largura, entao em 1140 ela sai quase em tamanho natural). */
-.lch-wrap{max-width:none}
-.lch{
-  border:1px solid var(--line2);border-radius:var(--r2);overflow:hidden;
-  background:#050507;box-shadow:0 18px 50px rgba(0,0,0,.5);
-}
-/* barra de janela: e o que faz o bloco ler como "programa aberto" e nao como
-   mais uma caixa do site. */
-.lch-tt{
-  display:flex;align-items:center;gap:8px;padding:9px 13px;
-  background:#0a0a0d;border-bottom:1px solid #1c1c22;
-}
-.lch-dot{width:10px;height:10px;border-radius:50%;background:#2a2a32;flex-shrink:0}
-.lch-tt-name{
-  margin-left:6px;font-size:11.5px;font-weight:600;color:#8a8a93;letter-spacing:.02em;
-}
-/* A maquete e uma FOTO do programa, nao um pedaco do site. pointer-events:none
-   em tudo que esta dentro dela resolve o problema de a pessoa tentar clicar no
-   botao vermelho e nao acontecer nada (clique morto irrita mais que nao ter
-   botao). user-select junto pra nao dar aquele arrastao de selecao de texto no
-   celular, que denuncia na hora que aquilo ali e HTML e nao um print. */
-.lch-app{background:#050507;color:#f4f4f5;pointer-events:none;user-select:none;-webkit-user-select:none}
-
-/* --- appbar --- */
-.lch-bar{
-  display:flex;align-items:center;gap:20px;height:56px;padding:0 16px;
-  background:#0a0a0d;border-bottom:1px solid #1c1c22;
-}
-.lch-brand{display:flex;align-items:center;gap:9px;flex-shrink:0}
-.lch-brand img{width:26px;height:26px;border-radius:6px}
-.lch-brand-txt{display:flex;flex-direction:column}
-.lch-name{font-size:14px;font-weight:800;letter-spacing:-.3px;color:#fff;line-height:1.15}
-.lch-name i{font-style:normal;color:#ee2740}
-.lch-plan{font-size:8px;font-weight:800;letter-spacing:2.2px;color:#f5b50a;line-height:1.2}
-.lch-nav{display:flex;align-items:center;gap:0;margin-left:4px}
-.lch-nav span{font-size:12.5px;font-weight:600;color:#5b5b63;padding:0 11px;white-space:nowrap}
-/* o item ativo do app tem sublinhado vermelho, igual ao .nav-item.active de la */
-.lch-nav span.on{color:#fff;position:relative}
-.lch-nav span.on::after{content:'';position:absolute;left:11px;right:11px;bottom:-19px;height:2px;background:#ee2740}
-.lch-right{margin-left:auto;display:flex;align-items:center;gap:8px}
-.lch-pill{
-  display:flex;align-items:center;gap:7px;font-size:11px;color:#f4f4f5;
-  background:#101015;border:1px solid #26262e;border-radius:50px;padding:6px 11px;white-space:nowrap;
-}
-.lch-pill .d{width:6px;height:6px;border-radius:50%;background:#25d366;flex-shrink:0}
-.lch-chip{
-  font-size:10.5px;font-weight:600;color:#f5b50a;background:rgba(245,181,10,.12);
-  border:1px solid rgba(245,181,10,.4);border-radius:50px;padding:6px 11px;white-space:nowrap;
-}
-
-/* --- corpo (hero do app) --- */
-.lch-body{padding:20px 18px 22px}
-.lch-h1{font-size:17px;font-weight:800;letter-spacing:-.5px;color:#fff}
-.lch-h1 i{font-style:normal;color:#ee2740}
-/* campo de busca do app (decorativo, nao e input de verdade) */
-.lch-search{
-  margin-top:12px;display:flex;align-items:center;gap:9px;
-  background:#0d0d11;border:1px solid #1c1c22;border-radius:9px;padding:9px 12px;
-}
-.lch-search svg{width:14px;height:14px;flex-shrink:0;fill:none;stroke:#5b5b63;stroke-width:2;stroke-linecap:round}
-.lch-search span{font-size:12px;color:#5b5b63;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lch-hero{
-  margin-top:12px;display:flex;align-items:center;gap:22px;
-  background:
-    radial-gradient(circle at 100% 0%,rgba(238,39,64,.18) 0%,rgba(0,0,0,0) 50%),
-    linear-gradient(120deg,#15090c 0%,#0b0b0f 60%);
-  border:1px solid #2a1116;border-radius:16px;padding:22px 24px;
-}
-.lch-hero-l{flex:1;min-width:0}
-.lch-hero-l h4{font-size:clamp(17px,2.4vw,22px);font-weight:800;letter-spacing:-.7px;color:#fff;line-height:1.2}
-.lch-hero-l h4 i{font-style:normal;color:#ee2740}
-.lch-fake-btn{
-  display:inline-flex;align-items:center;gap:8px;margin-top:12px;
-  background:linear-gradient(120deg,#ee2740,#dc2626);color:#fff;
-  font-size:12px;font-weight:800;padding:9px 15px;border-radius:9px;
-}
-.lch-fake-btn svg{width:13px;height:13px;flex-shrink:0;fill:none;stroke:#fff;stroke-width:2.6;stroke-linecap:round}
-.lch-stat{
-  flex-shrink:0;text-align:center;background:rgba(0,0,0,.28);
-  border:1px solid #26262e;border-radius:14px;padding:18px 26px;
-}
-.lch-stat b{display:block;font-size:clamp(28px,5vw,40px);font-weight:800;letter-spacing:-2px;color:#fff;line-height:1}
-.lch-stat span{display:block;margin-top:5px;font-size:9px;font-weight:700;letter-spacing:1.5px;color:#8a8a93}
-@media(max-width:820px){
-  /* No celular o appbar do app nao cabe inteiro. Some a navegacao e o chip do
-     plano (o numero de jogos ja aparece gigante no hero logo abaixo) e fica o
-     que importa pra reconhecer o programa: marca e "Steam detectada". */
-  .lch-nav,.lch-chip{display:none}
-  .lch-bar{height:50px;padding:0 12px;gap:12px}
-  .lch-body{padding:16px 13px 18px}
-  /* O hero empilha, mas alinhado A ESQUERDA. Foi o "centralizado" da primeira
-     versao que dava cara de secao de site; encostado na esquerda, com a barra de
-     busca em cima e o botao pequeno logo abaixo do titulo, o bloco le como
-     janela de programa. O botao continua sem clique (pointer-events no .lch-app). */
-  .lch-hero{flex-direction:column;align-items:flex-start;text-align:left;gap:14px;padding:16px 14px}
-  .lch-hero-l{width:100%}
-  .lch-hero-l h4{font-size:15px;letter-spacing:-.4px}
-  .lch-fake-btn{font-size:11px;padding:8px 13px}
-  .lch-search{padding:8px 11px}
-  .lch-search span{font-size:11.5px}
-  /* o contador ocupa a largura toda, igual painel de app */
-  .lch-stat{width:100%;padding:13px 10px;border-radius:12px}
-  .lch-stat span{font-size:8px;letter-spacing:.8px;margin-top:4px}
 }
 
 /* ---------- comparacao com jogo pirata ----------
@@ -1430,10 +1257,6 @@ body.gm-open{overflow:hidden}
   .step{text-align:center;padding:18px 16px}
   .step-n{margin-left:auto;margin-right:auto}
 
-  /* video: as bordas laterais deixam o card em foco parar no meio da tela */
-  .vfb-grid{justify-content:flex-start;gap:12px;padding-left:calc(50% - 116px);padding-right:calc(50% - 116px)}
-  .vfb-rating{justify-content:center}
-
   /* planos: nome e preco centralizados, lista de itens segue a esquerda */
   .ed-top{flex-direction:column;align-items:center;text-align:center;gap:8px}
   .featured .ed-top{padding-right:16px}
@@ -1620,12 +1443,12 @@ var io = (function(){
 
         <div class="side-card">
           <p class="side-desc">
-            Mais de 40.000 jogos no Vitalício. Lançamentos futuros também entram no Avançado.
+            Mais de 40.000 jogos no Vitalício. Todos os lançamentos entram no Avançado e no Vitalício.
             Você baixa pela própria Steam, sem compartilhar conta.
           </p>
           <dl class="spec">
             <div class="spec-row"><dt>Jogos no Vitalício</dt><dd class="num">+<span data-almaz-games="vitalicio">40.000</span></dd></div>
-            <div class="spec-row"><dt>Lançamentos futuros</dt><dd class="ok">Avançado e Vitalício</dd></div>
+            <div class="spec-row"><dt>Lançamentos</dt><dd class="ok">Avançado e Vitalício</dd></div>
             <div class="spec-row"><dt>Download</dt><dd>Pela própria Steam</dd></div>
             <div class="spec-row"><dt>Multiplayer</dt><dd class="ok">Nos jogos compatíveis</dd></div>
             <div class="spec-row"><dt>Garantia</dt><dd>7 dias</dd></div>
@@ -1666,7 +1489,7 @@ var io = (function(){
               <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9"/></svg>
               <span class="medo-txt">
                 <span class="medo-q">Vou ter que pagar de novo algum dia?</span>
-                <span class="medo-a">Não há mensalidade nem renovação. No Vitalício, os lançamentos futuros entram sem custo adicional.</span>
+                <span class="medo-a">Não há mensalidade nem renovação. No Vitalício, todos os lançamentos entram sem custo adicional.</span>
               </span>
             </div>
             <div class="medo">
@@ -1777,7 +1600,7 @@ var io = (function(){
           <span>e acabou</span>
         </div>
         <p class="conta-vs-sub">
-          Esses jogos e mais de <strong><span data-almaz-games="vitalicio">40.000</span> títulos</strong> por pagamento único. O Avançado também inclui lançamentos futuros.
+          Esses jogos e mais de <strong><span data-almaz-games="vitalicio">40.000</span> títulos</strong> por pagamento único. O Avançado também inclui todos os lançamentos.
         </p>
         <!-- Este botao ia DIRETO pro checkout ate 20/08/2026. Virou degrau do funil:
              a caixa continua fazendo a comparacao de preco, que e o trabalho dela, mas
@@ -1785,7 +1608,7 @@ var io = (function(){
              "Pagamento no PIX" e "Aprovacao na hora e 7 dias de garantia": elas so
              fazem sentido embaixo de um botao que cobra, e embaixo de um botao que
              rola viravam promessa solta. As duas continuam na secao de planos. -->
-        <a href="#cresce" class="btn-ghost">Ver lançamentos futuros</a>
+        <a href="#cresce" class="btn-ghost">Ver todos os lançamentos</a>
       </div>
 
     </div>
@@ -1796,8 +1619,8 @@ var io = (function(){
 <section class="sec" id="cresce">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>Lançamentos futuros também entram</h2>
-      <p>No Avançado e no Vitalício, os próximos lançamentos entram sem custo extra.</p>
+      <h2>Todos os lançamentos também entram</h2>
+      <p>No Avançado e no Vitalício, todos os lançamentos entram no catálogo sem custo adicional.</p>
     </div>
 
     <div class="cresce reveal">
@@ -1870,88 +1693,11 @@ var io = (function(){
 
     <div class="cresce-cta reveal">
       <p>
-        No Avançado e no Vitalício, os próximos lançamentos entram sem custo extra.
+        No Avançado e no Vitalício, todos os lançamentos entram no catálogo sem custo adicional.
       </p>
       <!-- Ultimo degrau do funil: daqui a pessoa cai na oferta. Ia DIRETO pro checkout
            ate 20/08/2026, o que deixava ela comprar sem nunca ter visto os 3 planos. -->
       <a href="#pricing" class="btn-ghost">Ver os planos</a>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== O PROGRAMA ===================== -->
-<section class="sec" id="launcher">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <h2>Veja como é o programa</h2>
-      <p>Chega no seu e-mail depois do pagamento.</p>
-    </div>
-
-    <div class="lch-wrap reveal">
-      <div class="lch">
-        <div class="lch-tt">
-          <span class="lch-dot"></span><span class="lch-dot"></span><span class="lch-dot"></span>
-          <span class="lch-tt-name">ALMAZ Store</span>
-        </div>
-
-        <div class="lch-app">
-          <div class="lch-bar">
-            <div class="lch-brand">
-              <img src="assets/logo-128.png" alt="" aria-hidden="true">
-              <span class="lch-brand-txt">
-                <span class="lch-name">ALMA<i>Z</i> STORE</span>
-                <span class="lch-plan">VITALÍCIO</span>
-              </span>
-            </div>
-            <div class="lch-nav">
-              <span class="on">Início</span>
-              <span>Adicionar Jogo</span>
-              <span>Novos Jogos</span>
-              <span>Em Alta</span>
-            </div>
-            <div class="lch-right">
-              <span class="lch-pill"><span class="d"></span>Steam detectada</span>
-              <span class="lch-chip"><span data-almaz-games="vitalicio">40.000</span> jogos</span>
-            </div>
-          </div>
-
-          <div class="lch-body">
-            <div class="lch-h1">Meu <i>ALMAZ</i></div>
-
-            <!-- Barra de busca: e o elemento que mais faz o bloco ler como
-                 programa. Dashboard com contador qualquer site tem; campo de
-                 busca dentro de uma janela, nao. Fica em cima do contador. -->
-            <div class="lch-search">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <span>Buscar jogo por nome ou AppID</span>
-            </div>
-
-            <div class="lch-hero">
-              <div class="lch-hero-l">
-                <h4>Sua biblioteca <i>completa</i> está pronta.</h4>
-                <span class="lch-fake-btn">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                  <!-- span unico por dentro: o .lch-fake-btn e inline-flex com
-                       gap, entao numero solto viraria item de flex e abriria
-                       buraco em volta (mesmo caso do botao da calculadora) -->
-                  <span>Adicionar os <span data-almaz-games="vitalicio">40.000</span> jogos</span>
-                </span>
-              </div>
-              <div class="lch-stat">
-                <b class="num" data-almaz-games="vitalicio">40.000</b>
-                <span>JOGOS NO SEU PLANO</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Aqui existia um paragrafo sobre o programa ser leve e ter suporte no
-           WhatsApp/Discord por dentro. Saiu em 13/08/2026: as duas informacoes
-           ja aparecem na lista da secao de baixo, e a janela do launcher vende
-           sozinha. Menos texto, a pessoa desce mais rapido. -->
-
-      <div class="flow reveal"><a href="#pricing" class="btn-ghost">Ver os planos</a></div>
     </div>
   </div>
 </section>
@@ -1984,6 +1730,25 @@ var io = (function(){
            desse dia e voltou: e degrau do funil, nao atalho. -->
       <div class="flow reveal"><a href="#pricing" class="btn-ghost">Ver planos e preços</a></div>
     </div>
+  </div>
+</section>
+
+<!-- ===================== FEEDBACKS DE CLIENTES ===================== -->
+<section class="sec" id="feedbacks">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>O que nossos clientes estão falando</h2>
+      <p>Veja mensagens de clientes que já estão jogando. Toque em uma para ampliar.</p>
+    </div>
+    <div class="qbx-rail reveal">
+      <div class="qbx-track" id="fbk-track"></div>
+    </div>
+    <div class="fbk-ctl reveal">
+      <button class="fbk-seta" id="fbk-prev" type="button" aria-label="Mensagem anterior">&#8249;</button>
+      <span class="fbk-cont" id="fbk-cont" aria-live="polite">1 de 9 mensagens</span>
+      <button class="fbk-seta" id="fbk-next" type="button" aria-label="Próxima mensagem">&#8250;</button>
+    </div>
+    <div class="flow reveal"><a href="#pricing" class="btn-ghost">Ver os planos</a></div>
   </div>
 </section>
 
@@ -2026,37 +1791,7 @@ var io = (function(){
       </div>
     </div>
 
-    <!-- O fecho "voce abre a sua Steam, o jogo esta la..." saiu em 13/08/2026.
-         As duas colunas ja dizem isso item por item; o paragrafo por baixo so
-         repetia em prosa e alongava a secao no celular. -->
-
     <div class="flow reveal"><a href="#pricing" class="btn-ghost">Ver planos e preços</a></div>
-  </div>
-</section>
-
-<!-- ===================== FEEDBACKS DE CLIENTES ===================== -->
-<!-- 16/09/2026: logo DEPOIS da oferta, primeiro tratamento de objecao ("sera que
-     funciona?"). Nao entra antes do #pricing pra nao empurrar o preco pra baixo
-     (ver o comentario de 21/08 logo abaixo). Sao os stories de feedback recortados
-     antes do botao "Link na bio"; arquivos em assets/feedbacks (fb-NN.webp no
-     cartao, fb-NN-g.webp no visor). Reusa o visual do carrossel das caixinhas. -->
-<section class="sec" id="feedbacks">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <h2>O que nossos clientes estão falando</h2>
-      <p>Veja mensagens de clientes que já estão jogando. Toque em uma para ampliar.</p>
-    </div>
-    <div class="qbx-rail reveal">
-      <div class="qbx-track" id="fbk-track"></div>
-    </div>
-    <!-- Setas + contador EMBAIXO (pedido do Almaz em 16/09/2026): com as setas so
-         nas laterais o cliente nao percebia que havia mais feedbacks pro lado. -->
-    <div class="fbk-ctl reveal">
-      <button class="fbk-seta" id="fbk-prev" type="button" aria-label="Mensagem anterior">&#8249;</button>
-      <span class="fbk-cont" id="fbk-cont" aria-live="polite">1 de 12 mensagens</span>
-      <button class="fbk-seta" id="fbk-next" type="button" aria-label="Próxima mensagem">&#8250;</button>
-    </div>
-    <div class="flow reveal"><a href="#pricing" class="btn-ghost">Ver os planos</a></div>
   </div>
 </section>
 
@@ -2065,7 +1800,7 @@ var io = (function(){
   <div class="wrap">
     <div class="sec-head reveal">
       <h2>Escolha seu plano</h2>
-      <p>Pagamento único. Sem mensalidade nem renovação. Lançamentos futuros no Avançado e no Vitalício.</p>
+      <p>Pagamento único. Sem mensalidade nem renovação. Todos os lançamentos no Avançado e no Vitalício.</p>
     </div>
 
     <div class="eds reveal">
@@ -2082,7 +1817,7 @@ var io = (function(){
             <li>Modo história liberado</li>
             <li>Entrega automática</li>
             <li class="no">Biblioteca fechada, sem jogos novos</li>
-            <li class="no">Lançamentos futuros não entram</li>
+            <li class="no">Lançamentos não inclusos</li>
           </ul>
         </div>
         <div class="ed-buy">
@@ -2110,7 +1845,7 @@ var io = (function(){
             <li>Multiplayer nos jogos compatíveis</li>
             <li>Entrega automática</li>
             <li>Suporte prioritário por WhatsApp e Discord</li>
-            <li>Lançamentos futuros inclusos, sem pagar mais</li>
+            <li>Todos os lançamentos inclusos, sem pagar mais</li>
           </ul>
         </div>
         <div class="ed-buy">
@@ -2134,7 +1869,7 @@ var io = (function(){
         <div class="ed-body">
           <ul class="offer-features">
             <li><strong><span data-almaz-games="vitalicio">40.000</span> jogos</strong> liberados</li>
-            <li>Lançamentos futuros inclusos</li>
+            <li>Todos os lançamentos inclusos</li>
             <li>Jogos novos toda semana</li>
             <li>Acesso vitalício</li>
             <li>Jogos com Denuvo funcionando</li>
@@ -2317,7 +2052,7 @@ var io = (function(){
         <div class="gm-offer-hd">O que você leva</div>
         <ul class="gm-offer-list">
           <li>Paga <strong>uma vez</strong> e nunca mais gasta com jogo</li>
-          <li>Lançamentos futuros inclusos no Avançado e no Vitalício</li>
+          <li>Todos os lançamentos inclusos no Avançado e no Vitalício</li>
           <li>Online funcionando</li>
         </ul>
         <a href="#pricing" class="offer-btn" id="gm-go">Quero garantir</a>
@@ -2372,14 +2107,14 @@ var io = (function(){
     <button class="ups-x" id="upsell-x" type="button" aria-label="Fechar">×</button>
     <div class="ups-badge">🔥 Só agora, 50% OFF</div>
     <h3 class="ups-title"><span>Nunca mais gaste com jogo</span> por metade do preço</h3>
-    <p class="ups-sub">O Avançado inclui 20.000 jogos e lançamentos futuros. No Vitalício, são 40.000 jogos e títulos com Denuvo funcionando.</p>
+    <p class="ups-sub">O Avançado inclui 20.000 jogos e todos os lançamentos. No Vitalício, são 40.000 jogos e títulos com Denuvo funcionando.</p>
     <div class="ups-price">
       <span class="ups-old">de R$ 49,97</span>
       <span class="ups-new">R$ <b>24</b>,98</span>
     </div>
     <ul class="ups-feat">
       <li>✅ 40.000 jogos liberados</li>
-      <li>✅ Lançamentos futuros inclusos</li>
+      <li>✅ Todos os lançamentos inclusos</li>
       <li>✅ Multiplayer funcionando</li>
       <li>✅ Acesso vitalício, taxa única</li>
     </ul>
@@ -3275,32 +3010,27 @@ var io = (function(){
   play();
 })();
 
-/* Feedbacks de clientes (16/09/2026). Numero do arquivo em assets/feedbacks,
-   na ordem de exibicao: o mais forte primeiro. Clique abre no visor das
-   caixinhas (almazOpenPrint), que ja tem o CTA pros planos. */
+/* Feedbacks de clientes. Clique abre a imagem inteira no visor das caixinhas,
+   que ja tem o CTA pros planos. */
 (function(){
   var tr=document.getElementById('fbk-track'),
       prev=document.getElementById('fbk-prev'), next=document.getElementById('fbk-next');
   if(!tr||!prev||!next) return;
   var L=[
-    [3,'Avaliação 5 estrelas: pegou 1.000 jogos e recomenda o serviço'],
-    [1,'Cliente conta que achou que era golpe e diz que foi o melhor investimento do ano'],
-    [6,'Cliente agradece e mostra a biblioteca da Steam cheia'],
-    [4,'Cliente já baixou Stellar Blade, Homem-Aranha 2 e outros'],
-    [12,'Cliente diz que antes o problema era jogo e agora é tempo pra jogar'],
-    [10,'Foto da biblioteca da Steam de um cliente'],
-    [2,'Clientes comentando no grupo que estão jogando'],
-    [7,'Cliente mostra que vieram até as expansões dos jogos'],
-    [8,'Cliente elogia o atendimento e mostra a biblioteca'],
-    [9,'Cliente comprou o pacote e já estava baixando'],
-    [11,'Cliente mostra mais de 43 mil jogos na biblioteca'],
-    [5,'Cliente agradece depois de baixar e jogar']
+    ['https://i.imgur.com/PwEv4tE.jpeg','Feedback de cliente 1'],
+    ['https://i.imgur.com/fNS51ry.jpeg','Feedback de cliente 2'],
+    ['https://i.imgur.com/yhsV88R.jpeg','Feedback de cliente 3'],
+    ['https://i.imgur.com/LYbsLAC.jpeg','Feedback de cliente 4'],
+    ['https://i.imgur.com/tZ52BYX.jpeg','Feedback de cliente 5'],
+    ['https://i.imgur.com/GgXFYV6.jpeg','Feedback de cliente 6'],
+    ['https://i.imgur.com/2BKZlQl.jpeg','Feedback de cliente 7'],
+    ['https://i.imgur.com/zutO6ZA.jpeg','Feedback de cliente 8'],
+    ['https://i.imgur.com/X6UkhGd.jpeg','Feedback de cliente 9']
   ];
   var lupa='<span class="qbx-zoom"><svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>';
   tr.innerHTML=L.map(function(f){
-    var n=(f[0]<10?'0':'')+f[0];
-    return '<button class="qbx-card" type="button" data-fbk="assets/feedbacks/fb-'+n+'-g.webp">'
-      +'<span class="qbx-shot"><img src="assets/feedbacks/fb-'+n+'.webp" alt="'+f[1]+'" loading="lazy" decoding="async">'+lupa+'</span>'
+    return '<button class="qbx-card" type="button" data-fbk="'+f[0]+'">'
+      +'<span class="qbx-shot"><img src="'+f[0]+'" alt="'+f[1]+'" loading="lazy" decoding="async">'+lupa+'</span>'
       +'</button>';
   }).join('');
 
@@ -3522,128 +3252,6 @@ var io = (function(){
     document.head.appendChild(s);
   },{once:false});
 })();
-</script>
-
-<script>
-
-(function(){
-
-  // Spotlight: só o vídeo central toca (nítido); os das laterais ficam borrados e pausados.
-  var section = document.getElementById('videos');
-  if(!section) return;
-  var grid = section.querySelector('.vfb-grid');
-  var cards = [].slice.call(section.querySelectorAll('[data-vfb]'));
-  if(!grid || !cards.length) return;
-
-  var current = null;   // card em foco
-  var visible = false;  // seção visível na tela?
-
-  function isCarousel(){ return grid.scrollWidth - grid.clientWidth > 8; }
-
-  function playFocused(){
-    if(!visible || !current) return;
-    var v = current.querySelector('video');
-    if(v) v.play().catch(function(){});
-  }
-
-  // Um vídeo em foco: nítido + tocando; os outros borrados + pausados + mudos
-  function focusCard(card){
-    cards.forEach(function(c){
-      var v = c.querySelector('video');
-      var h = c.querySelector('.vfb-audio-hint');
-      var p = c.querySelector('.vfb-pause');
-      if(c === card){
-        c.classList.add('vfb-focus');
-      } else {
-        c.classList.remove('vfb-focus','vfb-on');
-        if(v){ v.pause(); v.muted = true; }
-        if(h) h.classList.remove('hidden');
-        if(p) p.classList.remove('show');
-      }
-    });
-    current = card;
-    playFocused();
-  }
-
-  // No carrossel (mobile), o card mais perto do centro vira o foco
-  function focusNearestToCenter(){
-    var gr = grid.getBoundingClientRect();
-    var mid = gr.left + gr.width / 2;
-    var best = null, bestD = Infinity;
-    cards.forEach(function(c){
-      var r = c.getBoundingClientRect();
-      var d = Math.abs((r.left + r.width / 2) - mid);
-      if(d < bestD){ bestD = d; best = c; }
-    });
-    if(best && best !== current) focusCard(best);
-  }
-
-  // Marca como pronto → o CSS aplica o blur nas laterais (sem JS, tudo aparece normal)
-  grid.classList.add('vfb-ready');
-
-  // Toca só com a seção visível; fora dela pausa tudo (não deixa 3 vídeos rodando juntos)
-  new IntersectionObserver(function(es){
-    es.forEach(function(e){
-      visible = e.isIntersecting;
-      if(visible) playFocused();
-      else cards.forEach(function(c){ var v = c.querySelector('video'); if(v) v.pause(); });
-    });
-  }, {threshold:0.35}).observe(grid);
-
-  // Rolar o carrossel atualiza o foco
-  var scrollT;
-  grid.addEventListener('scroll', function(){
-    clearTimeout(scrollT);
-    scrollT = setTimeout(focusNearestToCenter, 80);
-  }, {passive:true});
-
-  cards.forEach(function(card){
-    var video = card.querySelector('video');
-    var hint = card.querySelector('.vfb-audio-hint');
-    var pauseOverlay = card.querySelector('.vfb-pause');
-    if(!video) return;
-
-    card.addEventListener('click', function(){
-      // Card fora de foco → traz para o centro/foco e já solta o áudio no mesmo
-      // toque. Antes o primeiro clique só focava, e o cliente achava que o site
-      // tinha travado porque continuava mudo.
-      if(current !== card){
-        if(isCarousel()) card.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
-        focusCard(card);
-      }
-      // Card em foco ainda mudo → ativa o áudio
-      if(video.muted){
-        cards.forEach(function(c){ var v = c.querySelector('video'); if(v && v !== video) v.muted = true; });
-        card.classList.add('vfb-on');
-        video.muted = false;
-        if(hint) hint.classList.add('hidden');
-        video.play().catch(function(){});
-        return;
-      }
-      // Card em foco com áudio → toggle play/pause
-      if(video.paused){
-        video.play().catch(function(){});
-        pauseOverlay.classList.remove('show');
-      } else {
-        video.pause();
-        pauseOverlay.classList.add('show');
-      }
-    });
-  });
-
-  // Foco inicial: carrossel → card central; desktop → card do meio
-  if(isCarousel()) focusNearestToCenter();
-  else focusCard(cards[Math.floor(cards.length / 2)] || cards[0]);
-
-  // Girar o celular / redimensionar → recalcula o foco
-  var resizeT;
-  window.addEventListener('resize', function(){
-    clearTimeout(resizeT);
-    resizeT = setTimeout(function(){ if(isCarousel()) focusNearestToCenter(); }, 200);
-  }, {passive:true});
-
-})();
-
 </script>
 
 <script>
@@ -4149,7 +3757,7 @@ document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
 
 
 
-(function(){var F=[{q:'Vou tomar ban na minha conta Steam?',a:'Você usa sua própria conta Steam. Não compartilhamos contas. E tem 7 dias de garantia.'},{q:'Vou ter que pagar de novo algum dia?',a:'Todos os planos são pagamento único, sem renovação nem mensalidade. O Avançado e o Vitalício incluem lançamentos futuros.'},{q:'E os jogos que saírem em 2027, 2028?',a:'Entram na sua biblioteca sem custo nenhum. A gente adiciona os lançamentos toda semana, e os planos Avançado e Vitalício recebem todos sem pagar a mais.'},{q:'Como recebo depois de pagar?',a:'Depois que o PIX é aprovado, o acesso chega por e-mail com o passo a passo.'},{q:'É seguro?',a:'Os downloads são feitos pelos servidores oficiais da Steam. Você pode testar por 7 dias.'},{q:'Como funciona?',a:'Instale o launcher, entre com o e-mail da compra e baixe os jogos pela Steam.'},{q:'Os jogos são originais?',a:'Sim. Os jogos e as atualizações vêm da própria Steam.'},{q:'Funciona online?',a:'Sim, nos jogos que têm multiplayer.'},{q:'Quais as formas de pagamento?',a:'O pagamento é por PIX. O acesso é liberado após a aprovação.'},{q:'Como funciona o suporte?',a:'Nossa equipe ajuda pelo WhatsApp.'}];var fl=document.getElementById('fl');fl.innerHTML=F.map(function(f){return'<div class="faq-item reveal"><button class="faq-q" onclick="tFaq(this)">'+f.q+'<span class="faq-chev">▼</span></button><div class="faq-a">'+f.a+'</div></div>'}).join('');fl.querySelectorAll('.reveal').forEach(function(el){io.observe(el)})})();
+(function(){var F=[{q:'Vou tomar ban na minha conta Steam?',a:'Você usa sua própria conta Steam. Não compartilhamos contas. E tem 7 dias de garantia.'},{q:'Vou ter que pagar de novo algum dia?',a:'Todos os planos são pagamento único, sem renovação nem mensalidade. O Avançado e o Vitalício incluem todos os lançamentos.'},{q:'E os jogos que saírem em 2027, 2028?',a:'Todos os lançamentos entram na sua biblioteca sem custo adicional. Eles são adicionados toda semana aos planos Avançado e Vitalício.'},{q:'Como recebo depois de pagar?',a:'Depois que o PIX é aprovado, o acesso chega por e-mail com o passo a passo.'},{q:'É seguro?',a:'Os downloads são feitos pelos servidores oficiais da Steam. Você pode testar por 7 dias.'},{q:'Como funciona?',a:'Instale o launcher, entre com o e-mail da compra e baixe os jogos pela Steam.'},{q:'Os jogos são originais?',a:'Sim. Os jogos e as atualizações vêm da própria Steam.'},{q:'Funciona online?',a:'Sim, nos jogos que têm multiplayer.'},{q:'Quais as formas de pagamento?',a:'O pagamento é por PIX. O acesso é liberado após a aprovação.'},{q:'Como funciona o suporte?',a:'Nossa equipe ajuda pelo WhatsApp.'}];var fl=document.getElementById('fl');fl.innerHTML=F.map(function(f){return'<div class="faq-item reveal"><button class="faq-q" onclick="tFaq(this)">'+f.q+'<span class="faq-chev">▼</span></button><div class="faq-a">'+f.a+'</div></div>'}).join('');fl.querySelectorAll('.reveal').forEach(function(el){io.observe(el)})})();
 
 function tFaq(b){var a=b.nextElementSibling,o=b.classList.contains('open');document.querySelectorAll('.faq-q.open').forEach(function(q){q.classList.remove('open');q.nextElementSibling.classList.remove('open')});if(!o){b.classList.add('open');a.classList.add('open')}}
 
@@ -4741,7 +4349,7 @@ else{el.scrollIntoView({behavior:'smooth'});}
 
       a: [
 
-        "Os 3 planos são pagamento único, sem mensalidade nem renovação: Básico, R$ 9,97, com 1.000 jogos; Avançado, R$ 19,97, com 20.000 jogos e lançamentos futuros (mais vendido); Vitalício, R$ 49,97, com 40.000 jogos e Denuvo funcionando.",
+        "Os 3 planos são pagamento único, sem mensalidade nem renovação: Básico, R$ 9,97, com 1.000 jogos; Avançado, R$ 19,97, com 20.000 jogos e todos os lançamentos (mais vendido); Vitalício, R$ 49,97, com 40.000 jogos e Denuvo funcionando.",
 
         "Dá uma olhada na seção de Planos e escolhe o que faz sentido pra você."
 
