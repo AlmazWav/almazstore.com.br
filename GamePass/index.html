@@ -45,80 +45,26 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
 
-<!-- Utmify Pixel (mesmo pixelId do index.html) -->
+
+<!-- Meta Pixel: Almaz Store -->
 <script>
-  window.pixelId = "6a8331f816fe7033bc1acbf7";
-  var a = document.createElement("script");
-  a.setAttribute("async", "");
-  a.setAttribute("defer", "");
-  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
-  document.head.appendChild(a);
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)
+}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '4720082348314631');
+fbq('track', 'PageView');
 </script>
-<script src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-  data-utmify-prevent-xcod-sck data-utmify-prevent-subids async defer></script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=4720082348314631&amp;ev=PageView&amp;noscript=1"
+/></noscript>
 
-<!-- Utmify Lead Stitching (script do suporte UTMify) — MESMO CODIGO DO index.html.
-     Costura o _id do lead da UTMify dentro do utm_source (ex: FBjLj<id>) para que a
-     venda no checkout seja casada com a visita/pixel (fbp/fbc). SEM isso, a UTMify
-     recebe a venda mas NAO dispara o Purchase/InitiateCheckout pra Meta, e o anuncio
-     otimiza no escuro. Se mudar aqui, mude no index.html junto: e o mesmo script. -->
-<script>
-(function () {
-  const POLL_MS = 500;
-  const MAX_ATTEMPTS = 40; // ~20s; evita timer infinito apos a costura
 
-  function getStorageKey() {
-    const url = new URL(window.location.href);
-    const current = url.searchParams.get("utm_source");
-    if (current === "FB") return "lead";
-    if (current === "google") return "lead-google";
-    return null;
-  }
 
-  function getLeadId(storageKey) {
-    if (!storageKey) return null;
-    const raw = localStorage.getItem(storageKey);
-    if (!raw) return null;
-    try {
-      const obj = JSON.parse(raw);
-      return obj && obj._id ? String(obj._id) : null;
-    } catch {
-      return null;
-    }
-  }
-
-  function applyUtmIfNeeded() {
-    const url = new URL(window.location.href);
-    const current = url.searchParams.get("utm_source");
-    const storageKey = getStorageKey();
-    const id = getLeadId(storageKey);
-    if (!id) return false;
-
-    let desired = null;
-    if (current === "FB") {
-      desired = "FBjLj" + id;
-    } else if (current === "google") {
-      desired = "googlejLj" + id;
-    }
-
-    if (!desired) return false;
-
-    url.searchParams.set("utm_source", desired);
-    window.location.replace(url.toString());
-    return true;
-  }
-
-  if (applyUtmIfNeeded()) return;
-
-  let attempts = 0;
-  const interval = setInterval(() => {
-    attempts++;
-    if (applyUtmIfNeeded() || getStorageKey() === null || attempts >= MAX_ATTEMPTS) {
-      clearInterval(interval);
-    }
-  }, POLL_MS);
-})();
-</script>
 
 <style>
 /* ============================================================================
@@ -941,22 +887,9 @@ var PLANOS = {
 };
 
 /* ============================================================================
-   SISTEMA DE TRACKING AVANCADO FOCADO EM META ADS
-   Portado do index.html (pagina da Steam) em 02/09/2026, IGUAL ao de la, de
-   proposito. O tracking caseiro que existia nesta pagina (gerarEventId +
-   decorarUrl + chamada manual de window.utmify.track) foi REMOVIDO: ele
-   gerava event_id em formato diferente do resto da loja e, pior, disparava o
-   InitiateCheckout na mao. O Pixel da UTMify JA dispara o IC sozinho (browser
-   + CAPI, com deduplicacao), entao a chamada manual contava o evento duas
-   vezes. Nao reintroduza fbq(), utmify.track() nem outro pixel aqui.
-
-   O que roda de verdade nesta pagina: Microsoft Clarity + Pixel da UTMify +
-   UTMs da UTMify + costura de lead. O Pixel da Meta fica conectado no PAINEL
-   da UTMify, nao no HTML.
-
-   MESMA CHAVE de storage do index.html ('almaz_utm_tracker') de proposito: se
-   a pessoa entrar pelo anuncio da Steam e navegar ate aqui, as UTMs da visita
-   original seguem junto e a venda nao vira "organico".
+   Meta Pixel direto: PageView, ViewContent e InitiateCheckout saem desta
+   página; parâmetros de campanha continuam sendo capturados pelo código local.
+   A compra só é registrada depois da confirmação do checkout no webhook.
    ========================================================================== */
 (function() {
   var trackingKeys = [
@@ -1033,7 +966,7 @@ var PLANOS = {
   };
 
   // event_id unico por clique, anexado na URL do checkout. O checkout pode
-  // repassa-lo no Purchase server-side (CAPI/Utmify) pra identificar/deduplicar
+  // repassa-lo no Purchase server-side (CAPI) pra identificar/deduplicar
   // a venda. crypto.randomUUID com fallback pra navegador antigo.
   window.generateEventId = function() {
     try {
@@ -1064,7 +997,7 @@ var PLANOS = {
         return m ? decodeURIComponent(m[1]) : '';
       })();
       var source = urlObj.searchParams.get('src') || '';
-      // Preserva src (incluindo origem da Utmify) e acrescenta o marcador uma unica vez.
+      // Preserva src (incluindo a origem original) e acrescenta o marcador uma unica vez.
       if (visitorId && !/(?:^|\.)rtv_[a-z0-9-]+(?:\.|$)/i.test(source)) {
         urlObj.searchParams.set('src', (source ? source + '.' : '') + 'rtv_' + visitorId);
       }
@@ -1075,11 +1008,18 @@ var PLANOS = {
   };
 
   window.trackEvent = function(eventName, params, eventID) {
-    // Meta / Facebook: NAO disparamos fbq aqui. O Pixel da UTMify injeta e
-    // dispara o fbq sozinho (browser) + CAPI (server-side) com deduplicacao
-    // automatica, desde que o Pixel da Meta esteja conectado no PAINEL da
-    // UTMify. Chamar fbq na mao aqui contaria o evento em dobro.
-    // TikTok Pixel (so dispara se um dia existir)
+    var eventParams = params || {};
+    var standardEvents = ['ViewContent', 'InitiateCheckout', 'Contact', 'Lead', 'Purchase'];
+    if (typeof window.fbq === 'function') {
+      if (standardEvents.indexOf(eventName) !== -1) {
+        if (eventID) window.fbq('track', eventName, eventParams, { eventID: String(eventID) });
+        else window.fbq('track', eventName, eventParams);
+      } else {
+        if (eventID) window.fbq('trackCustom', eventName, eventParams, { eventID: String(eventID) });
+        else window.fbq('trackCustom', eventName, eventParams);
+      }
+    }
+        // Envia os eventos diretamente para o Pixel da Meta.// TikTok Pixel (so dispara se um dia existir)
     if (typeof window.ttq === 'object' && typeof window.ttq.track === 'function') {
       window.ttq.track(eventName, params);
     }
@@ -1118,6 +1058,25 @@ function checkoutPlano(id){
   var p = PLANOS[id];
   if(!p) return;
 
+  /* Sem link de checkout ainda: manda pro WhatsApp e registra contato. */
+  if(!p.url){
+    if (window.trackEvent) {
+      window.trackEvent('Contact', {
+        content_name: p.nome,
+        content_category: 'Game Pass',
+        value: p.valor,
+        currency: 'BRL'
+      });
+    }
+    if (typeof window.clarity === 'function') {
+      window.clarity('event', 'contact_' + id);
+    }
+    var msg = encodeURIComponent('Olá! Quero o ' + p.nome + ' (R$ ' + p.valor.toFixed(2).replace('.',',') + ').');
+    var whatsappUrl = 'https://wa.me/' + WHATSAPP + '?text=' + msg;
+    setTimeout(function(){ window.location.href = whatsappUrl; }, 400);
+    return;
+  }
+
   var eventId = window.generateEventId ? window.generateEventId() : null;
 
   if (window.trackEvent) {
@@ -1133,20 +1092,11 @@ function checkoutPlano(id){
     window.clarity('event', 'checkout_' + id);
   }
 
-  /* Sem link de checkout ainda: manda pro WhatsApp já dizendo qual plano. */
-  if(!p.url){
-    var msg = encodeURIComponent('Olá! Quero o ' + p.nome + ' (R$ ' + p.valor.toFixed(2).replace('.',',') + ').');
-    window.location.href = 'https://wa.me/' + WHATSAPP + '?text=' + msg;
-    return;
-  }
-
   var destino = window.decorateUrlWithTracking
     ? window.decorateUrlWithTracking(p.url, eventId)
     : p.url;
 
-  /* 800ms pro pixel sair antes da navegação. Nada de trocar o texto do botão
-     aqui: a Utmify identifica o InitiateCheckout pelo texto do botão, e mexer
-     nele durante o clique já matou o evento uma vez. */
+  /* Espera o evento ser enfileirado antes de navegar para o checkout. */
   setTimeout(function(){ window.location.href = destino; }, 800);
 }
 

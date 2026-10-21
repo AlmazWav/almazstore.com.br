@@ -13,24 +13,7 @@
 <link rel="icon" href="/assets/logo-128.png">
 <link rel="apple-touch-icon" href="/assets/logo-180.png">
 
-<!--
-  PAGINA DE APOIO DO X1 (16/09/2026)
-  O vendedor manda este link NO MEIO da conversa no WhatsApp. Nao e pagina de
-  anuncio: e o material que ele usaria pra explicar, num lugar so (planos,
-  como funciona, provas, garantia e o botao de pagar).
 
-  Links que o vendedor pode mandar:
-    /x1/                        -> pagina completa
-    /x1/?plano=vitalicio        -> abre ja no plano, destacado (basico|avancado|vitalicio)
-    /x1/?v=joao                 -> marca a venda como do vendedor "joao"
-    /x1/?plano=avancado&v=joao  -> os dois juntos
-
-  Atribuicao: todo checkout sai com utm_source=whatsapp, utm_medium=x1,
-  utm_campaign=x1 e utm_content=<vendedor>. Assim a venda do X1 aparece
-  separada no painel da UTMify, e da pra ver quem vendeu.
-  Os links de checkout sao OS MESMOS da pagina principal (index.html).
-  noindex de proposito: nao e pra aparecer no Google.
--->
 
 <!-- Microsoft Clarity (mesmo projeto da pagina principal) -->
 <script type="text/javascript">
@@ -41,15 +24,23 @@
   })(window, document, "clarity", "script", "xeud5hnipq");
 </script>
 
-<!-- Utmify Pixel (mesmo da pagina principal) -->
+
+<!-- Meta Pixel: Almaz Store -->
 <script>
-  window.pixelId = "6a8331f816fe7033bc1acbf7";
-  var a = document.createElement("script");
-  a.setAttribute("async", "");
-  a.setAttribute("defer", "");
-  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
-  document.head.appendChild(a);
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)
+}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '4720082348314631');
+fbq('track', 'PageView');
 </script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=4720082348314631&amp;ev=PageView&amp;noscript=1"
+/></noscript>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -473,7 +464,7 @@ b,strong{color:#fff}
       if (!id) return raw;
       var u = new URL(raw, location.href);
       var src = u.searchParams.get('src') || '';
-      // Preserva src de afiliado/UTMify e acrescenta o marcador sem duplicar.
+      // Preserva o src de afiliado e acrescenta o marcador sem duplicar.
       if (!/(?:^|\.)rtv_[a-z0-9-]+(?:\.|$)/i.test(src)) u.searchParams.set('src', (src ? src + '.' : '') + 'rtv_' + id);
       return u.toString();
     } catch (_) { return raw; }
@@ -492,13 +483,35 @@ b,strong{color:#fff}
 
   document.querySelectorAll('[data-checkout]').forEach(function (a) {
     a.href = linkCheckout(a.getAttribute('href'));
-    a.addEventListener('click', function () {
+    a.addEventListener('click', function (event) {
+      event.preventDefault();
+      var eventId = (window.crypto && typeof window.crypto.randomUUID === 'function')
+        ? window.crypto.randomUUID()
+        : 'evt-' + Date.now() + '-' + Math.random().toString(16).slice(2);
+      var planKey = a.getAttribute('data-checkout');
+      var planData = PLANOS[planKey];
+      try {
+        var checkoutUrl = new URL(a.href);
+        checkoutUrl.searchParams.set('event_id', eventId);
+        a.href = checkoutUrl.toString();
+      } catch (e) {}
+      if (typeof window.fbq === 'function' && planData) {
+        window.fbq('track', 'InitiateCheckout', {
+          content_name: planData.nome,
+          content_ids: [planKey],
+          content_type: 'product',
+          value: planData.val,
+          currency: 'BRL'
+        }, { eventID: eventId });
+      }
       a.href = decorateVisitorForCheckout(a.href);
+      var checkoutHref = a.href;
       a.classList.add('carregando');
       a.textContent = 'Abrindo o pagamento...';
       try { if (window.clarity) window.clarity('event', 'x1_checkout_' + a.dataset.checkout); } catch (e) {}
       // Se a pessoa voltar pela seta do navegador, o botao nao fica travado.
       setTimeout(function () { a.classList.remove('carregando'); }, 4000);
+      setTimeout(function () { window.location.href = checkoutHref; }, 500);
     });
   });
 

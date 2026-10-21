@@ -60,49 +60,28 @@
   })(window, document, "clarity", "script", "xeud5hnipq");
 </script>
 
-<!-- ===================== UTMIFY: PIXEL =====================
-     Pixel PROPRIO do Euro Truck Mobile (20/09/2026). NAO e o da loja de PC:
-     aquele e o 6a8331f816fe7033bc1acbf7 e continua so na home. Os dois produtos
-     tem pixel separado de proposito, senao as visitas de um sujam a otimizacao
-     das campanhas do outro.
 
-     O Almaz mandou este pixel como um snippet ofuscado (base64 + XOR) da
-     propria UTMify. Decodificado, ele carregava exatamente isto: a mesma
-     pixel.js do CDN da UTMify, sem atributo nenhum, e um unico global,
-     pixelId = 6aafd2a1d4f7d3ce6049236c. Entao esta aqui na forma legivel, que
-     faz a mesma coisa e e a mesma forma usada na home. A ofuscacao nao protege
-     de bloqueador: quem bloqueia bloqueia pela URL do script, que e a mesma.
-     ========================================================================= -->
+<!-- Meta Pixel: Almaz Store -->
 <script>
-  window.pixelId = "6aafd2a1d4f7d3ce6049236c";
-  var a = document.createElement("script");
-  a.setAttribute("async", "");
-  a.setAttribute("defer", "");
-  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
-  document.head.appendChild(a);
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)
+}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '4720082348314631');
+fbq('track', 'PageView');
 </script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=4720082348314631&amp;ev=PageView&amp;noscript=1"
+/></noscript>
 
-<!-- ===================== UTMIFY: UTMS =====================
-     Mesmo script e mesmos atributos da home. Os dois data-utmify-prevent-*
-     existem pra UTMify nao inventar xcod/sck/subids por conta propria: quem
-     manda nesses campos e o nosso modulo de tracking la embaixo.
-     ======================================================================== -->
-<script
-  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-  data-utmify-prevent-xcod-sck
-  data-utmify-prevent-subids
-  async
-  defer
-></script>
 
-<!-- ===================== UTMIFY: LEAD STITCHING =====================
-     Script do suporte da UTMify, copiado da home sem alteracao.
-     Costura o _id do lead da UTMify dentro do utm_source (ex: FBjLj<id>) pra
-     que a venda no checkout seja casada com a visita/pixel (fbp/fbc). SEM isso
-     a UTMify recebe a venda mas NAO dispara o Purchase/IC pra Meta.
-     Ele da um location.replace quando costura, entao roda cedo, no <head>, e
-     so age se a pessoa chegou com utm_source=FB ou utm_source=google.
-     ================================================================== -->
+
+
+
 <script>
 (function () {
   const POLL_MS = 500;
@@ -997,25 +976,7 @@ window.ETM = {
   <img id="zoom-img" src="" alt="">
 </div>
 
-<!-- ===================== TRACKING =====================
-     Portado da home (index.html) em 20/09/2026, a pedido do Almaz, pra esta
-     pagina medir igual a loja de PC. O que veio, na mesma ordem de la:
 
-       1. merge das UTMs da URL com o que ja estava em localStorage/session
-       2. fallback organico pelo referrer (google/facebook/instagram/tiktok)
-       3. generateEventId .......... event_id unico por clique, pra dedup
-       4. decorateUrlWithTracking .. cola as UTMs + event_id na URL do checkout
-       5. trackEvent ............... TikTok e GA se existirem, e log no console
-       6. ViewContent .............. dispara no load
-
-     O QUE NAO VEIO, de proposito:
-     - fbq manual. O pixel da UTMify injeta e dispara o fbq sozinho (browser)
-       + CAPI (server-side) com deduplicacao, desde que o pixel da Meta esteja
-       conectado NO PAINEL da UTMify. Chamar fbq aqui contaria em dobro.
-     - O ramo do chatbot (utm_source=AssistenteIA) do decorateUrlWithTracking
-       da home: esta pagina nao tem chatbot, entao seria codigo morto. Se um dia
-       entrar um chat aqui, copie aquele trecho de volta da home.
-     ==================================================================== -->
 <script>
 // --- SISTEMA DE TRACKING AVANCADO FOCADO EM META ADS (copia da home) ---
 (function () {
@@ -1094,7 +1055,7 @@ window.ETM = {
   };
 
   // event_id unico por clique, anexado na URL do checkout. O ggcheckout pode
-  // repassa-lo no Purchase server-side (CAPI/Utmify) pra identificar e
+  // repassa-lo no Purchase server-side (CAPI) pra identificar e
   // deduplicar a venda. crypto.randomUUID com fallback pra navegador antigo.
   window.generateEventId = function () {
     try {
@@ -1122,7 +1083,7 @@ window.ETM = {
         return m ? decodeURIComponent(m[1]) : '';
       })();
       var source = urlObj.searchParams.get('src') || '';
-      // Preserva src (incluindo origem da Utmify) e acrescenta o marcador uma unica vez.
+      // Preserva src (incluindo a origem original) e acrescenta o marcador uma unica vez.
       if (visitorId && !/(?:^|\.)rtv_[a-z0-9-]+(?:\.|$)/i.test(source)) {
         urlObj.searchParams.set('src', (source ? source + '.' : '') + 'rtv_' + visitorId);
       }
@@ -1133,7 +1094,18 @@ window.ETM = {
   };
 
   window.trackEvent = function (eventName, params, eventID) {
-    // Meta: NAO disparamos fbq aqui de proposito (ver o comentario do bloco).
+    var eventParams = params || {};
+    var standardEvents = ['ViewContent', 'InitiateCheckout', 'Contact', 'Lead', 'Purchase'];
+    if (typeof window.fbq === 'function') {
+      if (standardEvents.indexOf(eventName) !== -1) {
+        if (eventID) window.fbq('track', eventName, eventParams, { eventID: String(eventID) });
+        else window.fbq('track', eventName, eventParams);
+      } else {
+        if (eventID) window.fbq('trackCustom', eventName, eventParams, { eventID: String(eventID) });
+        else window.fbq('trackCustom', eventName, eventParams);
+      }
+    }
+    // Envia os eventos diretamente para o Pixel da Meta.
     if (typeof window.ttq === 'object' && typeof window.ttq.track === 'function') {
       window.ttq.track(eventName, params);
     }
@@ -1250,9 +1222,8 @@ window.ETM = {
       return;
     }
 
-    // href ja sai pronto (sem event_id, que e por clique): o link precisa ser
-    // um link de verdade pra quem abre em nova aba e pro pixel da UTMify, que
-    // le o href da pagina.
+    // href já sai pronto (sem event_id, que é por clique): fica como link de
+    // verdade para abrir em nova aba e preservar os parâmetros da campanha.
     btn.href = montarLink(link, null);
 
     btn.addEventListener('click', function (e) {
@@ -1273,9 +1244,8 @@ window.ETM = {
       try { if (window.clarity) window.clarity('event', 'etm_checkout_' + id); } catch (err) {}
 
       var orig = btn.innerHTML;
-      // setTimeout(0) de proposito: a troca do texto so pode acontecer DEPOIS da
-      // propagacao do clique, porque o pixel da Utmify le o TEXTO do botao pra
-      // decidir o InitiateCheckout. Mesma pegadinha ja documentada na home.
+      // setTimeout(0) de proposito: primeiro enfileira o evento do Meta, depois
+      // troca o texto do botao e continua a navegacao pro checkout.
       setTimeout(function () { btn.innerHTML = SPIN; }, 0);
       // Failsafe: se a navegacao nao acontecer, o botao volta ao normal.
       setTimeout(function () { btn.innerHTML = orig; }, 6000);

@@ -33,176 +33,22 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
 
-<!-- Utmify Pixel -->
-
+<!-- Meta Pixel: Almaz Store -->
 <script>
-
-  window.pixelId = "6a8331f816fe7033bc1acbf7";
-
-  var a = document.createElement("script");
-
-  a.setAttribute("async", "");
-
-  a.setAttribute("defer", "");
-
-  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
-
-  document.head.appendChild(a);
-
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)
+}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '4720082348314631');
+fbq('track', 'PageView');
 </script>
-
-<!-- Utmify UTMs -->
-
-<script
-
-  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-
-  data-utmify-prevent-xcod-sck
-
-  data-utmify-prevent-subids
-
-  async
-
-  defer
-
-></script>
-
-<!-- Utmify Lead Stitching (script do suporte UTMify) -->
-
-<!-- Costura o _id do lead da UTMify dentro do utm_source (ex: FBjLj<id>) para
-
-     que a venda no checkout seja casada com a visita/pixel (fbp/fbc). SEM isso,
-
-     a UTMify recebe a venda mas nao dispara o Purchase/IC pra Meta. -->
-
-<script>
-
-(function () {
-
-  const POLL_MS = 500;
-
-  const MAX_ATTEMPTS = 40; // ~20s; evita timer infinito apos a costura
-
-
-
-  function getStorageKey() {
-
-    const url = new URL(window.location.href);
-
-    const current = url.searchParams.get("utm_source");
-
-    if (current === "FB") return "lead";
-
-    if (current === "google") return "lead-google";
-
-    return null;
-
-  }
-
-
-
-  function getLeadId(storageKey) {
-
-    if (!storageKey) return null;
-
-    const raw = localStorage.getItem(storageKey);
-
-    if (!raw) return null;
-
-    try {
-
-      const obj = JSON.parse(raw);
-
-      return obj && obj._id ? String(obj._id) : null;
-
-    } catch {
-
-      return null;
-
-    }
-
-  }
-
-
-
-  function applyUtmIfNeeded() {
-
-    const url = new URL(window.location.href);
-
-    const current = url.searchParams.get("utm_source");
-
-    const storageKey = getStorageKey();
-
-    const id = getLeadId(storageKey);
-
-    if (!id) return false;
-
-
-
-    let desired = null;
-
-    if (current === "FB") {
-
-      desired = "FBjLj" + id;
-
-    } else if (current === "google") {
-
-      desired = "googlejLj" + id;
-
-    }
-
-
-
-    if (!desired) return false;
-
-
-
-    url.searchParams.set("utm_source", desired);
-
-    /* replaceState atualiza a barra de endereço sem tela branca */
-    window.history.replaceState({}, '', url.toString());
-
-    /* Sincroniza imediatamente o cache de UTMs para o checkout pegar o lead costurado */
-    try {
-      if (window.getMergedTrackingParams) {
-        var mt = window.getMergedTrackingParams();
-        if (mt) mt['utm_source'] = desired;
-      }
-      var sk = 'almaz_utm_tracker';
-      var st = JSON.parse(localStorage.getItem(sk) || '{}');
-      st['utm_source'] = desired;
-      localStorage.setItem(sk, JSON.stringify(st));
-      sessionStorage.setItem(sk, JSON.stringify(st));
-    } catch(e) {}
-
-    return true;
-
-  }
-
-
-
-  if (applyUtmIfNeeded()) return;
-
-
-
-  let attempts = 0;
-
-  const interval = setInterval(() => {
-
-    attempts++;
-
-    if (applyUtmIfNeeded() || getStorageKey() === null || attempts >= MAX_ATTEMPTS) {
-
-      clearInterval(interval);
-
-    }
-
-  }, POLL_MS);
-
-})();
-
-</script>
-
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=4720082348314631&amp;ev=PageView&amp;noscript=1"
+/></noscript>
 <style>
 /* =========================================================================
    Sistema visual "loja/aplicativo" (azul grafite + CTA verde), no ar desde
@@ -3418,7 +3264,7 @@ var io = (function(){
 
   // Gera um event_id único por clique, anexado na URL do checkout. O ggcheckout
 
-  // pode repassá-lo no Purchase server-side (CAPI/Utmify) para identificar/
+  // pode repassá-lo no Purchase server-side (Meta CAPI) para identificar/
 
   // deduplicar a venda. Usa crypto.randomUUID com fallback p/ navegadores antigos.
 
@@ -3465,7 +3311,7 @@ var io = (function(){
       }
 
       // Encaminha os identificadores Meta já disponíveis no navegador para o
-      // checkout. A integração do checkout/UTMify pode então associá-los ao
+      // checkout. O webhook da GGCheckout pode então encaminhá-los à
       // Purchase server-side; nunca inventamos valores quando o cookie não existe.
       function readMetaCookie(name) {
         var cookies = document.cookie ? document.cookie.split(';') : [];
@@ -3490,7 +3336,7 @@ var io = (function(){
 
       // ggcheckout pode LER este event_id e reutilizá-lo no evento Purchase
 
-      // enviado server-side (CAPI/Utmify) para identificar/deduplicar a venda.
+      // enviado server-side (Meta CAPI) para identificar/deduplicar a venda.
 
       if (eventId) {
 
@@ -3535,7 +3381,7 @@ var io = (function(){
         return m ? decodeURIComponent(m[1]) : '';
       })();
       var source = urlObj.searchParams.get('src') || '';
-      // Preserva src (incluindo origem da Utmify) e acrescenta o marcador uma unica vez.
+      // Preserva src (incluindo origem da campanha) e acrescenta o marcador uma unica vez.
       if (visitorId && !/(?:^|\.)rtv_[a-z0-9-]+(?:\.|$)/i.test(source)) {
         urlObj.searchParams.set('src', (source ? source + '.' : '') + 'rtv_' + visitorId);
       }
@@ -3552,33 +3398,20 @@ var io = (function(){
 
 
   window.trackEvent = function(eventName, params, eventID) {
+    var eventParams = params || {};
+    var standardEvents = ['ViewContent', 'InitiateCheckout', 'Contact', 'Lead', 'Purchase'];
 
-    // Meta / Facebook: NÃO disparamos fbq aqui. O Pixel da UTMify injeta e
-
-    // dispara o fbq sozinho (browser) + CAPI (server-side) com deduplicação
-
-    // automática, desde que o Pixel da Meta esteja conectado no PAINEL da UTMify.
-
-    // Chamar fbq manualmente aqui causaria contagem em dobro dos eventos.
-
-    // TikTok Pixel
-
-    if (typeof window.ttq === 'object' && typeof window.ttq.track === 'function') {
-
-      window.ttq.track(eventName, params);
-
+    if (typeof window.fbq === 'function') {
+      if (standardEvents.indexOf(eventName) !== -1) {
+        if (eventID) window.fbq('track', eventName, eventParams, { eventID: String(eventID) });
+        else window.fbq('track', eventName, eventParams);
+      } else {
+        if (eventID) window.fbq('trackCustom', eventName, eventParams, { eventID: String(eventID) });
+        else window.fbq('trackCustom', eventName, eventParams);
+      }
     }
 
-    // Google Analytics (gtag)
-
-    if (typeof window.gtag === 'function') {
-
-      window.gtag('event', eventName, params);
-
-    }
-
-    console.log('[TRACKING EVENT]:', eventName, params, eventID ? '(eventID: ' + eventID + ')' : '');
-
+    console.log('[TRACKING EVENT]:', eventName, eventParams, eventID ? '(eventID: ' + eventID + ')' : '');
   };
 
 })();
@@ -3797,7 +3630,7 @@ function checkout(url,val){
 
   // event_id único por clique, anexado na URL do checkout para o Purchase
 
-  // server-side (CAPI/Utmify) identificar/deduplicar a venda.
+  // server-side (Meta CAPI) identificar/deduplicar a venda.
 
   var eventId = window.generateEventId ? window.generateEventId() : null;
 
@@ -3859,7 +3692,7 @@ function checkout(url,val){
 
   // REAL deve ser registrado SERVER-SIDE pelo ggcheckout (webhook "compra
 
-  // aprovada" -> CAPI/Utmify), reutilizando o event_id acima.
+  // aprovada" -> Meta CAPI), reutilizando o event_id acima.
 
   // Delay reduzido de 800ms para 180ms: dispara beacons sem causar clique morto
 
@@ -3891,9 +3724,7 @@ function checkout(url,val){
   document.addEventListener('click',function(e){
     var el=e.target.closest('a[href*="ggcheckout.app"], a[onclick*="checkout("], [onclick*="checkout("], #upsell-accept, #upsell-decline');
     // setTimeout(0): a troca do visual só pode acontecer DEPOIS da propagação do
-    // clique. O pixel da Utmify decide o InitiateCheckout pelo TEXTO do botão
-    // ("Quero garantir"); trocar pra "Abrindo checkout…" durante a captura
-    // matava o evento IC na Meta (confirmado em produção 01/07).
+    // deixa os handlers registrarem InitiateCheckout antes de mudar o texto do CTA.
     if(el) setTimeout(function(){markLoading(el);},0);
   },true);
 })();
@@ -4551,17 +4382,9 @@ else{el.scrollIntoView({behavior:'smooth'});}
 
 
 
-    // Track Meta Ads Lead event on chatbot interaction
+    // Registra interação do chatbot sem marcá-la como lead
 
     if (typeof window.trackEvent === 'function') {
-
-      window.trackEvent('Lead', {
-
-        content_name: 'Chatbot FAQ Click',
-
-        content_category: 'Chatbot Engagement'
-
-      });
 
       window.trackEvent('ChatbotInteraction', {
 

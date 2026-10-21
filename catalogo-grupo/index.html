@@ -23,93 +23,28 @@
     })();
 </script>
 
-<!-- Utmify Pixel -->
+
+<!-- Meta Pixel: Almaz Store -->
 <script>
-  window.pixelId = "6a8331f816fe7033bc1acbf7";
-  var a = document.createElement("script");
-  a.setAttribute("async", "");
-  a.setAttribute("defer", "");
-  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
-  document.head.appendChild(a);
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)
+}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '4720082348314631');
+fbq('track', 'PageView');
 </script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=4720082348314631&amp;ev=PageView&amp;noscript=1"
+/></noscript>
 
-<!-- Utmify UTMs -->
-<script
-  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-  data-utmify-prevent-xcod-sck
-  data-utmify-prevent-subids
-  async
-  defer
-></script>
 
-<!-- Utmify Lead Stitching — costura o _id do lead dentro do utm_source
-     para que a venda no checkout seja casada com a visita/pixel (fbp/fbc). -->
-<script>
-(function () {
-  var POLL_MS = 500;
-  var MAX_ATTEMPTS = 40;
 
-  function getStorageKey() {
-    var url = new URL(window.location.href);
-    var current = url.searchParams.get("utm_source");
-    if (current === "FB") return "lead";
-    if (current === "google") return "lead-google";
-    return null;
-  }
 
-  function getLeadId(storageKey) {
-    if (!storageKey) return null;
-    var raw = localStorage.getItem(storageKey);
-    if (!raw) return null;
-    try {
-      var obj = JSON.parse(raw);
-      return obj && obj._id ? String(obj._id) : null;
-    } catch (e) {
-      return null;
-    }
-  }
 
-  function applyUtmIfNeeded() {
-    var url = new URL(window.location.href);
-    var current = url.searchParams.get("utm_source");
-    var storageKey = getStorageKey();
-    var id = getLeadId(storageKey);
-    if (!id) return false;
-
-    var desired = null;
-    if (current === "FB") desired = "FBjLj" + id;
-    else if (current === "google") desired = "googlejLj" + id;
-    if (!desired) return false;
-
-    url.searchParams.set("utm_source", desired);
-    window.history.replaceState({}, '', url.toString());
-
-    try {
-      if (window.getMergedTrackingParams) {
-        var mt = window.getMergedTrackingParams();
-        if (mt) mt['utm_source'] = desired;
-      }
-      var sk = 'almaz_utm_tracker';
-      var st = JSON.parse(localStorage.getItem(sk) || '{}');
-      st['utm_source'] = desired;
-      localStorage.setItem(sk, JSON.stringify(st));
-      sessionStorage.setItem(sk, JSON.stringify(st));
-    } catch(e) {}
-
-    return true;
-  }
-
-  if (applyUtmIfNeeded()) return;
-
-  var attempts = 0;
-  var interval = setInterval(function () {
-    attempts++;
-    if (applyUtmIfNeeded() || getStorageKey() === null || attempts >= MAX_ATTEMPTS) {
-      clearInterval(interval);
-    }
-  }, POLL_MS);
-})();
-</script>
 
 <!-- Propagação de UTMs: qualquer link pro site principal leva as UTMs
      que o visitante trouxe do anúncio, pra venda ser atribuída mesmo
