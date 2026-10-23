@@ -35,6 +35,51 @@
 
 <!-- Meta Pixel: Almaz Store (4720082348314631) -->
 <script>
+window.generateMetaEventId = function() {
+  try {
+    if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+      return window.crypto.randomUUID();
+    }
+  } catch (e) {}
+  return 'evt-' + Date.now() + '-' + Math.random().toString(16).slice(2);
+};
+
+window.sendMetaServerEvent = function(eventName, eventId, customData) {
+  if (eventName !== 'PageView' && eventName !== 'ViewContent') return;
+  if (!eventId || typeof window.fetch !== 'function') return;
+
+  function readCookie(name) {
+    var prefix = name + '=';
+    var cookies = document.cookie ? document.cookie.split(';') : [];
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i].trim();
+      if (cookie.indexOf(prefix) === 0) {
+        try { return decodeURIComponent(cookie.slice(prefix.length)); }
+        catch (e) { return cookie.slice(prefix.length); }
+      }
+    }
+    return '';
+  }
+
+  var payload = {
+    event_name: eventName,
+    event_id: String(eventId),
+    event_source_url: window.location.origin + window.location.pathname,
+    fbp: readCookie('_fbp'),
+    fbc: readCookie('_fbc')
+  };
+  if (eventName === 'ViewContent' && customData) payload.custom_data = customData;
+
+  window.fetch('https://keys-server-9zq2.onrender.com/api/meta/events', {
+    method: 'POST',
+    mode: 'cors',
+    credentials: 'omit',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(payload),
+    keepalive: true
+  }).catch(function() {});
+};
+
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -44,7 +89,9 @@ t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)
 }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '4720082348314631');
-fbq('track', 'PageView');
+var pageViewEventId = window.generateMetaEventId();
+fbq('track', 'PageView', {}, { eventID: pageViewEventId });
+window.sendMetaServerEvent('PageView', pageViewEventId);
 </script>
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=4720082348314631&amp;ev=PageView&amp;noscript=1"
@@ -3401,6 +3448,10 @@ var io = (function(){
     var eventParams = params || {};
     var standardEvents = ['ViewContent', 'InitiateCheckout', 'Contact', 'Lead', 'Purchase'];
 
+    if (eventName === 'ViewContent' && !eventID && typeof window.generateMetaEventId === 'function') {
+      eventID = window.generateMetaEventId();
+    }
+
     if (typeof window.fbq === 'function') {
       if (standardEvents.indexOf(eventName) !== -1) {
         if (eventID) window.fbq('track', eventName, eventParams, { eventID: String(eventID) });
@@ -3409,6 +3460,10 @@ var io = (function(){
         if (eventID) window.fbq('trackCustom', eventName, eventParams, { eventID: String(eventID) });
         else window.fbq('trackCustom', eventName, eventParams);
       }
+    }
+
+    if (eventName === 'ViewContent' && eventID && typeof window.sendMetaServerEvent === 'function') {
+      window.sendMetaServerEvent(eventName, eventID, eventParams);
     }
 
     console.log('[TRACKING EVENT]:', eventName, eventParams, eventID ? '(eventID: ' + eventID + ')' : '');
