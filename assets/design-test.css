@@ -1,0 +1,956 @@
+/*
+ * Prévia de direção visual para a Almaz Store.
+ * Mantém a sequência e a copy da página; altera apenas a apresentação.
+ * Princípios: tipografia do sistema, respiro, superfícies sólidas, cantos amplos,
+ * um acento de ação, vidro restrito à navegação e movimento reduzido acessível.
+ */
+:root {
+  color-scheme: light;
+  --bg: #f4f5f7;
+  --bg2: #eef0f3;
+  --panel: #fff;
+  --panel2: #f8f9fb;
+  --panel3: #eef0f2;
+  --line: rgba(22, 28, 36, .09);
+  --line2: rgba(22, 28, 36, .16);
+  --txt: #17191d;
+  --txt2: #3f4650;
+  --dim: #59616c;
+  --blue: #16763a;
+  --blue-dim: rgba(0, 175, 54, .12);
+  --buy: #00d43d;
+  --buy2: #16763a;
+  --buy-dark: #087b2c;
+  --deal-bg: #e8f6ec;
+  --deal-tx: #176a35;
+  --warn: #805414;
+  --neon: #00d43d;
+  --neon-glow: rgba(0, 175, 54, .18);
+  --f: -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", sans-serif;
+  --r: 18px;
+  --r2: 28px;
+  --shadow: 0 18px 54px rgba(25, 34, 45, .10);
+}
+
+html {
+  scroll-padding-top: 76px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--txt);
+  font-family: var(--f);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before,
+body::after {
+  content: none;
+}
+
+button,
+input {
+  font-family: var(--f);
+}
+
+h1,
+h2,
+h3 {
+  color: var(--txt);
+  letter-spacing: -.035em;
+}
+
+.wrap {
+  max-width: 1220px;
+  padding-right: 24px;
+  padding-left: 24px;
+}
+
+/* O único elemento translúcido: a barra escura sobre o conteúdo. */
+.topbar {
+  position: sticky;
+  top: 0;
+  overflow: hidden;
+  background: rgba(13, 15, 18, .78);
+  border-bottom: 1px solid rgba(255, 255, 255, .14);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(18px) saturate(160%);
+}
+
+.topbar::before {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .62), transparent);
+  content: "";
+  pointer-events: none;
+}
+
+.topbar-in {
+  height: 64px;
+}
+
+.tb-brand span {
+  color: #fff;
+  font-weight: 650;
+  letter-spacing: -.02em;
+}
+
+.tb-brand {
+  min-height: 44px;
+  padding: 8px;
+}
+
+@supports not ((backdrop-filter: blur(18px)) or (-webkit-backdrop-filter: blur(18px))) {
+  .topbar {
+    background: #111317;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .topbar {
+    background: #111317;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+/* Hero mantém a arte e a caixa de compra na posição atual. */
+.ph {
+  padding-top: clamp(34px, 5vw, 64px);
+}
+
+.ph-crumb {
+  color: var(--dim);
+  font-size: 13px;
+  text-align: center;
+}
+
+.ph-crumb b {
+  color: var(--txt2);
+}
+
+.ph h1 {
+  max-width: 900px;
+  margin: 0 auto;
+  color: var(--txt);
+  font-size: clamp(36px, 5.2vw, 60px);
+  font-weight: 720;
+  line-height: 1.04;
+  text-align: center;
+}
+
+.ph-sub {
+  max-width: 700px;
+  margin: 16px auto 0;
+  color: var(--txt2);
+  font-size: clamp(16px, 1.7vw, 19px);
+  text-align: center;
+}
+
+.pg {
+  grid-template-columns: minmax(0, 1fr) 356px;
+  gap: 24px;
+  margin-top: 34px;
+}
+
+.art {
+  border: 0;
+  border-radius: 28px;
+  box-shadow: 0 24px 60px rgba(13, 19, 28, .18);
+}
+
+/* Segundo ponto de vidro: legenda sobre a arte rica do jogo. */
+.art-cap {
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, .22);
+  border-radius: 16px;
+  background: rgba(12, 14, 18, .62);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .22), inset 0 1px 0 rgba(255, 255, 255, .12);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(18px) saturate(160%);
+  transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+
+@supports not ((backdrop-filter: blur(18px)) or (-webkit-backdrop-filter: blur(18px))) {
+  .art-cap {
+    background: #111317;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .art-cap {
+    background: #111317;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+@media (hover: hover) {
+  .art:hover .art-cap {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, .34);
+    background-color: rgba(12, 14, 18, .72);
+  }
+}
+
+.art-thumbs {
+  gap: 8px;
+  background: #fff;
+  padding: 10px;
+}
+
+.art-thumb {
+  border-radius: 10px;
+}
+
+.art-thumb.on {
+  border-color: var(--buy2);
+  box-shadow: 0 0 0 2px rgba(0, 175, 54, .14);
+}
+
+.art-cap-tag {
+  border: 1px solid rgba(0, 212, 61, .68);
+  background: rgba(13, 15, 18, .84);
+  color: #00d43d;
+  font-size: 12px;
+}
+
+/* Espaçamento de leitura maior; a ordem e os destinos dos links não mudam. */
+.sec {
+  padding: clamp(64px, 8vw, 104px) 0;
+  border-top-color: var(--line);
+}
+
+.sec-head {
+  max-width: 780px;
+  margin: 0 auto 38px;
+  text-align: center;
+}
+
+.sec-head h2 {
+  margin-bottom: 10px;
+  font-size: clamp(30px, 4vw, 44px);
+  font-weight: 700;
+  line-height: 1.08;
+}
+
+.sec-head p {
+  max-width: 650px;
+  margin: 0 auto;
+  color: var(--dim);
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+/* Cartões sólidos com sombra leve, sem contorno pesado. */
+.side-card,
+.buybox,
+.step,
+.offer-card,
+.cresce-card,
+.conta-cart,
+.conta-vs,
+.gr-card,
+.faq-item,
+.qbx-card,
+.vs-col,
+.av-card,
+.cat-panel,
+.cat-note {
+  color: var(--txt);
+  background: #fff;
+  border: 1px solid rgba(22, 28, 36, .07);
+  border-radius: 28px;
+  box-shadow: 0 14px 40px rgba(25, 34, 45, .075);
+}
+
+.side-card,
+.buybox {
+  padding: 22px;
+}
+
+.buybox {
+  border-color: rgba(0, 175, 54, .18);
+  box-shadow: 0 16px 44px rgba(0, 90, 35, .10);
+}
+
+.side-desc,
+.conta-vs-sub,
+.vs-list li,
+.qbx-a,
+.faq-a,
+.offer-features li {
+  color: var(--txt2);
+}
+
+.spec-row dt,
+.buybox-from,
+.buybox-once,
+.side-note,
+.ed-name small,
+.ed-old,
+.offer-methods,
+.offer-trust,
+.step p,
+.cresce-dt,
+.conta-nome small,
+.conta-obs,
+.foot p {
+  color: var(--dim);
+}
+
+.spec-row dd,
+.buybox-new,
+.buybox-pay b,
+.conta-total b,
+.conta-vs-price b,
+.conta-vs-sub strong,
+.ed-new,
+.ed-name,
+.offer-features li strong,
+.faq-q,
+.qbx-q,
+.qbx-ov-cta p strong,
+.vs-col.good .vs-hd {
+  color: var(--txt);
+}
+
+.spec-row dd.ok,
+.cresce-ok,
+.deal,
+.ed-gain b,
+.spec-row dd.ok,
+.foot a {
+  color: var(--buy2);
+}
+
+.deal,
+.ed-plan-tag {
+  background: var(--deal-bg);
+  border-color: rgba(22, 118, 58, .16);
+  border-radius: 999px;
+}
+
+.ed-ribbon,
+.ed-plan-tag,
+.av-tag,
+.av-card-plat,
+.vfb-person-sub,
+.vfb-audio-hint,
+.cat-count {
+  font-size: 12px;
+}
+
+.vfb-person-sub {
+  color: #00d43d;
+}
+
+.vfb-audio-hint svg {
+  stroke: #00d43d;
+}
+
+.buybox-pay,
+.buybox-terms {
+  color: var(--txt2);
+}
+
+.hero-proof-link {
+  min-height: 44px;
+  color: var(--txt2);
+  text-decoration-color: rgba(23, 25, 29, .28);
+}
+
+.hero-proof-link:hover {
+  color: var(--txt);
+}
+
+.hero-proof-link:focus-visible {
+  outline: 3px solid #176a35;
+  outline-offset: 3px;
+}
+
+/* Ação de compra: a mesma cor da marca, formato de pílula e alvo de 44px+. */
+.offer-btn,
+#sticky-cta {
+  min-height: 48px;
+  border-radius: 999px;
+  border: 0;
+  background: #00d43d;
+  color: #07120a;
+  box-shadow: 0 8px 20px rgba(0, 150, 45, .20);
+  font-weight: 700;
+  transition: background-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+
+.offer-btn:hover,
+#sticky-cta:hover {
+  background: #00c438;
+  box-shadow: 0 10px 24px rgba(0, 150, 45, .25);
+  filter: none;
+  transform: translateY(-1px);
+}
+
+.offer-btn:active,
+#sticky-cta:active {
+  transform: scale(.97);
+}
+
+.offer-btn:focus-visible,
+#sticky-cta:focus-visible,
+.btn-ghost:focus-visible,
+.av-chip:focus-visible,
+.faq-q:focus-visible,
+.cat-more:focus-visible {
+  outline: 3px solid #176a35;
+  outline-offset: 3px;
+}
+
+.offer-card:not(.featured) .offer-btn {
+  min-height: 48px;
+  border-radius: 999px;
+  border-color: var(--line2);
+  background: #f2f3f5;
+  color: var(--txt);
+  box-shadow: none;
+}
+
+.offer-card:not(.featured) .offer-btn:hover {
+  border-color: var(--line2);
+  background: #e9ebee;
+  color: var(--txt);
+  box-shadow: none;
+}
+
+.btn-ghost,
+.cat-more {
+  min-height: 46px;
+  border-radius: 999px;
+  border: 1px solid var(--line2);
+  background: #fff;
+  color: var(--txt);
+  box-shadow: 0 4px 14px rgba(25, 34, 45, .045);
+  transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.btn-ghost:hover,
+.cat-more:hover {
+  border-color: rgba(22, 118, 58, .3);
+  background: #f7faf8;
+  color: var(--txt);
+  box-shadow: 0 6px 18px rgba(25, 34, 45, .075);
+  transform: translateY(-1px);
+}
+
+.btn-ghost:active,
+.cat-more:active,
+.av-chip:active,
+.av-arrow:active,
+.fbk-seta:active,
+.faq-q:active,
+.cat-close:active,
+.qbx-arrow:active,
+.qbx-x:active,
+.av-unlock:active,
+.gm-x:active {
+  transform: scale(.97);
+}
+
+.av-chip,
+.av-arrow,
+.fbk-seta,
+.faq-q,
+.cat-close,
+.qbx-arrow,
+.qbx-x,
+.av-unlock,
+.gm-x {
+  transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.av-chip,
+.av-arrow,
+.fbk-seta,
+.cat-close,
+.faq-q {
+  min-height: 44px;
+}
+
+.av-arrow {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--txt);
+  box-shadow: 0 8px 24px rgba(25, 34, 45, .12);
+}
+
+.av-chip {
+  border: 1px solid var(--line2);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--txt2);
+  padding: 9px 15px;
+}
+
+.av-chip:hover {
+  border-color: rgba(22, 118, 58, .32);
+  color: var(--txt);
+}
+
+.av-chip.active {
+  border-color: #00d43d;
+  background: #00d43d;
+  color: #07120a;
+  box-shadow: none;
+}
+
+.av-card:hover,
+.offer-card:hover,
+.qbx-card:hover {
+  border-color: rgba(22, 28, 36, .14);
+}
+
+.av-card:focus-visible {
+  outline-color: #176a35;
+}
+
+.step {
+  padding: 24px;
+}
+
+.step-n {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border-color: rgba(22, 118, 58, .18);
+  background: var(--deal-bg);
+  color: var(--buy2);
+}
+
+.step h3,
+.vs-hd,
+.gr-card h3 {
+  color: var(--txt);
+}
+
+.offer-card {
+  overflow: hidden;
+  border-radius: 28px;
+  box-shadow: 0 14px 40px rgba(25, 34, 45, .075);
+}
+
+.offer-card.featured {
+  border-color: rgba(0, 150, 45, .45);
+  background: linear-gradient(180deg, #eff9f1 0%, #fff 42%);
+  box-shadow: 0 18px 48px rgba(0, 90, 35, .13);
+}
+
+.offer-card,
+.step,
+.cresce-card,
+.vs-col,
+.gr-card {
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+@media (hover: hover) {
+  .offer-card:hover,
+  .step:hover,
+  .cresce-card:hover,
+  .vs-col:hover,
+  .gr-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 48px rgba(25, 34, 45, .12);
+  }
+}
+
+.featured .ed-ribbon {
+  border: 0;
+  background: #e3f5e9;
+  color: #176a35;
+}
+
+.ed-top {
+  padding: 20px 22px;
+}
+
+.ed-body {
+  padding: 20px 22px;
+}
+
+.ed-buy {
+  padding: 20px 22px;
+  border-top-color: var(--line);
+  background: #f8f9fb;
+}
+
+.featured .ed-top,
+.featured .ed-body,
+.featured .ed-buy {
+  padding-right: 22px;
+  padding-left: 22px;
+}
+
+.offer-features li::before {
+  background-color: #e8f6ec;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%23176A35' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+}
+
+.offer-features li.no::before {
+  background-color: #eceef0;
+}
+
+.conta-cart-hd,
+.conta-total,
+.conta-vs {
+  color: var(--txt);
+  background: #fff;
+}
+
+.conta-total b {
+  color: var(--txt);
+}
+
+.conta-vs {
+  border-color: rgba(0, 150, 45, .18);
+  box-shadow: 0 16px 42px rgba(0, 90, 35, .10);
+}
+
+.conta-vs-lbl,
+.conta-vs-price span {
+  color: var(--txt2);
+}
+
+.conta-ano.next {
+  color: var(--warn);
+}
+
+.cresce-cta {
+  border: 1px solid rgba(0, 150, 45, .16);
+  border-radius: 28px;
+  background: #edf7f0;
+  box-shadow: 0 14px 40px rgba(25, 34, 45, .06);
+}
+
+.cresce-cta p,
+.cresce-cta p strong {
+  color: var(--txt);
+}
+
+.vs-col.good {
+  border-color: rgba(0, 150, 45, .2);
+  background: linear-gradient(180deg, #eef8f1, #fff 58%);
+}
+
+.vs-col.bad .vs-hd {
+  color: var(--txt2);
+}
+
+.vs-col.good .vs-list li {
+  color: var(--txt2);
+}
+
+.faq-list {
+  gap: 10px;
+}
+
+.faq-item {
+  overflow: hidden;
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(25, 34, 45, .045);
+}
+
+.faq-q {
+  padding: 14px 18px;
+  color: var(--txt);
+}
+
+.faq-q:hover {
+  background: #f8f9fb;
+}
+
+.faq-chev {
+  color: var(--dim);
+}
+
+.faq-a {
+  color: var(--txt2);
+}
+
+.gr-card {
+  padding: 28px;
+}
+
+.gr-card p {
+  color: var(--txt2);
+}
+
+.gr-badge {
+  border: 0;
+  border-radius: 50%;
+  background: var(--deal-bg);
+}
+
+.qbx-card {
+  overflow: hidden;
+}
+
+.qbx-txt {
+  padding: 16px;
+}
+
+.qbx-q {
+  color: var(--txt);
+}
+
+.qbx-a {
+  color: var(--txt2);
+}
+
+.qbx-arrow,
+.fbk-seta {
+  border-color: var(--line2);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .94);
+  color: var(--txt);
+  box-shadow: 0 8px 24px rgba(25, 34, 45, .12);
+}
+
+.qbx-arrow:hover {
+  border-color: #00d43d;
+  background: #00d43d;
+  color: #07120a;
+  box-shadow: 0 8px 20px rgba(0, 150, 45, .18);
+}
+
+.qbx-ov-cta {
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: #fff;
+}
+
+.qbx-ov-cta p,
+.qbx-ov-cta p strong {
+  color: var(--txt);
+}
+
+.cat-panel {
+  overflow: hidden;
+}
+
+.cat-title,
+.cat-empty strong {
+  color: var(--txt);
+}
+
+.cat-title span {
+  color: var(--buy2);
+}
+
+.cat-close,
+.cat-more {
+  border-radius: 999px;
+}
+
+.cat-close {
+  width: 44px;
+  height: 44px;
+  background: #f3f4f6;
+  color: var(--txt2);
+}
+
+.gm-x,
+.qbx-x {
+  width: 44px;
+  height: 44px;
+}
+
+.qbx-zoom {
+  width: 44px;
+  height: 44px;
+}
+
+.gm-back {
+  min-height: 44px;
+  padding: 8px;
+}
+
+.gm-name,
+.gm-offer-hd,
+.gm-new,
+.gm-txt strong,
+.gm-offer-list li strong {
+  color: var(--txt);
+}
+
+.gm-status {
+  border: 1px solid rgba(22, 118, 58, .16);
+  background: var(--deal-bg);
+  color: var(--deal-tx);
+}
+
+.gm-status.soon {
+  border-color: rgba(128, 84, 20, .16);
+  background: #f7eedc;
+  color: var(--warn);
+}
+
+.gm-offer {
+  border-color: rgba(0, 150, 45, .18);
+  background: linear-gradient(180deg, #eef8f1, #fff 62%);
+}
+
+.cat-close:hover {
+  background: #e9ebee;
+  color: var(--txt);
+}
+
+.cat-search input {
+  border-radius: 14px;
+  background: #fff;
+  color: var(--txt);
+}
+
+.cat-grid-wrap {
+  background: var(--bg);
+}
+
+.cat-empty {
+  color: var(--txt2);
+}
+
+.cat-empty strong,
+.av-empty strong {
+  color: var(--txt);
+}
+
+.av-unlock {
+  min-height: 44px;
+  border-radius: 999px;
+  background: #00d43d;
+  color: #07120a;
+  box-shadow: 0 8px 20px rgba(0, 150, 45, .20);
+}
+
+.av-unlock:hover {
+  background: #00c438;
+  box-shadow: 0 10px 24px rgba(0, 150, 45, .25);
+}
+
+.av-tag.ok {
+  background: #e8f6ec;
+}
+
+.av-tag.soon {
+  background: #f7eedc;
+}
+
+.foot {
+  border-top-color: var(--line);
+  background: var(--bg2);
+}
+
+.foot a {
+  color: var(--buy2);
+}
+
+#sticky-cta {
+  padding: 14px 22px;
+}
+
+@media (max-width: 900px) {
+  .pg {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .wrap {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .ph {
+    padding-top: 30px;
+  }
+
+  .ph h1 {
+    max-width: 640px;
+    font-size: clamp(34px, 9vw, 46px);
+    line-height: 1.06;
+  }
+
+  .ph-sub {
+    max-width: 560px;
+    font-size: 16px;
+  }
+
+  .pg {
+    gap: 18px;
+    margin-top: 24px;
+  }
+
+  .art {
+    margin: 0 -20px;
+    border-radius: 0;
+  }
+
+  .art-cap {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    padding: 11px 12px;
+    border-radius: 14px;
+  }
+
+  .sec-head {
+    margin-bottom: 28px;
+  }
+
+  .sec-head p {
+    font-size: 16px;
+  }
+
+  .side-card,
+  .buybox,
+  .step,
+  .offer-card,
+  .cresce-card,
+  .conta-cart,
+  .conta-vs,
+  .gr-card,
+  .vs-col {
+    border-radius: 24px;
+  }
+
+  .side-card,
+  .buybox {
+    padding: 18px;
+  }
+
+  .faq-item {
+    border-radius: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
