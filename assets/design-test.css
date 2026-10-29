@@ -974,3 +974,10 @@ h3 {
     row-gap: 12px;
   }
 }
+
+/* Em telas empilhadas, mantenha o FAQ visualmente separado do card de garantia. */
+@media (max-width: 999px) {
+  .faq-wrap .sec-head {
+    margin-top: clamp(24px, 4vw, 36px);
+  }
+}
