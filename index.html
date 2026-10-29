@@ -563,49 +563,6 @@ body.gm-open{overflow:hidden}
    proposital em vez de parecer preco fora de ordem */
 .eds-alt{display:none;text-align:center;font-size:12.5px;color:var(--dim);padding:4px 0 0}
 
-/* ---------- selo de pagamento seguro ----------
-   Entrou em 20/08/2026, embaixo dos 3 cards. Fica SO aqui de proposito: e o unico
-   ponto da pagina onde a pessoa compra, entao e onde a duvida "eu ponho meu dinheiro
-   nessa loja?" realmente aparece. Espalhar selo pela pagina inteira nao acrescenta
-   confianca, so ruido.
-   O gateway do PIX no GGCheckout e o Mercado Pago (confirmado pelo user em
-   20/08/2026). SE TROCAR DE GATEWAY, TROQUE ESTE SELO JUNTO: exibir marca que nao
-   processa e problema com o cliente e com a dona da marca.
-   SOBRE O ARQUIVO DO LOGO (20/08/2026): usa assets/mercado-pago-branco.svg, que e a
-   versao NEGATIVA, gerada a partir do assets/mercado-pago.svg original trocando so a
-   classe .cls-1 de #0a0080 (azul-marinho) para #ffffff. O .cls-1 pinta o texto E o
-   contorno do icone; o .cls-3 (#00bcff, o icone azul) e o .cls-2 (#fff, o aperto de
-   mao) ficam como estao, e por isso o icone continua identico ao oficial.
-   A primeira versao usava o arquivo original dentro de uma plaquinha branca, porque
-   navy em fundo escuro some. Funcionava, mas era um retangulo branco colado num site
-   escuro, com cara de remendo. A negativa dispensa a plaquinha e o logo passa a fazer
-   parte do card. Os DOIS arquivos ficam no repo: se algum dia o site tiver fundo
-   claro, o original volta a ser o certo. */
-/* Tudo centralizado, em duas fileiras. A primeira versao punha o logo a esquerda e o
-   texto a direita: no celular isso virava coluna, o logo ficava sozinho num canto com
-   um vazio enorme do lado, o titulo quebrava deixando a palavra "Pago" orfa na segunda
-   linha, e o conjunto ficava desalinhado bem em cima do card da garantia, que e
-   centralizado. Centralizado tambem NAO precisa de media query: as duas fileiras se
-   viram sozinhas com flex-wrap.
-   O logo entra DENTRO da frase ("Pagamento seguro por [logo]"), o que resolve de
-   quebra a repeticao: antes o logo escrevia "mercado pago" e o titulo repetia
-   "Mercado Pago" na linha de baixo. */
-.selo{
-  margin-top:24px;
-  background:var(--panel);border:1px solid var(--line);border-radius:var(--r2);
-  padding:18px 22px;
-  display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;
-}
-.selo-hd{
-  display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;
-  font-size:14.5px;font-weight:600;color:var(--txt);
-}
-.selo-hd svg{width:15px;height:15px;flex-shrink:0;fill:none;stroke:var(--buy2);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.selo-hd img{display:block;height:34px;width:auto}
-.selo-list{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:8px 20px}
-.selo-list li{font-size:12.5px;color:var(--txt2);line-height:1.5;display:flex;gap:7px;align-items:center}
-.selo-list li::before{content:'\2713';color:var(--buy2);font-weight:700;flex-shrink:0}
-
 @media(max-width:860px){
   .eds{grid-template-columns:1fr;max-width:430px;margin:0 auto;gap:18px;align-items:stretch}
   .offer-card[data-plan-id="basico"]{order:1}
@@ -1345,7 +1302,7 @@ var io = (function(){
             <div class="spec-row"><dt>Lançamentos</dt><dd class="ok">Avançado e Vitalício</dd></div>
             <div class="spec-row"><dt>Download</dt><dd>Pela própria Steam</dd></div>
             <div class="spec-row"><dt>Multiplayer</dt><dd class="ok">Nos jogos compatíveis</dd></div>
-            <div class="spec-row"><dt>Garantia</dt><dd>7 dias</dd></div>
+            <div class="spec-row"><dt>Garantia</dt><dd>30 dias</dd></div>
           </dl>
         </div>
 
@@ -1499,7 +1456,7 @@ var io = (function(){
         <!-- Este botao ia DIRETO pro checkout ate 20/08/2026. Virou degrau do funil:
              a caixa continua fazendo a comparacao de preco, que e o trabalho dela, mas
              quem quer comprar segue descendo ate #pricing. Sairam junto as linhas
-             "Pagamento no PIX" e "Aprovacao na hora e 7 dias de garantia": elas so
+             "Pagamento no PIX" e "Aprovacao na hora e 30 dias de garantia": elas so
              fazem sentido embaixo de um botao que cobra, e embaixo de um botao que
              rola viravam promessa solta. As duas continuam na secao de planos. -->
         <a href="#cresce" class="btn-ghost">Ver todos os lançamentos</a>
@@ -1680,7 +1637,7 @@ var io = (function(){
           <li>Atualização oficial pela Steam</li>
           <li>Multiplayer funcionando</li>
           <li>Roda na sua conta, sem compartilhar</li>
-          <li>Suporte e 7 dias de garantia</li>
+          <li>Suporte e 30 dias de garantia</li>
         </ul>
       </div>
     </div>
@@ -1722,7 +1679,7 @@ var io = (function(){
           </div>
           <a role="button" tabindex="0" href="#pricing" onclick="almazUpsell('basico');return false" class="offer-btn">Quero garantir</a>
           <div class="offer-methods">Pagamento no PIX</div>
-          <div class="offer-trust"><strong>Aprovação na hora</strong> e 7 dias de garantia</div>
+          <div class="offer-trust"><strong>Aprovação na hora</strong> e 30 dias de garantia</div>
         </div>
       </div>
 
@@ -1750,7 +1707,7 @@ var io = (function(){
           </div>
           <a role="button" tabindex="0" href="#pricing" onclick="almazUpsell('avancado');return false" class="offer-btn">Quero garantir</a>
           <div class="offer-methods">Pagamento no PIX</div>
-          <div class="offer-trust"><strong>Aprovação na hora</strong> e 7 dias de garantia</div>
+          <div class="offer-trust"><strong>Aprovação na hora</strong> e 30 dias de garantia</div>
         </div>
       </div>
 
@@ -1786,32 +1743,12 @@ var io = (function(){
              onclick="checkout('https://ggcheckout.app/checkout/v5/Tjjri534N4VrT34qfUTm',49.97);return false"
              class="offer-btn">Quero garantir</a>
           <div class="offer-methods">Pagamento no PIX</div>
-          <div class="offer-trust"><strong>Aprovação na hora</strong> e 7 dias de garantia</div>
+          <div class="offer-trust"><strong>Aprovação na hora</strong> e 30 dias de garantia</div>
         </div>
       </div>
 
       <div class="eds-alt">Ou veja os outros planos</div>
 
-    </div>
-
-    <div class="selo reveal">
-      <!-- O logo faz parte da frase, nao e um bloco separado: le-se "Pagamento seguro
-           por [mercado pago]". Por isso o alt do <img> e so a marca. -->
-      <div class="selo-hd">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-        <span>Pagamento seguro por</span>
-        <img src="assets/mercado-pago-branco.svg" alt="Mercado Pago" width="84" height="34" loading="lazy" decoding="async">
-      </div>
-      <!-- Linhas CURTAS de proposito. A primeira versao explicava cada item ("os seus
-           dados nao passam pela gente", "devolvemos o dinheiro se voce nao curtir") e
-           cada uma quebrava em 2 linhas no celular: o selo ia a 276px de altura. Selo
-           e pra ser escaneado de relance, nao lido. Quem quiser o detalhe da garantia
-           tem o card dela e o FAQ logo abaixo. -->
-      <ul class="selo-list">
-        <li>Ambiente criptografado</li>
-        <li>PIX com liberação na hora</li>
-        <li>7 dias de garantia</li>
-      </ul>
     </div>
 
   </div>
@@ -1832,9 +1769,9 @@ var io = (function(){
         <div class="gr-badge">
           <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
         </div>
-        <h3>7 dias pra testar sem risco</h3>
+        <h3>30 dias pra testar sem risco</h3>
         <p>
-          Teste por 7 dias. Se não gostar, peça o reembolso dentro desse prazo.
+          Teste por 30 dias. Se não gostar, peça o reembolso dentro desse prazo.
         </p>
       </div>
     </div>
@@ -1951,7 +1888,7 @@ var io = (function(){
         </ul>
         <a href="#pricing" class="offer-btn" id="gm-go">Quero garantir</a>
         <div class="gm-offer-pay">Pagamento no PIX</div>
-        <div class="gm-offer-trust"><strong>Aprovação na hora</strong> e 7 dias de garantia</div>
+        <div class="gm-offer-trust"><strong>Aprovação na hora</strong> e 30 dias de garantia</div>
       </div>
 
       <button type="button" class="gm-back" id="gm-back">Continuar vendo os jogos</button>
@@ -2931,7 +2868,7 @@ var io = (function(){
   tr.addEventListener('click',function(e){
     var c=e.target.closest('[data-fbk]'); if(!c||!window.almazOpenPrint) return;
     window.almazOpenPrint(c.getAttribute('data-fbk'),
-      'Esse pode ser você. <strong>Pagamento único</strong> e 7 dias de garantia.');
+      'Esse pode ser você. <strong>Pagamento único</strong> e 30 dias de garantia.');
   });
 
   var cont=document.getElementById('fbk-cont');
@@ -3646,7 +3583,7 @@ document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
 
 
 
-(function(){var F=[{q:'Vou tomar ban na minha conta Steam?',a:'Você usa sua própria conta Steam. Não compartilhamos contas. E tem 7 dias de garantia.'},{q:'Vou ter que pagar de novo algum dia?',a:'Todos os planos são pagamento único, sem renovação nem mensalidade. O Avançado e o Vitalício incluem todos os lançamentos.'},{q:'E os jogos que saírem em 2027, 2028?',a:'Todos os lançamentos entram na sua biblioteca sem custo adicional. Eles são adicionados toda semana aos planos Avançado e Vitalício.'},{q:'Como recebo depois de pagar?',a:'Depois que o PIX é aprovado, o acesso chega por e-mail com o passo a passo.'},{q:'É seguro?',a:'Os downloads são feitos pelos servidores oficiais da Steam. Você pode testar por 7 dias.'},{q:'Como funciona?',a:'Instale o launcher, entre com o e-mail da compra e baixe os jogos pela Steam.'},{q:'Os jogos são originais?',a:'Sim. Os jogos e as atualizações vêm da própria Steam.'},{q:'Funciona online?',a:'Sim, nos jogos que têm multiplayer.'},{q:'Quais as formas de pagamento?',a:'O pagamento é por PIX. O acesso é liberado após a aprovação.'},{q:'Como funciona o suporte?',a:'Nossa equipe ajuda pelo WhatsApp.'}];var fl=document.getElementById('fl');fl.innerHTML=F.map(function(f){return'<div class="faq-item reveal"><button class="faq-q" onclick="tFaq(this)">'+f.q+'<span class="faq-chev">▼</span></button><div class="faq-a">'+f.a+'</div></div>'}).join('');fl.querySelectorAll('.reveal').forEach(function(el){io.observe(el)})})();
+(function(){var F=[{q:'Vou tomar ban na minha conta Steam?',a:'Você usa sua própria conta Steam. Não compartilhamos contas. E tem 30 dias de garantia.'},{q:'Vou ter que pagar de novo algum dia?',a:'Todos os planos são pagamento único, sem renovação nem mensalidade. O Avançado e o Vitalício incluem todos os lançamentos.'},{q:'E os jogos que saírem em 2027, 2028?',a:'Todos os lançamentos entram na sua biblioteca sem custo adicional. Eles são adicionados toda semana aos planos Avançado e Vitalício.'},{q:'Como recebo depois de pagar?',a:'Depois que o PIX é aprovado, o acesso chega por e-mail com o passo a passo.'},{q:'É seguro?',a:'Os downloads são feitos pelos servidores oficiais da Steam. Você pode testar por 30 dias.'},{q:'Como funciona?',a:'Instale o launcher, entre com o e-mail da compra e baixe os jogos pela Steam.'},{q:'Os jogos são originais?',a:'Sim. Os jogos e as atualizações vêm da própria Steam.'},{q:'Funciona online?',a:'Sim, nos jogos que têm multiplayer.'},{q:'Quais as formas de pagamento?',a:'O pagamento é por PIX. O acesso é liberado após a aprovação.'},{q:'Como funciona o suporte?',a:'Nossa equipe ajuda pelo WhatsApp.'}];var fl=document.getElementById('fl');fl.innerHTML=F.map(function(f){return'<div class="faq-item reveal"><button class="faq-q" onclick="tFaq(this)">'+f.q+'<span class="faq-chev">▼</span></button><div class="faq-a">'+f.a+'</div></div>'}).join('');fl.querySelectorAll('.reveal').forEach(function(el){io.observe(el)})})();
 
 function tFaq(b){var a=b.nextElementSibling,o=b.classList.contains('open');document.querySelectorAll('.faq-q.open').forEach(function(q){q.classList.remove('open');q.nextElementSibling.classList.remove('open')});if(!o){b.classList.add('open');a.classList.add('open')}}
 
@@ -4168,7 +4105,7 @@ else{el.scrollIntoView({behavior:'smooth'});}
 
         "Boa pergunta, e vou ser sincero com você: dá pra usar tranquilo. Não é aquele joguinho pirata cheio de vírus. Você baixa os arquivos originais direto pelos servidores da Steam, igual a quem comprou na loja.",
 
-        "Funciona assim: o nosso launcher libera os jogos direto na SUA conta Steam, nada de conta compartilhada nem login de terceiros. Tem bastante gente usando todo dia, e se em algum momento não rolar como você esperava, ainda tem os 7 dias de garantia. Você não fica na mão."
+        "Funciona assim: o nosso launcher libera os jogos direto na SUA conta Steam, nada de conta compartilhada nem login de terceiros. Tem bastante gente usando todo dia, e se em algum momento não rolar como você esperava, ainda tem os 30 dias de garantia. Você não fica na mão."
 
       ]
 
@@ -4194,7 +4131,7 @@ else{el.scrollIntoView({behavior:'smooth'});}
 
       a: [
 
-        "É seguro e você tem 7 dias de garantia. Se comprar e não curtir, é só pedir o reembolso dentro desse prazo, sem a gente ficar inventando desculpa pra te segurar.",
+        "É seguro e você tem 30 dias de garantia. Se comprar e não curtir, é só pedir o reembolso dentro desse prazo, sem a gente ficar inventando desculpa pra te segurar.",
 
         "O pagamento é no PIX, e a liberação é na hora que confirma. Se travar em qualquer parte, a gente te ajuda no WhatsApp."
 
@@ -4747,7 +4684,7 @@ else{el.scrollIntoView({behavior:'smooth'});}
         <div class="rmb-selo-ok"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
         <h2 style="margin-top:14px">Que bom que resolveu.</h2>
       </div>
-      <p class="rmb-sub rmb-centro">Se aparecer qualquer outra coisa, é só voltar aqui. O reembolso continua disponível enquanto sua compra estiver dentro dos 7 dias.</p>
+      <p class="rmb-sub rmb-centro">Se aparecer qualquer outra coisa, é só voltar aqui. Você pode solicitar o reembolso pela garantia em até 30 dias após a compra.</p>
       <button class="rmb-btn" id="rmb-fechar2">Voltar para a loja</button>
       <button class="rmb-btn rmb-btn-sec" id="rmb-mudei">Mudei de ideia, quero o reembolso</button>
     </section>
@@ -4784,7 +4721,7 @@ else{el.scrollIntoView({behavior:'smooth'});}
     {id:'duplicado',rotulo:'Comprei sem querer ou paguei duas vezes',titulo:'Cobrança repetida a gente devolve.',
      ajuda:'<div class="rmb-caixa-tit">Como funciona</div><p>Se saíram duas cobranças pela mesma compra, devolvemos a segunda e você fica com o acesso normalmente. Tenha em mãos o comprovante das duas cobranças para anexar no WhatsApp.</p>'},
     {id:'arrependimento',rotulo:'Me arrependi da compra',titulo:'Tudo bem, é seu direito.',
-     ajuda:'<div class="rmb-caixa-tit">Antes de você seguir</div><p>Compra pela internet tem 7 dias de arrependimento pelo Código de Defesa do Consumidor, contados do pagamento. Dentro do prazo a devolução é direta.</p><p style="margin-top:9px">Se o motivo foi o preço, dá pra trocar por um plano menor em vez de devolver tudo. É só escrever isso no próximo passo.</p>'},
+     ajuda:'<div class="rmb-caixa-tit">Antes de você seguir</div><p>Compra pela internet tem 7 dias de arrependimento pelo Código de Defesa do Consumidor, contados da assinatura do contrato ou do recebimento do serviço. Dentro do prazo a devolução é direta.</p><p style="margin-top:9px">Se o motivo foi o preço, dá pra trocar por um plano menor em vez de devolver tudo. É só escrever isso no próximo passo.</p>'},
     {id:'outro',rotulo:'Outro motivo',titulo:'Sem problema.',
      ajuda:'<div class="rmb-caixa-tit">Siga em frente</div><p>Você vai poder escrever o que aconteceu com suas palavras no próximo passo, e isso vai direto para a nossa equipe.</p>'}
   ];

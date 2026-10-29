@@ -954,3 +954,23 @@ h3 {
     transform: none;
   }
 }
+
+/* FAQ: mais respiro entre a garantia e as perguntas, com o título alinhado aos cards. */
+@media (min-width: 1000px) {
+  .faq-wrap {
+    column-gap: clamp(56px, 6vw, 80px);
+    row-gap: 24px;
+  }
+
+  .faq-wrap .sec-head {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    text-align: left;
+  }
+
+  .faq-wrap .faq-list {
+    column-gap: 16px;
+    row-gap: 12px;
+  }
+}
