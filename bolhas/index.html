@@ -34,11 +34,11 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)
 }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '4720082348314631');
+fbq('init', '1720822345680321');
 fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=4720082348314631&amp;ev=PageView&amp;noscript=1"
+src="https://www.facebook.com/tr?id=1720822345680321&amp;ev=PageView&amp;noscript=1"
 /></noscript>
 
 
@@ -348,7 +348,7 @@ new IntersectionObserver((es) => document.getElementById('fixo').classList.toggl
 
 // Loja real, vinda do servidor (preço editável no admin).
 (async function () {
-  const API = location.hostname.endsWith('onrender.com') ? location.origin : 'https://keys-server-9zq2.onrender.com';
+  const API = location.hostname.endsWith('onrender.com') ? location.origin : 'https://keys-lhkl.onrender.com';
   try {
     const r = await fetch(API + '/api/bolhas/config').then((x) => x.json());
     if (!r.success || !r.loja || !r.loja.length) return;

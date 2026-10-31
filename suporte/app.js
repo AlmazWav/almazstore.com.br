@@ -236,7 +236,7 @@
 
   const API_BASE = (location.hostname.includes('onrender.com') || location.hostname === 'localhost' || location.hostname === '127.0.0.1')
     ? ''
-    : 'https://keys-server-9zq2.onrender.com';
+    : 'https://keys-lhkl.onrender.com';
 
   async function apiRequest(url, options = {}) {
     const targetUrl = url.startsWith('http') ? url : `${API_BASE}${url}`;

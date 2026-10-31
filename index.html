@@ -70,7 +70,7 @@ window.sendMetaServerEvent = function(eventName, eventId, customData) {
   };
   if (eventName === 'ViewContent' && customData) payload.custom_data = customData;
 
-  window.fetch('https://keys-server-9zq2.onrender.com/api/meta/events', {
+  window.fetch('https://keys-lhkl.onrender.com/api/meta/events', {
     method: 'POST',
     mode: 'cors',
     credentials: 'omit',
@@ -636,6 +636,54 @@ body.gm-open{overflow:hidden}
   .flow{margin-top:22px}
   .flow .btn-ghost{width:100%;min-width:0}
 }
+
+/* ---------- feedbacks em video (spotlight: so o do centro toca) ---------- */
+.vfb-rating{display:flex;align-items:center;gap:9px;margin-top:10px;font-size:13.5px;color:var(--dim)}
+.vfb-rating svg{width:14px;height:14px;fill:var(--warn)}
+.vfb-rating b{color:var(--txt);font-weight:700}
+.vfb-grid{
+  display:flex;gap:14px;justify-content:center;overflow-x:auto;
+  scroll-snap-type:x mandatory;scrollbar-width:none;padding:4px 0 10px;
+}
+.vfb-grid::-webkit-scrollbar{display:none}
+.vfb-card{
+  flex:0 0 clamp(232px,27vw,286px);position:relative;scroll-snap-align:center;cursor:pointer;
+  border:1px solid var(--line);border-radius:var(--r2);overflow:hidden;background:#000;
+  transition:filter .35s ease,opacity .35s ease,transform .35s ease,border-color .2s;
+}
+.vfb-card video{width:100%;aspect-ratio:9/16;object-fit:cover;display:block;background:#05080b}
+/* Sem blur: o cliente ve todos os videos nitidos. O card fora de foco so fica
+   um pouco mais apagado, o suficiente pra saber qual esta tocando. O blur antigo
+   fazia a pessoa gastar um toque so pra "desborrar" o card. */
+.vfb-grid.vfb-ready .vfb-card:not(.vfb-focus){opacity:.72;transform:scale(.97)}
+.vfb-card.vfb-focus{border-color:var(--line2)}
+.vfb-card.vfb-on{border-color:var(--buy)}
+.vfb-audio-hint{
+  position:absolute;left:8px;right:8px;bottom:56px;display:flex;align-items:center;justify-content:center;gap:6px;
+  background:rgba(4,8,12,.86);color:#fff;font-size:11.5px;font-weight:600;padding:7px 10px;border-radius:6px;
+  transition:opacity .25s;pointer-events:none;
+}
+.vfb-audio-hint svg{width:13px;height:13px;stroke:var(--buy2);fill:none;stroke-width:2;flex-shrink:0}
+.vfb-audio-hint.hidden{opacity:0}
+.vfb-pause{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(4,8,12,.45);opacity:0;transition:opacity .2s;pointer-events:none;
+}
+.vfb-pause.show{opacity:1}
+.vfb-pause svg{width:46px;height:46px;fill:#fff;filter:drop-shadow(0 2px 8px rgba(0,0,0,.6))}
+.vfb-person{
+  position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:8px;padding:22px 10px 9px;
+  background:linear-gradient(to top,rgba(3,6,9,.94),transparent);pointer-events:none;
+}
+.vfb-person-av{
+  width:24px;height:24px;border-radius:50%;background:var(--panel3);color:var(--blue);
+  font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.vfb-person-meta{display:flex;flex-direction:column;line-height:1.25;min-width:0}
+.vfb-person-name{font-size:12.5px;font-weight:600;color:#fff;display:flex;align-items:center;gap:4px}
+.vfb-person-name svg{width:12px;height:12px;flex-shrink:0}
+.vfb-person-sub{font-size:10.5px;color:var(--deal-tx)}
+@media(max-width:600px){.vfb-grid{justify-content:flex-start}}
 
 /* ---------- feedbacks: prints do grupo (faixa rolando) ---------- */
 .fbs{
@@ -1584,21 +1632,88 @@ var io = (function(){
   </div>
 </section>
 
-<!-- ===================== FEEDBACKS DE CLIENTES ===================== -->
+<!-- ===================== FEEDBACKS (videos + prints do grupo) ===================== -->
 <section class="sec" id="feedbacks">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>O que nossos clientes estão falando</h2>
-      <p>Veja mensagens de clientes que já estão jogando. Toque em uma para ampliar.</p>
+      <h2>O que os clientes falam</h2>
+      <p>Vídeos de clientes de verdade, sem ator e sem roteiro. Toque para ouvir.</p>
+      <div class="vfb-rating">
+        <span>
+          <svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9.2 16.5,13.7 18.5,21 12,16.8 5.5,21 7.5,13.7 2,9.2 9,9"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9.2 16.5,13.7 18.5,21 12,16.8 5.5,21 7.5,13.7 2,9.2 9,9"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9.2 16.5,13.7 18.5,21 12,16.8 5.5,21 7.5,13.7 2,9.2 9,9"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9.2 16.5,13.7 18.5,21 12,16.8 5.5,21 7.5,13.7 2,9.2 9,9"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12,2 15,9 22,9.2 16.5,13.7 18.5,21 12,16.8 5.5,21 7.5,13.7 2,9.2 9,9"/></svg>
+        </span>
+        <span><b>4,9/5</b> em centenas de ativações</span>
+      </div>
     </div>
-    <div class="qbx-rail reveal">
-      <div class="qbx-track" id="fbk-track"></div>
+
+    <div id="videos" class="reveal">
+      <div class="vfb-grid">
+        <div class="vfb-card" data-vfb>
+          <video src="https://i.imgur.com/Ps6ntKf.mp4" playsinline muted loop preload="metadata"></video>
+          <div class="vfb-pause"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+          <div class="vfb-audio-hint">
+            <svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M11 5L6 9H2v6h4l5 4V5zM15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"/></svg>
+            Toque para ativar o áudio
+          </div>
+          <div class="vfb-person">
+            <span class="vfb-person-av">R</span>
+            <span class="vfb-person-meta">
+              <span class="vfb-person-name">Rafael
+                <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#4a9d2a"/><path d="M8 12.5l2.5 2.5L16 9" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <span class="vfb-person-sub">Compra verificada</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="vfb-card" data-vfb>
+          <video src="https://i.imgur.com/SsF4E5P.mp4" playsinline muted loop preload="metadata"></video>
+          <div class="vfb-pause"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+          <div class="vfb-audio-hint">
+            <svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M11 5L6 9H2v6h4l5 4V5zM15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"/></svg>
+            Toque para ativar o áudio
+          </div>
+          <div class="vfb-person">
+            <span class="vfb-person-av">L</span>
+            <span class="vfb-person-meta">
+              <span class="vfb-person-name">Lucas
+                <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#4a9d2a"/><path d="M8 12.5l2.5 2.5L16 9" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <span class="vfb-person-sub">Compra verificada</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="vfb-card" data-vfb>
+          <video src="https://i.imgur.com/9v0KpJh.mp4" playsinline muted loop preload="metadata"></video>
+          <div class="vfb-pause"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+          <div class="vfb-audio-hint">
+            <svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M11 5L6 9H2v6h4l5 4V5zM15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14"/></svg>
+            Toque para ativar o áudio
+          </div>
+          <div class="vfb-person">
+            <span class="vfb-person-av">B</span>
+            <span class="vfb-person-meta">
+              <span class="vfb-person-name">Bruno
+                <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#4a9d2a"/><path d="M8 12.5l2.5 2.5L16 9" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <span class="vfb-person-sub">Compra verificada</span>
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="fbk-ctl reveal">
-      <button class="fbk-seta" id="fbk-prev" type="button" aria-label="Mensagem anterior">&#8249;</button>
-      <span class="fbk-cont" id="fbk-cont" aria-live="polite">1 de 9 mensagens</span>
-      <button class="fbk-seta" id="fbk-next" type="button" aria-label="Próxima mensagem">&#8250;</button>
+
+    <div class="sec-head reveal" style="margin:34px 0 16px;max-width:660px">
+      <h2 style="font-size:18px">Feedbacks no grupo de clientes</h2>
+      <p>Prints do nosso grupo. Quem compra entra no grupo, que é aberto, e vê a galera trocando ideia e tirando dúvida em tempo real. Toque num print pra ler ele maior.</p>
     </div>
+    <div class="fbs reveal" id="fbs" aria-label="Prints de feedback de clientes"></div>
+
     <div class="flow reveal"><a href="#pricing" class="btn-ghost">Ver os planos</a></div>
   </div>
 </section>
@@ -4699,7 +4814,7 @@ else{el.scrollIntoView({behavior:'smooth'});}
 
   /* Servidor que sabe quem comprou (o mesmo do webhook do GGCheckout). Local
      aponta pro servidor de teste; no ar, pro Render. */
-  var API='https://keys-server-9zq2.onrender.com';
+  var API='https://keys-lhkl.onrender.com';
   if(location.hostname==='localhost'||location.hostname==='127.0.0.1')API='http://localhost:3399';
 
   var MOTIVOS=[

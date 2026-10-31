@@ -3,7 +3,7 @@
   'use strict';
   // As páginas ficam no site estático (GitHub Pages); a API fica no servidor
   // dos membros no Render, igual à votação.
-  const API = location.hostname.endsWith('onrender.com') ? location.origin : 'https://keys-server-9zq2.onrender.com';
+  const API = location.hostname.endsWith('onrender.com') ? location.origin : 'https://keys-lhkl.onrender.com';
   const CHAVE = 'almazBolhasToken';
 
   const token = () => { try { return localStorage.getItem(CHAVE) || ''; } catch (e) { return ''; } };
