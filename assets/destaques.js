@@ -9,6 +9,13 @@
 
 window.ALMAZ_DESTAQUES=[
 
+    '4115450',  // Phantom Blade Zero       -> 1º em RPG e Lançamentos (saiu 28/10/2026)
+
+    '2638890',  // Onimusha: Way of the Sword -> 1º em Ação (saiu 04/09/2026, em alta)
+
+    '3010850',  // Gears of War: E-Day      -> 1º em FPS (saiu 06/10/2026)
+
+
     '4080220',  // EA SPORTS FC 27          -> 1º em Esportes e Lançamentos (saiu 19/09/2026)
 
     '4356430',  // NBA 2K27                 -> 2º em Esportes e Lançamentos (saiu 3/09/2026)
@@ -67,7 +74,6 @@ window.ALMAZ_DESTAQUES=[
 
     '2651280',  // Marvel's Spider-Man 2    -> 4º em Ação
 
-    '2638890',  // Onimusha: Way of the Sword -> 5º em Ação
 
     '3472040',  // NBA 2K26                 -> 2º em Esportes
 

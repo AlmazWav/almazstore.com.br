@@ -981,3 +981,99 @@ h3 {
     margin-top: clamp(24px, 4vw, 36px);
   }
 }
+
+/* ---------- Planos com destaque (04/11/2026) ----------
+   O preco dos cards secundarios saia BRANCO no fundo branco: a regra do tema escuro
+   (.offer-card:not(.featured) .ed-new{color:#fff}) e mais especifica que o .ed-new
+   daqui. Pedido do Almaz: destacar a oferta toda, e o Vitalicio (R$ 49,97) tem que
+   chamar tanta atencao quanto o Mais vendido, porque e o que ele quer vender.
+   Cada plano tem um papel visual: Basico limpo, Avancado verde (mais vendido),
+   Vitalicio branco com borda verde. So cor, tamanho e fundo: nenhum elemento novo. */
+#pricing {
+  background: linear-gradient(180deg, #e9f7ee 0%, #f4f5f7 100%);
+  border-top: 1px solid rgba(0, 175, 54, .14);
+}
+
+#pricing .offer-card .ed-new {
+  color: var(--txt);
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -.03em;
+}
+
+/* --- Basico: branco, preco forte e botao com contorno verde --- */
+#pricing .offer-card[data-plan-id="basico"] {
+  border: 1px solid rgba(22, 28, 36, .12);
+}
+
+#pricing .offer-card[data-plan-id="basico"] .offer-btn {
+  background: #fff;
+  border: 2px solid #00d43d;
+  color: #087b2c;
+  font-weight: 700;
+}
+
+#pricing .offer-card[data-plan-id="basico"] .offer-btn:hover {
+  background: #eefaf2;
+  border-color: #00d43d;
+  color: #087b2c;
+}
+
+/* --- Avancado (Mais vendido): verde --- */
+#pricing .offer-card.featured {
+  border: 2px solid #00d43d;
+  box-shadow: 0 22px 56px rgba(0, 150, 45, .22);
+}
+
+#pricing .offer-card.featured .ed-new {
+  color: #087b2c;
+  font-size: 40px;
+}
+
+#pricing .featured .ed-ribbon {
+  background: #00d43d;
+  border-color: #00d43d;
+  color: #07120a;
+  font-weight: 800;
+}
+
+#pricing .featured .ed-buy {
+  background: #eefaf2;
+}
+
+/* --- Vitalicio: branco como os outros, com borda verde e preco/botao fortes.
+   04/11/2026: a primeira versao era um card escuro; o Almaz achou pesado e pediu
+   igual aos outros, so com a borda dando o destaque. --- */
+#pricing .offer-card[data-plan-id="vitalicio"] {
+  border: 2px solid #00d43d;
+  box-shadow: 0 22px 56px rgba(0, 150, 45, .22);
+}
+
+#pricing .offer-card[data-plan-id="vitalicio"] .ed-buy {
+  background: #eefaf2;
+}
+
+#pricing .offer-card[data-plan-id="vitalicio"] .ed-plan-tag {
+  background: #00d43d;
+  border-color: #00d43d;
+  color: #07120a;
+  font-weight: 800;
+}
+
+#pricing .offer-card[data-plan-id="vitalicio"] .ed-new {
+  color: #087b2c;
+  font-size: 40px;
+}
+
+#pricing .offer-card[data-plan-id="vitalicio"] .offer-btn {
+  background: #00d43d;
+  border: 0;
+  color: #07120a;
+  font-weight: 800;
+  box-shadow: 0 10px 26px rgba(0, 212, 61, .28);
+}
+
+#pricing .offer-card[data-plan-id="vitalicio"] .offer-btn:hover {
+  background: #00c438;
+  color: #07120a;
+}
