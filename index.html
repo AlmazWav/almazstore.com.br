@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdn.cloudflare.steamstatic.com" crossorigin>
 
-<title>Almaz Store | Voce paga uma vez e nunca mais gasta com jogo na Steam</title>
-<meta name="description" content="Voce paga uma vez e nunca mais compra jogo. Sao +40.000 jogos originais na sua conta Steam e os lancamentos entram sem custo. Taxa unica, licenca vitalicia, pagamento no PIX com liberacao na hora.">
+<title>Almaz Store | Você paga uma vez e nunca mais gasta com jogo na Steam</title>
+<meta name="description" content="Você paga uma vez e nunca mais compra jogo. São +40.000 jogos originais na sua conta Steam e os lançamentos entram sem custo. Taxa única, licença vitalícia, pagamento no PIX com liberação na hora.">
 
 <!-- Microsoft Clarity (deferred: loads after first paint to avoid blocking render) -->
 <script type="text/javascript">
@@ -576,10 +576,12 @@ body.gm-open{overflow:hidden}
    solto vira item de flex e ganha 8px: "40.000 jogos</strong> liberados" saia com
    buraco, e o item "...incluso</strong>, sem pagar de novo" saia com buraco ANTES DA
    VIRGULA. E a mesma armadilha ja documentada nos botoes. Corrigido em 20/08/2026:
-   agora so o icone tem espacamento proprio e o texto flui normal. */
-.offer-features li{font-size:13.5px;color:var(--txt2);display:flex;gap:0;align-items:flex-start;line-height:1.5}
+   agora so o icone tem espacamento proprio e o texto flui normal.
+   04/11/2026: mesmo com gap:0 o flex COMIA o espaco depois do </strong> ("1.000 jogosinclusos").
+   Agora o li e bloco comum e o icone fica em position:absolute. */
+.offer-features li{font-size:13.5px;color:var(--txt2);display:block;position:relative;padding-left:23px;line-height:1.5}
 .offer-features li::before{
-  content:'';flex-shrink:0;width:15px;height:15px;margin-top:2px;margin-right:8px;border-radius:3px;
+  content:'';position:absolute;left:0;top:3px;width:15px;height:15px;border-radius:3px;
   background:rgba(0,255,65,.18) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%2300FF41' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/11px no-repeat;
 }
 .offer-features li strong{color:var(--txt);font-weight:600}
@@ -1135,7 +1137,7 @@ body.gm-open{overflow:hidden}
 </style>
 
 <script src="https://almaz-tracker.vercel.app/t.js" data-id="default" defer></script>
-<link rel="stylesheet" href="assets/design-test.css?v=4">
+<link rel="stylesheet" href="assets/design-test.css?v=6">
 </head>
 
 <body>
@@ -1323,7 +1325,7 @@ var io = (function(){
               <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9"/></svg>
               <span class="medo-txt">
                 <span class="medo-q">Vou ter que pagar de novo algum dia?</span>
-                <span class="medo-a">Não há mensalidade nem renovação. No Vitalício, todos os lançamentos entram sem custo adicional.</span>
+                <span class="medo-a">Não há mensalidade nem renovação. No Avançado e no Vitalício, todos os lançamentos entram sem custo adicional.</span>
               </span>
             </div>
             <div class="medo">
@@ -1357,7 +1359,7 @@ var io = (function(){
   <div class="wrap">
     <div class="sec-head reveal">
       <h2>Quanto custam alguns jogos na Steam?</h2>
-      <p>Preços da Steam Brasil em 25/09/2026.</p>
+      <p>Preços da Steam Brasil em 04/11/2026.</p>
     </div>
 
     <div class="conta reveal">
@@ -1386,9 +1388,9 @@ var io = (function(){
         </div>
 
         <div class="conta-row">
-          <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1636440/0ed1cb4bc30631f95b92f7f13bb06c15d49b4afa/header.jpg" alt="Silent Hill: Townfall" loading="lazy" decoding="async">
-          <span class="conta-nome">Silent Hill: Townfall<small>lançou esta semana</small></span>
-          <span class="conta-preco num">R$ 284,90</span>
+          <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4115450/7f882f889630270d3d3fb93825ac6f55b55e7a6c/header.jpg" alt="Phantom Blade Zero" loading="lazy" decoding="async">
+          <span class="conta-nome">Phantom Blade Zero<small>lançou em 28/10</small></span>
+          <span class="conta-preco num">R$ 229,90</span>
         </div>
 
         <div class="conta-row">
@@ -1410,18 +1412,18 @@ var io = (function(){
         </div>
 
         <div class="conta-row">
-          <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3240220/header.jpg" alt="Grand Theft Auto V Enhanced" loading="lazy" decoding="async">
-          <span class="conta-nome">Grand Theft Auto V<small>edição Enhanced</small></span>
-          <span class="conta-preco num">R$ 149,90</span>
+          <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2638890/ce31174fea86d0bafa21b26e853dcd0b7326e36f/header.jpg" alt="Onimusha: Way of the Sword" loading="lazy" decoding="async">
+          <span class="conta-nome">Onimusha: Way of the Sword</span>
+          <span class="conta-preco num">R$ 299,00</span>
         </div>
 
         <div class="conta-total">
           <span>Total do carrinho</span>
-          <b class="num">R$ 1.682,69</b>
+          <b class="num">R$ 1.776,79</b>
         </div>
 
         <div class="conta-anos">
-          <div class="conta-ano now"><span>2026</span><b class="num">R$ 1.682,69</b></div>
+          <div class="conta-ano now"><span>2026</span><b class="num">R$ 1.776,79</b></div>
           <div class="conta-ano next"><span>2027</span>Fifa novo, Call of Duty novo, e a conta começa do zero</div>
           <div class="conta-ano next"><span>2028</span>de novo, e assim todo ano que você continuar jogando</div>
         </div>
@@ -1727,7 +1729,7 @@ var io = (function(){
         </div>
         <div class="ed-body">
           <ul class="offer-features">
-            <li><strong><span data-almaz-games="vitalicio">40.000</span> jogos</strong> liberados</li>
+            <li><strong><span data-almaz-games="vitalicio">40.000</span> jogos</strong> inclusos</li>
             <li>Todos os lançamentos inclusos</li>
             <li>Jogos novos toda semana</li>
             <li>Acesso vitalício</li>
@@ -1963,7 +1965,7 @@ var io = (function(){
 </div>
 
 <!-- A lista de destaques mora fora do HTML porque o /catalogo usa a mesma. -->
-<script src="assets/destaques.js?v=20261104"></script>
+<script src="assets/destaques.js?v=20261104b"></script>
 <script>
 
 (function(){
@@ -3591,7 +3593,7 @@ document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
 
 
 
-(function(){var F=[{q:'Vou tomar ban na minha conta Steam?',a:'Você usa sua própria conta Steam. Não compartilhamos contas. E tem 30 dias de garantia.'},{q:'Vou ter que pagar de novo algum dia?',a:'Todos os planos são pagamento único, sem renovação nem mensalidade. O Avançado e o Vitalício incluem todos os lançamentos.'},{q:'E os jogos que saírem em 2027, 2028?',a:'Todos os lançamentos entram na sua biblioteca sem custo adicional. Eles são adicionados toda semana aos planos Avançado e Vitalício.'},{q:'Como recebo depois de pagar?',a:'Depois que o PIX é aprovado, o acesso chega por e-mail com o passo a passo.'},{q:'É seguro?',a:'Os downloads são feitos pelos servidores oficiais da Steam. Você pode testar por 30 dias.'},{q:'Como funciona?',a:'Instale o launcher, entre com o e-mail da compra e baixe os jogos pela Steam.'},{q:'Os jogos são originais?',a:'Sim. Os jogos e as atualizações vêm da própria Steam.'},{q:'Funciona online?',a:'Sim, nos jogos que têm multiplayer.'},{q:'Quais as formas de pagamento?',a:'O pagamento é por PIX. O acesso é liberado após a aprovação.'},{q:'Como funciona o suporte?',a:'Nossa equipe ajuda pelo WhatsApp.'}];var fl=document.getElementById('fl');fl.innerHTML=F.map(function(f){return'<div class="faq-item reveal"><button class="faq-q" onclick="tFaq(this)">'+f.q+'<span class="faq-chev">▼</span></button><div class="faq-a">'+f.a+'</div></div>'}).join('');fl.querySelectorAll('.reveal').forEach(function(el){io.observe(el)})})();
+(function(){var F=[{q:'Vou tomar ban na minha conta Steam?',a:'Você usa sua própria conta Steam. Não compartilhamos contas. E tem 30 dias de garantia.'},{q:'Vou ter que pagar de novo algum dia?',a:'Todos os planos são pagamento único, sem renovação nem mensalidade. O Avançado e o Vitalício incluem todos os lançamentos.'},{q:'E os jogos que saírem em 2027, 2028?',a:'Todos os lançamentos entram na sua biblioteca sem custo adicional. Eles são adicionados toda semana aos planos Avançado e Vitalício.'},{q:'Como recebo depois de pagar?',a:'Depois que o PIX é aprovado, o acesso chega por e-mail com o passo a passo.'},{q:'É seguro?',a:'Os downloads são feitos pelos servidores oficiais da Steam. Você pode testar por 30 dias.'},{q:'Como funciona?',a:'Instale o launcher, entre com o e-mail da compra e baixe os jogos pela Steam.'},{q:'Os jogos são originais?',a:'Sim. Os jogos e as atualizações vêm da própria Steam.'},{q:'Funciona online?',a:'Sim, nos jogos que têm multiplayer.'},{q:'Quais as formas de pagamento?',a:'O pagamento é por PIX. O acesso é liberado após a aprovação.'},{q:'Como funciona o suporte?',a:'Nossa equipe ajuda pelo WhatsApp e pelo Discord.'}];var fl=document.getElementById('fl');fl.innerHTML=F.map(function(f){return'<div class="faq-item reveal"><button class="faq-q" onclick="tFaq(this)">'+f.q+'<span class="faq-chev">▼</span></button><div class="faq-a">'+f.a+'</div></div>'}).join('');fl.querySelectorAll('.reveal').forEach(function(el){io.observe(el)})})();
 
 function tFaq(b){var a=b.nextElementSibling,o=b.classList.contains('open');document.querySelectorAll('.faq-q.open').forEach(function(q){q.classList.remove('open');q.nextElementSibling.classList.remove('open')});if(!o){b.classList.add('open');a.classList.add('open')}}
 

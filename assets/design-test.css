@@ -1041,39 +1041,28 @@ h3 {
   background: #eefaf2;
 }
 
-/* --- Vitalicio: branco como os outros, com borda verde e preco/botao fortes.
-   04/11/2026: a primeira versao era um card escuro; o Almaz achou pesado e pediu
-   igual aos outros, so com a borda dando o destaque. --- */
+/* --- Vitalicio: branco, borda verde fina e botao igual ao do Basico.
+   04/11/2026: o Almaz quer o destaque PRINCIPAL so no Avancado (R$ 19,97).
+   O Vitalicio aparece mais que o Basico pela borda, mas preco e botao seguem o
+   Basico (preto e contorno verde). --- */
 #pricing .offer-card[data-plan-id="vitalicio"] {
-  border: 2px solid #00d43d;
-  box-shadow: 0 22px 56px rgba(0, 150, 45, .22);
-}
-
-#pricing .offer-card[data-plan-id="vitalicio"] .ed-buy {
-  background: #eefaf2;
-}
-
-#pricing .offer-card[data-plan-id="vitalicio"] .ed-plan-tag {
-  background: #00d43d;
-  border-color: #00d43d;
-  color: #07120a;
-  font-weight: 800;
+  border: 1px solid rgba(0, 175, 54, .45);
 }
 
 #pricing .offer-card[data-plan-id="vitalicio"] .ed-new {
-  color: #087b2c;
-  font-size: 40px;
+  color: var(--txt);
 }
 
 #pricing .offer-card[data-plan-id="vitalicio"] .offer-btn {
-  background: #00d43d;
-  border: 0;
-  color: #07120a;
-  font-weight: 800;
-  box-shadow: 0 10px 26px rgba(0, 212, 61, .28);
+  background: #fff;
+  border: 2px solid #00d43d;
+  color: #087b2c;
+  font-weight: 700;
+  box-shadow: none;
 }
 
 #pricing .offer-card[data-plan-id="vitalicio"] .offer-btn:hover {
-  background: #00c438;
-  color: #07120a;
+  background: #eefaf2;
+  border-color: #00d43d;
+  color: #087b2c;
 }
