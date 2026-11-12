@@ -1453,7 +1453,7 @@ var io = (function(){
         <div class="ld-hero">
           <img id="ld-img" src="" alt="" loading="lazy" decoding="async">
           <div class="ld-hero-copy">
-            <span class="ld-chip" id="ld-chip">Fora da biblioteca</span>
+            <span class="ld-chip" id="ld-chip">Pronto pra adicionar</span>
             <div class="ld-name ld-disp" id="ld-name"></div>
             <div class="ld-meta" id="ld-meta"></div>
           </div>
@@ -1547,7 +1547,7 @@ var io = (function(){
     var rt=rotulo(g); meta.innerHTML=rt?'<span>'+esc(rt)+'</span>':'';
     var ok=!!feitos[g.i];
     chip.classList.toggle('ok',ok);
-    chip.textContent=ok?'Na sua biblioteca':'Fora da biblioteca';
+    chip.textContent=ok?'Na sua biblioteca':'Pronto pra adicionar';
     go.classList.toggle('ok',ok);
     go.querySelector('span').textContent=ok?'Adicionado':'Adicionar este jogo';
   }
