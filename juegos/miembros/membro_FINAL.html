@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta name="robots" content="noindex">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="theme-color" content="#08080c"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <title>ALMAZ | Área de Miembros</title>
+
+  <!-- ============================================================
+       ALMAZ — ÁREA DO MEMBRO (TIER VITALÍCIO • CATÁLOGO COMPLETO)
+       Layout do design de referência, marca ALMAZ (vermelho/dourado).
+       Registro/login real (keys-server) + exibição da KEY do cliente.
+       Download do launcher: AlmazStore_40k.zip (MediaFire).
+       ============================================================ -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="membro-kit.css">
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ============== SIDEBAR ============== -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark"><img src="logo.png" alt="ALMAZ"></div>
+      <div>
+        <div class="brand-name">ALMA<span>Z</span></div>
+        <div class="brand-sub">Vitalicio</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-label">Panel</div>
+      <a href="#topo" class="active" data-nav><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+      <a href="#download" data-nav><i class="fa-solid fa-download"></i> Descarga</a>
+      <a href="#tutoriais" data-nav><i class="fa-solid fa-circle-play"></i> Tutoriales</a>
+      <a href="#instalacao" data-nav><i class="fa-solid fa-list-check"></i> Instalación</a>
+      <a href="#biblioteca" data-nav><i class="fa-solid fa-layer-group"></i> Biblioteca</a>
+      <a href="#indique" data-nav><i class="fa-solid fa-hand-holding-dollar"></i> Recomienda y Gana</a>
+      <div class="nav-label">Cuenta</div>
+      <a onclick="window.open('https://chat.whatsapp.com/EpFIccHn0aZ1hd9jRNcUEq','_blank')"><i class="fa-brands fa-whatsapp"></i> Grupo VIP</a>
+      <a onclick="window.open('https://discord.gg/nBcTBwHw8n','_blank')"><i class="fa-brands fa-discord"></i> Discord VIP</a>
+      <a onclick="window.open('https://chat.whatsapp.com/EpFIccHn0aZ1hd9jRNcUEq','_blank')"><i class="fa-solid fa-headset"></i> Soporte</a>
+      <a onclick="openTutorial()"><i class="fa-solid fa-graduation-cap"></i> Tutorial</a>
+      <a onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Salir</a>
+    </nav>
+
+    <div class="side-card">
+      <span class="tier-pill"><i class="fa-solid fa-crown"></i> VITALICIO</span>
+      <h4>Catálogo Completo</h4>
+      <p>Todos los juegos liberados</p>
+    </div>
+  </aside>
+
+  <!-- ============== MAIN ============== -->
+  <main class="main" id="topo">
+
+    <div class="topbar">
+      <div class="greeting">
+        <h1>Panel del Cliente</h1>
+        <p>Acceso total, tu biblioteca completa, para siempre.</p>
+      </div>
+      <div class="status-pills">
+        <span class="pill"><span class="dot"></span> Servidor Online</span>
+        <span class="pill gold"><i class="fa-solid fa-crown"></i> Plan Vitalicio</span>
+      </div>
+    </div>
+
+    <!-- PALCO: o launcher novo, com o lançamento em destaque (membro-kit.js) -->
+    <section class="stage" id="novidade">
+      <div class="stage-art" id="stageArt" aria-hidden="true"></div>
+      <div class="stage-copy">
+        <span class="stage-kicker"><i></i> Launcher nuevo · 04/11/2026</span>
+        <h2>ALMAZ quedó <b>nuevo</b></h2>
+        <p>Diseño nuevo, los lanzamientos al frente y Juegos Online y Bypass en el menú. Descarga la versión nueva y <b>reemplaza la carpeta vieja</b>: tu key sigue siendo la misma.</p>
+        <div class="stage-actions">
+          <button class="kbtn primary" type="button" onclick="downloadLauncher()"><i class="fa-solid fa-download"></i> Descargar el launcher nuevo</button>
+          <a class="kbtn glass" href="#tutoriais"><i class="fa-solid fa-circle-play"></i> Ver los tutoriales</a>
+        </div>
+      </div>
+      <div class="stage-side">
+        <div class="stage-count"><span id="counter">0</span><small>JUEGOS LIBERADOS EN TU PLAN</small></div>
+        <div class="stage-show" id="stageShow" aria-hidden="true"></div>
+        <div class="stage-name" id="stageName"></div>
+      </div>
+      <div class="stage-rail" id="stageRail" aria-label="Lanzamientos"></div>
+    </section>
+
+    <!-- LICENÇA / KEY DO CLIENTE -->
+    <div class="license">
+      <div class="ic"><i class="fa-solid fa-key"></i></div>
+      <div class="lic-info">
+        <div class="lab">Tu licencia (úsala en el launcher)</div>
+        <div class="key" id="clientKey">ALMAZ-XXXX-XXXX</div>
+      </div>
+      <button class="copy-btn" onclick="copyKey()"><i class="fa-solid fa-copy"></i> Copiar key</button>
+    </div>
+
+    <!-- DOWNLOAD x TUTORIAIS: separados e bem claros -->
+    <section class="duo">
+      <div class="dl-card" id="download">
+        <span class="card-tag"><i class="fa-solid fa-download"></i> Descarga</span>
+        <h3>Launcher ALMAZ</h3>
+        <div class="dl-meta">
+          <span>Versión <b>04/11/2026</b></span>
+          <span><b>148,93 MB</b></span>
+          <span>Windows <b>10 e 11</b></span>
+          <span>Plan <b>40.000 juegos</b></span>
+        </div>
+        <ol class="dl-steps">
+          <li><span><b>Extrae</b> el .zip (clic derecho, <b>Extraer todo</b>) y mantén la carpeta completa.</span></li>
+          <li><span>Clic derecho en <b>ALMAZ.exe</b>, <b>Ejecutar como administrador</b>.</span></li>
+          <li><span>Pega tu <b>key</b> y haz clic en <b>Desbloquear ahora</b>.</span></li>
+        </ol>
+        <button class="kbtn primary big" type="button" onclick="downloadLauncher()"><i class="fa-solid fa-download"></i> Descargar el launcher (148,93 MB)</button>
+        <p class="dl-foot">¿Ya tenías el launcher? <b>Borra la carpeta vieja</b> y usa esta. Tu key es la misma.</p>
+      </div>
+      <div class="tut-card" id="tutoriais">
+        <span class="card-tag"><i class="fa-solid fa-circle-play"></i> Tutoriales</span>
+        <h3>Paso a paso</h3>
+        <p class="tut-sub">Con las pantallas del launcher nuevo. Haz clic en lo que quieres aprender.</p>
+        <div class="tut-list">
+        <button class="tut-item" type="button" onclick="openModal('launcher')">
+          <span class="tut-ic"><i class="fa-solid fa-download"></i></span>
+          <span class="tut-txt"><b>Cómo instalar el launcher</b><small>De la descarga hasta los juegos en Steam</small></span>
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+        <button class="tut-item online" type="button" onclick="openModal('bypass')">
+          <span class="tut-ic"><i class="fa-solid fa-earth-americas"></i></span>
+          <span class="tut-txt"><b>Juegos Online</b><small>Jugar con amigos, con las pantallas del launcher</small></span>
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+        <button class="tut-item bypass" type="button" onclick="openModal('denuvo')">
+          <span class="tut-ic"><i class="fa-solid fa-shield-halved"></i></span>
+          <span class="tut-txt"><b>Bypass</b><small>GTA, RDR2 y juegos con protección propia</small></span>
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+        <a class="tut-item video" href="https://almazstore.com.br/juegos/tutoriais/" target="_blank" rel="noopener">
+          <span class="tut-ic"><i class="fa-solid fa-circle-play"></i></span>
+          <span class="tut-txt"><b>Centro de videos</b><small>FC 27, Denuvo, EA y Ubisoft en video</small></span>
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- INSTALAÇÃO -->
+    <section class="section" id="instalacao">
+      <div class="section-head with-ring">
+        <div>
+          <h3>Configuración en 5 pasos</h3>
+          <span id="stepsSummary">Toca un paso para ver el tutorial</span>
+        </div>
+        <div class="ring-wrap">
+          <div class="ring" id="ring" style="--p:0"><div class="ring-inner"><b id="ringPct">0%</b><span>listo</span></div></div>
+          <div class="ring-label" id="ringLabel">0 de 5 pasos completados</div>
+        </div>
+      </div>
+      <div class="steps">
+
+        <div class="step s1" data-step="1" onclick="openModal('steam')">
+          <div class="step-idx"><i class="fa-brands fa-steam"></i></div>
+          <div class="step-body">
+            <div class="step-kicker">Paso 01 · Obligatorio</div>
+            <h4>Instalar Steam Oficial</h4>
+            <p>Nuestro sistema funciona dentro de Steam. Instala y actualiza la plataforma.</p>
+          </div>
+          <div class="step-state"><div class="step-check"><i class="fa-solid fa-check"></i></div><div class="step-go">➜</div></div>
+        </div>
+
+        <div class="step s2" data-step="2" onclick="openModal('bypass')">
+          <div class="step-idx"><i class="fa-solid fa-plug-circle-xmark"></i></div>
+          <div class="step-body">
+            <div class="step-kicker">Paso 02 · Opcional</div>
+            <h4>Juegos Online: jugar con amigos</h4>
+            <p>Ahora es automático dentro del launcher. Mira dónde hacer clic.</p>
+          </div>
+          <div class="step-state"><div class="step-check"><i class="fa-solid fa-check"></i></div><div class="step-go">➜</div></div>
+        </div>
+
+        <div class="step s3" data-step="3" onclick="openModal('denuvo')">
+          <div class="step-idx"><i class="fa-solid fa-shield-halved"></i></div>
+          <div class="step-body">
+            <div class="step-kicker">Paso 03 · Opcional</div>
+            <h4>Bypass: GTA, RDR2 y Denuvo</h4>
+            <p>También automático. Sin descargar nada de MediaFire.</p>
+          </div>
+          <div class="step-state"><div class="step-check"><i class="fa-solid fa-check"></i></div><div class="step-go">➜</div></div>
+        </div>
+
+        <div class="step s4" data-step="4" onclick="openModal('launcher')">
+          <div class="step-idx"><i class="fa-solid fa-download"></i></div>
+          <div class="step-body">
+            <div class="step-kicker">Paso 04 · Final</div>
+            <h4>Descargar el Launcher ALMAZ</h4>
+            <p>Con todo listo, descarga la app y desbloquea el catálogo completo con tu key.</p>
+          </div>
+          <div class="step-state"><div class="step-check"><i class="fa-solid fa-check"></i></div><div class="step-go">➜</div></div>
+        </div>
+
+
+        <div class="step s5" data-step="5" onclick="markDone(5); window.open('https://almazstore.com.br/juegos/tutoriais/', '_blank', 'noopener,noreferrer')">
+          <div class="step-idx"><i class="fa-solid fa-graduation-cap"></i></div>
+          <div class="step-body">
+            <div class="step-kicker">Paso 05 · Tutoriales</div>
+            <h4>Centro de tutoriales</h4>
+            <p>Mira los videos para activar FC 27 y juegos Denuvo, EA y Ubisoft.</p>
+          </div>
+          <div class="step-state"><div class="step-check"><i class="fa-solid fa-check"></i></div><div class="step-go">➜</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BIBLIOTECA -->
+    <section class="section" id="biblioteca">
+      <div class="section-head">
+        <h3>En tendencia en tu biblioteca</h3>
+        <span>Los juegos más famosos del momento, todos liberados</span>
+      </div>
+      <div class="lib-grid" id="libGrid"></div>
+    </section>
+
+    <section class="section" id="indique">
+      <div class="section-head">
+        <h3>Hazte afiliado ALMAZ</h3>
+        <span>Comisión en tu Pix por cada venta, y números para participar por una RTX 3060</span>
+      </div>
+      <div id="afiliados"></div>
+      <div id="rifa"></div>
+    </section>
+
+    <!-- BOTTOM -->
+    <section class="bottom">
+      <div class="promo wa">
+        <div>
+          <h3><i class="fa-brands fa-whatsapp"></i> Grupo VIP en WhatsApp</h3>
+          <p>Entra a la comunidad oficial y recibe novedades, actualizaciones y juegos nuevos antes que nadie.</p>
+        </div>
+        <button class="btn" onclick="window.open('https://chat.whatsapp.com/EpFIccHn0aZ1hd9jRNcUEq','_blank')"><i class="fa-solid fa-arrow-right-to-bracket"></i> Entrar al grupo</button>
+      </div>
+      <div class="promo discord" style="background: radial-gradient(500px 200px at 100% 0, rgba(88,101,242,.15), transparent), var(--card); border-color: rgba(88,101,242,.25); display: flex; flex-direction: column; justify-content: space-between; gap: 18px; border-radius: 18px; padding: 26px;">
+        <div>
+          <h3><i class="fa-brands fa-discord" style="color:#5865f2;"></i> Servidor Discord VIP</h3>
+          <p>Entra al servidor de Discord para obtener roles exclusivos según tu plan y soporte rápido.</p>
+        </div>
+        <button class="btn" style="background:#5865f2;color:#fff;" onclick="window.open('https://discord.gg/nBcTBwHw8n','_blank')"><i class="fa-solid fa-arrow-right-to-bracket"></i> Entrar a Discord</button>
+      </div>
+      <div class="promo upd">
+        <div>
+          <h3><i class="fa-solid fa-rotate"></i> Actualizaciones constantes</h3>
+          <p>Tu catálogo crece cada semana con los mayores lanzamientos. Mantén el launcher actualizado para recibir todo.</p>
+        </div>
+        <button class="btn" onclick="openModal('launcher')"><i class="fa-solid fa-download"></i> Actualizar launcher</button>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ============== MODAIS ============== -->
+<dialog id="modal-steam">
+  <div class="modal-header"><h3>Paso 1 · Instalar Steam</h3><button class="modal-close" onclick="closeModal('steam')">✕</button></div>
+  <div class="modal-body">
+    <p class="lead">ALMAZ funciona <b>dentro de Steam</b>. Si todavía no tienes Steam instalado, sigue los pasos de abajo (si ya lo tienes, salta este paso).<br><br>1. Haz clic en el botón de abajo para descargar.<br>2. Instálalo e inicia sesión con tu cuenta gratuita.</p>
+    <a href="https://store.steampowered.com/about/" target="_blank" class="mbtn steam" onclick="markDone(1)"><i class="fa-brands fa-steam"></i> Descargar Steam Oficial</a>
+  </div>
+</dialog>
+
+<dialog id="modal-bypass">
+  <div class="modal-header"><h3>Juegos Online · jugar con amigos</h3><button class="modal-close" onclick="closeModal('bypass')">✕</button></div>
+  <div class="modal-body">
+    <p class="lead">
+      <b>Cambió todo:</b> ya no descargas ningún fix, no extraes zip, no pegas archivos en carpetas. El launcher lo hace solo. Eliges el juego y haces clic en un botón.
+    </p>
+
+    <div class="alz-guia" data-guia="online">
+
+      <div class="alz-passo">
+        <div class="alz-ck">✓</div>
+        <div class="alz-passo-txt">
+          <div class="alz-passo-n">Paso 1</div>
+          <h5>Abre ALMAZ y haz clic en "Juegos Online"</h5>
+          <p>Es el quinto elemento del menú de la izquierda. Solo los juegos de esa lista tienen el online liberado.</p>
+          <img class="alz-shot tall" src="guia/online-1-menu.jpg" alt="Menú del launcher con Juegos Online destacado" loading="lazy">
+          <div class="alz-legenda">Es este</div>
+        </div>
+      </div>
+
+      <div class="alz-passo">
+        <div class="alz-ck">✓</div>
+        <div class="alz-passo-txt">
+          <div class="alz-passo-n">Paso 2</div>
+          <h5>Elige el juego en la lista de la izquierda</h5>
+          <p>Haz clic en el juego que quieres jugar. La pantalla de la derecha se llena con todo sobre él.</p>
+          <img class="alz-shot" src="guia/online-2-lista.jpg" alt="Lista de juegos online con el juego elegido" loading="lazy">
+          <div class="alz-legenda">Haz clic en el nombre del juego</div>
+        </div>
+      </div>
+
+      <div class="alz-passo">
+        <div class="alz-ck">✓</div>
+        <div class="alz-passo-txt">
+          <div class="alz-passo-n">Paso 3</div>
+          <h5>Mira si el juego está instalado</h5>
+          <p><b style="color:#25d366">Verde (JUEGO INSTALADO):</b> puedes seguir.<br>
+             <b style="color:#ee2740">Rojo (JUEGO NO INSTALADO):</b> haz clic en <b>Instalar desde Steam</b>, espera a que se descargue y vuelve a esta pantalla.</p>
+          <img class="alz-shot" src="guia/online-3-instalado.jpg" alt="Juego con la marca de juego instalado" loading="lazy">
+          <div class="alz-legenda">Revisa esta línea antes de continuar</div>
+        </div>
+      </div>
+
+      <div class="alz-passo">
+        <div class="alz-ck">✓</div>
+        <div class="alz-passo-txt">
+          <div class="alz-passo-n">Paso 4</div>
+          <h5>Haz clic en "Iniciar juego"</h5>
+          <p>Este botón hace dos cosas solo: <b>descarga el fix de online</b> en la carpeta del juego y
+             <b>abre el juego</b> desde ahí. La primera vez tarda un poco, es la descarga.</p>
+          <img class="alz-shot" src="guia/online-4-iniciar.jpg" alt="Botón Iniciar juego" loading="lazy">
+          <div class="alz-legenda">Este es el botón</div>
+        </div>
+      </div>
+
+      <div class="alz-passo">
+        <div class="alz-ck">✓</div>
+        <div class="alz-passo-txt">
+          <div class="alz-passo-n">Paso 5</div>
+          <h5>Sigue el paso a paso del juego</h5>
+          <p>Cada juego entra al online de una forma distinta. Justo debajo del botón, el launcher muestra el paso a paso <b>de ese juego</b>: cómo <b>crear</b> un servidor y cómo <b>entrar</b>
+             al servidor de tu amigo.</p>
+          <p>Uno de ustedes crea el servidor y pasa el nombre, el otro busca ese nombre y entra.</p>
+          <img class="alz-shot" src="guia/online-5-passos.jpg" alt="Cuadro verde con el paso a paso del online" loading="lazy">
+          <div class="alz-legenda">Lee este cuadro verde</div>
+        </div>
+      </div>
+
+      <div class="alz-atencao">
+        <div class="alz-ico">!</div>
+        <div>
+          <b>Abre el juego siempre desde ALMAZ, nunca desde el ícono de Steam.</b>
+          Desde Steam usa los archivos originales y el online no funciona. Y los dos amigos necesitan tener ALMAZ y abrir el juego desde él.
+        </div>
+      </div>
+
+      <div class="alz-progresso"></div>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="modal-denuvo">
+  <div class="modal-header"><h3>Bypass · GTA, RDR2, Denuvo y similares</h3><button class="modal-close" onclick="closeModal('denuvo')">✕</button></div>
+  <div class="modal-body">
+    <p class="lead">
+      Algunos juegos tienen una <b>protección propia</b>, además de Steam: GTA V, Red Dead Redemption 2, Hogwarts Legacy, Black Myth Wukong, Stellar Blade y otros.
+      <b>Ya no descargas nada de MediaFire.</b> El launcher lo resuelve solo.
+    </p>
+
+    <div class="alz-guia" data-guia="bypass">
+
+      <div class="alz-passo">
+        <div class="alz-ck">✓</div>
+        <div class="alz-passo-txt">
+          <div class="alz-passo-n">Paso 1</div>
+          <h5>Abre ALMAZ y haz clic en "Bypass"</h5>
+          <p>Es el cuarto elemento del menú de la izquierda. Todos los juegos con protección propia están en esa lista.</p>
+          <img class="alz-shot tall" src="guia/bypass-1-menu.jpg" alt="Menú del launcher con Bypass destacado" loading="lazy">
+          <div class="alz-legenda">Es este</div>
+        </div>
+      </div>
+
+      <div class="alz-passo">
+        <div class="alz-ck">✓</div>
+        <div class="alz-passo-txt">
+          <div class="alz-passo-n">Paso 2</div>
+          <h5>Elige el juego y revisa si está instalado</h5>
+          <p>Haz clic en el juego en la lista. Si aparece <b style="color:#ee2740">JUEGO NO INSTALADO</b>, instálalo desde Steam primero y vuelve aquí.</p>
+          <img class="alz-shot" src="guia/bypass-2-lista.jpg" alt="Lista del Bypass con el juego elegido" loading="lazy">
+          <div class="alz-legenda">Haz clic en el nombre del juego</div>
+        </div>
+      </div>
+
+      <div class="alz-passo">
+        <div class="alz-ck">✓</div>
+        <div class="alz-passo-txt">
+          <div class="alz-passo-n">Paso 3</div>
+          <h5>Haz clic en "Iniciar juego"</h5>
+          <p>El launcher <b>descarga la corrección</b> en la carpeta del juego y <b>abre el juego</b> desde ahí, sin pasar por la validación de Steam. La primera vez tarda un poco, es la descarga.</p>
+          <img class="alz-shot" src="guia/bypass-3-iniciar.jpg" alt="Botón Iniciar juego del Bypass" loading="lazy">
+          <div class="alz-legenda">Este es el botón</div>
+        </div>
+      </div>
+
+      <div class="alz-atencao">
+        <div class="alz-ico">!</div>
+        <div>
+          <b>La regla de oro: abre estos juegos siempre desde ALMAZ.</b>
+          Si lo abres desde el ícono de Steam, usa los archivos originales y el juego
+          <b>no funciona</b>. Vale para todo juego que aparece en esa lista.
+        </div>
+      </div>
+
+      <div class="alz-progresso"></div>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="modal-launcher">
+  <div class="modal-header"><h3>Paso 4 · Instalar el Launcher ALMAZ</h3><button class="modal-close" onclick="closeModal('launcher')">✕</button></div>
+  <div class="modal-body">
+    <p class="lead">Ahora instala la app <b>ALMAZ</b> (plan Vitalicio):<br><br>1. Descarga y <b>extrae</b> el archivo <b>.zip</b> (clic derecho → <b>Extraer todo</b>). Mantén la carpeta completa.<br>2. Haz clic con el <b>botón derecho</b> en <b>"ALMAZ.exe"</b> → <b>"Ejecutar como administrador"</b> → <b>"Sí"</b>.<br>3. Pega tu <b>KEY</b> (la que aparece aquí arriba en el panel).<br>4. Haz clic en <b>"Desbloquear ahora"</b> y espera. La app instala todo, reinicia Steam y libera tus juegos.<br>5. Abre Steam e instala tus juegos. Si alguno no aparece, haz clic en <b>"¿No se desbloqueó?"</b> dentro de la app.</p>
+    <button class="mbtn dl" onclick="downloadLauncher()"><i class="fa-solid fa-download"></i> Descargar ALMAZ Launcher</button>
+    <div class="note"><i class="fa-solid fa-circle-info"></i><span>Descarga siempre la versión más reciente del launcher para recibir los juegos nuevos automáticamente.</span></div>
+  </div>
+</dialog>
+
+<a href="https://chat.whatsapp.com/EpFIccHn0aZ1hd9jRNcUEq" target="_blank" class="fab" title="Soporte por WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+
+<div class="toast" id="toast"><i class="fa-solid fa-check"></i><span id="toastMsg">¡Hecho!</span></div>
+
+<!-- ============== AUTH (LOGIN/REGISTRO) ============== -->
+<div class="auth-overlay" id="authOverlay">
+  <div class="auth-card">
+    <div class="auth-brandrow">
+      <div class="brand-mark"><img src="logo.png" alt="ALMAZ"></div>
+      <div class="nm">ALMA<span>Z</span></div>
+    </div>
+
+    <!-- RECUPERAR KEY PELO E-MAIL DA COMPRA -->
+    <div id="loginView">
+      <div class="auth-title">Área de Miembros</div>
+      <p class="auth-desc">Escribe el <b>correo que usaste en la compra</b> para ver tu key.</p>
+      <form id="recoverForm">
+        <div class="auth-field"><label>Correo de la compra</label><input type="email" id="recEmail" placeholder="seuemail@exemplo.com" autocomplete="email" required></div>
+        <button type="submit" class="auth-btn" id="recBtn">Acceder a mi key</button>
+      </form>
+      <div class="auth-msg" id="loginMsg"></div>
+      <div class="auth-switch">Usa el mismo correo del pago. ¿Todavía no compraste? <a href="https://almazstore.com.br/juegos/?utm_source=AreaMembro" target="_blank">Comprar ahora</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============== TOUR GUIADO ============== -->
+<div id="tourHole" class="tour-hole tour-hide"></div>
+<div id="tourBox" class="tour-box tour-hide">
+  <span class="kick" id="tourKick"></span>
+  <h4 id="tourTitle"></h4>
+  <p id="tourText"></p>
+  <button class="tour-extra tour-hide" id="tourExtra"></button>
+  <div class="tour-foot">
+    <span class="tour-count" id="tourCount"></span>
+    <div class="tour-acts">
+      <button class="tour-btn" id="tourPrev" onclick="tourGo(-1)">Volver</button>
+      <button class="tour-btn primary" id="tourNext" onclick="tourGo(1)">Siguiente</button>
+    </div>
+  </div>
+</div>
+<button class="tour-skip tour-hide" id="tourSkip" onclick="tourFim()">Saltar tutorial ✕</button>
+
+<script src="almaz-fix-gate.js"></script>
+<script src="rifa-ui.js"></script>
+<script src="afiliados-ui.js"></script>
+<script>
+  /* ================= CONFIG ================= */
+  const API_URL = "https://keys-lhkl.onrender.com";
+  window.API_URL = API_URL;   // o gate do fix (almaz-fix-gate.js) lê daqui
+  const DOWNLOAD_URL = "https://www.mediafire.com/file/91mdbhxc01v96zk/ENTREGA_40k.zip/file";
+  const TOTAL_STEPS = 5;
+  const STORAGE_KEY = "almaz_vitalicio_steps_v1";
+
+  /* ================= AUTH ================= */
+  const overlay = document.getElementById('authOverlay');
+
+  function setSession(user){ localStorage.setItem('almaz_user', JSON.stringify(user)); }
+  function getSession(){ try { return JSON.parse(localStorage.getItem('almaz_user')||'null'); } catch { return null; } }
+
+  function enterApp(user){
+    overlay.classList.add('hidden');
+    document.body.style.overflow = 'auto';
+    document.getElementById('clientKey').textContent = user.assignedKey || 'ALMAZ-XXXX-XXXX';
+    if (window.almazGateIniciar) window.almazGateIniciar();
+    if (window.renderRifa) window.renderRifa();
+    if (window.renderAfiliados) window.renderAfiliados();
+    abrirTutorial();
+  }
+  function checkSession(){
+    const u = getSession();
+    if (u && u.assignedKey) enterApp(u);
+    else { overlay.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
+  }
+  function logout(){ localStorage.removeItem('almaz_user'); location.reload(); }
+  function authMsg(id, text, type){ const el=document.getElementById(id); if(el){ el.textContent=text; el.className='auth-msg '+(type||''); } }
+
+  // Recuperar a key pelo e-mail usado na compra. NADA e enviado por e-mail:
+  // o e-mail e so a consulta (o webhook do GGCheckout ja salvou a key nele).
+  document.getElementById('recoverForm').addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const btn=document.getElementById('recBtn'); btn.disabled=true;
+    const email = document.getElementById('recEmail').value.trim();
+    // preview do dono: digitar "admin" abre a area sem compra
+    if (email.toLowerCase() === 'admin'){
+      const u = { email, assignedKey: 'ALMAZ-DEMO-0000' };
+      setSession(u); enterApp(u); return;
+    }
+    authMsg('loginMsg','Buscando tu key...','');
+    try {
+      const res = await fetch(`${API_URL}/api/recover-key`, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ email })
+      });
+      const data = await res.json();
+      if (res.ok && data.success){
+        authMsg('loginMsg','Key encontrada! Entrando...','ok');
+        const user = { email, assignedKey: data.key, plan: data.plan, fixUnlocked: !!data.fixUnlocked };
+        setSession(user); setTimeout(()=>enterApp(user),500);
+      } else { authMsg('loginMsg', data.message||'Correo no encontrado. Usa el mismo correo del pago.','err'); btn.disabled=false; }
+    } catch(err){ authMsg('loginMsg','No se pudo conectar con el servidor.','err'); btn.disabled=false; }
+  });
+
+  /* ================= COPIAR KEY ================= */
+  function copyKey(){
+    const k = document.getElementById('clientKey').textContent;
+    if (!k || k.includes('XXXX')) return;
+    navigator.clipboard.writeText(k).then(()=> toast('Key copiada!'));
+  }
+
+  /* ================= MODAIS ================= */
+  // O gate (almaz-fix-gate.js) cuida da trava do Fix/Denuvo e do sorteio do
+  // vídeo. Aqui só delegamos.
+  function openModal(t){
+    if (window.almazGateIntercepta && window.almazGateIntercepta(t)) return;
+    document.getElementById('modal-'+t).showModal();
+  }
+  function applyFixLock(){ if (window.almazGateIniciar) window.almazGateIniciar(); }
+
+  /* ================= TOUR GUIADO =================
+     Ilumina cada parte REAL do painel, com uma caixa explicando ao lado.
+     Passos com alvo:null aparecem centralizados (abertura e encerramento). */
+  const TOUR = [
+    { alvo: null, kick: 'Bem-vindo', titulo: 'Déjame mostrarte el panel',
+      texto: 'Em <b>30 segundos</b> te muestro dónde está cada cosa y cómo liberar tus juegos. Puedes volver a verlo cuando quieras con el botón <b>Tutorial</b> do menu.' },
+    { alvo: '.license', kick: 'Tu licencia', titulo: 'Esta es tu key',
+      texto: 'Es este código el que pegas en el launcher para liberar los juegos. Usa el botón <b>Copiar key</b> — ele evita erro de digitação.' },
+    { alvo: '.step.s1', kick: 'Paso 01 · Obligatorio', titulo: 'Instala Steam',
+      texto: 'ALMAZ funciona <b>dentro de Steam</b> . Es la que descarga y corre los juegos. Si ya la tienes, salta este paso. <b>Haz clic en la tarjeta</b> para abrir o passo.' },
+    { alvo: '.step.s2', kick: 'Paso 02 · Juegos Online', titulo: 'Jugar online con amigos',
+      texto: 'Ahora es <b>automático</b>: ya no descargas ningún fix. Eliges el juego dentro del launcher y haces clic en <b>Iniciar juego</b>. Abra aqui o passo a passo, com as telas.',
+      extra: { texto: '<i class="fa-solid fa-list-check"></i> Ver o passo a passo', acao: () => openModal('bypass') } },
+    { alvo: '.step.s3', kick: 'Passo 03 · Bypass', titulo: 'GTA, RDR2 y juegos con Denuvo',
+      texto: 'Estos juegos tienen una <b>protección propia</b>, além da Steam. Também é automático: o launcher baixa a correção e abre o jogo pra você. Só não abra pela Steam, senão não funciona.' },
+    { alvo: '.step.s4', kick: 'Paso 04 · Lo principal', titulo: 'Descarga y activa el launcher',
+      texto: 'Es la app que libera el catálogo en tu Steam. Atención: abre el <b>ALMAZ.exe</b> con <b>clic derecho → Ejecutar como administrador</b>, senão não funciona. Depois cole sua key.' },
+    { alvo: '#biblioteca', kick: 'Tu biblioteca', titulo: 'Todo esto es tuyo',
+      texto: 'Después del launcher, estos juegos aparecen en tu Steam listos para instalar. El catálogo <b>crece cada semana</b> — baixe o launcher de novo de vez em quando.' },
+    { alvo: '#indique', kick: 'Seja afiliado', titulo: 'Hazte afiliado y participa por una RTX',
+      texto: 'Vire <b>afiliado</b> aquí en esta sección y ganas las dos cosas con el mismo enlace: <b>la mitad del valor</b> de cada compra que haga, en dinero en tu Pix, y <b>números para participar</b> por una <b>RTX 3060 de 12GB</b>. Quanto mais gente compra pelo seu link, mais números você junta.' },
+    { alvo: null, kick: 'Tudo pronto', titulo: '¡Buen juego!',
+      texto: 'Deu algum problema? <b>El juego no abre, se traba o se cierra solo</b> → abre ALMAZ, ve a la pestaña <b>Bypass</b> o <b>Juegos Online</b>, busca el juego y haz clic en <b>Iniciar juego</b>. Descarga la corrección solo. <b>El juego no apareció en Steam</b> → cierra Steam por completo y vuelve a ejecutar el launcher (necesita reiniciar Steam para actualizar la biblioteca). <b>Cualquier otra cosa</b> → chame o suporte no WhatsApp, aqui embaixo.' },
+  ];
+
+  let tourAtual = 0;
+
+  const _el = (s) => document.querySelector(s);
+  function tourVisivel(mostrar){
+    ['tourHole','tourBox','tourSkip'].forEach(id =>
+      document.getElementById(id).classList.toggle('tour-hide', !mostrar));
+  }
+
+  // A luz é recalculada a cada quadro enquanto o tour está aberto. Isso a mantém
+  // grudada no alvo durante a rolagem (inclusive a suave, que dura mais do que
+  // qualquer espera fixa) sem depender de evento de scroll/resize chegar.
+  let tourRaf = null;
+  function tourLoop(){
+    tourPosicionar();
+    tourRaf = requestAnimationFrame(tourLoop);
+  }
+
+  function openTutorial(){
+    tourAtual = 0;
+    tourVisivel(true);
+    // NÃO travar o scroll do body: isso impediria o próprio scrollIntoView de
+    // levar o tour até os passos que ficam abaixo da dobra.
+    tourMostrar(0);
+    if (!tourRaf) tourLoop();
+  }
+  function tourFim(){
+    tourVisivel(false);
+    if (tourRaf) { cancelAnimationFrame(tourRaf); tourRaf = null; }
+  }
+  function tourGo(d){
+    if (tourAtual === TOUR.length - 1 && d > 0) { tourFim(); return; }
+    tourMostrar(Math.max(0, Math.min(TOUR.length - 1, tourAtual + d)));
+  }
+
+  async function tourMostrar(i){
+    tourAtual = i;
+    const p = TOUR[i];
+
+    // preenche a caixa
+    document.getElementById('tourKick').textContent = p.kick;
+    document.getElementById('tourTitle').textContent = p.titulo;
+    document.getElementById('tourText').innerHTML = p.texto;
+    document.getElementById('tourCount').textContent = (i + 1) + ' de ' + TOUR.length;
+    document.getElementById('tourPrev').style.visibility = i === 0 ? 'hidden' : 'visible';
+    document.getElementById('tourNext').textContent = i === TOUR.length - 1 ? 'Empezar a jugar' : 'Siguiente';
+
+    const extra = document.getElementById('tourExtra');
+    if (p.extra) {
+      extra.innerHTML = p.extra.texto;
+      extra.classList.remove('tour-hide');
+      extra.onclick = p.extra.acao;
+    } else extra.classList.add('tour-hide');
+
+    // Leva o alvo pro meio da tela e ilumina. O scroll é INSTANTÂNEO de
+    // propósito: com o suave, a luz só ficaria alinhada se o rAF/eventos de
+    // scroll estivessem rodando, e o alinhamento não pode depender disso.
+    // behavior:'instant' é obrigatório: a página tem `scroll-behavior: smooth`
+    // no CSS, que tornaria esta rolagem animada — e a luz seria posicionada
+    // antes de a página chegar no lugar.
+    // 'start' (e não 'center') deixa o alvo no alto, garantindo espaço para a
+    // caixa embaixo sem tapar o que ela está explicando.
+    if (p.alvo && _el(p.alvo)) {
+      _el(p.alvo).scrollIntoView({ block: 'start', behavior: 'instant' });
+      window.scrollBy({ top: -90, behavior: 'instant' }); // respiro acima do alvo
+    }
+    tourPosicionar();
+  }
+
+  // Coloca o "buraco" de luz em cima do alvo e a caixa no melhor lado livre.
+  function tourPosicionar(){
+    const p = TOUR[tourAtual];
+    const hole = document.getElementById('tourHole');
+    const box = document.getElementById('tourBox');
+    const alvo = p.alvo ? _el(p.alvo) : null;
+    const vw = window.innerWidth, vh = window.innerHeight;
+
+    if (!alvo) { // sem alvo: escurece tudo e centraliza a caixa
+      hole.classList.add('center');
+      // atribuição direta (não cssText +=): isto roda a cada quadro
+      hole.style.top = '50%'; hole.style.left = '50%';
+      hole.style.width = '0px'; hole.style.height = '0px';
+      box.style.top = Math.round(vh / 2 - box.offsetHeight / 2) + 'px';
+      box.style.left = Math.round(vw / 2 - box.offsetWidth / 2) + 'px';
+      return;
+    }
+
+    hole.classList.remove('center');
+    const r = alvo.getBoundingClientRect();
+    const pad = 8;
+    hole.style.top = (r.top - pad) + 'px';
+    hole.style.left = (r.left - pad) + 'px';
+    hole.style.width = (r.width + pad * 2) + 'px';
+    hole.style.height = (r.height + pad * 2) + 'px';
+
+    const bw = box.offsetWidth, bh = box.offsetHeight, gap = 16;
+    let top, left;
+    if (r.bottom + gap + bh < vh) top = r.bottom + gap;        // cabe embaixo
+    else if (r.top - gap - bh > 0) top = r.top - gap - bh;     // cabe em cima
+    else top = Math.max(12, vh / 2 - bh / 2);                  // sobrepõe centralizado
+    left = r.left + r.width / 2 - bw / 2;                      // centralizado no alvo
+    left = Math.max(12, Math.min(left, vw - bw - 12));         // sem vazar nas bordas
+    box.style.top = Math.round(top) + 'px';
+    box.style.left = Math.round(left) + 'px';
+  }
+
+  // Abre em TODO acesso à área — o cliente é guiado sempre que entra.
+  // (Fecha no X ou em "Pular" a qualquer momento.)
+  function abrirTutorial(){
+    setTimeout(openTutorial, 700);
+  }
+  function closeModal(t){ document.getElementById('modal-'+t).close(); }
+  window.addEventListener('click', e => { if (e.target.tagName === 'DIALOG') e.target.close(); });
+
+  /* ================= PROGRESSO ================= */
+  function loadDone(){ try { return new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]")); } catch { return new Set(); } }
+  function saveDone(set){ localStorage.setItem(STORAGE_KEY, JSON.stringify([...set])); }
+  function markDone(n){ const set=loadDone(); if(!set.has(n)){ set.add(n); saveDone(set); renderProgress(); toast("Passo "+n+" ¡completado!"); } }
+  function renderProgress(){
+    const set = loadDone();
+    document.querySelectorAll('.step').forEach(el => el.classList.toggle('done', set.has(+el.dataset.step)));
+    const pct = Math.round(set.size / TOTAL_STEPS * 100);
+    document.getElementById('ring').style.setProperty('--p', pct);
+    document.getElementById('ringPct').textContent = pct + '%';
+    document.getElementById('ringLabel').textContent = set.size + ' de ' + TOTAL_STEPS + ' pasos completados';
+    document.getElementById('stepsSummary').textContent =
+      set.size === TOTAL_STEPS ? '✓ Configuración completada, ¡buen juego!' : (set.size + '/' + TOTAL_STEPS + ' completados · toca para continuar');
+  }
+
+  /* ================= AÇÕES ================= */
+  function downloadLauncher(){ markDone(4); window.open(DOWNLOAD_URL, '_blank'); }
+
+  /* ================= TOAST ================= */
+  let toastTimer;
+  function toast(msg, type){
+    const t = document.getElementById('toast');
+    document.getElementById('toastMsg').textContent = msg;
+    t.className = 'toast show' + (type==='err'?' err':'');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  /* ================= CONTADOR ANIMADO ================= */
+  function animateCounter(){
+    const el = document.getElementById('counter');
+    const target = 40000; const dur = 1600; const t0 = performance.now();
+    function tick(now){
+      const p = Math.min((now - t0) / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.floor(eased * target).toLocaleString('pt-BR');
+      if (p < 1) requestAnimationFrame(tick); else el.textContent = "40.000";
+    }
+    requestAnimationFrame(tick);
+  }
+
+  /* ================= BIBLIOTECA ================= */
+  const FEATURED = [2358720,553850,2246340,2767030,2694490,1245620,1086940,1091500,730,271590,1771300,1623730,1174180,570,2050650,578080,990080,1593500,359550,1172470,2457220,1295660,2001120];
+  function buildLibrary(){
+    const grid = document.getElementById('libGrid');
+    FEATURED.slice(0, 15).forEach(appid => {
+      const a = document.createElement('div'); a.className = 'game';
+      const img = document.createElement('img'); img.loading = 'lazy';
+      img.src = `https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}/library_600x900.jpg`;
+      img.onerror = function(){ this.onerror=null; this.src=`https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}/header.jpg`; };
+      a.appendChild(img); grid.appendChild(a);
+    });
+    const more = document.createElement('div'); more.className = 'game more';
+    more.innerHTML = '<div><b>+40.000</b><span>y mucho más</span></div>';
+    grid.appendChild(more);
+  }
+
+  /* ================= NAV ATIVO AO ROLAR ================= */
+  function initNav(){
+    const links = [...document.querySelectorAll('[data-nav]')];
+    const map = links.map(l => ({ l, sec: document.querySelector(l.getAttribute('href')) })).filter(x => x.sec);
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting){ links.forEach(l=>l.classList.remove('active')); const hit=map.find(x=>x.sec===e.target); if(hit) hit.l.classList.add('active'); } });
+    }, { rootMargin: "-40% 0px -55% 0px" });
+    map.forEach(x => obs.observe(x.sec));
+  }
+
+  /* ================= INIT ================= */
+  checkSession();
+  renderProgress();
+  buildLibrary();
+  initNav();
+  animateCounter();
+</script>
+
+<script>
+/* ===== Guia visual: quadradinhos que o cliente marca =====
+   O progresso fica salvo no navegador dele, por guia. Se fechar o modal
+   e voltar depois, continua de onde parou. */
+(function () {
+  function chave(guia) { return 'almaz_guia_' + guia; }
+
+  function lidos(guia) {
+    try { return JSON.parse(localStorage.getItem(chave(guia))) || []; } catch (e) { return []; }
+  }
+  function salvar(guia, lista) {
+    try { localStorage.setItem(chave(guia), JSON.stringify(lista)); } catch (e) {}
+  }
+
+  function atualizarResumo(bloco) {
+    const total = bloco.querySelectorAll('.alz-passo').length;
+    const feitos = bloco.querySelectorAll('.alz-passo.feito').length;
+    const resumo = bloco.querySelector('.alz-progresso');
+    if (!resumo) return;
+    resumo.innerHTML = feitos >= total ? 'Todo listo. <b>¡Buen juego!</b>'
+      : '<b>' + feitos + '</b> de ' + total + ' passos marcados';
+  }
+
+  function ligar(bloco) {
+    const guia = bloco.dataset.guia || 'padrao';
+    const passos = [...bloco.querySelectorAll('.alz-passo')];
+    const marcados = lidos(guia);
+
+    passos.forEach((p, i) => {
+      if (marcados.includes(i)) p.classList.add('feito');
+      const alvo = p.querySelector('.alz-ck');
+      if (!alvo || alvo.dataset.ligado) return;
+      alvo.dataset.ligado = '1';
+      alvo.addEventListener('click', () => {
+        p.classList.toggle('feito');
+        const agora = passos.reduce((acc, el, n) => {
+          if (el.classList.contains('feito')) acc.push(n);
+          return acc;
+        }, []);
+        salvar(guia, agora);
+        atualizarResumo(bloco);
+      });
+    });
+
+    atualizarResumo(bloco);
+  }
+
+  function ligarTudo() { document.querySelectorAll('.alz-guia').forEach(ligar); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ligarTudo);
+  else ligarTudo();
+})();
+</script>
+<script src="membro-kit.js"></script>
+</body>
+</html>
