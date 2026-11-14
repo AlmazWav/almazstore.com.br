@@ -1137,7 +1137,7 @@ body.gm-open{overflow:hidden}
 </style>
 
 <script src="https://almaz-tracker.vercel.app/t.js" data-id="default" defer></script>
-<link rel="stylesheet" href="assets/design-roxo.css?v=9">
+<link rel="stylesheet" href="assets/design-roxo.css?v=10">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,800&display=swap" media="print" onload="this.media='all'">
 </head>
 
@@ -5228,10 +5228,16 @@ else{el.scrollIntoView({behavior:'smooth'});}
   }
   /* a animacao de entrada (CSS) do art-stage termina antes do primeiro scroll
      manual; so assume o transform depois dela pra nao brigar com o keyframe */
-  var pronto=false;
-  setTimeout(function(){ pronto=true; if(stage) stage.style.animation='none'; quadro(); },1700);
-  window.addEventListener('scroll',function(){ if(pronto&&!tick){ tick=true; requestAnimationFrame(quadro); } },{passive:true});
-  window.addEventListener('resize',function(){ largo=window.matchMedia('(min-width: 901px)').matches; if(copy&&!largo){copy.style.transform='';copy.style.opacity='';} },{passive:true});
+  /* 13/11/2026: com o GSAP carregado, o bloco "GSAP + SCROLLTRIGGER" no fim da pagina
+     faz o 3 e o 4 (mesmos valores, com scrub). Este codigo fica so de reserva, se o
+     CDN do GSAP nao responder. */
+  window.addEventListener('DOMContentLoaded',function(){
+    if(window.gsap&&window.ScrollTrigger) return;
+    var pronto=false;
+    setTimeout(function(){ pronto=true; if(stage) stage.style.animation='none'; quadro(); },1700);
+    window.addEventListener('scroll',function(){ if(pronto&&!tick){ tick=true; requestAnimationFrame(quadro); } },{passive:true});
+    window.addEventListener('resize',function(){ largo=window.matchMedia('(min-width: 901px)').matches; if(copy&&!largo){copy.style.transform='';copy.style.opacity='';} },{passive:true});
+  });
 })();
 </script>
 
@@ -5242,6 +5248,8 @@ else{el.scrollIntoView({behavior:'smooth'});}
      nativo (o Lenis nao mexe no toque por padrao). Desliga com prefers-reduced-motion.
      Para quando um popup trava a pagina (body com overflow hidden, cat-open, gm-open)
      e os popups com rolagem propria tem data-lenis-prevent. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
 <script>
 window.addEventListener('DOMContentLoaded',function(){
@@ -5252,8 +5260,17 @@ window.addEventListener('DOMContentLoaded',function(){
   });
   var lenis=new window.Lenis({lerp:0.085,smoothWheel:true,wheelMultiplier:1});
   window.almazLenis=lenis;
-  function raf(t){ lenis.raf(t); requestAnimationFrame(raf); }
-  requestAnimationFrame(raf);
+  /* 13/11/2026: com o GSAP, o Lenis anda no relogio do GSAP e avisa o ScrollTrigger
+     a cada quadro, senao o parallax e a rolagem suave ficam fora de compasso */
+  if(window.gsap&&window.ScrollTrigger){
+    gsap.registerPlugin(ScrollTrigger);
+    lenis.on('scroll',ScrollTrigger.update);
+    gsap.ticker.add(function(t){ lenis.raf(t*1000); });
+    gsap.ticker.lagSmoothing(0);
+  } else {
+    var raf=function(t){ lenis.raf(t); requestAnimationFrame(raf); };
+    requestAnimationFrame(raf);
+  }
   /* popups travam a pagina: o Lenis para junto */
   var b=document.body;
   function travado(){ return b.style.overflow==='hidden'||document.documentElement.style.overflow==='hidden'||b.classList.contains('cat-open')||b.classList.contains('gm-open'); }
@@ -5267,6 +5284,91 @@ window.addEventListener('DOMContentLoaded',function(){
     var id=a.getAttribute('href'); if(id.length<2) return;
     var alvo=document.querySelector(id); if(!alvo) return;
     e.preventDefault(); lenis.scrollTo(alvo,{offset:-16});
+  });
+});
+</script>
+
+<!-- ===================== GSAP + SCROLLTRIGGER (13/11/2026) =====================
+     Pedido do Almaz: usar GSAP, Lenis e React Bits no site. Nada de componente novo:
+     os efeitos entram em pecas que ja existiam.
+     A) parallax do topo e faixa de capas: mesmos numeros do bloco "MOTION COM SCROLL",
+        agora com scrub do ScrollTrigger (anda junto com o Lenis, com um leve atraso).
+     B) CountUp (React Bits): o total do carrinho da Steam conta de R$ 0 ate o valor
+        quando aparece. Sem JS ou com reduced-motion o valor fica parado como estava.
+     C) SpotlightCard (React Bits): luz roxa segue o mouse nos cards de plano e de
+        lancamento. So com mouse.
+     D) Magnet (React Bits): os botoes de compra puxam alguns pixels pro mouse. Usa a
+        propriedade CSS "translate" pra nao brigar com o transform do :hover/:active.
+     CSS no fim do assets/design-roxo.css ("GSAP + REACT BITS"). -->
+<script>
+window.addEventListener('DOMContentLoaded',function(){
+  if(!window.gsap||!window.ScrollTrigger) return;
+  gsap.registerPlugin(ScrollTrigger);
+  var mq=function(q){ return window.matchMedia&&window.matchMedia(q).matches; };
+  var reduz=mq('(prefers-reduced-motion: reduce)'), mouse=mq('(hover: hover) and (pointer: fine)');
+
+  if(!reduz){
+    /* A) topo: espera a entrada em CSS do art-stage (1,6s) e depois assume o transform */
+    var hero=document.querySelector('.ph-imersivo'),
+        stage=document.querySelector('.ph-imersivo .art-stage'),
+        pg=document.querySelector('.ph-imersivo .pg');
+    if(hero) gsap.delayedCall(1.7,function(){
+      if(stage){
+        stage.style.animation='none';
+        gsap.to(stage,{y:function(){ return hero.offsetHeight*0.35; },scale:1.08,ease:'none',
+          scrollTrigger:{trigger:hero,start:'top top',end:'bottom top',scrub:true,invalidateOnRefresh:true}});
+      }
+      if(pg) gsap.matchMedia().add('(min-width: 901px)',function(){
+        gsap.to(pg,{y:function(){ return -hero.offsetHeight*0.12; },opacity:0,ease:'none',
+          scrollTrigger:{trigger:hero,start:'top top',end:function(){ return '+='+hero.offsetHeight*0.91; },scrub:true,invalidateOnRefresh:true}});
+      });
+    });
+
+    /* A) faixa de capas: uma linha vai pra esquerda, a outra volta */
+    var wall=document.querySelector('.mv-wall');
+    if(wall) document.querySelectorAll('.mv-row').forEach(function(row,i){
+      gsap.fromTo(row,{x:function(){ return -(i%2?0.34:0.06)*row.scrollWidth; }},
+        {x:function(){ return -0.20*row.scrollWidth; },ease:'none',
+         scrollTrigger:{trigger:wall,start:'top bottom',end:'bottom top',scrub:0.6,invalidateOnRefresh:true}});
+    });
+
+    /* B) CountUp no total do carrinho */
+    document.querySelectorAll('.conta-total b, .conta-ano.now b').forEach(function(el){
+      var alvo=parseFloat(el.textContent.replace(/[^\d,]/g,'').replace(',','.'));
+      if(!alvo) return;
+      var fmt=function(v){ return 'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); };
+      var o={v:0}; el.textContent=fmt(0);
+      gsap.to(o,{v:alvo,duration:1.8,ease:'power3.out',
+        onUpdate:function(){ el.textContent=fmt(o.v); },
+        onComplete:function(){ el.textContent=fmt(alvo); },
+        scrollTrigger:{trigger:el,start:'top 90%',once:true}});
+    });
+  }
+
+  if(!mouse) return;
+
+  /* C) SpotlightCard */
+  document.querySelectorAll('#pricing .offer-card, .cresce-card').forEach(function(c){
+    c.classList.add('fx-spot');
+    c.addEventListener('pointermove',function(e){
+      var r=c.getBoundingClientRect();
+      c.style.setProperty('--fx-x',(e.clientX-r.left)+'px');
+      c.style.setProperty('--fx-y',(e.clientY-r.top)+'px');
+    });
+  });
+
+  /* D) Magnet nos botoes de compra */
+  if(reduz) return;
+  document.querySelectorAll('.ph-imersivo .buybox .offer-btn, #pricing .offer-btn').forEach(function(b){
+    var p={x:0,y:0}, pinta=function(){ b.style.translate=p.x.toFixed(2)+'px '+p.y.toFixed(2)+'px'; },
+        xTo=gsap.quickTo(p,'x',{duration:0.6,ease:'power3',onUpdate:pinta}),
+        yTo=gsap.quickTo(p,'y',{duration:0.6,ease:'power3',onUpdate:pinta});
+    b.addEventListener('pointermove',function(e){
+      var r=b.getBoundingClientRect();
+      xTo((e.clientX-(r.left+r.width/2))/r.width*14);
+      yTo((e.clientY-(r.top+r.height/2))/r.height*8);
+    });
+    b.addEventListener('pointerleave',function(){ xTo(0); yTo(0); });
   });
 });
 </script>

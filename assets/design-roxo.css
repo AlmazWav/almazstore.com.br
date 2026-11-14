@@ -1604,3 +1604,15 @@ html.lenis,html.lenis body{height:auto}
 }
 @media (prefers-reduced-motion:reduce){ .ph-imersivo .buybox .offer-btn::before{animation:none;display:none} }
 @media (min-width:901px){ .ph-imersivo .buybox-top{padding-left:24px;border-left:1px solid rgba(255,255,255,.18)} .ph-imersivo .buybox{column-gap:24px} }
+
+/* =========================================================================
+   13/11/2026: GSAP + REACT BITS
+   O JS fica no fim do index.html ("GSAP + SCROLLTRIGGER"). As classes .fx-* so
+   entram com mouse (hover + pointer fino); no celular nada disso existe.
+   ========================================================================= */
+/* SpotlightCard: luz roxa que segue o mouse dentro do card */
+.fx-spot{position:relative;isolation:isolate}
+.fx-spot::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:2;
+  opacity:0;transition:opacity .35s ease;
+  background:radial-gradient(420px circle at var(--fx-x,50%) var(--fx-y,50%),rgba(168,59,255,.24),transparent 60%)}
+.fx-spot:hover::after{opacity:1}
