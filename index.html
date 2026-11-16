@@ -80,6 +80,13 @@ window.sendMetaServerEvent = function(eventName, eventId, customData) {
   }).catch(function() {});
 };
 
+// Ambiente local (localhost/arquivo): NÃO dispara o pixel de produção.
+// Testes em localhost estavam poluindo o pixel AlmazNew com eventos falsos.
+if (/^(localhost|127\.0\.0\.1|0\.0\.0\.0)$/.test(location.hostname) || location.protocol === 'file:') {
+  window.fbq = function() {};
+  window.sendMetaServerEvent = function() {};
+  console.log('[PIXEL] desligado em ambiente local');
+}
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -1289,18 +1296,17 @@ var io = (function(){
 
         <div class="buybox">
           <div class="buybox-top">
-            <!-- Passou a abrir pelo MENOR preco em 20/08/2026. O R$ 49,97 sozinho era uma
-                  porta cara pra primeira tela; "a partir de R$ 9,97" mostra a entrada da oferta.
-                 DECISAO DO USER, mesma data: o R$ 49,97 fica FORA desta caixa de proposito,
-                 pra ninguem levar susto de preco na primeira tela. Ele aparece na secao de
-                 planos, depois que a pessoa ja leu a oferta inteira. Nao "conserte" isso
-                 achando que faltou o preco cheio: e escolha, nao esquecimento.
-                  A ficha tecnica identifica os 40.000 jogos e os lancamentos semanais como
-                  beneficios do Vitalicio; o preco de entrada identifica o Basico com 1.000 jogos. -->
+            <!-- ANCORA NO VITALICIO desde 16/11/2026 (DECISAO DO USER).
+                 Com "a partir de R$ 9,97" aqui, 8 de 10 vendas viraram Basico, e o ticket
+                 de R$ 9,97 nao paga o anuncio (custo por venda de R$ 6,59 a R$ 12,61). A primeira
+                 tela agora ancora no Vitalicio. O titulo (h1) continua sendo a PROMESSA,
+                 nao o preco: o preco fica so nesta caixa. O Basico e o Avancado seguem
+                 na secao de planos. Para voltar ao antigo, ver o backup
+                 _ARQUIVO/backups-site/index.backup-20261116-antes-pixel-localhost.html -->
             <span class="buybox-prices">
-              <span class="buybox-from">a partir de</span>
-              <span class="buybox-new num">R$ 9,97</span>
-              <span class="buybox-once">Plano Básico · 1.000 jogos · pagamento único</span>
+              <span class="buybox-from">Acesso Vitalício</span>
+              <span class="buybox-new num">R$ 49,97</span>
+              <span class="buybox-once">40.000 jogos + todos os lançamentos · pagamento único</span>
             </span>
           </div>
           <!-- CTA principal da primeira tela: leva diretamente aos planos. A biblioteca
