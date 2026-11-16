@@ -5326,6 +5326,24 @@ window.addEventListener('DOMContentLoaded',function(){
 });
 </script>
 
+<!-- 16/11/2026: card do plano inteiro tocavel. No Clarity um visitante tocou varias
+     vezes na lista e no preco do Vitalicio e nao entrou: so o botao fazia algo,
+     o resto do card era clique morto. Toque fora de link repassa pro botao do card,
+     entao segue o mesmo caminho (checkout direto ou popup de upsell). -->
+<style>.offer-card[data-plan-id]{cursor:pointer}</style>
+<script>
+(function(){
+  document.querySelectorAll('.offer-card[data-plan-id]').forEach(function(card){
+    var btn=card.querySelector('.offer-btn'); if(!btn) return;
+    card.addEventListener('click',function(e){
+      if(e.target.closest('a,button,input,select,textarea,label')) return;
+      if(window.getSelection && String(window.getSelection())) return; /* estava selecionando texto */
+      btn.click();
+    });
+  });
+})();
+</script>
+
 <!-- Contato no WhatsApp pra quem nao vai comprar agora (16/11).
      Nao aparece antes dos planos (regra de poucos CTAs ate o #pricing).
      Aparece uma vez por sessao: depois que a pessoa ja viu os planos e
