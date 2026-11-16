@@ -31,11 +31,6 @@ const ALMAZ_VIDEOS = [
   { rede: 'facebook', url: 'https://www.facebook.com/61579859661601/posts/4539851306229253/' },
   { rede: 'facebook', url: 'https://www.facebook.com/61579859661601/posts/1151489620591895/' },
   { rede: 'facebook', url: 'https://www.facebook.com/61579859661601/posts/1109329968476341/' },
-  { rede: 'facebook', url: 'https://www.facebook.com/61579859661601/posts/122163379526995322/' },
-  { rede: 'facebook', url: 'https://www.facebook.com/61579859661601/posts/122163379478995322/' },
-  { rede: 'facebook', url: 'https://www.facebook.com/61579859661601/posts/122163379454995322/' },
-  { rede: 'facebook', url: 'https://www.facebook.com/61579859661601/posts/122163389876995322/' },
-  { rede: 'facebook', url: 'https://www.facebook.com/61579859661601/posts/122163389894995322/' },
 ];
 /* Perfil que o cliente tem que seguir. Só o @, sem a arroba.
    Vazio esconde o passo de seguir inteiro. */
