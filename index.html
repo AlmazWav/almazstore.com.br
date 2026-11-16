@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdn.cloudflare.steamstatic.com" crossorigin>
 
-<title>Almaz Store | Você paga uma vez e nunca mais gasta com jogo na Steam</title>
+<title>Almaz Store | Desbloqueie +40.000 jogos na sua Steam</title>
 <meta name="description" content="Você paga uma vez e nunca mais compra jogo. São +40.000 jogos originais na sua conta Steam e os lançamentos entram sem custo. Taxa única, licença vitalícia, pagamento no PIX com liberação na hora.">
 
 <!-- Microsoft Clarity (deferred: loads after first paint to avoid blocking render) -->
@@ -1243,7 +1243,8 @@ var io = (function(){
            sao os mesmos, mas a frase descreve o que acontece com a pessoa em vez de
            mandar ela pagar. Se for mexer aqui de novo, mexa no MODO do verbo, nao na
            promessa: o "nunca mais gasta" e o eixo da pagina inteira. -->
-      <h1>Você paga uma vez e nunca mais gasta com jogo na Steam</h1>
+      <!-- 16/11/2026: copy da pagina toda saiu do tom de venda pro de experiencia (decisao do Almaz). -->
+      <h1>Desbloqueie +40.000 jogos na sua Steam e nunca mais gaste com jogos</h1>
       <!-- Aqui existia o subtitulo "Taxa unica, licenca vitalicia. O download vem dos
            servidores oficiais da Steam, na sua propria conta." Removido em 13/08/2026:
            ocupava 80px logo acima do banner, e as duas informacoes dele passaram a estar
@@ -1282,8 +1283,8 @@ var io = (function(){
 
         <div class="side-card">
           <p class="side-desc">
-            Mais de 40.000 jogos no Vitalício. Todos os lançamentos entram no Avançado e no Vitalício.
-            Você baixa pela própria Steam, sem compartilhar conta.
+            Baixa pela própria Steam, na sua conta, sem compartilhar com ninguém.
+            Todo lançamento entra no Avançado e no Vitalício.
           </p>
           <dl class="spec">
             <div class="spec-row"><dt>Jogos no Vitalício</dt><dd class="num">+<span data-almaz-games="vitalicio">40.000</span></dd></div>
@@ -1311,7 +1312,7 @@ var io = (function(){
           </div>
           <!-- CTA principal da primeira tela: leva diretamente aos planos. A biblioteca
                continua disponivel como alternativa para quem quer conferir um jogo. -->
-          <a href="#pricing" class="offer-btn">Ver planos e preços</a>
+          <a href="#pricing" class="offer-btn">Quero começar a jogar</a>
           <a href="#feedbacks" class="hero-proof-link">Veja o que nossos clientes estão falando <span aria-hidden="true">↓</span></a>
           <div class="buybox-pay">Pagamento no <b>PIX</b>, aprovação na hora</div>
           <div class="buybox-terms">Pagamento único · sem mensalidade · sem renovação</div>
@@ -1441,61 +1442,7 @@ var io = (function(){
       </ul>
     </div>
 
-    <div class="lx-demo-wrap">
-      <div class="lx-demo-copy reveal">
-        <h3>Teste o launcher</h3>
-        <p>Busque um jogo e clique em adicionar.</p>
-        <figure class="lx-real">
-          <img src="assets/launcher/launcher-desbloqueando.webp" width="2160" height="1350" loading="lazy" decoding="async" alt="Tela real do launcher ALMAZ desbloqueando a biblioteca">
-          <figcaption>Desbloqueando a biblioteca.</figcaption>
-        </figure>
-      </div>
-
-      <div class="ld reveal" id="ld">
-        <div class="ld-top">
-          <span class="ld-disp">Meu <span>ALMAZ</span></span>
-          <span class="ld-steam">Steam detectada</span>
-        </div>
-        <div class="ld-hero">
-          <img id="ld-img" src="" alt="" loading="lazy" decoding="async">
-          <div class="ld-hero-copy">
-            <span class="ld-chip" id="ld-chip">Pronto pra adicionar</span>
-            <div class="ld-name ld-disp" id="ld-name"></div>
-            <div class="ld-meta" id="ld-meta"></div>
-          </div>
-        </div>
-        <div class="ld-body">
-          <label class="ld-busca">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7.5"/><path d="M20.5 20.5l-4-4"/></svg>
-            <input type="search" id="ld-q" placeholder="Busque o jogo que você quer" autocomplete="off" spellcheck="false" aria-label="Buscar jogo no catálogo">
-          </label>
-          <div class="ld-res" id="ld-res" role="listbox" aria-label="Resultados da busca"></div>
-          <div class="ld-pick-lbl" id="ld-pick-lbl">Lançamentos</div>
-          <div class="ld-pick" id="ld-pick"></div>
-          <div class="ld-acts">
-            <button type="button" class="ld-btn" id="ld-go">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg>
-              <span>Adicionar este jogo</span>
-            </button>
-          </div>
-          <div class="ld-lib" id="ld-lib">
-            <div class="ld-lib-hd"><span>Biblioteca Steam</span><span id="ld-lib-n"></span></div>
-            <div id="ld-lib-list"></div>
-          </div>
-        </div>
-        <div class="ld-ov" id="ld-ov" role="status" aria-live="polite">
-          <div class="ld-box" id="ld-box">
-            <div class="ld-spin"></div>
-            <div class="ld-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
-            <div class="ld-box-t ld-disp" id="ld-t">Desbloqueando sua biblioteca</div>
-            <div class="ld-box-m" id="ld-m">Iniciando...</div>
-            <div class="ld-bar"><i id="ld-bar"></i></div>
-            <a href="#pricing" class="ld-btn ld-plano-cta" id="ld-cta">Ver o Vitalício</a>
-            <button type="button" class="ld-box-x" id="ld-x">Testar outro jogo</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- 16/11/2026: o teste de busca do launcher saiu daqui (pedido do Almaz). A busca fica no catalogo (#biblioteca); aqui so a imagem. Codigo antigo em index.backup-pre-tirar-demo-launcher.html -->
 
     <!-- 10/11/2026: botao pros planos tirado daqui. Pedido do Almaz: muito CTA no caminho; a ideia e entreter a pessoa ate a secao de compra. -->
   </div>
@@ -1643,7 +1590,7 @@ var io = (function(){
 <section class="sec" id="conta">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>Quanto custam alguns jogos na Steam?</h2>
+      <h2>Quanto custa sua lista de desejos?</h2>
       <p>Preços da Steam Brasil em 04/11/2026.</p>
     </div>
 
@@ -1721,7 +1668,7 @@ var io = (function(){
           <span>e acabou</span>
         </div>
         <p class="conta-vs-sub">
-          Esses jogos e mais de <strong><span data-almaz-games="vitalicio">40.000</span> títulos</strong> por pagamento único. O Avançado também inclui todos os lançamentos.
+          Esses e mais de <strong><span data-almaz-games="vitalicio">40.000</span> jogos</strong> saem por um pagamento só. O Avançado também inclui todo lançamento.
         </p>
         <!-- Este botao ia DIRETO pro checkout ate 20/08/2026. Virou degrau do funil:
              a caixa continua fazendo a comparacao de preco, que e o trabalho dela, mas
@@ -1740,8 +1687,8 @@ var io = (function(){
 <section class="sec" id="cresce">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>Todos os lançamentos também entram</h2>
-      <p>No Avançado e no Vitalício, todos os lançamentos entram no catálogo sem custo adicional.</p>
+      <h2>Lançou na Steam, você já joga</h2>
+      <p>No Avançado e no Vitalício, todo lançamento entra sem pagar nada a mais.</p>
     </div>
 
     <div class="cresce reveal">
@@ -1811,7 +1758,7 @@ var io = (function(){
 
     <div class="cresce-cta reveal">
       <p>
-        No Avançado e no Vitalício, todos os lançamentos entram no catálogo sem custo adicional.
+        No Avançado e no Vitalício, todo lançamento entra sem pagar nada a mais.
       </p>
       <!-- Ultimo degrau do funil: daqui a pessoa cai na oferta. Ia DIRETO pro checkout
            ate 20/08/2026, o que deixava ela comprar sem nunca ter visto os 3 planos. -->
@@ -1824,8 +1771,8 @@ var io = (function(){
 <section class="sec" id="biblioteca">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>Um pedaço da biblioteca</h2>
-      <p>Pesquise seu jogo ou abra o catálogo completo para conferir se ele está incluso.</p>
+      <h2>O que você vai jogar primeiro?</h2>
+      <p>Pesquisa o jogo ou abre o catálogo completo.</p>
     </div>
 
     <div id="disponibilidade">
@@ -1855,8 +1802,8 @@ var io = (function(){
 <section class="sec" id="feedbacks">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>O que nossos clientes estão falando</h2>
-      <p>Veja mensagens de clientes que já estão jogando. Toque em uma para ampliar.</p>
+      <h2>A galera já tá jogando</h2>
+      <p>Mensagens de quem já entrou. Toca em uma pra ampliar.</p>
     </div>
     <div class="qbx-rail reveal">
       <div class="qbx-track" id="fbk-track"></div>
@@ -1920,21 +1867,21 @@ var io = (function(){
      "Conhecer o programa" apontava pro #launcher, que nao existe mais). -->
 <section class="sec" id="passos">
   <div class="wrap">
-    <div class="sec-head reveal"><h2>Do pagamento ao jogo rodando</h2></div>
+    <div class="sec-head reveal"><h2>Em poucos minutos você tá jogando</h2></div>
     <div class="steps reveal">
       <div class="step">
         <div class="step-n num">1</div>
-        <h3>Escolhe o plano e paga</h3>
+        <h3>Escolhe o plano</h3>
         <p>Pagamento no PIX. A aprovação sai na hora que o pagamento confirma.</p>
       </div>
       <div class="step">
         <div class="step-n num">2</div>
-        <h3>Recebe o acesso no e-mail</h3>
+        <h3>Abre o e-mail</h3>
         <p>Chega em poucos minutos, com o launcher e o passo a passo da ativação.</p>
       </div>
       <div class="step">
         <div class="step-n num">3</div>
-        <h3>Baixa direto na sua Steam</h3>
+        <h3>Joga na sua Steam</h3>
         <p>Os jogos aparecem na sua biblioteca e o download vem dos servidores da Steam.</p>
       </div>
     </div>
@@ -1945,7 +1892,7 @@ var io = (function(){
 <section class="sec" id="pricing">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2>Escolha seu plano</h2>
+      <h2>Escolhe seu plano e começa a jogar</h2>
       <p>Pagamento único. Sem mensalidade nem renovação. Todos os lançamentos no Avançado e no Vitalício.</p>
     </div>
 
@@ -2064,9 +2011,9 @@ var io = (function(){
         <div class="gr-badge">
           <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
         </div>
-        <h3>30 dias pra testar sem risco</h3>
+        <h3>Joga 30 dias sem risco</h3>
         <p>
-          Teste por 30 dias. Se não gostar, peça o reembolso dentro desse prazo.
+          Se não curtir, devolvemos seu dinheiro dentro desse prazo.
         </p>
       </div>
     </div>
@@ -2110,7 +2057,7 @@ var io = (function(){
   </div>
 </footer>
 
-<a id="sticky-cta" href="#pricing" role="button" aria-label="Ver os planos">Ver os planos e preços</a>
+<a id="sticky-cta" href="#pricing" role="button" aria-label="Ver os planos">Quero começar a jogar</a>
 
 <!-- ===================== MODAL DO CATÁLOGO ===================== -->
 <div class="cat-modal" id="cat-modal" role="dialog" aria-modal="true" aria-label="Catálogo completo de jogos">
@@ -5377,6 +5324,73 @@ window.addEventListener('DOMContentLoaded',function(){
     b.addEventListener('pointerleave',function(){ xTo(0); yTo(0); });
   });
 });
+</script>
+
+<!-- Contato no WhatsApp pra quem nao vai comprar agora (16/11).
+     Nao aparece antes dos planos (regra de poucos CTAs ate o #pricing).
+     Aparece uma vez por sessao: depois que a pessoa ja viu os planos e
+     (a) no desktop, quando o mouse sai pela parte de cima da tela, ou
+     (b) depois de 25s sem clicar em nenhum checkout. -->
+<style>
+#wpp-depois{
+  position:fixed;right:16px;bottom:16px;z-index:720;width:300px;max-width:calc(100vw - 32px);
+  background:#121212;border:1px solid rgba(37,211,102,.35);border-radius:14px;
+  box-shadow:0 14px 40px rgba(0,0,0,.75);padding:16px 16px 14px;color:#f5f5f5;font-family:var(--f);
+  opacity:0;transform:translateY(16px);pointer-events:none;transition:opacity .25s ease,transform .25s ease;
+}
+#wpp-depois.on{opacity:1;transform:none;pointer-events:auto}
+#wpp-depois .wd-x{position:absolute;top:6px;right:8px;background:none;border:0;color:#909090;font-size:20px;line-height:1;padding:6px;cursor:pointer}
+#wpp-depois .wd-t{font-weight:800;font-size:15.5px;margin:0 22px 6px 0}
+#wpp-depois .wd-p{font-size:13.5px;color:#c8c8c8;line-height:1.5;margin:0 0 12px}
+#wpp-depois .wd-b{display:flex;align-items:center;justify-content:center;gap:8px;background:#25D366;color:#06210f;
+  font-weight:800;font-size:14.5px;padding:12px;border-radius:10px;text-decoration:none}
+#wpp-depois .wd-b svg{width:18px;height:18px;flex:none}
+@media(max-width:820px){#wpp-depois{left:12px;right:12px;width:auto;max-width:none;bottom:80px}}
+@media(prefers-reduced-motion:reduce){#wpp-depois{transition:none}}
+</style>
+<div id="wpp-depois" role="dialog" aria-label="Contato no WhatsApp" aria-hidden="true">
+  <button class="wd-x" type="button" aria-label="Fechar">&times;</button>
+  <p class="wd-t">Não dá pra testar agora?</p>
+  <p class="wd-p">Chama a gente no WhatsApp e não perde o contato. Quando puder, a gente te ajuda a começar.</p>
+  <a class="wd-b" target="_blank" rel="noopener" href="https://wa.me/5545999515463?text=Oi!%20Vi%20o%20site%20da%20Almaz%20Store%20e%20quero%20salvar%20o%20contato%20pra%20testar%20depois.">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.6 11.6 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.1-1.2l-.4-.2z"/></svg>
+    Chamar no WhatsApp
+  </a>
+</div>
+<script>
+(function(){
+  var box=document.getElementById('wpp-depois'), planos=document.getElementById('pricing');
+  if(!box||!planos) return;
+  var CHAVE='wpp_depois_visto';
+  function ja(){ try{ return sessionStorage.getItem(CHAVE)==='1'; }catch(e){ return false; } }
+  function marca(){ try{ sessionStorage.setItem(CHAVE,'1'); }catch(e){} }
+  if(ja()) return;
+  var viuPlanos=false, comprou=false, aberto=false, timer=null;
+  function mostra(){
+    if(aberto||comprou||!viuPlanos||ja()) return;
+    aberto=true; marca();
+    box.classList.add('on'); box.setAttribute('aria-hidden','false');
+  }
+  function fecha(){ box.classList.remove('on'); box.setAttribute('aria-hidden','true'); }
+  box.querySelector('.wd-x').addEventListener('click',fecha);
+  box.querySelector('.wd-b').addEventListener('click',function(){ setTimeout(fecha,300); });
+  new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting&&!viuPlanos){ viuPlanos=true; timer=setTimeout(mostra,25000); }
+    });
+  },{threshold:0,rootMargin:'0px 0px -40% 0px'}).observe(planos); /* a secao e mais alta que a tela, threshold em % nunca bate */
+  /* clicou num botao de compra: nao interrompe com o contato */
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a[href]');
+    if(!a||box.contains(a)) return;
+    var h=a.getAttribute('href')||'';
+    if(/checkout|ggcheckout|pay|pix/i.test(h)){ comprou=true; if(timer) clearTimeout(timer); }
+  },true);
+  /* desktop: mouse saindo pela parte de cima (indo fechar a aba) */
+  document.addEventListener('mouseout',function(e){
+    if(!e.relatedTarget&&e.clientY<=0) mostra();
+  });
+})();
 </script>
 </body>
 </html>
