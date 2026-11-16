@@ -25,9 +25,24 @@
    └──────────────────────────────────────────────────────────────────────────┘ */
 // Criativos ativos (16/11/2026) para os comentários exigidos no launcher e na área de membros.
 const ALMAZ_VIDEOS = [
+  // anuncios ativos (conta Wallison Henrique Moreira da Cunha)
   { rede: 'instagram', url: 'https://www.instagram.com/reel/DfahVCGGUh7/' },
   { rede: 'instagram', url: 'https://www.instagram.com/reel/DftGjbjDu6N/' },
   { rede: 'instagram', url: 'https://www.instagram.com/reel/DftG7uhHA9K/' },
+  // reels do perfil (fixados e organicos)
+  { rede: 'instagram', url: 'https://www.instagram.com/reel/DfzqhU9jEsi/' },
+  { rede: 'instagram', url: 'https://www.instagram.com/reel/Dfzqt0gmVv2/' },
+  { rede: 'instagram', url: 'https://www.instagram.com/reel/Dfzq4CyD1yo/' },
+  { rede: 'instagram', url: 'https://www.instagram.com/reel/DfsPeW7FWdw/' },
+  { rede: 'instagram', url: 'https://www.instagram.com/reel/DfsNNY-lIt2/' },
+  { rede: 'instagram', url: 'https://www.instagram.com/reel/DffktYgldt8/' },
+  { rede: 'instagram', url: 'https://www.instagram.com/reel/Dfcsgc_gasc/' },
+  { rede: 'instagram', url: 'https://www.instagram.com/reel/DfU9MDKjSWp/' },
+  { rede: 'instagram', url: 'https://www.instagram.com/reel/DfU85QwGw0H/' },
+  { rede: 'instagram', url: 'https://www.instagram.com/reel/DfTZxxFFTrx/' },
+  { rede: 'instagram', url: 'https://www.instagram.com/reel/DfTZgCVlVDu/' },
+  { rede: 'instagram', url: 'https://www.instagram.com/reel/DfR_kAxn6Xv/' },
+  // post no Facebook dos 3 anuncios
   { rede: 'facebook', url: 'https://www.facebook.com/61579859661601/posts/4539851306229253/' },
   { rede: 'facebook', url: 'https://www.facebook.com/61579859661601/posts/1151489620591895/' },
   { rede: 'facebook', url: 'https://www.facebook.com/61579859661601/posts/1109329968476341/' },
