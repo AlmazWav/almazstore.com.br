@@ -1616,3 +1616,49 @@ html.lenis,html.lenis body{height:auto}
   opacity:0;transition:opacity .35s ease;
   background:radial-gradient(420px circle at var(--fx-x,50%) var(--fx-y,50%),rgba(168,59,255,.24),transparent 60%)}
 .fx-spot:hover::after{opacity:1}
+
+/* =========================================================================
+   18/11/2026: AJUSTES VISUAIS COM A OVERISE DE REFERENCIA (pedido do Almaz)
+   1) Botao de compra e a coisa mais clara da tela: roxo claro com letra escura.
+      O roxo #8C00F2 esta na pagina toda (brilho, borda, fundo), entao o botao
+      roxo se misturava. Planos que nao sao o Vitalicio continuam escuros.
+   2) Preco no topo do card, grande, logo abaixo do nome do plano.
+   3) Palavra-chave dos titulos em roxo claro (.hl).
+   4) Depoimentos e planos aparecem na hora, sem esperar a animacao de entrada.
+   ========================================================================= */
+.offer-btn,
+#sticky-cta,
+.ph-imersivo .buybox .offer-btn,
+#pricing .offer-card[data-plan-id="vitalicio"] .offer-btn{
+  background:linear-gradient(180deg,#D7B6FF 0%,#B57AFF 100%);
+  color:#12051F;border:0;font-weight:800;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 10px 28px rgba(140,0,242,.45),0 2px 6px rgba(0,0,0,.5);
+}
+.offer-btn:focus-visible,#sticky-cta:focus-visible,
+.ph-imersivo .buybox .offer-btn:focus-visible{outline:3px solid #fff;outline-offset:3px}
+@media (hover:hover) and (pointer:fine){
+  .offer-btn:hover,
+  #sticky-cta:hover,
+  .ph-imersivo .buybox .offer-btn:hover,
+  #pricing .offer-card[data-plan-id="vitalicio"] .offer-btn:hover{
+    background:linear-gradient(180deg,#E3CBFF 0%,#C28FFF 100%);color:#12051F;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 14px 36px rgba(140,0,242,.55),0 2px 6px rgba(0,0,0,.5);
+  }
+}
+/* brilho que passa no botao do topo: no fundo claro ele precisa ser mais forte */
+.ph-imersivo .buybox .offer-btn::before{background:linear-gradient(100deg,transparent,rgba(255,255,255,.6),transparent)}
+
+/* preco no topo do card */
+#pricing .offer-card > .ed-price-row{padding:0 22px;margin:-6px 0 4px}
+#pricing .offer-card .ed-new{font-size:44px;line-height:1;letter-spacing:-.035em}
+#pricing .offer-card[data-plan-id="basico"] .ed-new,
+#pricing .offer-card.featured .ed-new{font-size:38px;color:#fff}
+#pricing .offer-card[data-plan-id="vitalicio"] .ed-new{font-size:50px;color:#C99BFF}
+
+/* palavra-chave do titulo */
+.hl{color:#C99BFF}
+
+/* depoimentos e planos sem espera */
+#feedbacks .reveal,#pricing .reveal{opacity:1;transform:none;transition:none}
+#feedbacks .mv,#pricing .mv{opacity:1;transition:none}
+#feedbacks .mv:not(.visible),#pricing .mv:not(.visible){transform:none}
