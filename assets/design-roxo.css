@@ -1479,27 +1479,32 @@ h3 {
 .ld-cta-sec{display:none;margin-top:8px;font-size:13px;color:#C99BFF;text-decoration:underline;text-underline-offset:3px}
 .ld-box.ok .ld-cta-sec{display:inline-block}
 
-/* ---- Vitalicio em destaque (pedido do Almaz em 10/11: o plano a empurrar e o R$ 49,97).
-   Avancado continua com o selo "Mais vendido", mas sem o brilho. ---- */
-.offer-card.featured{border-color:rgba(255,255,255,.1);box-shadow:none}
-.offer-card.featured.visible{animation:none}
-.offer-card.featured .offer-btn{background:#15121C;color:#fff;border:1px solid rgba(255,255,255,.2);box-shadow:none}
-.offer-card[data-plan-id="vitalicio"]{border:2px solid #8C00F2;box-shadow:0 0 0 1px rgba(140,0,242,.4),0 0 60px rgba(140,0,242,.3);background:linear-gradient(180deg,#1A0B2C 0%,#0E0C14 55%)}
-.offer-card[data-plan-id="vitalicio"].visible{animation:mv-glow 2.4s var(--mv-ease) .5s 1 both}
-#pricing .offer-card[data-plan-id="vitalicio"] .offer-btn{background:#8C00F2;color:#fff;border:0;box-shadow:0 10px 30px rgba(140,0,242,.45)}
+/* ---- Avancado em destaque (foco principal no R$ 19,97) ---- */
+.offer-card[data-plan-id="vitalicio"]{border:1px solid rgba(255,255,255,.1);box-shadow:none;background:var(--panel)}
+.offer-card[data-plan-id="vitalicio"].visible{animation:none}
+#pricing .offer-card[data-plan-id="vitalicio"] .offer-btn{background:#15121C;color:#fff;border:1px solid rgba(255,255,255,.2);box-shadow:none}
+
+.offer-card[data-plan-id="avancado"]{border:2px solid #8C00F2;box-shadow:0 0 0 1px rgba(140,0,242,.4),0 0 60px rgba(140,0,242,.3);background:linear-gradient(180deg,#1A0B2C 0%,#0E0C14 55%)}
+.offer-card[data-plan-id="avancado"].visible{animation:mv-glow 2.4s var(--mv-ease) .5s 1 both}
+#pricing .offer-card[data-plan-id="avancado"] .offer-btn{background:#8C00F2;color:#fff;border:0;box-shadow:0 10px 30px rgba(140,0,242,.45)}
 @media (hover:hover) and (pointer:fine){
-  #pricing .offer-card[data-plan-id="vitalicio"] .offer-btn:hover{background:#7A00D4;color:#fff;border-color:transparent}
+  #pricing .offer-card[data-plan-id="avancado"] .offer-btn:hover{background:#7A00D4;color:#fff;border-color:transparent}
 }
-@media (min-width:901px){ .offer-card[data-plan-id="vitalicio"]{transform:translateY(-10px)} .offer-card[data-plan-id="vitalicio"].mv{transform:translateY(24px) scale(.97)} .offer-card[data-plan-id="vitalicio"].mv.visible{transform:translateY(-10px)} }
-@media (prefers-reduced-motion:reduce){ .offer-card[data-plan-id="vitalicio"].visible{animation:none} }
+@media (min-width:901px){
+  .offer-card[data-plan-id="vitalicio"]{transform:none}
+  .offer-card[data-plan-id="avancado"]{transform:translateY(-10px)}
+  .offer-card[data-plan-id="avancado"].mv{transform:translateY(24px) scale(.97)}
+  .offer-card[data-plan-id="avancado"].mv.visible{transform:translateY(-10px)}
+}
+@media (prefers-reduced-motion:reduce){ .offer-card[data-plan-id="avancado"].visible{animation:none} }
 @media (max-width:640px){
   .ld-hero{aspect-ratio:4/3}
   .ld-hero-copy{left:14px;right:14px;bottom:12px}
   .ld-lib-hd{font-size:10px;letter-spacing:.08em}
 }
-/* Vitalicio sozinho no roxo: Avancado e Basico ficam neutros (sem borda/preco roxo) */
-#pricing .offer-card.featured{border:1px solid rgba(255,255,255,.1);box-shadow:none}
-#pricing .offer-card.featured .ed-new{color:#fff}
+/* Avancado em roxo: Vitalicio e Basico ficam neutros */
+#pricing .offer-card[data-plan-id="vitalicio"]{border:1px solid rgba(255,255,255,.1);box-shadow:none}
+#pricing .offer-card[data-plan-id="vitalicio"] .ed-new{color:#fff}
 #pricing .offer-card[data-plan-id="basico"] .offer-btn{border-color:rgba(255,255,255,.2);color:#fff}
 
 
@@ -1629,7 +1634,7 @@ html.lenis,html.lenis body{height:auto}
 .offer-btn,
 #sticky-cta,
 .ph-imersivo .buybox .offer-btn,
-#pricing .offer-card[data-plan-id="vitalicio"] .offer-btn{
+#pricing .offer-card[data-plan-id="avancado"] .offer-btn{
   background:linear-gradient(180deg,#D7B6FF 0%,#B57AFF 100%);
   color:#12051F;border:0;font-weight:800;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 10px 28px rgba(140,0,242,.45),0 2px 6px rgba(0,0,0,.5);
@@ -1640,7 +1645,7 @@ html.lenis,html.lenis body{height:auto}
   .offer-btn:hover,
   #sticky-cta:hover,
   .ph-imersivo .buybox .offer-btn:hover,
-  #pricing .offer-card[data-plan-id="vitalicio"] .offer-btn:hover{
+  #pricing .offer-card[data-plan-id="avancado"] .offer-btn:hover{
     background:linear-gradient(180deg,#E3CBFF 0%,#C28FFF 100%);color:#12051F;
     box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 14px 36px rgba(140,0,242,.55),0 2px 6px rgba(0,0,0,.5);
   }
@@ -1652,8 +1657,8 @@ html.lenis,html.lenis body{height:auto}
 #pricing .offer-card > .ed-price-row{padding:0 22px;margin:-6px 0 4px}
 #pricing .offer-card .ed-new{font-size:44px;line-height:1;letter-spacing:-.035em}
 #pricing .offer-card[data-plan-id="basico"] .ed-new,
-#pricing .offer-card.featured .ed-new{font-size:38px;color:#fff}
-#pricing .offer-card[data-plan-id="vitalicio"] .ed-new{font-size:50px;color:#C99BFF}
+#pricing .offer-card[data-plan-id="vitalicio"] .ed-new{font-size:38px;color:#fff}
+#pricing .offer-card[data-plan-id="avancado"] .ed-new{font-size:50px;color:#C99BFF}
 
 /* palavra-chave do titulo */
 .hl{color:#C99BFF}
