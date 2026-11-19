@@ -1197,59 +1197,95 @@ var io = (function(){
      O topo fica so com a imagem e a headline. A marca continua no rodape. -->
 
 <!-- ===================== BARRA DE EMERGÊNCIA ===================== -->
-<div id="emergency-bar" style="
-  position:fixed;top:0;left:0;right:0;z-index:900;
-  background:linear-gradient(90deg,rgba(140,0,242,.06),rgba(8,8,8,.97) 15%,rgba(8,8,8,.97) 85%,rgba(140,0,242,.06));
-  border-bottom:1px solid rgba(140,0,242,.2);
-  transform:translateY(-100%);opacity:0;
-  transition:transform .35s ease,opacity .35s ease;
-  backdrop-filter:blur(12px);
-">
-  <div style="
-    max-width:1180px;margin:0 auto;padding:10px 20px;
-    display:flex;align-items:center;justify-content:space-between;gap:14px;
-    font-family:var(--f);font-size:14px;color:var(--txt);line-height:1.4;
-  ">
-    <!-- Lado esquerdo: badge + texto -->
-    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;min-width:0;">
-      <span style="
-        display:inline-flex;align-items:center;gap:6px;
-        background:var(--blue);color:#fff;
-        font-weight:800;font-size:11.5px;letter-spacing:.04em;
-        padding:6px 14px;border-radius:6px;white-space:nowrap;
-        box-shadow:0 0 16px rgba(140,0,242,.35);
-        flex-shrink:0;
-      ">🔥 OFERTA LIMITADA</span>
-      <span style="color:var(--txt2);font-weight:500;font-size:14px;">Preço promocional termina em:</span>
+<div id="emergency-bar">
+  <div class="em-inner">
+    <!-- Lado esquerdo: badge + texto (texto sai no celular) -->
+    <div class="em-left">
+      <span class="em-badge">🔥 <span class="em-badge-text">OFERTA LIMITADA</span></span>
+      <span class="em-text">Preço promocional termina em:</span>
     </div>
     <!-- Lado direito: timer + CTA -->
-    <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
-      <span id="emergency-timer" style="
-        display:inline-flex;align-items:center;gap:2px;
-        background:var(--panel);
-        color:var(--txt);font-weight:800;font-size:15px;
-        padding:7px 16px;border-radius:var(--r);
-        border:1px solid var(--line2);
-        font-variant-numeric:tabular-nums;letter-spacing:.08em;
-        white-space:nowrap;
-      ">10 : 00</span>
-      <a href="#pricing" onclick="event.preventDefault();var t=document.getElementById('pricing');if(t)window.almazScrollTo(t);" style="
-        display:inline-flex;align-items:center;gap:6px;
-        background:var(--blue);color:#fff;
-        font-weight:700;font-size:13px;
-        padding:8px 18px;border-radius:6px;
-        border:none;white-space:nowrap;text-decoration:none;
-        box-shadow:0 0 14px rgba(140,0,242,.3);
-        transition:filter .15s,transform .1s;
-      " onmouseover="this.style.filter='brightness(1.15)'" onmouseout="this.style.filter='none'">APROVEITAR →</a>
+    <div class="em-right">
+      <span id="emergency-timer" class="em-timer">10 : 00</span>
+      <a href="#pricing" onclick="event.preventDefault();var t=document.getElementById('pricing');if(t)window.almazScrollTo(t);" class="em-cta">APROVEITAR →</a>
     </div>
   </div>
 </div>
 <style>
+#emergency-bar{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  background:rgba(8,8,8,.96);
+  background-image:linear-gradient(90deg,rgba(140,0,242,.08),rgba(8,8,8,.97) 15%,rgba(8,8,8,.97) 85%,rgba(140,0,242,.08));
+  border-bottom:1px solid rgba(140,0,242,.22);
+  transform:translateY(-100%);opacity:0;
+  transition:transform .3s ease,opacity .3s ease;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
 #emergency-bar.visible{transform:translateY(0) !important;opacity:1 !important}
-@media(max-width:600px){
-  #emergency-bar>div{flex-direction:column;gap:8px;padding:10px 16px;text-align:center}
-  #emergency-bar>div>div{justify-content:center}
+
+.em-inner{
+  max-width:1180px;margin:0 auto;padding:9px 20px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  font-family:var(--f);color:var(--txt);line-height:1.2;
+}
+.em-left{display:flex;align-items:center;gap:12px;min-width:0}
+.em-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  background:var(--blue);color:#fff;
+  font-weight:800;font-size:11.5px;letter-spacing:.04em;
+  padding:5px 12px;border-radius:6px;white-space:nowrap;
+  box-shadow:0 0 14px rgba(140,0,242,.35);flex-shrink:0;
+}
+.em-text{color:var(--txt2);font-weight:500;font-size:13.5px;white-space:nowrap}
+.em-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.em-timer{
+  display:inline-flex;align-items:center;
+  background:var(--panel);color:var(--txt);
+  font-weight:800;font-size:14px;
+  padding:6px 14px;border-radius:var(--r);
+  border:1px solid var(--line2);
+  font-variant-numeric:tabular-nums;letter-spacing:.06em;
+  white-space:nowrap;
+}
+.em-cta{
+  display:inline-flex;align-items:center;gap:5px;
+  background:var(--blue);color:#fff;
+  font-weight:700;font-size:12.5px;
+  padding:7px 15px;border-radius:6px;
+  white-space:nowrap;text-decoration:none;
+  box-shadow:0 0 12px rgba(140,0,242,.3);
+  transition:filter .15s,transform .1s;
+}
+.em-cta:hover{filter:brightness(1.15)}
+
+/* Celular: UMA LINHA SÓ, fininha (~36px), discreta e sem ocupar a tela */
+@media(max-width:720px){
+  .em-inner{
+    padding:6px 12px;
+    justify-content:space-between;
+    gap:6px;
+  }
+  .em-left{gap:0}
+  .em-text{display:none} /* tira o texto longo que fazia quebrar em várias linhas */
+  .em-badge{
+    font-size:10.5px;
+    padding:4px 8px;
+    gap:4px;
+  }
+  .em-timer{
+    font-size:12.5px;
+    padding:4px 8px;
+    letter-spacing:.03em;
+  }
+  .em-cta{
+    font-size:11px;
+    padding:5px 10px;
+  }
+}
+@media(max-width:360px){
+  .em-badge-text{display:none}
+  .em-badge::after{content:'OFERTA'}
+  .em-cta{font-size:10.5px;padding:4px 7px}
 }
 </style>
 <script>
