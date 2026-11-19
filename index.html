@@ -1196,6 +1196,116 @@ var io = (function(){
 <!-- 10/11/2026: a barra fixa com a marca (logo + "Almaz Store") saiu a pedido do Almaz.
      O topo fica so com a imagem e a headline. A marca continua no rodape. -->
 
+<!-- ===================== BARRA DE EMERGÊNCIA ===================== -->
+<div id="emergency-bar" style="
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  background:linear-gradient(90deg,rgba(140,0,242,.06),rgba(8,8,8,.97) 15%,rgba(8,8,8,.97) 85%,rgba(140,0,242,.06));
+  border-bottom:1px solid rgba(140,0,242,.2);
+  transform:translateY(-100%);opacity:0;
+  transition:transform .35s ease,opacity .35s ease;
+  backdrop-filter:blur(12px);
+">
+  <div style="
+    max-width:1180px;margin:0 auto;padding:10px 20px;
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+    font-family:var(--f);font-size:14px;color:var(--txt);line-height:1.4;
+  ">
+    <!-- Lado esquerdo: badge + texto -->
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;min-width:0;">
+      <span style="
+        display:inline-flex;align-items:center;gap:6px;
+        background:var(--blue);color:#fff;
+        font-weight:800;font-size:11.5px;letter-spacing:.04em;
+        padding:6px 14px;border-radius:6px;white-space:nowrap;
+        box-shadow:0 0 16px rgba(140,0,242,.35);
+        flex-shrink:0;
+      ">🔥 OFERTA LIMITADA</span>
+      <span style="color:var(--txt2);font-weight:500;font-size:14px;">Preço promocional termina em:</span>
+    </div>
+    <!-- Lado direito: timer + CTA -->
+    <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
+      <span id="emergency-timer" style="
+        display:inline-flex;align-items:center;gap:2px;
+        background:var(--panel);
+        color:var(--txt);font-weight:800;font-size:15px;
+        padding:7px 16px;border-radius:var(--r);
+        border:1px solid var(--line2);
+        font-variant-numeric:tabular-nums;letter-spacing:.08em;
+        white-space:nowrap;
+      ">10 : 00</span>
+      <a href="#planos" onclick="event.preventDefault();var t=document.getElementById('planos');if(t)window.almazScrollTo(t);" style="
+        display:inline-flex;align-items:center;gap:6px;
+        background:var(--blue);color:#fff;
+        font-weight:700;font-size:13px;
+        padding:8px 18px;border-radius:6px;
+        border:none;white-space:nowrap;text-decoration:none;
+        box-shadow:0 0 14px rgba(140,0,242,.3);
+        transition:filter .15s,transform .1s;
+      " onmouseover="this.style.filter='brightness(1.15)'" onmouseout="this.style.filter='none'">APROVEITAR →</a>
+    </div>
+  </div>
+</div>
+<style>
+#emergency-bar.visible{transform:translateY(0) !important;opacity:1 !important}
+@media(max-width:600px){
+  #emergency-bar>div{flex-direction:column;gap:8px;padding:10px 16px;text-align:center}
+  #emergency-bar>div>div{justify-content:center}
+}
+</style>
+<script>
+(function(){
+  var bar = document.getElementById('emergency-bar');
+  if(!bar) return;
+  var shown = false;
+  function check(){
+    var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+    if(y > 100){
+      if(!shown){ bar.classList.add('visible'); shown = true; }
+    } else {
+      if(shown){ bar.classList.remove('visible'); shown = false; }
+    }
+  }
+  window.addEventListener('scroll', check, {passive:true});
+  document.addEventListener('DOMContentLoaded', check);
+  check();
+})();
+</script>
+<script>
+(function(){
+  var DURATION = 10 * 60; // 10 minutos em segundos
+  var KEY = 'almaz_emergency_end';
+  var el = document.getElementById('emergency-timer');
+  if(!el) return;
+
+  // Salva o timestamp de fim no sessionStorage para sobreviver a reloads dentro da sessão
+  var end = sessionStorage.getItem(KEY);
+  if(!end){ end = Date.now() + DURATION * 1000; sessionStorage.setItem(KEY, end); }
+  else { end = Number(end); }
+
+  function pad(n){ return n < 10 ? '0' + n : '' + n; }
+
+  function tick(){
+    var left = Math.max(0, Math.floor((end - Date.now()) / 1000));
+    var m = Math.floor(left / 60);
+    var s = left % 60;
+    el.textContent = pad(m) + ' : ' + pad(s);
+    if(left <= 0){
+      el.textContent = '⏰ ENCERRADO';
+      el.style.background = 'rgba(255,60,60,.35)';
+      el.style.borderColor = 'rgba(255,100,100,.4)';
+      return;
+    }
+    // Pisca nos últimos 60s
+    if(left <= 60){ el.style.animation = 'emergencyPulse 1s ease-in-out infinite'; }
+    requestAnimationFrame(function(){ setTimeout(tick, 250); });
+  }
+  tick();
+})();
+</script>
+<style>
+@keyframes emergencyPulse{0%,100%{opacity:1}50%{opacity:.55}}
+</style>
+
 <!-- ===================== TOPO: FICHA DO PRODUTO ===================== -->
 <main id="top">
 <section class="ph ph-imersivo">
