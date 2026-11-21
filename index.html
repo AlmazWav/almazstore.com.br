@@ -1558,6 +1558,61 @@ var io = (function(){
 })();
 </script>
 
+<!-- ===================== BIBLIOTECA ===================== -->
+<section class="sec" id="biblioteca">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>O que você vai <span class="hl">jogar primeiro</span>?</h2>
+      <p>Pesquisa o jogo ou abre o catálogo completo.</p>
+    </div>
+
+    <div id="disponibilidade">
+      <div class="av-chips reveal" id="av-chips"></div>
+      <div class="av-body reveal">
+        <div class="av-results">
+          <button class="av-arrow prev" id="av-prev" type="button" aria-label="Anterior">&#8249;</button>
+          <div class="av-track" id="av-track"></div>
+          <button class="av-arrow next" id="av-next" type="button" aria-label="Próximo">&#8250;</button>
+        </div>
+      </div>
+      <div class="av-catalog reveal">
+        <button class="btn-ghost" id="av-catalog-open" type="button">Abrir catálogo completo</button>
+        <span class="av-catalog-note">Busque por nome ou filtre por categoria</span>
+      </div>
+
+      <!-- 21/08/2026: apontava pra #passos. Com os passos movidos pra depois da oferta,
+           o degrau seguinte a biblioteca virou a ancora de preco (#conta).
+           21/09/2026: continua #conta. Chegou a apontar pros planos num corte
+           desse dia e voltou: e degrau do funil, nao atalho. -->
+      <!-- 10/11/2026: botao pros planos tirado daqui. Pedido do Almaz: muito CTA no caminho; a ideia e entreter a pessoa ate a secao de compra. -->
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PASSO A PASSO ===================== -->
+<section class="sec" id="passos">
+  <div class="wrap">
+    <div class="sec-head reveal"><h2>Em <span class="hl">poucos minutos</span> você tá jogando</h2></div>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-n num">1</div>
+        <h3>Escolhe o plano</h3>
+        <p>Pagamento no PIX. A aprovação sai na hora que o pagamento confirma.</p>
+      </div>
+      <div class="step">
+        <div class="step-n num">2</div>
+        <h3>Abre o e-mail</h3>
+        <p>Chega em poucos minutos, com o launcher e o passo a passo da ativação.</p>
+      </div>
+      <div class="step">
+        <div class="step-n num">3</div>
+        <h3>Joga na sua Steam</h3>
+        <p>Os jogos aparecem na sua biblioteca e o download vem dos servidores da Steam.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ===================== O QUE VOCE RECEBE: O LAUNCHER ===================== -->
 <!-- 10/11/2026: pedido do Almaz pra pagina vender pelo VISUAL do que a pessoa recebe.
      O print e REAL: tela inicial do launcher da pasta 1-LAUNCHER/ENTREGA_40k, tirado
@@ -1915,37 +1970,6 @@ var io = (function(){
   </div>
 </section>
 
-<!-- ===================== BIBLIOTECA ===================== -->
-<section class="sec" id="biblioteca">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <h2>O que você vai <span class="hl">jogar primeiro</span>?</h2>
-      <p>Pesquisa o jogo ou abre o catálogo completo.</p>
-    </div>
-
-    <div id="disponibilidade">
-      <div class="av-chips reveal" id="av-chips"></div>
-      <div class="av-body reveal">
-        <div class="av-results">
-          <button class="av-arrow prev" id="av-prev" type="button" aria-label="Anterior">&#8249;</button>
-          <div class="av-track" id="av-track"></div>
-          <button class="av-arrow next" id="av-next" type="button" aria-label="Próximo">&#8250;</button>
-        </div>
-      </div>
-      <div class="av-catalog reveal">
-        <button class="btn-ghost" id="av-catalog-open" type="button">Abrir catálogo completo</button>
-        <span class="av-catalog-note">Busque por nome ou filtre por categoria</span>
-      </div>
-
-      <!-- 21/08/2026: apontava pra #passos. Com os passos movidos pra depois da oferta,
-           o degrau seguinte a biblioteca virou a ancora de preco (#conta).
-           21/09/2026: continua #conta. Chegou a apontar pros planos num corte
-           desse dia e voltou: e degrau do funil, nao atalho. -->
-      <!-- 10/11/2026: botao pros planos tirado daqui. Pedido do Almaz: muito CTA no caminho; a ideia e entreter a pessoa ate a secao de compra. -->
-    </div>
-  </div>
-</section>
-
 <!-- ===================== FEEDBACKS DE CLIENTES ===================== -->
 <section class="sec" id="feedbacks">
   <div class="wrap">
@@ -2005,34 +2029,6 @@ var io = (function(){
     </div>
 
     <!-- 10/11/2026: botao pros planos tirado daqui. Pedido do Almaz: muito CTA no caminho; a ideia e entreter a pessoa ate a secao de compra. -->
-  </div>
-</section>
-
-<!-- ===================== PASSO A PASSO ===================== -->
-<!-- Voltou em 04/11/2026, a pedido do Almaz, com o MESMO texto que saiu em 21/09 (quando a
-     home foi encurtada). Fica logo antes dos planos: responde "e depois que eu pagar?" na
-     hora em que a pessoa decide. Sem botao: a secao seguinte ja e a dos planos (o antigo
-     "Conhecer o programa" apontava pro #launcher, que nao existe mais). -->
-<section class="sec" id="passos">
-  <div class="wrap">
-    <div class="sec-head reveal"><h2>Em <span class="hl">poucos minutos</span> você tá jogando</h2></div>
-    <div class="steps reveal">
-      <div class="step">
-        <div class="step-n num">1</div>
-        <h3>Escolhe o plano</h3>
-        <p>Pagamento no PIX. A aprovação sai na hora que o pagamento confirma.</p>
-      </div>
-      <div class="step">
-        <div class="step-n num">2</div>
-        <h3>Abre o e-mail</h3>
-        <p>Chega em poucos minutos, com o launcher e o passo a passo da ativação.</p>
-      </div>
-      <div class="step">
-        <div class="step-n num">3</div>
-        <h3>Joga na sua Steam</h3>
-        <p>Os jogos aparecem na sua biblioteca e o download vem dos servidores da Steam.</p>
-      </div>
-    </div>
   </div>
 </section>
 
