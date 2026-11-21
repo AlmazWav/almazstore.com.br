@@ -7,23 +7,19 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdn.cloudflare.steamstatic.com" crossorigin>
+<link rel="preconnect" href="https://shared.akamai.steamstatic.com" crossorigin>
+<link rel="preconnect" href="https://www.clarity.ms" crossorigin>
 
 <title>Almaz Store | Desbloqueie +40.000 jogos na sua Steam</title>
 <meta name="description" content="Você paga uma vez e nunca mais compra jogo. São +40.000 jogos originais na sua conta Steam e os lançamentos entram sem custo. Taxa única, licença vitalícia, pagamento no PIX com liberação na hora.">
 
-<!-- Microsoft Clarity (deferred: loads after first paint to avoid blocking render) -->
+<!-- Microsoft Clarity -->
 <script type="text/javascript">
-    (function(){
-        function loadClarity(){
-            (function(c,l,a,r,i,t,y){
-                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-            })(window, document, "clarity", "script", "xeud5hnipq");
-        }
-        if(typeof requestIdleCallback==='function') requestIdleCallback(loadClarity,{timeout:3000});
-        else setTimeout(loadClarity,3000);
-    })();
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xeud5hnipq");
 </script>
 
 <link rel="icon" type="image/png" href="assets/logo-128.png">
@@ -1141,6 +1137,18 @@ body.gm-open{overflow:hidden}
 
 /* elementos herdados que a variante nao usa */
 .cv-frame,.cv-cover,.cv-click,.hero2-cta,.pricepeek-btn,.offer-bar,#amz-toasts{display:none!important}
+
+/* Celular rápido: garante visibilidade imediata sem tela em branco ou atraso de animação */
+@media(max-width:768px){
+  .reveal{opacity:1!important;transform:none!important;transition:none!important}
+  .mv{opacity:1!important;transform:none!important;transition:none!important}
+  .mv-w>span{transform:none!important;transition:none!important;animation:none!important}
+  .ph-imersivo .side>*{animation:none!important;opacity:1!important}
+  .ph-imersivo .ph-art{animation:none!important;opacity:1!important}
+  .topbar, .cat-backdrop, #upsell-ov, #emergency-bar, #whatsapp-discount-modal, .rmb-backdrop{
+    -webkit-backdrop-filter:none!important;backdrop-filter:none!important
+  }
+}
 </style>
 
 <script src="https://meu-tracker-five.vercel.app/t.js?k=4291ec8543444aa9" async></script>
@@ -1172,6 +1180,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
+</script>
+
+<script>
+// Fallback de visibilidade: garante que nenhum bloco fique invisível caso o IntersectionObserver atrase
+(function(){
+  function revelarTudo(){
+    var invisiveis = document.querySelectorAll('.reveal:not(.visible), .mv:not(.visible), .mv-t:not(.visible)');
+    for(var i=0; i<invisiveis.length; i++){ invisiveis[i].classList.add('visible'); }
+  }
+  setTimeout(revelarTudo, 1200);
+  window.addEventListener('load', function(){ setTimeout(revelarTudo, 400); });
+})();
 </script>
 
 <script>
@@ -2924,8 +2944,8 @@ document.addEventListener('keydown', function(e){
     jaTrouxe=true;
     /* alvo: topo da faixa logo abaixo da caixa de busca, com a caixa ainda visivel
        (a pessoa precisa continuar vendo o que digitou). */
-    var alvo=track.getBoundingClientRect().top+window.pageYOffset
-             -input.getBoundingClientRect().height-90;
+    var inputH=input?input.getBoundingClientRect().height:0;
+    var alvo=track.getBoundingClientRect().top+window.pageYOffset-inputH-90;
     window.scrollTo({top:Math.max(0,alvo),behavior:'smooth'});
   }
   if(input) input.addEventListener('input',function(){
@@ -4107,8 +4127,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:.06});
-
+if(!window.io){
+  window.io=new IntersectionObserver(function(e){
+    e.forEach(function(x){
+      if(x.isIntersecting){
+        x.target.classList.add('visible');
+        if(window.io.unobserve) window.io.unobserve(x.target);
+      }
+    });
+  },{threshold:.06});
+}
 document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
 
 
@@ -5510,6 +5538,9 @@ else{el.scrollIntoView({behavior:'smooth'});}
 <script>
 window.addEventListener('DOMContentLoaded',function(){
   if(!window.Lenis) return;
+  /* Só roda Lenis no computador com mouse/trackpad (no celular o toque segue 100% nativo e leve) */
+  var isMobile = (window.innerWidth <= 900) || (window.matchMedia && !window.matchMedia('(hover: hover) and (pointer: fine)').matches);
+  if(isMobile) return;
   if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   ['#cat-modal','#gm-ov','#ai-window','#qbx-ov','#upsell-ov','#rmb-modal','#ld-res','.cat-grid-wrap'].forEach(function(s){
     document.querySelectorAll(s).forEach(function(el){ el.setAttribute('data-lenis-prevent',''); });
